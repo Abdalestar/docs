@@ -1,0 +1,70 @@
+---
+title: "Campaigns Overview"
+description: "How campaigns work in Qtap and what types are available."
+---
+
+Campaigns send automated messages to your members when specific conditions are met. You configure the trigger, an optional reward, and the notification message. After that, Qtap runs the campaign automatically.
+
+## How campaigns work
+
+When a member meets a campaign's trigger condition (for example, their birthday is in 3 days, or they haven't visited in 60 days), Qtap sends them a push notification. You can attach a reward to the notification so they receive something when they open it.
+
+Each campaign runs on its own rules. You can have multiple campaigns active at the same time.
+
+## Campaign types
+
+Qtap has seven campaign types:
+
+**Birthday Rewards** — sends a message a set number of days before a member's birthday. You choose how many days in advance.
+
+**Win-Back Campaign** — targets members who haven't visited in a certain number of days. You set how many days of inactivity triggers the campaign.
+
+**Milestone Celebration** — triggers when a member reaches a specific number of stamps or points. Useful for recognizing loyal customers at a key threshold.
+
+**Time-Based Promotion** — sends messages on specific days of the week within a time window. Good for happy hours or recurring weekly offers.
+
+**Welcome Campaign** — sends a message to new members after a delay you set, measured in hours after they join.
+
+**Points Multiplier** — increases the points members earn during a set date range. Only available on a points program.
+
+**Flash Sale** — a limited-time offer with a set duration. You define the discount or bonus, the duration in hours, and an optional cap on how many times it can be redeemed.
+
+## Campaign statuses
+
+- **Draft** — saved but not running yet. Members won't receive anything.
+- **Active** — running. Qtap is monitoring for trigger conditions.
+- **Paused** — temporarily stopped. No new notifications will be sent until you resume it.
+- **Ended** — completed campaigns that are no longer running.
+
+## Creating a campaign
+
+Click **New Campaign** from the Campaigns page. A multi-step wizard walks you through:
+
+1. Choosing the campaign type and giving it a name
+2. Configuring the trigger
+3. Optionally adding a reward (free item, bonus stamps, bonus points, or a discount)
+4. Writing the notification title and message body
+5. Optionally setting conditions to narrow which members are targeted
+6. Optionally setting up an A/B test with two message variants
+7. Reviewing and either saving as a draft or activating immediately
+
+## Pausing and resuming campaigns
+
+On the Campaigns page, find the campaign card and open its menu. Select **Pause** to stop it temporarily, or **Resume** to start it again. Paused campaigns keep all their settings.
+
+## Plan limits
+
+Your plan determines how many active campaigns you can run at once. If you've reached the limit, you'll see a message when trying to create a new one. Go to **Settings > Billing** to upgrade.
+
+<Note>
+Campaign notifications are sent to members via the Qtap member app. Members who haven't downloaded the app or enabled notifications won't receive them.
+</Note>
+
+<CardGroup cols={2}>
+  <Card title="Birthday Campaigns" href="/merchants/campaigns/birthday">
+    Configure a birthday reward campaign step by step.
+  </Card>
+  <Card title="Win-Back Campaigns" href="/merchants/campaigns/winback">
+    Re-engage members who haven't visited in a while.
+  </Card>
+</CardGroup>

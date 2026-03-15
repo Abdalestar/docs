@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Qtap Help Center",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#6B1A2E",
+    "light": "#8E2440",
+    "dark": "#4A0F1E"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -63,6 +63,86 @@
               "api-reference/endpoint/create",
               "api-reference/endpoint/delete",
               "api-reference/endpoint/webhook"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Merchant Guide",
+        "groups": [
+          {
+            "group": "Getting started",
+            "pages": [
+              "merchants/welcome",
+              "merchants/dashboard-overview",
+              "merchants/first-loyalty-program"
+            ]
+          },
+          {
+            "group": "Loyalty programs",
+            "pages": [
+              "merchants/stamp-cards/overview",
+              "merchants/stamp-cards/creating",
+              "merchants/stamp-cards/designing",
+              "merchants/stamp-cards/rewards",
+              "merchants/points/overview",
+              "merchants/points/creating",
+              "merchants/points/operations"
+            ]
+          },
+          {
+            "group": "QR codes & NFC",
+            "pages": [
+              "merchants/qr-codes/overview",
+              "merchants/qr-codes/generating",
+              "merchants/qr-codes/batch",
+              "merchants/nfc-tags"
+            ]
+          },
+          {
+            "group": "Campaigns",
+            "pages": [
+              "merchants/campaigns/overview",
+              "merchants/campaigns/birthday",
+              "merchants/campaigns/winback",
+              "merchants/campaigns/milestone",
+              "merchants/campaigns/rewards",
+              "merchants/campaigns/analytics"
+            ]
+          },
+          {
+            "group": "Analytics",
+            "pages": [
+              "merchants/analytics/overview",
+              "merchants/analytics/location-comparison",
+              "merchants/analytics/points-activity",
+              "merchants/analytics/revenue-impact",
+              "merchants/analytics/staff-performance"
+            ]
+          },
+          {
+            "group": "Members",
+            "pages": [
+              "merchants/members/overview",
+              "merchants/members/profiles",
+              "merchants/members/redemptions"
+            ]
+          },
+          {
+            "group": "Staff",
+            "pages": [
+              "merchants/staff/overview",
+              "merchants/staff/roles-permissions",
+              "merchants/staff/activity-logs"
+            ]
+          },
+          {
+            "group": "Settings",
+            "pages": [
+              "merchants/settings/billing",
+              "merchants/settings/locations",
+              "merchants/settings/notifications",
+              "merchants/settings/merchant-page"
             ]
           }
         ]
