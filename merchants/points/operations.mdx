@@ -1,6 +1,59 @@
 ---
 title: "Points Operations"
-description: "How to add, deduct, and manage points for your members"
+description: "Award points to members at the counter based on a purchase amount, or manually adjust a member's balance."
 ---
 
-Coming soon
+Points Operations is where staff go to give members points for purchases and to correct a member's balance when needed. It requires an active points program set up under your account.
+
+## Award points for a purchase
+
+The **Award Points** tab lets staff enter a transaction amount and Qtap calculates how many points to give based on your program's earn rate.
+
+<Steps>
+  1. Go to **Points Operations**.
+  2. On the **Award Points** tab, type the member's name, email, or phone number into the search field.
+  3. Select the member from the results.
+  4. Enter the **Transaction Amount** in the currency field. Qtap shows a preview of how many points this amount earns based on your program's points-per-currency rate.
+  5. Optionally add a **Description** to note what the purchase was for.
+  6. Click **Award Points** and confirm in the dialog.
+</Steps>
+
+Points are added to the member's balance immediately. A success screen shows how many points were awarded and the member's new balance.
+
+<Note>
+If your points program has a minimum transaction amount set, purchases below that amount will calculate as 0 points. The preview updates as you type so you can see this before confirming.
+</Note>
+
+## Award points manually
+
+If you need to give a specific number of points rather than calculating from a purchase amount, toggle on **Enter points manually** below the transaction amount field. Type the points directly and skip the currency calculation.
+
+## Adjust a member's balance
+
+Use the **Adjust Balance** tab to add or remove points outside of a normal transaction — for example, to fix a data entry mistake or honor a special exception.
+
+<Steps>
+  1. Click the **Adjust Balance** tab.
+  2. Search for and select the member.
+  3. Choose **Add** or **Deduct**.
+  4. Enter the number of points.
+  5. Enter a **Reason** — this is recorded in the transaction history and visible to other staff.
+  6. Click **Adjust Points** and confirm.
+</Steps>
+
+<Warning>
+Adjustments are logged with your staff account and the reason you enter. There is no way to undo a balance adjustment, so double-check the amount before confirming.
+</Warning>
+
+## Recent transactions
+
+The bottom of the Points Operations page shows the last 20 points transactions across all members. Each row shows the member name, points amount, transaction type, and date. This gives staff a quick way to confirm a recent award went through correctly.
+
+<CardGroup cols={2}>
+  <Card title="Points Programs" href="/merchants/points/overview">
+    Set up your earn rate, minimum transactions, and expiry rules.
+  </Card>
+  <Card title="Member Profiles" href="/merchants/members/profiles">
+    See a member's full points history and current balance.
+  </Card>
+</CardGroup>
