@@ -1,6 +1,86 @@
 ---
 title: "Creating a Stamp Card"
-description: "Step-by-step guide to creating a new stamp card program"
+description: "A walkthrough of every field in the stamp card setup wizard."
 ---
 
-Coming soon
+To create a stamp card, go to **Cards** in the left sidebar and click **New Card**. The wizard has four steps: Card Design, Rewards, Locations, and Review.
+
+<Note>
+Your plan determines how many active loyalty cards you can have at once. If you've reached the limit, you'll see a message on this page with a link to upgrade.
+</Note>
+
+## Step 1: Card Design
+
+This step sets how the card looks and behaves.
+
+**Name** is required and must be at least 2 characters. This is the name members see in the app.
+
+**Description** is optional. It appears on the back of the card in the app. Use it to tell members what the reward is or how to earn stamps.
+
+**Stamps Required** is the stamp goal — how many stamps a customer needs before they earn the main reward. It defaults to 10.
+
+**Business Name** is shown on the card. It pre-fills with your organization name. You can change it per card if you run more than one brand.
+
+**Card Color** is the background color of the card. Click the color swatch to open the color picker.
+
+**Stamp Icon** is the icon displayed in each stamp space. Pick from the built-in set (coffee cup, star, heart, etc.) or upload a custom PNG or SVG file up to 500KB. The icon is also shown on the front of the card as the card's identity icon.
+
+**Website URL** is optional. If provided, it appears as a link on the back of the card.
+
+A live preview of the card appears on the right side of the screen as you fill in these fields.
+
+## Step 2: Rewards
+
+Every stamp card needs at least one **Main** reward before you can publish it. You can also add optional **Sign Up** and **Interim** rewards.
+
+Click **Add Reward** to open the reward editor.
+
+**Reward Type** determines when the reward is issued:
+
+- **Main** — issued automatically when the member completes the stamp goal
+- **Sign Up** — issued when a customer joins the card for the first time
+- **Interim** — issued at a specific stamp milestone you define (e.g., at stamp 5 on a 10-stamp card)
+
+**Reward Name** is what the member sees (e.g., "Free Drink", "10% Off").
+
+**Trigger Value** is the stamp number that triggers the reward. For Main rewards, this matches your stamp goal. For Interim rewards, set it to any number less than your stamp goal.
+
+**Expiry** — toggle this on to set an expiry period. Enter the number of days the reward stays valid after it is issued. If left off, the reward does not expire.
+
+**Reward Image** is optional. Upload a PNG or JPEG (max 2MB) to show alongside the reward in the app.
+
+**Staff Note** is optional. This note appears to staff when they look up a redemption — useful for reminding staff what to give the customer.
+
+## Step 3: Locations
+
+Select which of your locations the stamp card is valid at. Members can only earn stamps at the locations you select here.
+
+If you have one location, it is selected automatically. If you have multiple locations, select all of them or choose a subset.
+
+<Warning>
+If a location is not selected here, staff at that location will not be able to stamp this card — even if the customer is enrolled.
+</Warning>
+
+## Step 4: Review
+
+The Review step shows a summary of your card settings. Check that the stamp goal, rewards, and locations look correct.
+
+Click **Publish** to make the card live immediately. Members can find it in the app right away.
+
+Click **Save as Draft** if you want to come back to it. Draft cards are not visible to customers and cannot be stamped by staff.
+
+<Note>
+After publishing, the card status appears as **Active** on the Cards page. You can switch it to **Inactive** at any time to stop accepting new stamps without deleting the card.
+</Note>
+
+<CardGroup cols={2}>
+  <Card title="Stamp Card Rewards" icon="gift" href="/merchants/stamp-cards/rewards">
+    More detail on the three reward types and how they work
+  </Card>
+  <Card title="Designing Your Card" icon="palette" href="/merchants/stamp-cards/designing">
+    Customizing card colors, icons, and branding
+  </Card>
+  <Card title="Locations" icon="map-pin" href="/merchants/settings/locations">
+    Adding and managing your business locations
+  </Card>
+</CardGroup>

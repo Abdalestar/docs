@@ -1,6 +1,88 @@
 ---
 title: "Win-Back Campaigns"
-description: "Re-engaging members who haven't visited in a while"
+description: "How to automatically re-engage members who haven't visited in a while."
 ---
 
-Coming soon
+A win-back campaign sends a push notification to members who haven't visited your business in a set number of days. You can attach a reward to bring them back.
+
+## How it works
+
+Qtap checks daily for members whose last recorded visit falls outside the inactivity window you set. When a match is found, they receive a push notification. If you attached a reward, it goes into their wallet when they open the message.
+
+The campaign will only contact each member up to the maximum number of times you set, so you won't keep messaging the same inactive customers indefinitely.
+
+## Setting up a win-back campaign
+
+Go to **Campaigns** in the left sidebar and click **New Campaign**. The wizard has seven steps.
+
+<Steps>
+
+### Step 1: Type
+
+Select **Win-Back Campaign** from the campaign type list. Give it a name (e.g., "We Miss You") and an optional internal description. Click **Next**.
+
+### Step 2: Trigger
+
+Set how long a member must be inactive before the campaign fires, and how many times they can receive it:
+
+**Inactivity period** — choose from 14, 30, 60, or 90 days without a visit.
+
+**Maximum sends per customer** — how many times a single member can receive this campaign. Options are 1, 2, or 3 times. This prevents messaging the same person repeatedly if they remain inactive after receiving the first notification.
+
+Click **Next**.
+
+### Step 3: Reward (optional)
+
+Attach a reward to give inactive members a reason to return. Choose from Free Item, Bonus Stamps, Bonus Points, Discount, or Special Badge. Fill in the reward details.
+
+Leave this step empty to send a message without a reward.
+
+Click **Next**.
+
+### Step 4: Message
+
+Write the push notification:
+
+- **Title** — the headline (e.g., "We miss you!")
+- **Message** — the body text. Be specific about what they'll get if they come back.
+
+Both fields are required. Click **Next**.
+
+### Step 5: Conditions (optional)
+
+Add conditions to narrow the audience. For example, limit the campaign to members who have visited at least 3 times in the past but haven't come back. Leave empty to reach all inactive members.
+
+Click **Next**.
+
+### Step 6: A/B Test (optional)
+
+Test two different messages to see which performs better. Leave this off if you don't need it.
+
+Click **Next**.
+
+### Step 7: Review
+
+Check your settings and click **Activate** to start the campaign, or **Save Draft** to publish later.
+
+</Steps>
+
+## Managing the campaign
+
+Once active, the campaign runs automatically in the background. You can pause it from the Campaigns page by opening the three-dot menu on the campaign card and clicking **Pause**.
+
+<Note>
+A member's "last visit" is recorded when staff stamp their card or issue points. Members who have joined your loyalty program but never received a stamp will not be counted as having visited.
+</Note>
+
+<Warning>
+If you lower the inactivity threshold after a campaign is already active (for example, from 60 days to 30 days), some members who were previously outside the window may now qualify and receive a notification.
+</Warning>
+
+<CardGroup cols={2}>
+  <Card title="Campaigns Overview" href="/merchants/campaigns/overview">
+    How campaigns work and what types are available.
+  </Card>
+  <Card title="Birthday Campaigns" href="/merchants/campaigns/birthday">
+    Send an automated birthday reward to members each year.
+  </Card>
+</CardGroup>
