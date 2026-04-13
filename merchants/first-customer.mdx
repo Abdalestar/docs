@@ -1,0 +1,90 @@
+---
+title: "Adding Your First Customer"
+sidebarTitle: "Your First Customer"
+description: "How to enroll a customer in your loyalty program for the first time, from QR scan to first stamp."
+---
+
+Customers join your loyalty program by scanning a QR code or tapping an NFC tag at your shop. There is no manual "add customer" form on the dashboard. Once they scan, they enter their phone number in the Qtap app, and the moment they tap **Join**, they appear in your Members list.
+
+This page walks through what you need to set up first, what the customer sees, and how to issue their first stamp or points.
+
+## Before you start
+
+Two things have to be in place before your first customer can join:
+
+- A **published** stamp card or points program. A draft program will not show up to customers. See [Your First Loyalty Program](/merchants/first-loyalty-program) if you have not built one yet.
+- At least one **active QR code** (or NFC tag) tied to one of your locations. See [Generating a QR Code](/merchants/qr-codes/generating).
+
+If you also want a printed display, download the QR code as a PDF from the QR Codes page and print it on a card or counter sign.
+
+## What the customer does
+
+The customer needs the Qtap app. If they do not have it, point them to the App Store or Google Play and let them search for "Qtap".
+
+Once the app is open, they:
+
+1. Tap the scan button in the app and point the camera at your QR code (or hold their phone to your NFC tag).
+2. Enter their phone number and a verification code sent by SMS.
+3. Add their first name and (optionally) their birthday.
+4. See your loyalty card with their first stamp or starting points already on it, if your program is set to award one on join.
+
+That is the entire enrollment. From your side, the new member shows up in **Members** within a few seconds.
+
+<Tip>
+Birthday is optional, but ask for it if you can. The [Birthday Campaign](/merchants/campaigns/birthday) will then send them a free reward on their birthday with no extra work from you.
+</Tip>
+
+## Issuing their first stamp or points
+
+If your stamp card has a Sign Up reward set, the customer leaves with one stamp already on the card. For everything after that, staff issue stamps or points by scanning the customer's member QR code in the staff app.
+
+When the customer is paying:
+
+1. Open the Qtap staff app and go to **Stamp Operations** (or **Points Operations** if you run a points program).
+2. Ask the customer to open their member QR code in their app.
+3. Scan their code with the staff app camera.
+4. Confirm the stamp count or points value, then tap **Issue**.
+
+The customer gets a push notification right after, showing their updated balance.
+
+<Note>
+You can also issue a stamp without scanning by using the **Issue Stamp** or **Issue Points** button in the top right of the dashboard. Type the customer's phone number into the search box, pick their record, and issue from there. Use this for customers who left their phone in the car or whose camera is broken.
+</Note>
+
+## Confirm the customer joined
+
+Go to **Members** in the left sidebar. Your new customer appears at the top of the list, sorted by join date. Click the row to open their profile and check that the right loyalty card shows under their balance.
+
+If they do not appear, check two things first. Open **Cards** and confirm your loyalty program shows **Published** rather than Draft. Then open **QR Codes** and confirm the code they scanned is **Active** and tied to a location that the program covers. Once both look right, ask the customer to close and reopen the app, then scan again.
+
+## Common questions
+
+<AccordionGroup>
+  <Accordion title="Can I add a customer without them having the app?">
+    No. Membership lives in the Qtap app, so the customer needs to install it and verify a phone number. If they cannot install it on the spot, give them a card with your QR code on it and they can join later from anywhere.
+  </Accordion>
+  <Accordion title="What if a customer enters the wrong phone number?">
+    Phone numbers are tied to the verification code, so a wrong number will not pass verification. If they enter a typo, the SMS goes to a different phone and they cannot finish joining. Have them tap **Change number** on the verification screen and try again.
+  </Accordion>
+  <Accordion title="Do I need a separate QR for every customer?">
+    No. One QR code per location is enough. Every customer scans the same code to join, and the same code keeps working forever unless you mark it Inactive.
+  </Accordion>
+  <Accordion title="Can a customer join more than one of my programs?">
+    Yes. Each program (stamp card or points) is its own opt-in. A customer who joins your stamp card can also join your points program later by scanning a QR tied to it.
+  </Accordion>
+</AccordionGroup>
+
+<CardGroup cols={2}>
+  <Card title="Your First Loyalty Program" icon="credit-card" href="/merchants/first-loyalty-program">
+    Build the stamp card or points program your customers will join.
+  </Card>
+  <Card title="Generating a QR Code" icon="qrcode" href="/merchants/qr-codes/generating">
+    Create the QR code customers scan to enroll.
+  </Card>
+  <Card title="Members" icon="users" href="/merchants/members/overview">
+    See who has joined and what their balances look like.
+  </Card>
+  <Card title="Birthday Campaign" icon="cake-candles" href="/merchants/campaigns/birthday">
+    Reward customers automatically on their birthday once you have their date.
+  </Card>
+</CardGroup>
