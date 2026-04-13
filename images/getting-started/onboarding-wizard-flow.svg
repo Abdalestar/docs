@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="750" height="270" viewBox="0 0 750 270" font-family="Inter, Segoe UI, sans-serif">
+<rect width="750" height="270" fill="#FFFFFF"/>
+<text x="375" y="28" text-anchor="middle" font-size="15" font-weight="700" fill="#423F4C">Qtap Onboarding Wizard — 8 Steps</text>
+
+<!-- Row 1: Steps 1-4 -->
+
+<!-- Step 1: Welcome (plum) -->
+<rect x="30" y="50" width="150" height="62" rx="10" ry="10" fill="#8E4A63" stroke="#8E4A63" stroke-width="1.5"/>
+<circle cx="44" cy="63" r="9" fill="#F0D793"/>
+<text x="44" y="67" text-anchor="middle" font-size="9" font-weight="700" fill="#423F4C">1</text>
+<text x="105" y="74" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">Welcome</text>
+<text x="105" y="89" text-anchor="middle" font-size="10" fill="#F5E8EE">14-day free trial</text>
+<text x="105" y="102" text-anchor="middle" font-size="10" fill="#F5E8EE">Growth plan</text>
+
+<!-- Arrow 1→2 -->
+<line x1="180" y1="81" x2="202" y2="81" stroke="#8E4A63" stroke-width="2" marker-end="url(#arrow)"/>
+
+<!-- Step 2: Business Type -->
+<rect x="208" y="50" width="150" height="62" rx="10" ry="10" fill="#F5EDF1" stroke="#8E4A63" stroke-width="1.5"/>
+<circle cx="222" cy="63" r="9" fill="#8E4A63"/>
+<text x="222" y="67" text-anchor="middle" font-size="9" font-weight="700" fill="#FFFFFF">2</text>
+<text x="283" y="74" text-anchor="middle" font-size="12" font-weight="700" fill="#423F4C">Business Type</text>
+<text x="283" y="89" text-anchor="middle" font-size="10" fill="#6B5060">Cafe, Restaurant,</text>
+<text x="283" y="102" text-anchor="middle" font-size="10" fill="#6B5060">Salon, Retail, Gym…</text>
+
+<!-- Arrow 2→3 -->
+<line x1="358" y1="81" x2="380" y2="81" stroke="#8E4A63" stroke-width="2" marker-end="url(#arrow)"/>
+
+<!-- Step 3: Your Goal -->
+<rect x="386" y="50" width="150" height="62" rx="10" ry="10" fill="#F5EDF1" stroke="#8E4A63" stroke-width="1.5"/>
+<circle cx="400" cy="63" r="9" fill="#8E4A63"/>
+<text x="400" y="67" text-anchor="middle" font-size="9" font-weight="700" fill="#FFFFFF">3</text>
+<text x="461" y="74" text-anchor="middle" font-size="12" font-weight="700" fill="#423F4C">Your Goal</text>
+<text x="461" y="89" text-anchor="middle" font-size="10" fill="#6B5060">Repeat customers,</text>
+<text x="461" y="102" text-anchor="middle" font-size="10" fill="#6B5060">increase spend…</text>
+
+<!-- Arrow 3→4 -->
+<line x1="536" y1="81" x2="558" y2="81" stroke="#8E4A63" stroke-width="2" marker-end="url(#arrow)"/>
+
+<!-- Step 4: Business Details -->
+<rect x="564" y="50" width="150" height="62" rx="10" ry="10" fill="#F5EDF1" stroke="#8E4A63" stroke-width="1.5"/>
+<circle cx="578" cy="63" r="9" fill="#8E4A63"/>
+<text x="578" y="67" text-anchor="middle" font-size="9" font-weight="700" fill="#FFFFFF">4</text>
+<text x="639" y="74" text-anchor="middle" font-size="12" font-weight="700" fill="#423F4C">Business Details</text>
+<text x="639" y="89" text-anchor="middle" font-size="10" fill="#6B5060">Business Name,</text>
+<text x="639" y="102" text-anchor="middle" font-size="10" fill="#6B5060">Phone, Website</text>
+
+<!-- Bend arrow from step 4 down to row 2 -->
+<polyline points="639,112 639,148 105,148 105,160" fill="none" stroke="#8E4A63" stroke-width="2" marker-end="url(#arrow)"/>
+
+<!-- Row 2: Steps 5-8 -->
+
+<!-- Step 5: First Location -->
+<rect x="30" y="166" width="150" height="62" rx="10" ry="10" fill="#F5EDF1" stroke="#8E4A63" stroke-width="1.5"/>
+<circle cx="44" cy="179" r="9" fill="#8E4A63"/>
+<text x="44" y="183" text-anchor="middle" font-size="9" font-weight="700" fill="#FFFFFF">5</text>
+<text x="105" y="190" text-anchor="middle" font-size="12" font-weight="700" fill="#423F4C">First Location</text>
+<text x="105" y="205" text-anchor="middle" font-size="10" fill="#6B5060">Location name</text>
+<text x="105" y="218" text-anchor="middle" font-size="10" fill="#6B5060">+ address</text>
+
+<!-- Arrow 5→6 -->
+<line x1="180" y1="197" x2="202" y2="197" stroke="#8E4A63" stroke-width="2" marker-end="url(#arrow)"/>
+
+<!-- Step 6: Loyalty Type -->
+<rect x="208" y="166" width="150" height="62" rx="10" ry="10" fill="#F5EDF1" stroke="#8E4A63" stroke-width="1.5"/>
+<circle cx="222" cy="179" r="9" fill="#8E4A63"/>
+<text x="222" y="183" text-anchor="middle" font-size="9" font-weight="700" fill="#FFFFFF">6</text>
+<text x="283" y="190" text-anchor="middle" font-size="12" font-weight="700" fill="#423F4C">Loyalty Type</text>
+<text x="283" y="205" text-anchor="middle" font-size="10" fill="#6B5060">Stamp Cards</text>
+<text x="283" y="218" text-anchor="middle" font-size="10" fill="#6B5060">or Points Program</text>
+
+<!-- Arrow 6→7 -->
+<line x1="358" y1="197" x2="380" y2="197" stroke="#8E4A63" stroke-width="2" marker-end="url(#arrow)"/>
+
+<!-- Step 7: Payment (gold) -->
+<rect x="386" y="166" width="150" height="62" rx="10" ry="10" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+<circle cx="400" cy="179" r="9" fill="#8E4A63"/>
+<text x="400" y="183" text-anchor="middle" font-size="9" font-weight="700" fill="#FFFFFF">7</text>
+<text x="461" y="190" text-anchor="middle" font-size="12" font-weight="700" fill="#423F4C">Payment</text>
+<text x="461" y="205" text-anchor="middle" font-size="10" fill="#423F4C">Stripe card setup</text>
+<text x="461" y="218" text-anchor="middle" font-size="10" fill="#423F4C">not charged today</text>
+
+<!-- Arrow 7→8 -->
+<line x1="536" y1="197" x2="558" y2="197" stroke="#8E4A63" stroke-width="2" marker-end="url(#arrow)"/>
+
+<!-- Step 8: Done (green) -->
+<rect x="564" y="166" width="150" height="62" rx="10" ry="10" fill="#4CAF7D" stroke="#4CAF7D" stroke-width="1.5"/>
+<circle cx="578" cy="179" r="9" fill="#F0D793"/>
+<text x="578" y="183" text-anchor="middle" font-size="9" font-weight="700" fill="#423F4C">8</text>
+<text x="639" y="190" text-anchor="middle" font-size="12" font-weight="700" fill="#FFFFFF">Done</text>
+<text x="639" y="205" text-anchor="middle" font-size="10" fill="#E8F8EF">Dashboard ready</text>
+<text x="639" y="218" text-anchor="middle" font-size="10" fill="#E8F8EF">Create first program</text>
+
+<!-- Legend -->
+<rect x="30" y="248" width="12" height="12" rx="2" fill="#8E4A63"/>
+<text x="47" y="259" font-size="10" fill="#423F4C">Start</text>
+<rect x="100" y="248" width="12" height="12" rx="2" fill="#F0D793" stroke="#8E4A63" stroke-width="1"/>
+<text x="117" y="259" font-size="10" fill="#423F4C">Payment</text>
+<rect x="190" y="248" width="12" height="12" rx="2" fill="#4CAF7D"/>
+<text x="207" y="259" font-size="10" fill="#423F4C">Complete</text>
+
+<defs>
+  <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#8E4A63"/>
+  </marker>
+</defs>
+</svg>

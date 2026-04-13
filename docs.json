@@ -16,6 +16,7 @@
         "pages": [
           "merchants/what-is-qtap",
           "merchants/welcome",
+          "merchants/onboarding-wizard",
           "merchants/dashboard-overview",
           "merchants/first-loyalty-program"
         ]
@@ -54,7 +55,8 @@
           "merchants/campaigns/winback",
           "merchants/campaigns/milestone",
           "merchants/campaigns/rewards",
-          "merchants/campaigns/analytics"
+          "merchants/campaigns/analytics",
+          "merchants/campaigns/push-notifications"
         ]
       },
       {
