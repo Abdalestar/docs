@@ -14,6 +14,7 @@
       {
         "group": "Getting Started",
         "pages": [
+          "merchants/what-is-qtap",
           "merchants/welcome",
           "merchants/dashboard-overview",
           "merchants/first-loyalty-program"
