@@ -1,0 +1,132 @@
+# Content, Language, and Style Patterns to Remove
+
+These are the structural and tonal patterns that make text feel AI-generated even after you fix the obvious words.
+
+## Content Patterns
+
+### Significance Inflation
+Anything that announces importance instead of showing it.
+
+**Cut:** "marking a pivotal moment," "a testament to," "setting the stage for," "reflects broader trends," "in today's rapidly evolving landscape," "indelible mark," "deeply rooted."
+
+**Fix:** If something matters, explain why with specifics. Show the consequence, not the label.
+
+### Promotional Tone
+Travel-brochure language that puffs up plain things.
+
+**Cut:** "nestled in," "vibrant," "rich cultural heritage," "stunning," "breathtaking," "renowned," "groundbreaking," "must-visit," "boasts a," "in the heart of," "natural beauty."
+
+**Fix:** Use concrete facts. "Stunning views" → "you can see three states from the porch."
+
+### Vague Attribution
+Faceless authority claims.
+
+**Cut:** "experts say," "industry observers note," "some critics argue," "studies show," "research suggests."
+
+**Fix:** Name the expert and source, or cut the claim. If you can't name who said it, the claim probably isn't worth including.
+
+### Formulaic Endings
+The "Challenges and Future Outlook" pattern: "Despite these challenges, [subject] continues to thrive." Cut and replace with a specific fact, anecdote, or open question.
+
+### Generic Positive Conclusions
+"The future looks bright," "Exciting times lie ahead," "This represents a major step in the right direction." End with a real fact instead. Or just stop when you've made your point.
+
+## Language Patterns
+
+### Copula Avoidance
+AI dodges the word "is" for some reason. Just use it.
+
+| Avoid | Use |
+|---|---|
+| serves as | is |
+| stands as | is |
+| functions as | is |
+| represents | is |
+| boasts | has |
+| features | has |
+| offers | has |
+
+### -ing Phrase Padding
+Participial phrases tacked onto sentence endings to add fake depth.
+
+**Cut these endings:** "highlighting the importance of," "underscoring the need for," "reflecting a broader trend toward," "contributing to the overall," "showcasing the," "ensuring that," "paving the way for," "shedding light on."
+
+These add words without adding meaning. Delete and stop the sentence at the real point.
+
+### Contrast Framing (All Variants)
+
+All of these are banned:
+- **Basic:** "It's not X, it's Y"
+- **Split:** "This isn't about X. It's about Y."
+- **Escalation:** "It's not A. It's not even B. It's C." (AI builds a ladder of negations before the real point)
+- **Not just / not only:** "Not just X, but Y" / "Not only X, but also Y"
+- **More than:** "More than just X, it's Y"
+- **Question version:** "X? No. It's actually Y."
+
+**Fix:** If you catch yourself writing "it's not," stop, delete the sentence, and write what it actually is.
+
+**Example fix.**
+- Before: "It's not a tool. It's not even a platform. It's a fundamental shift in how we think about collaboration."
+- After: "The software changed how our team communicates, mostly by making async updates easier than scheduling another meeting."
+
+### Synonym Cycling
+If the same subject gets called "the protagonist," then "the main character," then "the central figure," then "the hero" in consecutive sentences, pick one and stick with it. Repetition is fine.
+
+### False Ranges
+"From X to Y" constructions where X and Y are not on a real spectrum.
+
+**Cut:** "From hobbyist experiments to enterprise rollouts," "From individual creators to global brands."
+
+**Fix:** Just describe who it serves with concrete examples.
+
+### Rule-of-Three (All Variants)
+AI groups things into threes constantly:
+- **Three adjectives:** "innovative, scalable, and robust"
+- **Three nouns:** "speed, efficiency, and reliability"
+- **Three verbs:** "ideate, iterate, and deliver"
+- **Three parallel phrases:** "streamlining processes, enhancing collaboration, and fostering alignment"
+- **Three escalating negations:** "It's not A. It's not B. It's actually C."
+
+**Fix:** Use two when two is enough. Use four or five when you need more. Three every time is a pattern. Vary group sizes naturally.
+
+### Fake Naming
+AI invents important-sounding names for ordinary ideas: "The Productivity Paradox," "The 3C Framework," "The Feedback Loop Method," "The Innovation Flywheel."
+
+**Fix:** Unless it's a real established term people actually use, don't capitalize it or give it a title. Just describe the idea normally.
+
+## Style Patterns
+
+### Boldface Abuse
+Mechanically bolding key terms in every paragraph. Use bold sparingly or not at all. One or two bolds per section max, only when something genuinely needs emphasis.
+
+### Vertical Lists with Inline Headers
+The "**Header**: description" pattern repeated as a fake list:
+
+```
+- **Performance**: Performance improved
+- **Reliability**: The system is more reliable
+- **Scalability**: It scales better
+```
+
+**Fix:** Use normal sentences in prose, or use real markdown headings.
+
+### Title Case in Body Text
+"How To Write Better Emails" reads as corporate and dated. Use sentence case almost always: "How to write better emails."
+
+### Curly Quotes
+Use straight quotes ("like this") not curly quotes ("like this"). Curly quotes are a typesetting artifact that creeps in from word processors and signals copy-paste origin.
+
+## Final Checklist
+
+Before returning edited text, scan for:
+
+1. Em dashes anywhere
+2. Any list of exactly 3 items
+3. "It's not X, it's Y" structures
+4. 3+ consecutive short sentences
+5. "Here's the thing" or any rhetorical transition
+6. Banned words from `banned-words.md`
+7. Capitalized invented names
+8. Self-narrating sentences ("this highlights," "the key takeaway")
+9. Generic conclusion language ("the future looks bright")
+10. Bolded phrases without clear emphasis purpose
