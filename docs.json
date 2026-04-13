@@ -16,6 +16,7 @@
         "pages": [
           "merchants/what-is-qtap",
           "merchants/welcome",
+          "merchants/onboarding-wizard",
           "merchants/dashboard-overview",
           "merchants/first-loyalty-program"
         ]
