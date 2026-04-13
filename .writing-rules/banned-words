@@ -1,0 +1,206 @@
+# Banned Words and Phrases Reference
+
+These show up in AI writing far more than in human writing. Use the replacements or cut entirely.
+
+## Transition Words to Avoid
+
+| Banned | Use Instead |
+|--------|-------------|
+| Arguably | (cut) |
+| Certainly | (cut) |
+| Consequently | so |
+| Hence | so |
+| However (as sentence opener) | But |
+| Indeed | (cut) |
+| Moreover | also, and |
+| Nevertheless | still, but |
+| Nonetheless | still |
+| Thus | so |
+| Undoubtedly | (cut) |
+| Accordingly | so |
+| Additionally | also, and |
+| On the contrary | (cut) |
+| Furthermore | also |
+| Notably | (cut) |
+| Essentially | (cut) |
+| Fundamentally | (cut) |
+| Inherently | (cut) |
+| Particularly (as sentence opener) | (cut or restructure) |
+
+## Adjectives AI Overuses
+
+Adept, Commendable, Compelling, Comprehensive, Crucial, Cutting-edge, Dynamic, Efficient, Ever-evolving, Exciting, Exemplary, Game-changing, Genuine, Groundbreaking, Holistic, Innovative, Invaluable, Meticulous, Multifaceted, Noteworthy, Nuanced, Paramount, Pivotal, Profound, Remarkable, Robust, Scalable, Seamless, Significant, State-of-the-art, Streamlined, Substantial, Synergistic, Tailored, Thought-provoking, Transformative, Unprecedented, Vibrant, Vital
+
+**Fix:** Replace with concrete description. Instead of "robust system" → "handles 10k requests per second without crashing." Instead of "innovative approach" → describe what makes it different.
+
+## Adverbs AI Overuses
+
+Drastically, Genuinely, Meticulously, Notably, Profoundly, Remarkably, Significantly, Strategically, Substantially, Truly
+
+**Fix:** Cut the adverb. The verb usually carries the meaning fine on its own.
+
+## Abstract Nouns That Sound Like AI
+
+Bandwidth (figurative), Bedrock, Cadence, Catalyst, Cornerstone, Deep dive, Ecosystem (figurative), Efficiency, Framework (when vague), Game-changer, Guardrails (figurative), Headwinds/Tailwinds (figurative), Implementation, Innovation, Institution, Integration, Interplay, Intersection (figurative), Intricacies, Juxtaposition, Landscape (figurative), Linchpin, North star (figurative), Optimization, Pain point, Paradigm/Paradigm shift, Realm, Synergy, Takeaway/Key takeaway, Tapestry (figurative), Transformation
+
+## Verbs AI Defaults To (with replacements)
+
+| Banned | Use Instead |
+|--------|-------------|
+| Aligns | matches, fits |
+| Amplify | increase |
+| Augment | add to |
+| Bolster | support |
+| Catalyze | start, cause |
+| Craft (figurative) | write, make |
+| Cultivate | build, grow |
+| Curate | pick, choose |
+| Delve | look at |
+| Demystify | explain |
+| Dive in | start |
+| Double down | (cut or rewrite) |
+| Elevate | raise, improve |
+| Embark | start |
+| Empower | let, enable |
+| Enhance | improve |
+| Execute | do |
+| Expedite | speed up |
+| Facilitate | help |
+| Foster | build, grow |
+| Garner | get |
+| Harness | use |
+| Implement | start, build |
+| Leverage | use |
+| Maximize | increase |
+| Navigate (figurative) | handle, deal with |
+| Optimize | improve |
+| Reimagine | rethink, redo |
+| Resonate | connect, land |
+| Revolutionize | change |
+| Showcase | show |
+| Spearhead | lead |
+| Streamline | simplify |
+| Underscore | show |
+| Unlock (figurative) | (cut or rewrite) |
+| Unpack (figurative) | explain |
+| Utilize | use |
+
+## Full Phrases to Delete or Replace
+
+- "A testament to..."
+- "In conclusion..." / "In summary..."
+- "It's important to note/consider..."
+- "It's worth noting/mentioning that..."
+- "This is not an exhaustive list"
+- "At its core..."
+- "In today's [rapidly evolving / fast-paced / competitive] landscape..."
+- "At the end of the day..."
+- "Moving forward..."
+- "That said..." / "That being said..." / "With that in mind..."
+- "When it comes to..."
+- "In terms of..."
+- "At the intersection of..."
+- "Here's the thing..."
+- "Make no mistake..."
+- "Simply put..." / "To put it simply..." / "In a nutshell..."
+- "The reality is..."
+- "Let that sink in" / "Read that again"
+- "Full stop." / "Period." (used as emphasis)
+- "Think about that for a second"
+- "This can't be overstated"
+- "It bears mentioning..."
+- "What's more..."
+- "To be sure..."
+- "First and foremost..."
+- "Last but not least..."
+- "Needless to say..." / "It goes without saying..."
+- "Rest assured..."
+- "Here's why that matters"
+- "And that's okay"
+- "Spoiler alert:" / "Hot take:" / "Pro tip:"
+- "The takeaway?" / "The bottom line?"
+- "Level up" / "Move the needle" / "Low-hanging fruit"
+- "Circle back"
+- "It's a marathon, not a sprint"
+- "The elephant in the room"
+- "Only time will tell"
+- "Stands out as"
+- "Serves as a reminder"
+- "Paves the way for"
+- "Sheds light on"
+- "Bridges the gap"
+- "Strikes a balance"
+- "Pushes the envelope"
+- "Raises the bar"
+
+## Self-Narration Phrases (delete entirely)
+
+- "This highlights..."
+- "This underscores..."
+- "This speaks to..."
+- "This illustrates..."
+- "This demonstrates..."
+- "This signals..."
+- "This points to..."
+- "This reflects..."
+- "This suggests that..."
+- "This is a clear sign that..."
+- "This is a reminder that..."
+- "Here's why this matters"
+- "Here's why that's important"
+- "Here's why that's a big deal"
+- "Here's the real story"
+- "Here's what's really going on"
+- "The key takeaway is..."
+- "The big picture here is..."
+- "The real lesson here is..."
+- "The important thing is..."
+- "The point is..."
+- "Now for the interesting part"
+- "And that's where it gets interesting"
+- "Which brings us to the real question"
+- "What does this tell us?"
+- "What does this mean?"
+- "Why does this matter?"
+- "Why should you care?"
+- "And here's where..."
+- "And that's where..."
+- "And this is where..."
+- "And here's the thing..."
+- "And here's what most people miss..."
+- "And here's the best part..."
+- "And here's the crazy part..."
+- "And that's exactly why..."
+- "And that's the point"
+
+## Emojis to Avoid
+
+AI sprays these as bullet points, header decoration, or text engagement. Avoid in professional writing entirely:
+
+🚀 💡 🎯 ✅ 🔥 💪 🌟 ✨ 📈 🏆 💎 🔑 🎉 ⚡ 🌐 📊 🤝 💼 🧠 🔒 ⭐ 📌 👉 🛠️ 📢 🔷 💠 🪄 ⚙️ 🎁 💰 🧩 🏅 📍 🔔 💬 📝 🎓 🌱 💥
+
+## Filler to Cut
+
+| Filler | Replacement |
+|--------|-------------|
+| in order to | to |
+| due to the fact that | because |
+| at this point in time | now |
+| has the ability to | can |
+| in the event that | if |
+| it is important to note that | (delete) |
+| it's worth considering that | (delete) |
+| needless to say | (delete the whole sentence) |
+| for the purpose of | to, for |
+| with the exception of | except |
+| in spite of the fact that | although |
+
+## Hedging to Reduce
+
+One qualifier per claim is plenty. Cut excessive stacks like "could potentially possibly might."
+
+| Stacked Hedge | Fix |
+|---|---|
+| "It could potentially possibly be argued that..." | "Some argue..." or just state the claim |
+| "might possibly..." | "might..." |
+| "I think maybe perhaps..." | "I think..." |
