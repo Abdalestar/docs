@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="310" viewBox="0 0 760 310" font-family="Inter, Segoe UI, sans-serif">
+  <rect width="760" height="310" fill="#F9F9FB" rx="12"/>
+
+  <text x="380" y="32" text-anchor="middle" font-size="15" font-weight="700" fill="#423F4C">Audience Segments</text>
+  <text x="380" y="50" text-anchor="middle" font-size="12" fill="#7A7585">Each segment shows a live member count when composing a notification</text>
+
+  <!-- Row 1: 4 segments -->
+  <!-- All Customers -->
+  <rect x="20" y="66" width="168" height="72" rx="10" fill="#FFFFFF" stroke="#E8E4EE" stroke-width="1.5"/>
+  <rect x="20" y="66" width="168" height="8" rx="10" fill="#8E4A63"/>
+  <rect x="20" y="70" width="168" height="4" fill="#8E4A63"/>
+  <text x="104" y="96" text-anchor="middle" font-size="13" font-weight="700" fill="#423F4C">All Customers</text>
+  <text x="104" y="114" text-anchor="middle" font-size="11" fill="#7A7585">Push notifications</text>
+  <text x="104" y="129" text-anchor="middle" font-size="11" fill="#7A7585">enabled</text>
+
+  <!-- VIP Members -->
+  <rect x="200" y="66" width="168" height="72" rx="10" fill="#FFFFFF" stroke="#E8E4EE" stroke-width="1.5"/>
+  <rect x="200" y="66" width="168" height="8" rx="10" fill="#8E4A63"/>
+  <rect x="200" y="70" width="168" height="4" fill="#8E4A63"/>
+  <text x="284" y="96" text-anchor="middle" font-size="13" font-weight="700" fill="#423F4C">VIP Members</text>
+  <text x="284" y="114" text-anchor="middle" font-size="11" fill="#7A7585">10+ stamps</text>
+  <text x="284" y="129" text-anchor="middle" font-size="11" fill="#7A7585">earned total</text>
+
+  <!-- Regular Customers -->
+  <rect x="380" y="66" width="168" height="72" rx="10" fill="#FFFFFF" stroke="#E8E4EE" stroke-width="1.5"/>
+  <rect x="380" y="66" width="168" height="8" rx="10" fill="#8E4A63"/>
+  <rect x="380" y="70" width="168" height="4" fill="#8E4A63"/>
+  <text x="464" y="96" text-anchor="middle" font-size="13" font-weight="700" fill="#423F4C">Regular Customers</text>
+  <text x="464" y="114" text-anchor="middle" font-size="11" fill="#7A7585">5+ stamps, visited</text>
+  <text x="464" y="129" text-anchor="middle" font-size="11" fill="#7A7585">in last 30 days</text>
+
+  <!-- New Members -->
+  <rect x="560" y="66" width="180" height="72" rx="10" fill="#FFFFFF" stroke="#E8E4EE" stroke-width="1.5"/>
+  <rect x="560" y="66" width="180" height="8" rx="10" fill="#8E4A63"/>
+  <rect x="560" y="70" width="180" height="4" fill="#8E4A63"/>
+  <text x="650" y="96" text-anchor="middle" font-size="13" font-weight="700" fill="#423F4C">New Members</text>
+  <text x="650" y="114" text-anchor="middle" font-size="11" fill="#7A7585">Joined in the</text>
+  <text x="650" y="129" text-anchor="middle" font-size="11" fill="#7A7585">last 30 days</text>
+
+  <!-- Row 2: 3 segments (centred) -->
+  <!-- At Risk -->
+  <rect x="110" y="156" width="168" height="72" rx="10" fill="#FFFFFF" stroke="#E8E4EE" stroke-width="1.5"/>
+  <rect x="110" y="156" width="168" height="8" rx="10" fill="#F0D793"/>
+  <rect x="110" y="160" width="168" height="4" fill="#F0D793"/>
+  <text x="194" y="186" text-anchor="middle" font-size="13" font-weight="700" fill="#423F4C">At Risk</text>
+  <text x="194" y="204" text-anchor="middle" font-size="11" fill="#7A7585">No activity for</text>
+  <text x="194" y="219" text-anchor="middle" font-size="11" fill="#7A7585">30+ days</text>
+
+  <!-- Birthday This Week -->
+  <rect x="296" y="156" width="168" height="72" rx="10" fill="#FFFFFF" stroke="#E8E4EE" stroke-width="1.5"/>
+  <rect x="296" y="156" width="168" height="8" rx="10" fill="#F0D793"/>
+  <rect x="296" y="160" width="168" height="4" fill="#F0D793"/>
+  <text x="380" y="186" text-anchor="middle" font-size="13" font-weight="700" fill="#423F4C">Birthday This Week</text>
+  <text x="380" y="204" text-anchor="middle" font-size="11" fill="#7A7585">Birthday falls within</text>
+  <text x="380" y="219" text-anchor="middle" font-size="11" fill="#7A7585">the current week</text>
+
+  <!-- Near Reward -->
+  <rect x="482" y="156" width="168" height="72" rx="10" fill="#FFFFFF" stroke="#E8E4EE" stroke-width="1.5"/>
+  <rect x="482" y="156" width="168" height="8" rx="10" fill="#F0D793"/>
+  <rect x="482" y="160" width="168" height="4" fill="#F0D793"/>
+  <text x="566" y="186" text-anchor="middle" font-size="13" font-weight="700" fill="#423F4C">Near Reward</text>
+  <text x="566" y="204" text-anchor="middle" font-size="11" fill="#7A7585">1-2 stamps away</text>
+  <text x="566" y="219" text-anchor="middle" font-size="11" fill="#7A7585">from next reward</text>
+
+  <!-- Legend -->
+  <rect x="280" y="248" width="14" height="8" rx="2" fill="#8E4A63"/>
+  <text x="300" y="257" font-size="11" fill="#7A7585">Engagement-based</text>
+  <rect x="430" y="248" width="14" height="8" rx="2" fill="#F0D793"/>
+  <text x="450" y="257" font-size="11" fill="#7A7585">Timing / behaviour-based</text>
+
+  <!-- Note -->
+  <text x="380" y="285" text-anchor="middle" font-size="11" fill="#9A94A8">Counts update in real time based on your current member list.</text>
+  <text x="380" y="300" text-anchor="middle" font-size="11" fill="#9A94A8">Only members with push notifications enabled are counted.</text>
+</svg>
