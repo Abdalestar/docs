@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 640" width="520" height="640" font-family="system-ui, -apple-system, sans-serif">
+  <!-- Background -->
+  <rect width="520" height="640" fill="#fafafa" rx="12"/>
+
+  <!-- Title -->
+  <text x="260" y="36" text-anchor="middle" font-size="15" font-weight="600" fill="#1a1a1a">Manual Stamp Issuance Flow</text>
+
+  <!-- Step 1: Search Member -->
+  <rect x="160" y="60" width="200" height="52" rx="8" fill="#6B1A2E"/>
+  <text x="260" y="82" text-anchor="middle" font-size="13" font-weight="600" fill="#fff">Search Member</text>
+  <text x="260" y="100" text-anchor="middle" font-size="11" fill="#f3c4cc">name, email, or phone</text>
+
+  <!-- Arrow down -->
+  <line x1="260" y1="112" x2="260" y2="135" stroke="#aaa" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 2: Select Stamp Card -->
+  <rect x="160" y="135" width="200" height="52" rx="8" fill="#6B1A2E"/>
+  <text x="260" y="157" text-anchor="middle" font-size="13" font-weight="600" fill="#fff">Select Stamp Card</text>
+  <text x="260" y="175" text-anchor="middle" font-size="11" fill="#f3c4cc">choose from dropdown</text>
+
+  <!-- Arrow down -->
+  <line x1="260" y1="187" x2="260" y2="210" stroke="#aaa" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Decision: Enrolled? -->
+  <polygon points="260,210 360,255 260,300 160,255" fill="#fff" stroke="#6B1A2E" stroke-width="2"/>
+  <text x="260" y="251" text-anchor="middle" font-size="12" font-weight="600" fill="#6B1A2E">Enrolled in card?</text>
+
+  <!-- No branch (left) -->
+  <line x1="160" y1="255" x2="80" y2="255" stroke="#aaa" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="118" y="248" text-anchor="middle" font-size="11" fill="#888">No</text>
+  <!-- Auto-enroll box -->
+  <rect x="20" y="235" width="60" height="40" rx="6" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+  <text x="50" y="253" text-anchor="middle" font-size="10" font-weight="600" fill="#92400e">Auto</text>
+  <text x="50" y="267" text-anchor="middle" font-size="10" fill="#92400e">Enrolled</text>
+  <!-- Arrow down from auto-enroll back to main flow -->
+  <line x1="50" y1="275" x2="50" y2="360" stroke="#aaa" stroke-width="1.5"/>
+  <line x1="50" y1="360" x2="160" y2="360" stroke="#aaa" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Yes branch (down) -->
+  <line x1="260" y1="300" x2="260" y2="330" stroke="#aaa" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="272" y="318" font-size="11" fill="#888">Yes</text>
+
+  <!-- Step 3: Set Quantity -->
+  <rect x="160" y="330" width="200" height="52" rx="8" fill="#6B1A2E"/>
+  <text x="260" y="352" text-anchor="middle" font-size="13" font-weight="600" fill="#fff">Set Stamp Quantity</text>
+  <text x="260" y="370" text-anchor="middle" font-size="11" fill="#f3c4cc">default 1, max = goal − current</text>
+
+  <!-- Arrow down -->
+  <line x1="260" y1="382" x2="260" y2="405" stroke="#aaa" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 4: Confirm -->
+  <rect x="160" y="405" width="200" height="52" rx="8" fill="#6B1A2E"/>
+  <text x="260" y="427" text-anchor="middle" font-size="13" font-weight="600" fill="#fff">Confirm in Dialog</text>
+  <text x="260" y="445" text-anchor="middle" font-size="11" fill="#f3c4cc">click Issue Stamp</text>
+
+  <!-- Arrow down -->
+  <line x1="260" y1="457" x2="260" y2="480" stroke="#aaa" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 5: Success -->
+  <rect x="160" y="480" width="200" height="52" rx="8" fill="#166534"/>
+  <text x="260" y="502" text-anchor="middle" font-size="13" font-weight="600" fill="#fff">Stamps Issued</text>
+  <text x="260" y="520" text-anchor="middle" font-size="11" fill="#bbf7d0">success screen + new count</text>
+
+  <!-- Arrow down -->
+  <line x1="260" y1="532" x2="260" y2="555" stroke="#aaa" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 6: Transaction logged -->
+  <rect x="130" y="555" width="260" height="52" rx="8" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="260" y="577" text-anchor="middle" font-size="12" font-weight="600" fill="#374151">Transaction Logged</text>
+  <text x="260" y="595" text-anchor="middle" font-size="11" fill="#6b7280">type: manual_code · staff_id recorded</text>
+
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#aaa"/>
+    </marker>
+  </defs>
+</svg>
