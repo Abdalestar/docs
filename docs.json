@@ -15,6 +15,7 @@
         "group": "Getting Started",
         "pages": [
           "merchants/welcome",
+          "merchants/create-account",
           "merchants/dashboard-overview",
           "merchants/first-loyalty-program"
         ]
