@@ -1,0 +1,91 @@
+---
+title: "Security"
+sidebarTitle: "Security"
+description: "Change your password, set up two-factor authentication, and manage active sessions."
+---
+
+The Security page handles password changes and two-factor authentication setup. There's also a sessions panel if you need to sign out everywhere at once. Go to **Settings → Security** to get there.
+
+Only account owners can reach this page by default. Managers and staff can access it if their account has the settings permission turned on. You can change that under **Staff → [staff member] → Permissions**.
+
+## Change your password
+
+<Steps>
+  <Step title="Enter your current password">
+    Type your existing password in the **Current Password** field. Qtap verifies it before making any changes. If you type it wrong, you'll see a "Current password is incorrect" error and the new password won't be saved.
+  </Step>
+  <Step title="Set a new password">
+    Type your new password in **New Password**, then repeat it in **Confirm New Password**. The new password must be at least 8 characters.
+  </Step>
+  <Step title="Save">
+    Click **Update Password**. A green confirmation message appears for a few seconds, then the three fields clear.
+  </Step>
+</Steps>
+
+<Tip>
+If you need to reset a forgotten password instead of changing it, use the forgot password link on the login page. The form on this page requires your current password.
+</Tip>
+
+## Two-factor authentication
+
+Two-factor authentication (2FA) means that after you enter your password, you also need a 6-digit code from an authenticator app on your phone. Even if someone gets hold of your password, they still can't log in without your phone.
+
+Qtap uses TOTP (time-based one-time passwords). Any standard authenticator app works: Google Authenticator, Authy, Microsoft Authenticator, or 1Password's built-in authenticator.
+
+### Setting it up
+
+<Frame caption="The four steps to set up 2FA: enable on the Security page, scan the QR code, enter the verification code, done.">
+  <img src="/images/settings/2fa-enrollment-flow.svg" alt="Four-step diagram: click Enable on Security Settings, scan QR code in authenticator app, enter 6-digit code, 2FA enabled." />
+</Frame>
+
+<Steps>
+  <Step title="Click Enable">
+    On the Security page, find the **Two-Factor Authentication** section. The badge next to Authenticator App shows **Not Enabled**. Click **Enable**. A dialog opens with a QR code.
+  </Step>
+  <Step title="Scan the QR code">
+    Open your authenticator app and scan the QR code. If your app doesn't support scanning, use the manual entry key shown below the QR code — copy it into your app's "add account manually" option.
+  </Step>
+  <Step title="Enter the verification code">
+    Your app generates a new 6-digit code every 30 seconds. Type the current code into **Verification Code** and click **Verify & Enable**.
+  </Step>
+</Steps>
+
+Once the code checks out, the dialog closes and the badge changes to **Enabled**.
+
+### Turning off 2FA
+
+Click **Disable** next to the Authenticator App entry. The factor is removed right away with no extra confirmation, so the next time you log in only your password is required.
+
+<Warning>
+If your account has owner-level access to a live loyalty program, turning off 2FA without a replacement leaves the account protected only by a password. Worth keeping 2FA on.
+</Warning>
+
+## Active sessions
+
+The Active Sessions section shows your current login: the email address and when the session expires.
+
+**Sign Out All Sessions** ends every active session across all browsers and devices at once. You're redirected to the login page immediately. Use this if you've left yourself logged in somewhere you shouldn't have, or if you suspect unauthorised access.
+
+<AccordionGroup>
+  <Accordion title="Who can access the Security page?">
+    Owners can always reach it. For managers and staff, the settings permission needs to be turned on. Go to **Staff → [staff member's name] → Permissions** to check or change it.
+  </Accordion>
+  <Accordion title="Which authenticator apps work?">
+    Any TOTP-compatible app works. Google Authenticator and Authy are the most widely used. Microsoft Authenticator and 1Password's built-in authenticator both work fine.
+  </Accordion>
+  <Accordion title="What if I lose access to my authenticator app?">
+    There's no self-serve recovery for a lost TOTP factor. Contact Qtap support to regain access to your account.
+  </Accordion>
+  <Accordion title="Does Sign Out All Sessions affect my staff?">
+    No. It ends your own sessions only, not sessions belonging to other staff accounts on the same organisation.
+  </Accordion>
+</AccordionGroup>
+
+<CardGroup cols={2}>
+  <Card title="Staff roles and permissions" icon="users" href="/merchants/staff/roles-permissions">
+    Control which staff members can access Settings and other dashboard areas.
+  </Card>
+  <Card title="Billing" icon="credit-card" href="/merchants/settings/billing">
+    Manage your plan, add-ons, and payment details.
+  </Card>
+</CardGroup>
