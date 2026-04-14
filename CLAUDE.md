@@ -8,6 +8,7 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 **Article:** `merchants/settings/security.mdx`
 **Branch:** `docs/settings-security`
+**PR:** https://github.com/Abdalestar/docs/pull/10
 **Status:** Done (screenshots pending)
 
 ### What was written
@@ -39,7 +40,7 @@ Also added `merchants/settings/security` to the Settings group in `docs.json`.
 
 ### Errors / challenges
 - `request_access` for computer-use timed out after 60s (no user present). Same result as all previous automated runs. Screenshots deferred.
-- App repo path required `app/` not `src/app/`. Desktop Commander `dir` with parentheses in path (`(dashboard)`) caused syntax errors when the path was unquoted; fixed by using PowerShell `Get-Content` which handles parentheses correctly.
+- App repo path required `app/` not `src/app/`. Desktop Commander `dir` with parentheses in path (`(dashboard)`) caused syntax errors when unquoted; fixed by using PowerShell `Get-Content`.
 - `mcp__filesystem__search_files` did not recursively search subdirectories — used Desktop Commander `dir /s` instead.
 
 ### Insights for future runs
@@ -49,8 +50,16 @@ Also added `merchants/settings/security` to the Settings group in `docs.json`.
 - `DEFAULT_PERMISSIONS` in `staff.ts` is the authoritative source for what each role can access. Always check this before writing access-control claims.
 - PowerShell `Get-Content` works reliably for reading files with parentheses in their path. CMD `type` does not.
 
+### Phase 5 errors / insights (PR creation)
+- CMD `gh pr create --title "..."` fails with space-splitting even with correct quoting; fix: use `--fill` flag (commit message becomes title) + `--body-file pr-body.txt`
+- PR #9 was already created by a prior automated run on branch `claude/intelligent-darwin-BZ4YF`; this run's PR #10 on `docs/settings-security` supersedes it with source-code-grounded content
+- Desktop Commander does not stream stdout from `gh.exe` in PowerShell sessions; workaround: redirect output to a file (`> gh-output.txt`) and read with `type`
+- PowerShell `Out-File` in a pipe can truncate/empty the target file if the pipe fails silently; prefer `Set-Content` with an intermediate variable
+
 ### Gap discovery (Phase 6)
-Run-6 gap check results appended at bottom of this file.
+Scanned all `app/(dashboard)/` routes against the Notion tracker. Two undocumented pages found and added:
+- `merchants` route → `/merchants/merchant-profile.mdx` (P3 Low) — distinct from `settings/merchant-page` (the editor). Shows merchant's public profile card (name, logo, cover, phone, website, slug) with real-time loyalty stats (members, stamps, points, redemptions). Has Create/Edit/Delete buttons. The "My Business" overview page.
+- `notifications` root → `/merchants/campaigns/notification-templates.mdx` (P3 Low) — two tabs: Sent history (notification log) and Templates (TemplateManager). Existing push-notifications.mdx covers only `/notifications/new`. Templates and sent history are undocumented.
 
 ---
 
