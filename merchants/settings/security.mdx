@@ -1,0 +1,59 @@
+---
+title: "Security"
+description: "Change your password, turn on two-factor authentication, manage API keys, and see which devices are signed in."
+---
+
+The Security page is under **Settings → Security**. It covers the login side of your Qtap account: your password, two-factor authentication, API keys, and active sessions.
+
+Only the account owner can open this page. Manager and staff accounts get a permission error if they go to `/settings/security` directly. Each owner handles security for their own login, so there is nothing here to configure for the wider team.
+
+## Change your password
+
+The Password section asks for your current password once, then the new password twice (once to type, once to confirm). Fill the fields in and submit.
+
+The form checks that your new password meets Qtap's minimum length and that the two new-password fields match. If either check fails, the update is blocked and an inline error tells you why.
+
+If you've forgotten your current password, sign out and use the password reset link on the login screen. That sends a recovery email to the address on your account.
+
+## Two-factor authentication
+
+Two-factor authentication (2FA) adds a 6-digit code from your phone on top of your password at every sign-in. Even if someone steals your password, they still can't get in without your device.
+
+To turn it on, open the Two-Factor Authentication card and start the setup. Qtap shows a QR code. Open an authenticator app on your phone (Google Authenticator or Authy both work, as does any TOTP-compatible app) and scan the code. The app starts generating a 6-digit code that refreshes every 30 seconds. Type the current code into the verification box to confirm.
+
+<Warning>
+If you lose the phone running your authenticator and haven't saved any recovery information, you won't be able to sign in. Keep a backup authenticator on a second device where possible, and save any recovery codes Qtap shows you during setup.
+</Warning>
+
+To turn 2FA off, go back to the same card and disable it. You'll be prompted to confirm before it's removed.
+
+## API keys
+
+The API Keys section lists any keys on your account, along with the date each was created and the last time it was used. Keys let you connect Qtap to outside tools, like Zapier or a custom POS integration, without sharing your password.
+
+To create one, open the new-key form, give it a short label so you remember what it's for (e.g. "Zapier integration"), and copy the key immediately. Qtap only shows the full key once. After you close the dialog, only a masked version stays visible on the page.
+
+If a key leaks, or you've stopped using the integration it was built for, revoke it. Revoked keys stop working on the next request, so tell anyone relying on the integration before you remove access.
+
+<Note>
+API keys inherit your owner-level permissions, which means they can read and change anything in your account. Treat them like passwords. Don't paste them into shared documents or public repos.
+</Note>
+
+## Active sessions
+
+The Active Sessions list shows every device currently signed in to your Qtap account. Each row includes the browser or app name and when it was last active.
+
+Sign out of a single device with the sign-out icon next to that row. To sign out of every session at once (useful if you've lost a laptop or suspect someone else has access), use the sign-out-all option at the bottom of the card. Your current device stays signed in so you don't lock yourself out.
+
+<Tip>
+If you see a session you don't recognize, sign out of it and change your password. Turn on 2FA if it isn't already on.
+</Tip>
+
+<CardGroup cols={2}>
+  <Card title="Staff roles" href="/merchants/staff/roles-permissions">
+    Control what managers and staff can see and do across the dashboard.
+  </Card>
+  <Card title="Billing" href="/merchants/settings/billing">
+    View your plan and update your payment method.
+  </Card>
+</CardGroup>
