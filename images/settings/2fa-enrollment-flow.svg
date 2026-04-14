@@ -1,0 +1,112 @@
+<svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+
+  <!-- Background -->
+  <rect width="760" height="320" fill="#faf9fb" rx="12"/>
+
+  <!-- Title -->
+  <text x="380" y="30" text-anchor="middle" font-size="13" font-weight="600" fill="#423F4C">Setting up two-factor authentication</text>
+
+  <!-- Step boxes -->
+  <!-- Step 1: Security Settings -->
+  <rect x="30" y="55" width="130" height="64" rx="8" fill="#fff" stroke="#8E4A63" stroke-width="1.5"/>
+  <text x="95" y="80" text-anchor="middle" font-size="11" font-weight="600" fill="#8E4A63">Security Settings</text>
+  <text x="95" y="97" text-anchor="middle" font-size="10" fill="#423F4C">Click Enable</text>
+  <text x="95" y="110" text-anchor="middle" font-size="10" fill="#423F4C">under 2FA</text>
+
+  <!-- Arrow 1 -->
+  <line x1="161" y1="87" x2="193" y2="87" stroke="#8E4A63" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 2: QR code dialog -->
+  <rect x="194" y="55" width="130" height="64" rx="8" fill="#fff" stroke="#8E4A63" stroke-width="1.5"/>
+  <text x="259" y="80" text-anchor="middle" font-size="11" font-weight="600" fill="#8E4A63">Scan QR code</text>
+  <text x="259" y="97" text-anchor="middle" font-size="10" fill="#423F4C">Open authenticator</text>
+  <text x="259" y="110" text-anchor="middle" font-size="10" fill="#423F4C">app and scan</text>
+
+  <!-- Arrow 2 -->
+  <line x1="325" y1="87" x2="357" y2="87" stroke="#8E4A63" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 3: Enter code -->
+  <rect x="358" y="55" width="130" height="64" rx="8" fill="#fff" stroke="#8E4A63" stroke-width="1.5"/>
+  <text x="423" y="80" text-anchor="middle" font-size="11" font-weight="600" fill="#8E4A63">Enter 6-digit code</text>
+  <text x="423" y="97" text-anchor="middle" font-size="10" fill="#423F4C">Type the code from</text>
+  <text x="423" y="110" text-anchor="middle" font-size="10" fill="#423F4C">your app</text>
+
+  <!-- Arrow 3 -->
+  <line x1="489" y1="87" x2="521" y2="87" stroke="#8E4A63" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Step 4: Enabled -->
+  <rect x="522" y="55" width="130" height="64" rx="8" fill="#8E4A63"/>
+  <text x="587" y="80" text-anchor="middle" font-size="11" font-weight="600" fill="#fff">2FA Enabled</text>
+  <text x="587" y="97" text-anchor="middle" font-size="10" fill="#F0D793">Badge shows</text>
+  <text x="587" y="110" text-anchor="middle" font-size="10" fill="#F0D793">"Enabled"</text>
+
+  <!-- Step numbers -->
+  <circle cx="95" cy="55" r="10" fill="#8E4A63"/>
+  <text x="95" y="59" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">1</text>
+
+  <circle cx="259" cy="55" r="10" fill="#8E4A63"/>
+  <text x="259" y="59" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">2</text>
+
+  <circle cx="423" cy="55" r="10" fill="#8E4A63"/>
+  <text x="423" y="59" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">3</text>
+
+  <circle cx="587" cy="55" r="10" fill="#F0D793"/>
+  <text x="587" y="59" text-anchor="middle" font-size="10" font-weight="700" fill="#8E4A63">4</text>
+
+  <!-- Divider -->
+  <line x1="30" y1="158" x2="730" y2="158" stroke="#E8E0EC" stroke-width="1"/>
+
+  <!-- Bottom section: Three panels -->
+  <!-- Change Password panel -->
+  <rect x="30" y="170" width="210" height="120" rx="8" fill="#fff" stroke="#ddd" stroke-width="1.2"/>
+  <rect x="30" y="170" width="210" height="28" rx="8" fill="#423F4C"/>
+  <rect x="30" y="185" width="210" height="13" fill="#423F4C"/>
+  <text x="44" y="189" font-size="11" font-weight="600" fill="#fff">Change Password</text>
+  <text x="44" y="214" font-size="10" fill="#555">Current password</text>
+  <rect x="44" y="219" width="170" height="16" rx="3" fill="#f4f4f6" stroke="#ddd" stroke-width="1"/>
+  <text x="44" y="246" font-size="10" fill="#555">New password (min 8 chars)</text>
+  <rect x="44" y="251" width="170" height="16" rx="3" fill="#f4f4f6" stroke="#ddd" stroke-width="1"/>
+  <rect x="44" y="271" width="80" height="14" rx="3" fill="#8E4A63"/>
+  <text x="84" y="281" text-anchor="middle" font-size="9" fill="#fff">Update Password</text>
+
+  <!-- 2FA panel -->
+  <rect x="274" y="170" width="210" height="120" rx="8" fill="#fff" stroke="#ddd" stroke-width="1.2"/>
+  <rect x="274" y="170" width="210" height="28" rx="8" fill="#423F4C"/>
+  <rect x="274" y="185" width="210" height="13" fill="#423F4C"/>
+  <text x="288" y="189" font-size="11" font-weight="600" fill="#fff">Two-Factor Auth</text>
+  <text x="288" y="214" font-size="10" fill="#555">Authenticator App</text>
+  <!-- Not Enabled badge -->
+  <rect x="380" y="205" width="70" height="16" rx="8" fill="#f0f0f3"/>
+  <text x="415" y="216" text-anchor="middle" font-size="9" fill="#666">Not Enabled</text>
+  <!-- Enable button -->
+  <rect x="430" y="230" width="48" height="14" rx="3" fill="#fff" stroke="#8E4A63" stroke-width="1"/>
+  <text x="454" y="240" text-anchor="middle" font-size="9" fill="#8E4A63">Enable</text>
+  <!-- Note about 2FA -->
+  <text x="288" y="265" font-size="9" fill="#888">Use Google Authenticator,</text>
+  <text x="288" y="277" font-size="9" fill="#888">Authy, or any TOTP app</text>
+
+  <!-- Sessions panel -->
+  <rect x="518" y="170" width="212" height="120" rx="8" fill="#fff" stroke="#ddd" stroke-width="1.2"/>
+  <rect x="518" y="170" width="212" height="28" rx="8" fill="#423F4C"/>
+  <rect x="518" y="185" width="212" height="13" fill="#423F4C"/>
+  <text x="532" y="189" font-size="11" font-weight="600" fill="#fff">Active Sessions</text>
+  <text x="532" y="214" font-size="10" fill="#555">Current Session</text>
+  <!-- Active badge -->
+  <rect x="602" y="205" width="60" height="16" rx="8" fill="#edfaed"/>
+  <text x="632" y="216" text-anchor="middle" font-size="9" fill="#2d8a2d">Active Now</text>
+  <text x="532" y="242" font-size="9" fill="#888">your@email.com</text>
+  <text x="532" y="254" font-size="9" fill="#888">Expires: [timestamp]</text>
+  <!-- Sign out button -->
+  <rect x="532" y="265" width="120" height="14" rx="3" fill="#fff" stroke="#e84c4c" stroke-width="1"/>
+  <text x="592" y="275" text-anchor="middle" font-size="9" fill="#e84c4c">Sign Out All Sessions</text>
+
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#8E4A63"/>
+    </marker>
+  </defs>
+
+  <!-- Caption -->
+  <text x="380" y="308" text-anchor="middle" font-size="10" fill="#888">Settings &rarr; Security &mdash; Owner access only by default</text>
+</svg>
