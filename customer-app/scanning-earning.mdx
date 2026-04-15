@@ -1,0 +1,118 @@
+---
+title: "Scanning and Earning Stamps or Points"
+sidebarTitle: "Scanning & earning"
+description: "How your customers use the Qtap app to scan your QR code or tap your NFC tag and get credit for their visit."
+---
+
+Earning in the Qtap app is customer-initiated. The customer opens the app and scans your QR code, or taps their phone against your NFC tag. Their stamp or points balance updates on screen a moment later. Nothing happens on your dashboard unless the customer completes the scan themselves.
+
+This page covers what that looks like from their side, so you can help a customer at the counter when something looks off.
+
+## The basic flow
+
+Your customers have two ways to earn credit at your business. Both trigger from the app, not the dashboard.
+
+<Steps>
+  <Step title="Customer opens the Qtap app">
+    The app's home screen shows a large scan button and a wallet summary. The customer needs to be signed in; the scanner does not work on a signed-out app.
+  </Step>
+  <Step title="Customer scans your QR code or taps your NFC tag">
+    They point the in-app camera at a printed QR code you have on a counter or receipt, or they hold their phone near an NFC tag stuck to a surface. The app reads the code string or NFC serial and sends it to Qtap.
+  </Step>
+  <Step title="Qtap records the visit">
+    The server looks up the QR code or tag, checks it is still active, identifies which stamp card or points program it is linked to, and records a transaction. If this is the customer's first interaction with your business, a member row is created for them automatically.
+  </Step>
+  <Step title="The app confirms on screen">
+    For a stamp card, the customer sees a short animation with the new total, for example "Stamp added. 3 of 10." For a points program, they see "You earned 50 points" plus the running balance. If a bonus campaign is active, the amount reflects the multiplier.
+  </Step>
+</Steps>
+
+<Info>
+The customer does not need to be standing at your counter to scan a code. If someone photographs your QR poster and scans it later from home, the stamp or points still land on their account. Most merchants use single-use or time-limited codes to prevent that. See [QR Codes Overview](/merchants/qr-codes/overview) for the options.
+</Info>
+
+## Stamp cards vs points programs
+
+The customer experience is similar for both, with a few differences that are worth knowing.
+
+For a **stamp card**, each scan adds one stamp by default. The app shows the updated card, and if the scan completes the card, the customer sees a reward notification in the app. They can then go to the Rewards tab to redeem it.
+
+For a **points program**, each scan adds points based on what the QR code or NFC tag is set to. A QR code can be worth a flat number of points, or it can be pegged to an amount the staff enters at the counter. Bonus multipliers (like a 2x points weekend campaign) are applied automatically, and the app shows "2x bonus active" in the confirmation screen.
+
+<Warning>
+Points balances are tracked in the app, but redemption for points-based programs currently happens at the counter through your dashboard, not from inside the customer app. A customer with 500 points cannot tap "redeem" in the app yet; they need to tell staff and have the reward applied from the dashboard. Stamp card rewards do support in-app redemption.
+</Warning>
+
+## First-time customers
+
+If someone scans one of your codes and they have never interacted with your business before, they are enrolled automatically. The first scan creates the member record on your side, and the app shows a welcome screen for your brand before the stamp or points land on a fresh card. You see the new member on your dashboard within seconds.
+
+A customer can install the app in the morning and be a member of your program by lunch without either of you filling out a form. The signup flow covered in [How Customers Sign Up](/customer-app/signup) is a one-time thing; after that, joining a merchant is just a scan.
+
+## What shows up on your dashboard
+
+Every successful scan writes a transaction that you can see on the member's profile. The entry looks slightly different depending on how the scan happened:
+
+- A QR scan shows as **Earned via QR** with the code identifier.
+- An NFC tap shows as **Earned via NFC** with the tag serial.
+- A staff-issued stamp or point (from /stamp-operations on the dashboard) shows as **Issued by [staff name]**.
+
+All three count toward the same total. The distinction is there so you can tell which channel your customers actually use. Many merchants find that customers tap NFC more than they scan QR once the tag is placed somewhere obvious, like a tabletop sticker.
+
+## When scans fail
+
+A scan can fail for a handful of reasons. The app shows a message for each, and it helps to know what the wording means when a customer shows you their screen.
+
+<AccordionGroup>
+  <Accordion title="QR code not found or inactive">
+    The code has been deleted or turned off from your dashboard. Check the QR Codes page to make sure the code is still enabled. Codes that reached their scan limit get deactivated automatically.
+  </Accordion>
+  <Accordion title="This QR code has expired">
+    You set an expiry date on the code and the current date is past it. Either extend the date on the existing code or generate a new one.
+  </Accordion>
+  <Accordion title="This QR code is not linked to a stamp card">
+    The code was generated without a stamp card or points program attached. Open the code on your dashboard and attach it to a program from the edit screen.
+  </Accordion>
+  <Accordion title="NFC tag not found">
+    The serial number on the tag does not match any registered tag on your account. Usually this means the tag was not provisioned yet. Go to NFC Tags in your dashboard and add the serial.
+  </Accordion>
+  <Accordion title="Scan limit reached">
+    Single-use or limited-use codes stop working after the quota is hit. This is normal for single-use vouchers. Generate a new code if you want to continue handing them out.
+  </Accordion>
+  <Accordion title="The customer says nothing happened when they tapped">
+    NFC taps can fail silently on the phone side if the phone moves away before the read completes. Ask the customer to hold the phone steady against the tag for about a second. On iPhones, NFC reading is always-on from iPhone XS onward; on older models, the customer may need to open the app's scanner first and then tap.
+  </Accordion>
+</AccordionGroup>
+
+## If the customer is offline
+
+Qtap does not queue offline scans. If the customer's phone has no internet when they scan, the app shows a retry message. Once they have signal again, they can scan the same code or tag and the credit goes through (as long as the code has not expired or hit its limit in the meantime).
+
+This comes up most often at locations inside malls where cellular is weak. A customer-facing Wi-Fi network at your counter usually solves it.
+
+## Helping a customer at the counter
+
+A few quick things to check when someone says their scan did not work:
+
+<Tip>
+Ask them to close and reopen the app once before troubleshooting anything else. A stale session token is the single most common cause of "scanner won't open" or "nothing happens when I tap." Reopening the app refreshes the token and the scan goes through.
+</Tip>
+
+If reopening does not fix it, check on your dashboard whether the code is still active. If it is, look at the member's profile to see whether the scan actually recorded even though the app did not show a confirmation. Sometimes the network drops between the save and the screen update, and you can confirm the stamp was added anyway.
+
+If the scan still does not work, staff can issue the stamp or points manually from [Issue Stamps Manually](/merchants/stamp-cards/manual-stamps) using the customer's name or phone number. The outcome is the same as a self-scan.
+
+<CardGroup cols={2}>
+  <Card title="How Customers Sign Up" icon="user-plus" href="/customer-app/signup">
+    The signup flow, phone verification, and Qtap ID.
+  </Card>
+  <Card title="QR Codes Overview" icon="qrcode" href="/merchants/qr-codes/overview">
+    How to create and manage the QR codes customers scan.
+  </Card>
+  <Card title="NFC Tags" icon="wifi" href="/merchants/nfc-tags">
+    Setting up and placing NFC tags at your locations.
+  </Card>
+  <Card title="Issue Stamps Manually" icon="hand" href="/merchants/stamp-cards/manual-stamps">
+    Fall back to dashboard-issued stamps when a scan does not work.
+  </Card>
+</CardGroup>
