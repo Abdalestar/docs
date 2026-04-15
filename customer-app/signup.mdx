@@ -1,0 +1,96 @@
+---
+title: "How Customers Sign Up"
+sidebarTitle: "How customers sign up"
+description: "What your customers see when they download the Qtap app and create an account to join your loyalty program."
+---
+
+Your customers join your loyalty program through the Qtap app on their phone. If someone asks for help at your counter, it is useful to know what the signup flow looks like from their side, and what data lands on your dashboard afterward.
+
+## Where customers get the app
+
+The Qtap customer app is published on the Apple App Store and Google Play. Most customers find it by scanning a QR code at one of your locations. If the code is scanned from the phone's camera before the app is installed, the phone opens the relevant store listing. Customers can also search for "Qtap" in the store and install it directly.
+
+<Info>
+The app is available in English and Arabic. Customers pick a language on first launch, and they can change it later from the profile screen. The choice is saved to their account as `preferred_language` (`en` or `ar`).
+</Info>
+
+## Creating an account
+
+After opening the app, a new customer goes through a short signup flow. The fields match what you see later on the member profile in your dashboard.
+
+<Steps>
+  <Step title="Enter phone number">
+    Qtap sends a one-time code by SMS to verify the number. Once the customer enters the code, the phone number becomes the account's primary identifier. This is the value stored in the `phone` column on the member record.
+  </Step>
+  <Step title="Add name and email">
+    The customer enters a first name, last name, and email address. Those fields are shown on the dashboard so you can recognise them when they visit. Email is optional at signup, though the app will ask again the first time the customer tries to redeem a reward.
+  </Step>
+  <Step title="Add birthday and gender (optional)">
+    The customer can share a birth date and gender. Those two fields enable birthday campaigns and demographic audiences for push notifications. They are not required at signup and can be added later from the profile screen.
+  </Step>
+  <Step title="Allow notifications">
+    iOS and Android ask the customer to allow push notifications. If they agree, the app registers a push token with OneSignal so you can send campaign messages and reward reminders from your dashboard.
+  </Step>
+</Steps>
+
+Once signup finishes, the app creates a member record in Qtap and assigns the customer a permanent **Qtap ID**. That is a short code that identifies the customer across every merchant they join, and you will see it on the member profile in your dashboard.
+
+<Note>
+A Qtap account is a single account across the whole platform. If a customer has already signed up at another merchant's location in Qatar, they do not create a new account for you. They sign in with the same phone number and join your program from there.
+</Note>
+
+## Joining your loyalty program
+
+Signing up for the app does not automatically enroll a customer in your program. Membership happens the moment the customer interacts with one of your QR codes or NFC tags for the first time.
+
+There are two common paths.
+
+One is the customer scanning your QR code from inside the app. They tap the QR scanner icon, point their camera at a code you have printed at the counter or on a receipt, and land on your stamp card or points program. Tapping **Join** adds a row to `organization_members` linking their account to your business.
+
+The other is staff scanning the customer's QR code. If the customer is not yet enrolled in any of your cards, the first stamp your staff issues triggers an auto-enrollment. Nothing needs to happen on the customer's phone beyond showing their QR code.
+
+After either path, your program appears in the customer's Wallet tab with a starting balance of zero, ready to fill up.
+
+## What signup looks like on your dashboard
+
+You see a new member appear on the **Members** page as soon as they join your program. Their name, phone number, and email are pulled from their Qtap account. If they signed up minutes ago at your counter and then scanned a QR code, the fields will already be populated.
+
+A few things worth knowing:
+
+- A phone number is required to sign up, so every member has one. Email is commonly missing for customers who skipped the optional step.
+- You see the member's birthday only if they shared it during signup.
+- The join date on the member list is when they joined *your* program, not when they created their Qtap account.
+- Members who uninstall the app do not disappear from your list. Their stamps and points stay intact. If they reinstall later and sign in with the same phone number, everything comes back.
+
+<Warning>
+If a customer signs up with a typo in their email, your campaign emails will bounce. The customer can correct it themselves in the app under Profile, or you can edit it from the member profile in your dashboard.
+</Warning>
+
+## Common questions at the counter
+
+<AccordionGroup>
+  <Accordion title="The customer already has a Qtap account. Do they need to sign up again?">
+    No. They install the app, sign in with their phone number, and scan your QR code to join. Their existing profile carries over.
+  </Accordion>
+  <Accordion title="The customer changed phones. Will they lose their stamps?">
+    No. As long as they sign in with the same phone number on the new phone, their stamps, points, and redemption history load from the server.
+  </Accordion>
+  <Accordion title="The customer does not want to install another app.">
+    You can still add them manually from the Members page. They will miss push notifications and in-app redemptions, but they can collect stamps and points and use rewards when staff scan at the counter.
+  </Accordion>
+  <Accordion title="The customer cannot receive the SMS verification code.">
+    Qtap supports Qatari mobile numbers (+974) reliably. Numbers from other countries may work but are not officially supported. If the SMS never arrives, ask them to check signal, close the app, reopen it, and tap **Resend code** on the verification screen.
+  </Accordion>
+  <Accordion title="Can two people share one account?">
+    Technically yes, but I would not recommend it. Stamp counts and birthday campaigns belong to one phone number, so sharing an account usually causes confusion over who earned what.
+  </Accordion>
+</AccordionGroup>
+
+<CardGroup cols={2}>
+  <Card title="Members Overview" icon="users" href="/merchants/members/overview">
+    How to find, search, and edit members after they join your program.
+  </Card>
+  <Card title="QR Codes Overview" icon="qrcode" href="/merchants/qr-codes/overview">
+    How the QR codes that customers scan at your counter actually work.
+  </Card>
+</CardGroup>
