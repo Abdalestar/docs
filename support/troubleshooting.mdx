@@ -10,10 +10,6 @@ The Qtap dashboard covers a lot of features, so issues can crop up in different 
 
 The login page lives at [dashboard.qtap.qa/login](https://dashboard.qtap.qa/login). Every sign-in failure surfaces there.
 
-<Frame caption="The Qtap login page showing an 'Invalid login credentials' error above the email field.">
-  <img src="/images/support/login-error-final.png" alt="Login page with a red 'Invalid login credentials' banner, email field pre-filled, and the Log In button below." />
-</Frame>
-
 ### "Invalid login credentials"
 
 This error appears for a wrong email or wrong password, not for account lockouts. Two quick checks:
@@ -29,10 +25,6 @@ If you enabled two-factor authentication and lost the phone with your authentica
 
 ## The dashboard looks empty
 
-<Frame caption="A new dashboard showing zeros for Total Members, Active Members, Stamps Issued, and Rewards Redeemed.">
-  <img src="/images/support/dashboard-home-final.png" alt="Dashboard home screen with empty activity metrics and a Quick Actions panel on the right." />
-</Frame>
-
 ### No activity and zero members
 
 Every widget reads from live data, so zeros are accurate when nothing has happened yet. Before assuming it's broken, confirm:
@@ -47,10 +39,6 @@ Every widget reads from live data, so zeros are accurate when nothing has happen
 Hard refresh first: `Ctrl+Shift+R` on Windows or `Cmd+Shift+R` on Mac. If the content still doesn't appear, sign out and back in. Stale sessions can leave the UI in a half-loaded state, especially after a long period of inactivity.
 
 ## QR codes
-
-<Frame caption="The QR Codes page where you can filter by status, location, and type.">
-  <img src="/images/support/qr-codes-page-final.png" alt="QR Codes page showing an empty state with filter controls and a Generate QR Code button." />
-</Frame>
 
 ### Customer scans aren't registering
 
@@ -71,10 +59,6 @@ If you need to pause a code temporarily (for example, during a renovation), togg
 
 ## Members
 
-<Frame caption="The Members page with search, sort, and bulk action controls.">
-  <img src="/images/support/members-search-final.png" alt="Members page showing the search box, sort controls, filter dropdowns, and Download and Add Member buttons." />
-</Frame>
-
 ### A customer isn't in the Members list
 
 Customers appear after they join your program. They join by downloading the Qtap app, creating an account, and scanning one of your QR codes (or tapping an NFC tag) for the first time. Until a first scan hits one of your codes, they're not a member of your program.
@@ -94,10 +78,6 @@ Deletion removes the member and every stamp, point, and redemption tied to them.
 
 ## Staff access
 
-<Frame caption="The Staff page listing team members with their roles, status, and action menus.">
-  <img src="/images/support/staff-page-final.png" alt="Staff page showing a list of team members, their roles, active or pending status, and Invite Staff Member button." />
-</Frame>
-
 ### A staff member can't see a section of the dashboard
 
 Every role has a default set of sections. Owners can reach every section, and there's only one owner per organization. Managers cover everything except Billing and Settings. For the Staff role, the default is narrower: Members, Stamp Operations (or Points Operations), QR Codes, and Analytics. That default can be overridden per staff member through custom permissions.
@@ -115,10 +95,6 @@ If the email was typed incorrectly, remove the pending staff member and invite t
 Only the account owner can reach the Billing page. That's a hard restriction, and custom permissions can't override it. If a manager needs to handle billing for you, the owner has to make the changes themselves or transfer ownership (contact support for ownership transfers).
 
 ## Billing
-
-<Frame caption="The Billing overview showing current plan, usage bars, and active add-ons.">
-  <img src="/images/support/billing-page-final.png" alt="Billing page showing an Elite plan with usage progress bars for Locations, Staff Members, Loyalty Cards, QR Codes, Campaigns, and Push Notifications." />
-</Frame>
 
 ### Downgrade blocked by a warning
 
@@ -147,10 +123,6 @@ Open the campaign's analytics and look at delivery rate. If it's much lower than
 Active campaigns count against your plan's campaign limit. If you're at the cap, a new campaign sits in Draft until you pause or end an existing one, or upgrade to a higher plan. The Campaigns page shows your current count versus the cap at the top.
 
 ## Security
-
-<Frame caption="The Security page with password change, two-factor authentication, and active sessions.">
-  <img src="/images/support/security-sessions-final.png" alt="Security page showing Change Password, Two-Factor Authentication, and Active Sessions panels with a Sign Out All Sessions button." />
-</Frame>
 
 ### Sign out of every device
 
