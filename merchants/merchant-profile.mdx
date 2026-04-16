@@ -1,0 +1,61 @@
+---
+title: "Business profile"
+sidebarTitle: "Business Profile"
+description: "Your merchant profile page shows your business details, loyalty stats, and a link to your public page."
+---
+
+The **Merchants** page in the sidebar is your business profile at a glance. It shows your logo, contact info, category, and real-time loyalty stats pulled from your member data. Think of it as a read-only summary of your business on Qtap, with buttons to edit or preview your public-facing page.
+
+This is separate from the [Merchant Page settings](/merchants/settings/merchant-page), which is where you actually change your name, upload photos, and set business hours. The Merchants page just shows you what you've already set up.
+
+## What you'll see
+
+If you've already created your merchant profile, the page shows a card with your business info.
+
+<Frame caption="A merchant profile card showing the business name, category, contact details, and live loyalty stats.">
+  <img src="/images/merchants/merchant-profile-active-final.png" alt="Merchant profile card with active business data" />
+</Frame>
+
+The card includes:
+
+- **Logo and name** with an "Active" badge
+- **Business category** (Restaurants, Cafés, Salons, etc.)
+- **Contact info** like phone number and website
+- **Google rating** if you've added one in settings
+- **Loyalty card count** showing how many stamp or points cards you've created
+- **Live stats** pulled from your member data: total members, stamps earned, points earned, and rewards redeemed
+
+The stats update automatically. As customers earn stamps or redeem rewards, those numbers go up on their own.
+
+## Actions
+
+The profile card has buttons on the right side:
+
+**Preview** opens your public merchant page in a new tab. This is the page customers see when they visit your Qtap link (`/m/your-slug`). Only appears after you've set a URL slug in settings.
+
+**Edit** takes you to the [Merchant Page editor](/merchants/settings/merchant-page) where you can change your name, logo, cover photo, business hours, social links, and other details.
+
+**Delete** removes your merchant profile. This clears your cover photo, logo, and all merchant page settings. Your loyalty programs and member data stay intact. Qtap asks you to confirm before deleting, since this can't be undone.
+
+## Empty state
+
+If you haven't created a merchant profile yet, you'll see a placeholder with a "Create Merchant" button.
+
+<Frame caption="The empty state when no merchant profile has been created yet.">
+  <img src="/images/merchants/merchant-empty-state-final.png" alt="Empty merchant page with Create Merchant button" />
+</Frame>
+
+Clicking **Create Merchant** takes you to the Merchant Page editor. Fill in your business name, upload a logo, and save. Your profile card will appear on this page once that's done.
+
+## Who can access this page
+
+Access depends on your role and permissions. The page uses Qtap's route guard system, so if your account doesn't have the right permissions, you'll see an "Access Denied" message instead.
+
+Owners always have access. Managers and staff need their permissions turned on by an owner. See [Roles and permissions](/merchants/staff/roles-permissions) for details on what each role can do.
+
+## Good to know
+
+- Deleting your merchant profile doesn't delete your loyalty programs, members, or transaction history. It only removes the public-facing profile page and its settings (logo, cover photo, description, social links).
+- The live stats (members, stamps, points, redemptions) are totals across all your members. For per-location breakdowns, check [Analytics](/merchants/analytics/overview).
+- Your public merchant page URL follows the pattern `dashboard.qtap.qa/m/your-slug`. Set your slug in the [Merchant Page editor](/merchants/settings/merchant-page).
+- If you see "No merchant yet" but you've already filled in your business details in Settings, you may need to save and publish from the Merchant Page editor first.
