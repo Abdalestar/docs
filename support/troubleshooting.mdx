@@ -1,0 +1,153 @@
+---
+title: "Troubleshooting common issues"
+sidebarTitle: "Troubleshooting"
+description: "Fixes for the problems that come up most often in the Qtap dashboard."
+---
+
+The Qtap dashboard covers a lot of features, so issues can crop up in different places. This page walks through the fixes that solve most of what merchants report. If none apply, email [support@qtap.qa](mailto:support@qtap.qa) with your business name and a screenshot, and the team will dig in.
+
+## Sign-in problems
+
+The login page lives at [dashboard.qtap.qa/login](https://dashboard.qtap.qa/login). Every sign-in failure surfaces there.
+
+### "Invalid login credentials"
+
+This error appears for a wrong email or wrong password, not for account lockouts. Two quick checks:
+
+- Your email matches the one you signed up with (not a support alias or a staff member's address).
+- Caps Lock is off and no stray space got pasted after the email or password.
+
+If you can't remember your password, click **Forgot password?** under the Log In button. Qtap emails a reset link to the address on file. If that email never arrives, check spam and promotions first. Reset emails come from `no-reply@qtap.qa`. A typo in the address during signup will silently kill delivery, in which case you'll need support to help recover the account.
+
+### Locked out by 2FA
+
+If you enabled two-factor authentication and lost the phone with your authenticator app, there's no self-serve recovery. Email support from the address on the account with proof of ownership, and the team will unenroll your TOTP factor so you can log back in with your password alone. Re-enable 2FA afterwards on a device you still control.
+
+## The dashboard looks empty
+
+### No activity and zero members
+
+Every widget reads from live data, so zeros are accurate when nothing has happened yet. Before assuming it's broken, confirm:
+
+- A customer has actually downloaded the Qtap app and scanned your QR code (or tapped an NFC tag) at least once.
+- You're signed into the correct organization. The business name shows at the top right of the sidebar. If it's the wrong account, sign out and back in with the correct email.
+- Your QR code is toggled **Active** on the QR Codes page. Inactive codes silently drop scans without reporting anything.
+- The date filter on the Dashboard isn't narrower than when your activity happened.
+
+### The page won't load past the sidebar
+
+Hard refresh first: `Ctrl+Shift+R` on Windows or `Cmd+Shift+R` on Mac. If the content still doesn't appear, sign out and back in. Stale sessions can leave the UI in a half-loaded state, especially after a long period of inactivity.
+
+## QR codes
+
+### Customer scans aren't registering
+
+Work through these in order:
+
+1. Open **QR Codes** and find the code that was scanned. Confirm the Status column shows **Active**. Inactive codes drop scans with no error to the customer.
+2. Check which location the code is tied to. A scan at a code attached to a closed location still records, but it won't appear in that location's analytics.
+3. Open the QR code image and inspect it. A wrinkled or smudged printout can produce codes that cameras can't read. Reprint if the edges are fuzzy.
+4. Ask the customer to close and reopen the Qtap app, then try once more. An expired app session occasionally fails to post the scan.
+
+### A deleted QR code is still on posters
+
+Deletion is permanent and can't be undone. Any printed or saved copies stop working the moment the code is deleted. To recover, generate a new code, print fresh posters, and replace the old ones. Customers who scan the old version will see a failure in the app.
+
+<Tip>
+If you need to pause a code temporarily (for example, during a renovation), toggle it **Inactive** instead of deleting. Flipping back to Active restores scans immediately.
+</Tip>
+
+## Members
+
+### A customer isn't in the Members list
+
+Customers appear after they join your program. They join by downloading the Qtap app, creating an account, and scanning one of your QR codes (or tapping an NFC tag) for the first time. Until a first scan hits one of your codes, they're not a member of your program.
+
+If the customer insists they've already scanned:
+
+- Search by phone number instead of name. The Qtap app sometimes displays a short nickname rather than the customer's full legal name.
+- Confirm which code they scanned. A scan at a code belonging to a different merchant won't enroll them in yours, and a scan at one of your codes before your program became active won't either.
+
+### Can't update a member's email
+
+You can't change a member's email from the dashboard. Members control their email through the Qtap app. The dashboard lets you edit the phone number and birthday, but only if those fields are blank. Once a member has filled them in, they can only be changed from the app.
+
+### Deleted a member by accident
+
+Deletion removes the member and every stamp, point, and redemption tied to them. This cannot be undone. The customer will need to rejoin by scanning your QR code, and they'll start from zero. Only owners and staff with full member permissions can delete members, so locking down that permission prevents accidents.
+
+## Staff access
+
+### A staff member can't see a section of the dashboard
+
+Every role has a default set of sections. Owners can reach every section, and there's only one owner per organization. Managers cover everything except Billing and Settings. For the Staff role, the default is narrower: Members, Stamp Operations (or Points Operations), QR Codes, and Analytics. That default can be overridden per staff member through custom permissions.
+
+If someone needs access beyond their default, open their row on the Staff page, click **Edit Permissions**, and check the specific area. Changes apply right away with no re-login needed.
+
+### Invite email never arrived
+
+Click the three-dot menu on the staff member's row and select **Resend Invite**. It re-sends to the same address you originally entered. Ask the recipient to check spam and promotional folders, especially on Gmail where onboarding emails often land under Promotions on first contact.
+
+If the email was typed incorrectly, remove the pending staff member and invite them fresh with the correct address. Pending invites can't be edited in place.
+
+### A manager is missing Billing
+
+Only the account owner can reach the Billing page. That's a hard restriction, and custom permissions can't override it. If a manager needs to handle billing for you, the owner has to make the changes themselves or transfer ownership (contact support for ownership transfers).
+
+## Billing
+
+### Downgrade blocked by a warning
+
+Qtap checks your current usage against the target plan before switching. If you have more locations, staff accounts, or loyalty cards than the lower plan allows, the downgrade won't proceed. The warning lists each conflict.
+
+Resolve each one yourself from **Settings → Locations**, **Staff**, or the Cards section. Qtap doesn't auto-delete anything during a downgrade, on purpose. Once your usage fits within the target plan's limits, run the downgrade again and it'll go through.
+
+### Manage Subscription button is missing
+
+The **Manage Subscription** button appears only when you have an active Stripe subscription. During a free trial there isn't one yet, so the button stays hidden. Pick a paid plan (the trial stays free until day 14 regardless), and the button appears once Stripe confirms the subscription.
+
+### Add-on purchase didn't apply
+
+Stripe processes add-ons through a separate checkout flow. If the checkout succeeded (you got a receipt email) but the add-on hasn't shown up on the Billing page after a few minutes, forward the Stripe receipt to support. NFC tags specifically ship as physical items, so they only appear in your tag inventory after you register each serial number on the NFC Tags page.
+
+## Campaigns and notifications
+
+### Members aren't receiving my campaign
+
+Push notifications go through the Qtap mobile app. A campaign reaches a member only if the app is installed on their phone, they're signed into the account they joined your program with, notifications are allowed at the OS level, and they haven't muted your merchant in the app. That's a lot of conditions, and most missed deliveries come down to notification permission.
+
+Open the campaign's analytics and look at delivery rate. If it's much lower than your member count, a chunk of your audience either hasn't installed the app or didn't grant notification permission. Prompting them at the counter the next time they visit usually fixes it over a week or two.
+
+### Campaign is stuck in Draft
+
+Active campaigns count against your plan's campaign limit. If you're at the cap, a new campaign sits in Draft until you pause or end an existing one, or upgrade to a higher plan. The Campaigns page shows your current count versus the cap at the top.
+
+## Security
+
+### Sign out of every device
+
+Go to **Settings → Security** and click **Sign Out All Sessions**. This ends every active session on your account across browsers and devices. It doesn't affect staff sessions on the same organization, only your own. Use it if you left yourself signed in somewhere you shouldn't have, or if you suspect your password has been compromised.
+
+### Can't disable 2FA because I lost my authenticator
+
+You can't disable 2FA from the Security page without a valid 6-digit code, since that's the point of the factor. Email support from the address on your account with proof of ownership, and they'll unenroll the TOTP factor for you. Log in afterwards with your password, then re-enable 2FA on a device you still have.
+
+## Still stuck?
+
+Email [support@qtap.qa](mailto:support@qtap.qa) with:
+
+- Your business name and the email on your account.
+- A short description of what you were trying to do when it broke.
+- A screenshot of anything visible in the dashboard.
+- Roughly what time it happened, so support can correlate with server logs.
+
+Support handles loyalty type switches, account recovery, ownership transfers, and anything else the dashboard doesn't let you do on your own.
+
+<CardGroup cols={2}>
+  <Card title="Security settings" icon="shield" href="/merchants/settings/security">
+    Change your password, set up 2FA, and manage active sessions.
+  </Card>
+  <Card title="Billing" icon="credit-card" href="/merchants/settings/billing">
+    Plans, add-ons, invoices, and cancellation.
+  </Card>
+</CardGroup>
