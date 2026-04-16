@@ -1,0 +1,163 @@
+---
+title: "Frequently asked questions"
+sidebarTitle: "FAQ"
+description: "Short answers to the questions new Qtap merchants ask most often."
+---
+
+These cover the questions that come up in the first few days of using Qtap. For anything specific to your account, email [support@qtap.qa](mailto:support@qtap.qa).
+
+## Getting started
+
+<AccordionGroup>
+  <Accordion title="How long is the free trial, and what does it include?">
+    Qtap runs a 14-day free trial on the Growth plan. During the trial you can add up to 2 locations, 5 staff members, 3 loyalty cards, and use the full analytics dashboard. You add a card at signup, but Qtap does not charge it until day 14.
+  </Accordion>
+
+  <Accordion title="Do I need to enter card details to start?">
+    Yes. The onboarding wizard asks for a payment method before it finishes. Qtap uses Stripe to store the card, and you are not charged until day 14. You can cancel at any point during the trial from **Settings → Billing**.
+  </Accordion>
+
+  <Accordion title="Can I try Qtap without a Qatar business?">
+    The country field defaults to Qatar during onboarding, but you can change it before you finish the wizard. Most of the product works anywhere. Pricing is shown in USD and billing runs through Stripe, so any card supported by Stripe is fine.
+  </Accordion>
+</AccordionGroup>
+
+## Stamp cards and points programs
+
+<AccordionGroup>
+  <Accordion title="What's the difference between a stamp card and a points program?">
+    A stamp card gives one stamp per visit. When a customer hits your stamp goal, they get a reward. A points program gives points based on how much a customer spends. They save those points and redeem them for rewards at the thresholds you set.
+
+    Cafes and salons usually pick stamp cards because purchase sizes are roughly the same each visit. Restaurants and retail shops usually pick points because the basket size varies a lot between visits.
+  </Accordion>
+
+  <Accordion title="Can I switch from stamp cards to points later?">
+    No. The loyalty type is locked when you finish the onboarding wizard. If you need to change it, email support and they will move your account manually. Existing members and their history stay intact.
+  </Accordion>
+
+  <Accordion title="Can I run both a stamp card and a points program?">
+    No. An account uses one loyalty type, and that type applies to every loyalty card you create. You can still run several stamp cards at once (for example, a cafe card and a dessert card), and each card can have its own reward structure.
+  </Accordion>
+
+  <Accordion title="Do points expire?">
+    Only if you turn expiry on. In the program settings, flip **Points expire** on and pick an expiry mode. **From earn date** expires each batch a set number of days after it was earned. **From last activity** resets the clock whenever the member earns more points. **Calendar year** expires everything on 31 December.
+
+    By default, points do not expire.
+  </Accordion>
+</AccordionGroup>
+
+## QR codes and NFC tags
+
+<AccordionGroup>
+  <Accordion title="QR code or NFC tag, which should I use?">
+    QR codes are free to print and can go anywhere you can print (receipts, menus, window stickers, countertop signs). Customers scan with their phone camera. NFC tags are physical stickers that cost $19 each through the add-on store. Customers tap their phone to the tag and the action fires without opening a camera.
+
+    Most merchants start with a QR code at the counter and add NFC tags later if the counter gets busy.
+  </Accordion>
+
+  <Accordion title="Can one QR code work at multiple locations?">
+    Each QR code is tied to a single location. If you have more than one branch, generate one code per branch. That way your analytics show stamps by location without extra setup. For print campaigns across several branches, generate a batch QR and assign codes to each location in bulk.
+  </Accordion>
+
+  <Accordion title="How do NFC tags ship?">
+    You order them through **Settings → Billing** under the NFC Tags add-on. They ship as physical stickers. When they arrive, register each tag by typing its serial number into the NFC Tags page and choosing what happens on tap: add a stamp to a specific card, award a fixed number of points, or log a check-in without rewarding anything.
+  </Accordion>
+</AccordionGroup>
+
+## Members and redemptions
+
+<AccordionGroup>
+  <Accordion title="How do customers find my loyalty program?">
+    They scan your QR code or tap your NFC tag with the Qtap app. The first scan signs them up automatically, so new customers do not need to register before walking in. They can also search for your business inside the Qtap app directory.
+  </Accordion>
+
+  <Accordion title="A customer lost their reward code. How do I redeem?">
+    Go to **Members → Redemptions** and open the **Lookup** tab. Type the customer's name, email, or phone, then pick them from the results. Qtap lists every pending reward on their account. Click **Redeem** next to the one they want to use.
+  </Accordion>
+
+  <Accordion title="Can I edit a member's email address?">
+    No. Members control their own email from the Qtap app. Owners and managers can edit a member's phone number and birthday from the profile page, but email changes have to come from the member themselves.
+  </Accordion>
+
+  <Accordion title="What happens when I delete a member?">
+    Everything goes. The member's stamp balances, points, redemption history, and profile are removed and cannot be recovered. Use **Mute Notifications** instead if you only want to stop sending them campaigns.
+  </Accordion>
+</AccordionGroup>
+
+## Staff and roles
+
+<AccordionGroup>
+  <Accordion title="What can each role do?">
+    **Owner** has full access, including billing and account settings. There is one owner per account. **Manager** can do everything except billing and account-level settings. **Staff** can look up members and issue stamps or points, and they can process redemptions at the counter. Staff cannot create loyalty cards or run campaigns.
+
+    If none of the defaults fit, toggle on **Use custom permissions** in the staff edit dialog and pick the exact permissions for that person.
+  </Accordion>
+
+  <Accordion title="My staff member didn't receive the invite email. What now?">
+    Find them in the **Staff** table, click the three-dot menu, and choose **Resend invite**. A fresh invitation goes to the same email address. If it still doesn't arrive, ask them to check spam, then confirm the email is typed correctly.
+  </Accordion>
+</AccordionGroup>
+
+## Billing and plans
+
+<AccordionGroup>
+  <Accordion title="How much does Qtap cost?">
+    Four plans are available. Annual billing runs at roughly 17% off the monthly price.
+
+    | Plan | Monthly | Annual (per month) | Locations | Staff | Cards |
+    |------|---------|--------------------|-----------|-------|-------|
+    | Starter | $29 | $24 | 1 | 2 | 1 |
+    | Growth | $49 | $39 | 2 | 5 | 3 |
+    | Elite | $79 | $65 | 5 | 15 | 10 |
+    | Franchise | $199 | $165 | 15 | Unlimited | Unlimited |
+
+    All plans include QR codes, the Qtap customer app, campaign automation, and analytics.
+  </Accordion>
+
+  <Accordion title="Can I downgrade if I'm already using more than the lower plan allows?">
+    Not directly. The downgrade check compares your current usage against the lower plan's limits. If you have more locations, staff, or cards than the new plan allows, Qtap shows a list of what is over the limit and blocks the change until you deactivate or remove the extras.
+
+    Your data is not deleted automatically. You decide what to drop before the downgrade goes through.
+  </Accordion>
+
+  <Accordion title="What happens if I cancel?">
+    Your plan stays active until the end of the current billing period, so you are not charged again after cancelling. Your data stays in place, but the account falls back to trial limits once the period ends. Anything over those limits (extra locations, extra staff) stops working until you resubscribe or remove them.
+  </Accordion>
+
+  <Accordion title="Who can change billing?">
+    Only the owner. Managers and staff cannot see the Billing page.
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="A customer's QR code won't scan. What's wrong?">
+    First, check that the QR code is active on the **QR Codes** page. An inactive code will not process stamps or redemptions. Second, make sure the staff app or scanner has camera permission. If the code still doesn't work, generate a new one for that location and print it.
+  </Accordion>
+
+  <Accordion title="I deleted a QR code by accident. Can I restore it?">
+    No. Deletion is permanent, and any printed copies of that code stop working. If you only need to pause a code (for example, you're changing its design), toggle it **Inactive** instead. You can flip it back on later without reprinting.
+  </Accordion>
+
+  <Accordion title="My NFC tag isn't registering taps.">
+    Open the NFC Tags page and confirm two things: the tag's status is **Active**, and the serial number you registered matches the one printed on the tag exactly. A single wrong character stops taps from registering. If both look right, open the tag's detail page and confirm it has an action configured and is assigned to a live location.
+  </Accordion>
+
+  <Accordion title="Where can I see what my staff have been doing?">
+    The **Staff → Activity Logs** page records every action staff members take, with timestamps and the affected member or card. Use it to audit stamp issuance, redemptions, card edits, and permission changes.
+  </Accordion>
+</AccordionGroup>
+
+## Still stuck?
+
+Email [support@qtap.qa](mailto:support@qtap.qa) with your account email and a short description of what you are trying to do. For billing questions, include the last four digits of the card on file so the support team can match it to your Stripe account.
+
+<CardGroup cols={2}>
+  <Card title="Onboarding walkthrough" href="/merchants/onboarding-wizard">
+    The full tour of the 8-step setup wizard, covering business details through payment.
+  </Card>
+  <Card title="Billing and add-ons" href="/merchants/settings/billing">
+    Plans, usage meters, add-ons, and how to manage invoices.
+  </Card>
+</CardGroup>
