@@ -95,6 +95,14 @@
           "merchants/settings/merchant-page",
           "merchants/settings/security"
         ]
+      },
+      {
+        "group": "Customer App",
+        "pages": [
+          "customer-app/signup",
+          "customer-app/scanning-earning",
+          "customer-app/rewards-redemptions"
+        ]
       }
     ]
   },
