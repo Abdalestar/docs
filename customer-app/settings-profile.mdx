@@ -1,0 +1,83 @@
+---
+title: "Customer app settings and profile"
+sidebarTitle: "Settings & profile"
+description: "Where your members edit their profile, switch the app to Arabic, manage push notifications, and see which loyalty programs they've joined."
+---
+
+The Settings area in the Qtap customer app is where members update their own details and control how the app behaves. You can't edit a member's profile from the merchant dashboard beyond notes and tags. Everything below lives in the app and belongs to the customer.
+
+## Profile
+
+Members open Settings from the app's main menu. The Profile section shows and lets them edit:
+
+- First name and last name
+- Email
+- Phone number
+- Birthday
+- Gender (male, female, other, or prefer not to say)
+
+Changes save to the shared `members` record, which is the same record every merchant they've joined sees on their dashboard.
+
+<Info>
+A member's name on your dashboard updates a few seconds after they change it in the app. Your notes and per-program stamp totals stay on your side and aren't touched.
+</Info>
+
+## Qtap ID
+
+Every member has a permanent Qtap ID (something like `Q7K4M9`) generated when their account is created. It appears at the top of their profile and on their digital membership card.
+
+Members can't change it. They can read it out to staff who type it into the dashboard to look up the account, and it gets embedded automatically when they scan a QR code.
+
+## Language
+
+Qtap supports English and Arabic. The toggle sits near the top of Settings. When a member switches to Arabic, the whole app flips to right-to-left layout, and any push notifications your campaigns send arrive in the language they've chosen (as long as you've provided Arabic copy in the template).
+
+Default is English. The choice persists across devices because it's stored on the member record, not on the phone.
+
+## Notifications
+
+Two toggles affect push delivery:
+
+- Push notifications. The master on/off. When off, the member won't receive any push from any merchant they've joined.
+- Marketing messages. Turns off promotional campaigns like birthday rewards and win-back nudges. Transactional pushes (for example, "you earned a stamp") still go through.
+
+If a member turns push off at the iOS or Android system level, Qtap respects that regardless of the in-app toggle. On the dashboard, their profile will read `Push: off`.
+
+<Tip>
+If a customer says they aren't getting your campaigns, ask them to check both toggles in the app and the system-level notification permission. It's almost always one of those two.
+</Tip>
+
+## Linked programs
+
+Under "My programs" in the app, members see every merchant they've enrolled with. Each entry shows the brand's logo and the member's current balance in that program's stamps or points. Tapping a merchant opens that merchant's stamp card or points balance.
+
+One Qtap account holds memberships across every merchant that uses Qtap. This is the screen where customers manage all of them in one place.
+
+## Account actions
+
+From the bottom of Settings, a member can:
+
+- Sign out of the current device
+- Reset their password through an email link
+
+Sign out clears the session on that one device. Other phones or tablets they've logged in on stay signed in.
+
+## What isn't in the app yet
+
+A few things members occasionally ask about that we don't support in-app yet:
+
+- Profile photo or avatar upload
+- An in-app "delete my account" button (members email support@qtap.qa and we handle it manually)
+- Per-category notification preferences or quiet hours
+- Data export requests
+
+If a customer asks about any of these, point them at support@qtap.qa and the team will handle it.
+
+## For merchants: what you can see and change
+
+On your dashboard, a member's profile card reads from the same underlying record. You can:
+
+- See their name, email, phone, birthday, Qtap ID, and notification status
+- Add your own notes and tags for filtering or campaign targeting
+
+Name, email, birthday, gender, language, and notification preferences can only be changed by the member, inside the app.
