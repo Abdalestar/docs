@@ -1,0 +1,129 @@
+---
+title: "Viewing Rewards and Redemptions"
+sidebarTitle: "Rewards & redemptions"
+description: "How customers see the rewards they have earned in the Qtap app and hand them over at your counter."
+---
+
+Once a customer earns a reward from one of your programs or campaigns, it lives in the Rewards tab of the Qtap app on their phone. They open the tab, pick a reward, and either read out a 6-character code or show you a QR screen for staff to scan. This page walks through what the customer sees, so you can help at the counter when something looks off.
+
+## What a reward looks like in the app
+
+The Rewards tab groups rewards by status. A reward is one of:
+
+- **Available.** Earned and ready to use. The customer can tap it to start redemption.
+- **Pending redemption.** The customer has tapped a reward and the app has issued a code; the counter has not processed it yet.
+- **Redeemed.** Already used. Shown in the history section with the date it was claimed.
+- **Expired.** Passed its expiry date without being used. Greyed out and not selectable.
+
+Each card shows the reward name (for example, "Free medium latte"), the program or campaign it came from, your business name, and the expiry date if one is set. A short description appears underneath if the staff member who set up the reward wrote one.
+
+<Info>
+Rewards from your stamp cards and rewards from your campaigns (birthday, milestone, win-back, flash sale) both land in the same Rewards tab. The customer does not see the distinction, and the redemption steps are almost the same for each.
+</Info>
+
+## Redeeming a stamp card reward
+
+Stamp card rewards use a short alphanumeric code. The customer generates the code in the app, and staff enters it on the dashboard.
+
+<Steps>
+  <Step title="Customer opens the Rewards tab and taps an available reward">
+    The app confirms the reward and asks whether to start redemption. Tapping **Show redemption code** calls the server, which switches the reward's status from `available` to `pending_redemption` and issues a 6-character code.
+  </Step>
+  <Step title="The code appears on a full-screen card">
+    The code is six characters from the set A-Z plus 2-9, skipping letters and numbers that look alike (no I, O, 1, or 0). The customer reads it out, or hands you the phone so you can type it.
+  </Step>
+  <Step title="Staff enters the code on the Redemptions page">
+    On your dashboard, open **Members → Redemptions**, stay on the **Code** tab, and type the code into the field. The reward, program, member name, and status appear. Click **Confirm Redemption** to process it.
+  </Step>
+  <Step title="The app updates">
+    Within a few seconds the reward moves to the history section of the customer's Rewards tab, marked with the date and your location.
+  </Step>
+</Steps>
+
+<Warning>
+Once a customer taps **Show redemption code**, the reward moves to `pending_redemption` and cannot be handed to a different member. If they change their mind and walk out, the code stays valid until the reward's expiry date. The next time they come in, the same code still works.
+</Warning>
+
+See [Member Redemptions](/merchants/members/redemptions) for the staff-side details and the by-name lookup flow for customers who forgot their code.
+
+## Redeeming a campaign reward
+
+Rewards from birthday, milestone, win-back, and flash sale campaigns are issued with a permanent `reward_code` string and a QR image. Staff scans the QR at the counter instead of typing a code.
+
+<Steps>
+  <Step title="Customer opens the reward in the Rewards tab">
+    The app shows a QR screen with the campaign name and the reward ("Birthday bonus - 10 extra stamps").
+  </Step>
+  <Step title="Staff scans the QR from the customer's phone">
+    Use the scanner on the staff device or the built-in scanner on the dashboard Redemptions page. The system validates the code first.
+  </Step>
+  <Step title="The dashboard confirms the redemption">
+    A success screen shows the reward type and amount, plus the member's new stamp or points balance. The reward changes to `redeemed` status for the customer, and a `reward_redeemed` event is written for analytics.
+  </Step>
+</Steps>
+
+If a customer reopens a campaign reward after it has been redeemed, the QR is still visible but scanning it returns "This reward has already been redeemed." The same wording applies to expired ones, with the expiry date shown.
+
+## Where rewards come from
+
+Customers see a reward in their app any time one of the following happens:
+
+- They complete a stamp card on one of your programs. The main reward is issued, the card resets to zero, and a `pending_rewards` row is written for the member.
+- They cross an interim threshold on a stamp card. The same flow runs for each interim reward set on the card.
+- A campaign fires for them. Birthday, milestone, win-back, and flash sale campaigns write a `campaign_rewards` entry when their trigger conditions match. See [Campaigns Overview](/merchants/campaigns/overview) for how triggers work.
+- Staff issues them a reward manually from the member profile. This is less common but supported.
+
+<Note>
+Signup rewards configured on a stamp card do not reach customers today. The code path that handles enrollment skips the signup reward type, so new members never see one even if you set it up. This is a known gap in the system.
+</Note>
+
+## Points programs and redemption
+
+Points programs track earning in the app but do not yet support customer-initiated redemption. A member with 500 points sees the balance on their program page, but there is no **Redeem** button on points rewards inside the app. To claim a points reward, the customer tells staff, and staff processes it from the dashboard.
+
+For counter staff, that means:
+
+- Open the member's profile on the dashboard, or find them through **Members → Redemptions → Lookup**.
+- Check their points balance against the reward tiers you set up on the points program.
+- If they qualify, mark the reward as redeemed from their profile.
+
+The customer's balance on the app refreshes the next time they open it. Nothing shows in their Rewards tab for a points redemption yet, so expect questions like "where's my free coffee" even after you have processed it.
+
+## Common questions at the counter
+
+<AccordionGroup>
+  <Accordion title="The customer generated a code but the Redemptions page says 'not found'.">
+    Two things to check. First, confirm the code is being typed correctly. The allowed character set skips I, O, 1, and 0 to avoid this exact problem, so anything outside A-Z (excluding I and O) and 2-9 is wrong. Second, check that you are on the correct business dashboard. A code generated for another merchant's reward will not resolve here.
+  </Accordion>
+  <Accordion title="The reward is stuck on 'Pending redemption' in the app.">
+    The customer tapped **Show redemption code** but the code was never entered on the dashboard. The reward stays in this state until someone confirms it or the reward expires. If the customer wants to restart, the code remains the same; they do not get a new one.
+  </Accordion>
+  <Accordion title="The reward says 'Expired' but the customer is sure they just earned it.">
+    Every reward has an `expires_at` based on how your program or campaign was set up. Stamp card rewards usually expire 30 or 60 days after the card completes. Campaign rewards follow the window set on the campaign. Once past the date, the reward is locked, and extending it means issuing a new one manually from the member profile.
+  </Accordion>
+  <Accordion title="The customer has the app but no rewards appear.">
+    Either they have not earned one yet, or the reward tab is filtering to a category. Ask them to tap **All** at the top of the screen. If nothing shows up, look at their profile on your dashboard. The **Pending Rewards** section lists anything issued to them, with status.
+  </Accordion>
+  <Accordion title="Can the customer gift a reward to a friend?">
+    No. A reward is bound to the member record that earned it. If a different phone number shows a code, the dashboard will reject it on lookup.
+  </Accordion>
+</AccordionGroup>
+
+## If the app and the dashboard disagree
+
+Occasionally the app and the dashboard get out of sync for a few seconds after a redemption, especially on weak Wi-Fi. If the dashboard confirms the redemption but the customer's phone still shows the reward as available, ask the customer to pull down on the Rewards tab to refresh. If it still does not update after a minute, the dashboard record is the source of truth. You have already processed the reward, and the app will catch up on its next network sync.
+
+<CardGroup cols={2}>
+  <Card title="Member Redemptions" icon="ticket" href="/merchants/members/redemptions">
+    The staff-side redemption flow, including the lookup tab and history.
+  </Card>
+  <Card title="How Customers Sign Up" icon="user-plus" href="/customer-app/signup">
+    The signup flow that creates the account where rewards are stored.
+  </Card>
+  <Card title="Scanning and Earning" icon="qrcode" href="/customer-app/scanning-earning">
+    How customers earn stamps and points in the first place.
+  </Card>
+  <Card title="Campaigns Overview" icon="bullhorn" href="/merchants/campaigns/overview">
+    What triggers a campaign reward to land in a customer's app.
+  </Card>
+</CardGroup>
