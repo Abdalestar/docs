@@ -18,6 +18,7 @@
           "merchants/welcome",
           "merchants/onboarding-wizard",
           "merchants/dashboard-overview",
+          "merchants/merchant-profile",
           "merchants/first-loyalty-program"
         ]
       },
