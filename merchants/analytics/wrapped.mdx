@@ -1,0 +1,91 @@
+---
+title: "Analytics Wrapped"
+sidebarTitle: "Wrapped"
+description: "A periodic summary of your loyalty program's performance, broken down by week, month, or year."
+---
+
+The Wrapped page gives you a snapshot of how your loyalty program performed over a specific time period. Think of it as a report card that Qtap builds automatically from your stamp, points, and member data.
+
+You'll find it under **Analytics > Wrapped** in the sidebar.
+
+<Info>
+Wrapped is available on the Growth plan ($49/mo) and above. If you're on Starter, you'll need to upgrade to see this page.
+</Info>
+
+<Frame caption="The Wrapped page showing the Weekly tab with the six core metrics.">
+  <img src="/images/analytics/wrapped-overview-final.png" alt="Wrapped weekly view showing metrics grid" />
+</Frame>
+
+## Choosing a time period
+
+Three tabs sit at the top of the page:
+
+- **Weekly** shows data from the previous full week (Sunday to Saturday).
+- **Monthly** shows the previous calendar month.
+- **Yearly** shows the entire previous calendar year.
+
+Each tab pulls from the same data sources but over a different date range. The period label and exact dates appear below the tabs so you always know what you're looking at.
+
+<Frame caption="The Monthly tab showing March 2026 data.">
+  <img src="/images/analytics/wrapped-monthly-final.png" alt="Wrapped monthly view" />
+</Frame>
+
+## What the numbers mean
+
+The **Your Numbers** card displays six metrics in a grid:
+
+| Metric | What it counts |
+|---|---|
+| Total Stamps | Stamps issued during the period |
+| Points Earned | Points earned by customers (excludes points spent) |
+| Redemptions | Rewards redeemed during the period |
+| New Members | Customers who joined your program in that time window |
+| Est. Revenue | Revenue estimate based on daily analytics data |
+| Growth | Percentage of new members relative to your existing member count before the period started |
+
+All numbers are pulled from your actual transaction and analytics data. Nothing is estimated except the revenue figure, which comes from the `analytics_daily` aggregate table.
+
+## Highlights and standout stats
+
+Below the metrics grid, the page shows two extra cards when there's enough data:
+
+**Top Customer** names your most active member during the period and shows how many times they interacted (scans, stamps, points transactions). This is based on analytics events, not just visits.
+
+**Busiest Day** tells you which day of the week had the most combined stamp and points activity. If you notice that Tuesdays consistently top the chart, that might be worth knowing when you plan campaigns or staff shifts.
+
+The **Highlights** section is a bullet list that summarizes the numbers in plain language: "142 stamps issued," "12 new members joined," "Tuesday was your busiest day." It only shows bullets for metrics that are above zero.
+
+<Frame caption="Diagram showing the Wrapped page layout with sample data.">
+  <img src="/images/analytics/wrapped-layout.svg" alt="Wrapped page layout diagram" />
+</Frame>
+
+## Sharing your summary
+
+Each period view has a **Share** button in the top right. You can use it to share your wrapped summary with your team or save it for your records.
+
+## Empty states
+
+If there's no activity for a given period, the page shows "No data available for this period yet" instead of the metrics cards. This is normal for new accounts or quiet weeks.
+
+<Frame caption="The Yearly tab showing 2025 data.">
+  <img src="/images/analytics/wrapped-yearly-final.png" alt="Wrapped yearly view" />
+</Frame>
+
+## Access and permissions
+
+Wrapped follows the same access rules as the rest of the Analytics section. Staff members need analytics permissions to view it. The page is also gated behind a plan-level feature flag, so it only loads on Growth, Elite, and Franchise plans. If a staff member on a Starter plan tries to open the URL directly, the page won't render.
+
+<AccordionGroup>
+  <Accordion title="Why are all my numbers zero?">
+    Your loyalty program might not have had any activity during the selected period. Switch to a longer period (Monthly or Yearly) to see if there's data over a wider range. If you just set up your account, give it a week for activity to accumulate.
+  </Accordion>
+  <Accordion title="How often does the data refresh?">
+    Wrapped pulls live data from your analytics tables each time you open the page. There's a 5-minute cache so repeated visits within that window show the same numbers, but after that it re-fetches.
+  </Accordion>
+  <Accordion title="Can I export or download my Wrapped summary?">
+    The Share button lets you share the summary. For full data exports, use the main Analytics section, which supports CSV downloads.
+  </Accordion>
+  <Accordion title="Which plan do I need?">
+    Growth ($49/mo), Elite ($79/mo), or Franchise ($199/mo). The Starter plan does not include Wrapped.
+  </Accordion>
+</AccordionGroup>
