@@ -1,0 +1,75 @@
+---
+title: "POS system integration"
+sidebarTitle: "POS Systems"
+description: "How Qtap works alongside your existing point-of-sale system without any setup changes."
+---
+
+Qtap runs separately from your POS. You don't need to install a plugin or connect an API. Your POS handles payments and Qtap handles loyalty, so the two systems don't need to talk to each other.
+
+This is on purpose. Most small businesses in Qatar already have a POS they're happy with (Square, Clover, Foodics, or even a simple cash register). Qtap adds loyalty on top without getting in the way.
+
+<Frame caption="Qtap works alongside your POS. Both systems run independently at the counter.">
+  <img src="/images/integrations/pos-loyalty-flow.svg" alt="Diagram showing how Qtap loyalty works alongside a POS system at the counter" />
+</Frame>
+
+## How loyalty happens at the counter
+
+After a customer pays through your POS, they earn stamps or points through Qtap. There are a few ways this works.
+
+**QR code on the counter.** Print a QR code and place it near the register. After paying, the customer opens the Qtap app and scans it. Stamps or points are added to their account right away. You can generate QR codes from the [QR Codes page](/docs/merchants/qr-codes/generating) in your dashboard.
+
+**NFC tag at the register.** Stick an NFC tag near your payment terminal. The customer taps their phone to it after paying. Same result as scanning a QR code, but faster. See the [NFC Tags guide](/docs/merchants/nfc-tags) for setup.
+
+**Staff issues manually.** If you'd rather control it yourself, any staff member can open the Qtap dashboard (or the dashboard on a tablet at the counter) and add stamps or points for a customer. This works well when you want to verify the purchase before giving credit. See [Issuing Stamps Manually](/docs/merchants/stamp-cards/manual-stamps) or [Points Operations](/docs/merchants/points/operations).
+
+## What about reward redemption?
+
+When a customer earns a reward (say, a free coffee after 10 stamps), they show a reward QR code from their app. Your staff opens the Qtap dashboard, goes to [Redemptions](/docs/merchants/members/redemptions), and confirms it. The reward is marked as used.
+
+Your POS doesn't need to know about this. You handle the free item however you normally would, whether that's a void, a discount code, or just handing it over.
+
+## Do I need a tablet at the counter?
+
+Not necessarily. Here's what works for different setups:
+
+<AccordionGroup>
+  <Accordion title="Counter QR code (simplest)">
+    Print your QR code and tape it near the register. Customers scan it themselves after paying. You don't need any extra hardware. Works best for cafes, bakeries, and quick-service spots where the line moves fast.
+  </Accordion>
+  <Accordion title="NFC tag (fastest)">
+    Place the NFC tag next to your payment terminal. Customers tap their phone right after tapping their card. Takes about two seconds. Good for high-traffic locations.
+  </Accordion>
+  <Accordion title="Tablet at the counter (most control)">
+    Keep a tablet or laptop with the Qtap dashboard open. Staff search for the customer and issue stamps or points after each sale. Takes a bit longer, but gives you full control over who gets credit and when.
+  </Accordion>
+  <Accordion title="All of the above">
+    You can use QR codes, NFC, and manual issuance at the same location. They all feed into the same customer accounts. Mix and match based on what your staff prefers.
+  </Accordion>
+</AccordionGroup>
+
+## Can my POS connect to Qtap directly?
+
+Qtap has a public API that accepts scan requests. If you have a developer on your team (or a POS system that supports custom webhooks), you could trigger a stamp or points award when a sale closes.
+
+The relevant endpoint is `POST /api/scan`, which accepts a QR code value and an optional member ID. It returns the stamps or points added. Full details are in the API reference.
+
+<Warning>
+There's no built-in connector for specific POS brands yet. A direct integration would require custom development work. For most merchants, the QR code or NFC approach is simpler and works just as well.
+</Warning>
+
+## Common questions
+
+<AccordionGroup>
+  <Accordion title="Will Qtap slow down my checkout?">
+    No. Qtap runs after the payment, not during it. A QR scan or NFC tap takes two to five seconds. If staff issue manually, it takes about 15 seconds.
+  </Accordion>
+  <Accordion title="What if a customer forgets to scan?">
+    Staff can add stamps or points later from the dashboard. Search for the customer by name, phone, or Qtap ID. There's no time limit on manual issuance.
+  </Accordion>
+  <Accordion title="Does my POS data sync with Qtap?">
+    No. Qtap tracks loyalty activity (stamps, points, redemptions) and your POS tracks sales. They stay separate. Your dashboard analytics show loyalty metrics, not revenue from your POS.
+  </Accordion>
+  <Accordion title="What if I switch POS systems?">
+    Nothing changes on the Qtap side. Since the two systems are independent, swapping your POS has zero effect on your loyalty program, customer data, or reward history.
+  </Accordion>
+</AccordionGroup>
