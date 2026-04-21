@@ -56,6 +56,16 @@ Not captured. `request_access` times out in automated runs (no user present). No
 - `git.exe` is at `C:\Program Files\Git\bin\git.exe`
 - `gh.exe` path needs checking for PR creation.
 
+### Gap discovery (Phase 6)
+Scanned all `app/(dashboard)/` routes against Notion tracker. One undocumented route found and added:
+- `nfc-tags/[id]` → `/merchants/nfc-tags-detail.mdx` (P3 Low) — individual NFC tag detail/edit page. Shows tag name, serial number, action (stamp/points/checkin), location assignment, active/inactive toggle, and tap count stats. Different from the general NFC Tags list page covered by the existing article.
+
+Routes checked but not flagged (covered by existing articles or are detail variants of documented features):
+- `points/[id]` — edit page for existing points program (uses same form as creating, covered by points articles)
+- `qr-codes/[id]` — QR code detail, covered by QR codes articles
+- `staff/activity` — covered by merchants/staff/activity-logs in docs.json
+- `analytics/wrapped` — confirmed Done (PR #18), was added in previous run
+
 ### Deliverables
 - `integrations/pos-systems.mdx` — new article written
 - `docs.json` — Integrations nav group added
