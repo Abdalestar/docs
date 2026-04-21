@@ -97,6 +97,12 @@
         ]
       },
       {
+        "group": "Integrations",
+        "pages": [
+          "integrations/pos-systems"
+        ]
+      },
+      {
         "group": "Customer App",
         "pages": [
           "customer-app/settings-profile"
