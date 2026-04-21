@@ -1,0 +1,100 @@
+<svg viewBox="0 0 840 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="How Qtap works alongside your POS system">
+  <!-- Background -->
+  <rect width="840" height="380" fill="#F8F5F2" rx="8"/>
+
+  <!-- Title -->
+  <text x="420" y="36" text-anchor="middle" fill="#423F4C"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="18" font-weight="700">How Qtap works at the counter</text>
+
+  <!-- POS System box (left) -->
+  <rect x="40" y="70" width="200" height="260" rx="12" fill="white" stroke="#423F4C" stroke-width="1.5"/>
+  <text x="140" y="100" text-anchor="middle" fill="#423F4C"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="15" font-weight="700">Your POS</text>
+  <text x="140" y="122" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="12">(Square, Clover, etc.)</text>
+  <line x1="60" y1="136" x2="220" y2="136" stroke="#E8E4E0" stroke-width="1"/>
+  <text x="140" y="164" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="13">Takes payment</text>
+  <text x="140" y="196" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="13">Prints receipt</text>
+  <text x="140" y="228" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="13">Tracks inventory</text>
+
+  <!-- Divider with "then" label -->
+  <line x1="270" y1="140" x2="270" y2="300" stroke="#E8E4E0" stroke-width="1" stroke-dasharray="6,4"/>
+  <rect x="252" y="205" width="36" height="24" rx="4" fill="#F8F5F2"/>
+  <text x="270" y="222" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="12" font-style="italic">then</text>
+
+  <!-- Qtap section (right) -->
+  <rect x="310" y="70" width="490" height="260" rx="12" fill="white" stroke="#8E4A63" stroke-width="1.5"/>
+  <text x="555" y="100" text-anchor="middle" fill="#8E4A63"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="15" font-weight="700">Qtap Loyalty</text>
+  <line x1="330" y1="116" x2="780" y2="116" stroke="#E8E4E0" stroke-width="1"/>
+
+  <!-- Method 1: QR Code -->
+  <rect x="335" y="132" width="130" height="100" rx="8" fill="#8E4A63"/>
+  <text x="400" y="168" text-anchor="middle" fill="white"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="13" font-weight="600">QR code</text>
+  <text x="400" y="190" text-anchor="middle" fill="#F0D793"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="11">Customer scans</text>
+  <text x="400" y="206" text-anchor="middle" fill="#F0D793"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="11">with their phone</text>
+
+  <!-- Method 2: NFC Tap -->
+  <rect x="485" y="132" width="130" height="100" rx="8" fill="#8E4A63"/>
+  <text x="550" y="168" text-anchor="middle" fill="white"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="13" font-weight="600">NFC tag</text>
+  <text x="550" y="190" text-anchor="middle" fill="#F0D793"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="11">Customer taps</text>
+  <text x="550" y="206" text-anchor="middle" fill="#F0D793"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="11">phone to tag</text>
+
+  <!-- Method 3: Manual -->
+  <rect x="635" y="132" width="145" height="100" rx="8" fill="#8E4A63"/>
+  <text x="707" y="168" text-anchor="middle" fill="white"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="13" font-weight="600">Staff issues</text>
+  <text x="707" y="190" text-anchor="middle" fill="#F0D793"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="11">From dashboard</text>
+  <text x="707" y="206" text-anchor="middle" fill="#F0D793"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="11">or tablet</text>
+
+  <!-- Result row -->
+  <rect x="335" y="252" width="445" height="56" rx="8" fill="#F0D793"/>
+  <text x="557" y="278" text-anchor="middle" fill="#423F4C"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="13" font-weight="600">Stamps or points added to customer's account</text>
+  <text x="557" y="296" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="11">Customer sees it in the Qtap app. You see it in the dashboard.</text>
+
+  <!-- Arrows from methods to result -->
+  <line x1="400" y1="232" x2="400" y2="252" stroke="#423F4C" stroke-width="1.5"/>
+  <polygon points="396,250 400,258 404,250" fill="#423F4C"/>
+  <line x1="550" y1="232" x2="550" y2="252" stroke="#423F4C" stroke-width="1.5"/>
+  <polygon points="546,250 550,258 554,250" fill="#423F4C"/>
+  <line x1="707" y1="232" x2="707" y2="252" stroke="#423F4C" stroke-width="1.5"/>
+  <polygon points="703,250 707,258 711,250" fill="#423F4C"/>
+
+  <!-- Footer note -->
+  <text x="420" y="362" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="11">No changes to your POS required. Both systems run independently.</text>
+</svg>
