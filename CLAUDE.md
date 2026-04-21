@@ -8,7 +8,7 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 **Article:** `integrations/pos-systems.mdx`
 **Branch:** `docs/integrations-pos-systems`
-**PR:** Pending (see below)
+**PR:** https://github.com/Abdalestar/docs/pull/19
 **Status:** Done
 
 ### What was written
@@ -60,7 +60,7 @@ Not captured. `request_access` times out in automated runs (no user present). No
 - `integrations/pos-systems.mdx` — new article written
 - `docs.json` — Integrations nav group added
 - `CLAUDE.md` — this entry
-- PR: see below
+- PR #19: https://github.com/Abdalestar/docs/pull/19
 
 ---
 
