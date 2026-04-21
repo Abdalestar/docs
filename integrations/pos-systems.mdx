@@ -1,0 +1,57 @@
+﻿---
+title: "POS System Integration"
+sidebarTitle: "POS Systems"
+description: "How Qtap works alongside your existing point of sale system."
+---
+
+Qtap runs alongside your existing POS system. There is no plugin to install on your till, no connection to POS software, and no configuration required on the hardware side. You can use Qtap with any POS setup — tablets, dedicated terminals, or a simple cash register — without touching any of it.
+
+The loyalty interaction happens separately from the payment. A customer pays through your POS as usual, then opens the Qtap app and scans a QR code or taps an NFC tag to earn stamps or points.
+
+## What you need at the counter
+
+At minimum, you need a printed QR code somewhere customers can reach it after paying. Generate one from the dashboard under **QR Codes**, download it, and print it. Laminating it saves reprinting when something gets spilled on it.
+
+If you prefer a tap setup, [NFC tags](/merchants/nfc-tags) work the same way. Register the tag in the dashboard, place it near your terminal, and customers tap their phone to earn. Most counters run both: a printed QR code for customers who prefer scanning, and an NFC tag for those who prefer tapping.
+
+## The checkout flow
+
+<Steps>
+  <Step title="Customer pays at your POS">
+    Nothing changes here. They pay however they normally do. Your POS records the sale.
+  </Step>
+  <Step title="Customer opens the Qtap app">
+    They tap Scan on the home screen.
+  </Step>
+  <Step title="Customer scans or taps">
+    They point the camera at your QR code, or hold their phone near your NFC tag.
+  </Step>
+  <Step title="Qtap records the loyalty interaction">
+    A stamp is added or points land in their balance. The app shows a confirmation immediately.
+  </Step>
+</Steps>
+
+## What each system records
+
+Your POS records the sale: items sold, amounts, payment method. Qtap records the loyalty event: a stamp earned or points added. The two don't share data.
+
+If you ever need to match Qtap activity against your POS records for accounting, the transaction log under **Members** shows each entry with a timestamp and location. You can line those up against your POS receipts manually.
+
+## Points and how much customers earn
+
+QR codes and NFC tags award a fixed number of stamps or points per scan. The amount is set on the code when you create it, not calculated from the purchase total. If you want to reward customers based on spend, you have two options:
+
+- **Manual adjustment:** Staff open the Points Operations page, look up the member, and add whatever amount the purchase warrants.
+- **Points multiplier campaigns:** Run a 2x or 3x campaign during a specific window (happy hour, a weekend promotion). The multiplier applies to every scan during that period, regardless of spend.
+
+Automatic spend-based points — where Qtap awards an amount proportional to the sale total without staff involvement — isn't available yet. If your business model depends on it, contact Qtap support to mention it.
+
+<Info>
+  Before telling customers Qtap is ready, scan your QR code yourself with the Qtap app. Confirm it awards the right stamp card or points value. One test scan takes under a minute and avoids a confusing first experience.
+</Info>
+
+## Staff responsibilities
+
+Since Qtap and your POS don't share data, your staff manage the moment between them. They complete the sale on the POS, then let the customer scan. If a customer forgets to scan, staff can add stamps or points manually from the dashboard rather than asking the customer to come back.
+
+For reward redemptions, the customer shows the reward in their app, and staff mark it redeemed in the dashboard under **Members → Redemptions**.
