@@ -1,0 +1,54 @@
+﻿---
+title: "NFC Tag Detail & Settings"
+sidebarTitle: "Tag Detail"
+description: "Edit settings, view tap stats, and manage an individual NFC tag from its detail page."
+---
+
+When you click **View Details** on any tag from the [NFC Tags list](/merchants/nfc-tags), you land on that tag's detail page. This is where you change its name, location, or action type, toggle it on or off, and see its tap history.
+
+## What's on the page
+
+Four summary cards at the top show the tag's total tap count, its configured action (stamp, points, or check-in), its assigned location, and whether it's currently active.
+
+If the tag has received any taps, a line chart below the cards shows daily tap volume for the past 7 days. Good for spotting whether a tag you just moved to a new spot is actually being used.
+
+The **Details** section below the chart is read-only. It shows the serial number, purchase date, when the tag was last tapped, and when it was added. If the action is set to points, the current points value also appears here.
+
+The **Recent Taps** list (only visible when tap data exists) shows the last 10 tap events with timestamps. Each row includes the date and time, and a "Member" badge when the tap was linked to a customer account.
+
+## Editing a tag
+
+Click **Edit** in the top-right corner. A form appears below the stats cards:
+
+- **Name** — an optional label that only shows up in the dashboard, not to customers
+- **Location** — which of your locations this tag belongs to, or "No Location" if unassigned
+- **Action** — stamp, award points, or check-in
+- **Points Value** — only visible when action is **Award Points**; sets how many points each tap awards
+- **Active** toggle — turning this off stops the tag from processing taps immediately
+
+Click **Save Changes** when done. The serial number is permanently set at creation and cannot be changed here.
+
+<Info>
+  You can't change which stamp card a tag links to from the detail page. That association is set when the tag is first added. If you need a different stamp card, delete the tag and add it again with the correct card selected.
+</Info>
+
+## Deactivating vs. deleting
+
+The **Active** toggle in the edit form is the right choice when a tag is temporarily out of service — damaged or moved to a closed location, for example. Tap history is preserved and the tag can be reactivated whenever you need it.
+
+Deleting from the detail page (the red trash icon in the top-right) is permanent. All tap history goes with it.
+
+<Warning>
+  Deleting a tag cannot be undone. If you are not certain, deactivate it first.
+</Warning>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="NFC Tags" href="/merchants/nfc-tags">
+    Register a new tag, view the full inventory, and manage tags from the list
+  </Card>
+  <Card title="QR Codes" href="/merchants/qr-codes/overview">
+    Generate QR codes as an alternative to NFC tags
+  </Card>
+</CardGroup>

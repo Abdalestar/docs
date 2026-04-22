@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Qtap Help Center",
@@ -45,7 +45,8 @@
           "merchants/qr-codes/overview",
           "merchants/qr-codes/generating",
           "merchants/qr-codes/batch",
-          "merchants/nfc-tags"
+          "merchants/nfc-tags",
+          "merchants/nfc-tags-detail"
         ]
       },
       {
@@ -140,3 +141,8 @@
     }
   }
 }
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes

@@ -87,3 +87,68 @@ Article covering the Stamp Operations dashboard feature (`/stamp-operations` rou
 Two undocumented routes found and added to Notion task board:
 - `analytics/wrapped` → `/merchants/analytics/wrapped.mdx` (P3 Low)
 - `settings/security` → `/merchants/settings/security.mdx` (P2 Medium)
+
+---
+
+## 2026-04-22 — NFC Tag Detail & Settings
+
+**Article:** `merchants/nfc-tags-detail.mdx`
+**Branch:** `docs/nfc-tag-detail`
+**PR:** TBD
+**Status:** Done
+
+### What was written
+Article covering the individual NFC tag detail page (`/nfc-tags/[id]` route). This page is linked from the NFC Tags list via "View Details". Covers:
+- Four stat cards: total taps, action type, location assignment, status badge
+- Tap activity line chart (last 7 days, only shown when tap data exists)
+- Read-only Details section: serial number, purchase date, last tapped, created date, points value (if action = points)
+- Recent Taps list: last 10 of up to 100 taps, with timestamps and "Member" badge
+- Edit form: name, location, action, points value (conditional), active toggle
+- Honest callout: stamp card assignment cannot be changed from the detail page
+- Deactivating vs. deleting distinction
+
+Also added `merchants/nfc-tags-detail` to the QR Codes & NFC nav group in `docs.json` after `merchants/nfc-tags`.
+
+### Research sources
+- `app/(dashboard)/nfc-tags/[id]/page.tsx` — full detail page: NFCTagDetailPage component, edit form fields (`name`, `location_id`, `action`, `points_value`, `is_active` — note: no `stamp_card_id` in update), tap history from `nfc_taps` table, 7-day chart via recharts LineChart
+- `app/(dashboard)/nfc-tags/page.tsx` — list page for context (confirmed "View Details" menu item routes to `/nfc-tags/[id]`)
+- `types/database.ts` — NFCTag type (id, organization_id, location_id, stamp_card_id, serial_number, name, action, points_value, tap_count, is_active, last_tapped_at, purchased_at, created_at, updated_at)
+- `merchants/nfc-tags.mdx` — existing NFC Tags article reviewed to avoid duplication; confirmed detail page was only briefly mentioned
+
+### Anti-slop passes applied
+- No em dashes
+- Lists: 5-item edit field list (not 3), 2-item CardGroup ✓
+- No contrast framing
+- No banned words (no leverage, seamless, enhance, utilize, streamline, etc.)
+- No self-narration phrases
+- "Good for spotting whether a tag you just moved to a new spot is actually being used" — concrete, practical tone
+- Honest callout about stamp card limitation (cannot be changed post-creation)
+
+### Screenshots
+Not captured. `request_access` times out in automated runs (no user present). Article relies on prose descriptions of the UI.
+
+### Errors / challenges
+- `Get-Content ... -Raw` not available in Desktop Commander PowerShell; workaround: omit `-Raw`, use `Out-String` to join
+- `Get-Content "...\[id]\page.tsx"` fails silently (PowerShell interprets `[id]` as wildcard); fixed with `-LiteralPath` flag
+- Stash pop created a conflict in `docs.json` because main had been updated with 5 new commits (faq.mdx, customer-app/settings-profile.mdx); conflict was trivial (trailing markers only), resolved by stripping conflict markers
+- `ORIG_HEAD.lock` file existed from a prior crashed git process; removed manually before git operations
+
+### Insights for future runs
+- Always use `-LiteralPath` with `Get-Content` when path contains `[` or `(` characters
+- Stashing before switching branches and popping on new branch risks docs.json conflicts if main moved forward; consider using `git diff` to apply changes manually instead
+- NFCTag type: `purchased_at` field exists (when the hardware was purchased), separate from `created_at` (when it was registered in dashboard). The detail page shows both.
+- The stamp card linked to a tag is stored as `stamp_card_id` on the nfc_tags row and is NOT exposed in the edit form on the detail page. It can only be set on creation.
+- NFC taps table is `nfc_taps` (not `nfc_tap_events` or similar). Columns: id, nfc_tag_id, member_id, location_id, tapped_at.
+
+### Gap discovery (Phase 6)
+Checked current Notion board against app routes. All remaining Not started items are:
+- Payment Gateway Integration (P3 Low) — `/integrations/payment-gateways.mdx` — no code research done this run
+- API Overview & Authentication (P3 Low) — `/api-reference/overview.mdx`
+- API Endpoints Reference (P3 Low) — `/api-reference/endpoints.mdx`
+
+No new undocumented routes spotted this run.
+
+### Deliverables
+- `merchants/nfc-tags-detail.mdx` — new article written
+- `docs.json` — QR Codes & NFC nav updated
+- `CLAUDE.md` — this entry
