@@ -1,4 +1,4 @@
-# Qtap Docs Writer — Run Log
+﻿# Qtap Docs Writer — Run Log
 
 Automated runs by the Qtap Documentation Writer agent are logged here.
 
@@ -94,7 +94,7 @@ Two undocumented routes found and added to Notion task board:
 
 **Article:** `merchants/nfc-tags-detail.mdx`
 **Branch:** `docs/nfc-tag-detail`
-**PR:** TBD
+**PR:** https://github.com/Abdalestar/docs/pull/21
 **Status:** Done
 
 ### What was written
