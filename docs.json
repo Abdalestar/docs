@@ -103,6 +103,13 @@
         ]
       },
       {
+        "group": "API Reference",
+        "pages": [
+          "api-reference/overview",
+          "api-reference/endpoints"
+        ]
+      },
+      {
         "group": "Support",
         "pages": [
           "support/faq"

@@ -1,0 +1,85 @@
+---
+title: "API Overview & Authentication"
+sidebarTitle: "Overview & Auth"
+description: "Base URL, authentication methods, and the common error format used across all Qtap API endpoints."
+---
+
+The Qtap API lets you build integrations on top of the loyalty platform. You can use it to process QR code scans, manage campaign rewards, check member eligibility, and pull campaign analytics.
+
+All requests and responses use JSON. The base URL comes from the `NEXT_PUBLIC_API_URL` environment variable in your deployment.
+
+## Base URL
+
+```
+https://your-domain.com
+```
+
+Set `NEXT_PUBLIC_API_URL` in your environment to match your Qtap deployment URL.
+
+## Authentication
+
+The API has two access levels: public and protected.
+
+Public endpoints accept requests without any credentials. They are intended for use from the customer mobile app, where no server session is available:
+
+- `POST /api/scan`
+- `GET /api/qr-codes/[code]/details`
+- `GET /api/campaigns/rewards/validate/[code]`
+
+All other endpoints require a valid Supabase session cookie. If you are logged in to the Qtap dashboard, middleware sets this cookie automatically. For server-to-server requests, pass the session token in a cookie header:
+
+```bash
+curl -b "sb-access-token=<your_token>" \
+  "https://your-domain.com/api/campaigns/active?organization_id=org_123"
+```
+
+<Info>
+  Session tokens come from Supabase Auth. Sign in with the Supabase client SDK and read the access token from the session object. Tokens expire after one hour by default, so your integration needs to handle refresh.
+</Info>
+
+<Frame caption="Public endpoints proceed without a token. Protected endpoints go through Supabase middleware before processing.">
+  <img src="/images/api-reference/auth-paths.svg" alt="Two-panel diagram showing public endpoints requiring no auth on the left, and protected endpoints requiring a Supabase session cookie on the right." />
+</Frame>
+
+## Errors
+
+Every error response uses the same shape:
+
+```json
+{
+  "success": false,
+  "message": "Human-readable description of what went wrong"
+}
+```
+
+| Status | Meaning |
+|--------|---------|
+| 200 | Success |
+| 400 | Bad request: missing or invalid input |
+| 401 | Unauthorized: session cookie is missing or has expired |
+| 404 | Not found |
+| 409 | Conflict: the resource is already in a final state (a reward already redeemed, for example) |
+| 410 | Gone: resource has expired or been deactivated |
+| 429 | Limit exceeded: scan count or rate limit reached |
+| 500 | Server error |
+
+## What the API covers
+
+The API covers four areas of the platform.
+
+The QR code endpoints handle scan processing from the mobile app. When a customer presents a code, the scan endpoint records the action and returns the result: what they earned, how many stamps they have, or whether a reward was triggered. The details endpoint returns the current state of any code, including whether it is active, what action it triggers, and how many scans remain if the code has a cap.
+
+The campaign and reward endpoints cover the full lifecycle: listing active campaigns, checking which a member can currently receive, issuing rewards, and processing redemptions at checkout.
+
+The member endpoints are used mainly by the mobile app to register device push tokens and fetch campaign eligibility per member.
+
+The analytics endpoints accept event data (notification opens and clicks) and return aggregated performance metrics for a specific campaign over a chosen time window.
+
+<CardGroup cols={2}>
+  <Card title="API Endpoints Reference" icon="code" href="/api-reference/endpoints">
+    All request parameters and response shapes for every endpoint.
+  </Card>
+  <Card title="Go to Dashboard" icon="layout-dashboard" href="https://dashboard.qtap.qa">
+    Use the Qtap merchant dashboard directly.
+  </Card>
+</CardGroup>
