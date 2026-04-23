@@ -1,0 +1,51 @@
+<svg viewBox="0 0 800 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Qtap API authentication flow diagram">
+  <rect width="800" height="340" fill="#F8F5F2" rx="8"/>
+
+  <text x="400" y="35" text-anchor="middle" fill="#423F4C" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="600">How authentication works</text>
+
+  <!-- Public flow -->
+  <text x="40" y="75" fill="#8E4A63" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600">Public endpoints (no login needed)</text>
+
+  <rect x="40" y="90" width="160" height="56" rx="10" fill="#8E4A63"/>
+  <text x="120" y="115" text-anchor="middle" fill="white" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500">Customer scans</text>
+  <text x="120" y="133" text-anchor="middle" fill="#F0D793" font-family="system-ui, -apple-system, sans-serif" font-size="11">QR code or NFC tag</text>
+
+  <line x1="210" y1="118" x2="270" y2="118" stroke="#423F4C" stroke-width="2"/>
+  <polygon points="270,113 280,118 270,123" fill="#423F4C"/>
+
+  <rect x="290" y="90" width="160" height="56" rx="10" fill="#F0D793"/>
+  <text x="370" y="115" text-anchor="middle" fill="#423F4C" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500">POST /api/scan</text>
+  <text x="370" y="133" text-anchor="middle" fill="#6B6770" font-family="system-ui, -apple-system, sans-serif" font-size="11">No auth required</text>
+
+  <line x1="460" y1="118" x2="520" y2="118" stroke="#423F4C" stroke-width="2"/>
+  <polygon points="520,113 530,118 520,123" fill="#423F4C"/>
+
+  <rect x="540" y="90" width="220" height="56" rx="10" fill="#8E4A63"/>
+  <text x="650" y="115" text-anchor="middle" fill="white" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500">Points awarded or</text>
+  <text x="650" y="133" text-anchor="middle" fill="#F0D793" font-family="system-ui, -apple-system, sans-serif" font-size="11">stamp added to card</text>
+
+  <!-- Authenticated flow -->
+  <text x="40" y="195" fill="#8E4A63" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600">Authenticated endpoints (login required)</text>
+
+  <rect x="40" y="210" width="160" height="56" rx="10" fill="#423F4C"/>
+  <text x="120" y="235" text-anchor="middle" fill="white" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500">Dashboard user</text>
+  <text x="120" y="253" text-anchor="middle" fill="#F0D793" font-family="system-ui, -apple-system, sans-serif" font-size="11">logs in via Supabase</text>
+
+  <line x1="210" y1="238" x2="270" y2="238" stroke="#423F4C" stroke-width="2"/>
+  <polygon points="270,233 280,238 270,243" fill="#423F4C"/>
+
+  <rect x="290" y="210" width="160" height="56" rx="10" fill="#F0D793"/>
+  <text x="370" y="235" text-anchor="middle" fill="#423F4C" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500">Session cookie</text>
+  <text x="370" y="253" text-anchor="middle" fill="#6B6770" font-family="system-ui, -apple-system, sans-serif" font-size="11">set by middleware</text>
+
+  <line x1="460" y1="238" x2="520" y2="238" stroke="#423F4C" stroke-width="2"/>
+  <polygon points="520,233 530,238 520,243" fill="#423F4C"/>
+
+  <rect x="540" y="210" width="220" height="56" rx="10" fill="#423F4C"/>
+  <text x="650" y="235" text-anchor="middle" fill="white" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500">Campaigns, analytics,</text>
+  <text x="650" y="253" text-anchor="middle" fill="#F0D793" font-family="system-ui, -apple-system, sans-serif" font-size="11">members, rewards, staff</text>
+
+  <!-- Footer note -->
+  <text x="400" y="310" text-anchor="middle" fill="#6B6770" font-family="system-ui, -apple-system, sans-serif" font-size="11">Cookie-based auth is automatic. The dashboard handles login. You only pass the session cookie in API calls.</text>
+  <text x="400" y="328" text-anchor="middle" fill="#6B6770" font-family="system-ui, -apple-system, sans-serif" font-size="11">Public endpoints need no cookie at all.</text>
+</svg>
