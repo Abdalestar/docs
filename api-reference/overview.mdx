@@ -1,0 +1,163 @@
+---
+title: "API overview and authentication"
+sidebarTitle: "Overview & auth"
+description: "How the Qtap API works and how authentication is handled."
+---
+
+The Qtap API powers everything behind the merchant dashboard and the customer mobile app. When a customer scans a QR code at your counter, an API call processes that scan. When you check campaign performance in your dashboard, API calls pull those numbers.
+
+Most merchants will never call the API directly. The dashboard and mobile app handle it for you. But if you're building a custom integration (connecting your POS system, for example, or writing scripts to automate reward issuance), you'll need to understand how the API is structured.
+
+## Base URL
+
+All API endpoints live under your dashboard URL:
+
+```
+https://dashboard.qtap.qa/api
+```
+
+Every endpoint path in this guide is relative to that base. So when you see `/api/scan`, the full URL is `https://dashboard.qtap.qa/api/scan`.
+
+## Two kinds of endpoints
+
+The API has public endpoints and authenticated endpoints. The difference is simple: public endpoints don't need a login, authenticated endpoints do.
+
+<Frame caption="Public endpoints handle customer-facing actions like QR scans. Authenticated endpoints handle everything in the dashboard.">
+  <img src="/images/api-reference/auth-flow.svg" alt="Qtap API authentication flow showing public and authenticated paths" />
+</Frame>
+
+### Public endpoints
+
+These handle customer-facing interactions. No login or session cookie needed.
+
+| Endpoint | What it does |
+|----------|-------------|
+| `POST /api/scan` | Process a QR code scan (award stamps or points) |
+| `GET /api/qr-codes/[code]/details` | Look up details about a specific QR code |
+| `GET /api/campaigns/rewards/validate/[code]` | Check if a reward code is valid and redeemable |
+
+The scan endpoint is the one you'll use most if you're building a custom integration. It accepts a QR code value, an optional member ID, and an optional location ID. If the scan is valid, the customer gets their stamps or points automatically.
+
+### Authenticated endpoints
+
+Everything else requires an active Supabase session. When you log into the Qtap dashboard, Supabase sets a session cookie in your browser. That cookie is sent with every request automatically.
+
+If you're calling the API from code (not through the browser), you need to include that session cookie in your requests:
+
+```bash
+curl -X GET "https://dashboard.qtap.qa/api/campaigns/active?organization_id=org_123" \
+  -H "Content-Type: application/json" \
+  -b "sb-access-token=<your_supabase_auth_token>"
+```
+
+<Info>
+You get the auth token by signing in through Supabase Auth. The dashboard handles this automatically. If you're building a custom client, use the [Supabase JavaScript SDK](https://supabase.com/docs/reference/javascript/auth-signinwithpassword) to sign in and get a session.
+</Info>
+
+## API categories
+
+The API is organized around the same features you see in the dashboard:
+
+| Category | Example endpoints | Auth required |
+|----------|------------------|---------------|
+| **Scans** | `POST /api/scan` | No |
+| **QR codes** | `GET /api/qr-codes/[code]/details` | No |
+| **NFC** | `POST /api/nfc/tap` | Varies |
+| **Campaigns** | `GET /api/campaigns/active`, reward issuance, tracking | Yes |
+| **Members** | Push tokens, campaign eligibility | Yes |
+| **Analytics** | Event tracking, campaign performance | Yes |
+| **Rewards** | Issue, redeem, validate reward codes | Validate is public; others require auth |
+
+## Response format
+
+Every API response follows the same shape:
+
+```json
+{
+  "success": true,
+  "data": { ... },
+  "message": "Human-readable description"
+}
+```
+
+When something goes wrong:
+
+```json
+{
+  "success": false,
+  "message": "QR code not found"
+}
+```
+
+The `success` field is always present. The `data` field holds the actual payload on success. The `message` field gives you a readable explanation, which is especially useful for error responses.
+
+## HTTP status codes
+
+| Code | Meaning |
+|------|---------|
+| **200** | Request succeeded |
+| **400** | Bad request (missing fields, invalid input) |
+| **401** | Not authenticated (missing or expired session) |
+| **404** | Resource not found |
+| **409** | Conflict (for example, trying to redeem a reward that was already redeemed) |
+| **410** | Gone (the resource existed but is now expired or deactivated) |
+| **429** | Rate limited (too many scan attempts, for example) |
+| **500** | Server error |
+
+<Warning>
+A 401 error usually means your session expired. Sign in again through Supabase Auth to get a fresh token. Sessions last for the duration of your browser session by default.
+</Warning>
+
+## Quick example: processing a QR scan
+
+The most common API call is processing a customer scan. Here is a complete example:
+
+```bash
+curl -X POST "https://dashboard.qtap.qa/api/scan" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "abc123xyz",
+    "member_id": "member_001",
+    "location_id": "loc_456"
+  }'
+```
+
+A successful response looks like this:
+
+```json
+{
+  "success": true,
+  "message": "Scan processed successfully",
+  "data": {
+    "qr_code_id": "qr_789",
+    "action": "earn_points",
+    "result": "Points awarded",
+    "transaction_id": "txn_101112",
+    "scan_count": 5
+  },
+  "action": "earn_points",
+  "points_value": 10,
+  "organization_name": "Acme Corp"
+}
+```
+
+The response tells you what happened: which QR code was scanned, what action was triggered, how many points were awarded, and a transaction ID you can use for record-keeping.
+
+If the QR code is expired, you'll get a `410` status. If it has hit its maximum scan limit, you'll get a `429`. Both include a `message` field explaining what went wrong.
+
+## Rate limits and scan limits
+
+Individual QR codes can have scan limits set by the merchant. Once a QR code reaches its maximum number of scans, additional attempts return a `429` status.
+
+There are no global API rate limits documented at this time, but the scan endpoint does enforce per-QR-code limits. If you're building an integration that sends many requests, space them out to avoid hitting any undocumented throttling.
+
+## What's next
+
+<CardGroup cols={2}>
+  <Card title="API endpoints reference" icon="code" href="/api-reference/endpoints">
+    Full details on every endpoint, including request and response schemas.
+  </Card>
+  <Card title="POS system integration" icon="cash-register" href="/integrations/pos-systems">
+    How to connect Qtap with your point-of-sale system using the scan API.
+  </Card>
+</CardGroup>
