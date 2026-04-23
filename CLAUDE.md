@@ -8,7 +8,7 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 **Article:** `api-reference/overview.mdx`
 **Branch:** `docs/api-overview-auth`
-**PR:** (see git-out.txt after push)
+**PR:** https://github.com/Abdalestar/docs/pull/22
 **Status:** Done
 
 ### What was written
