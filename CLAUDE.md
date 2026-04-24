@@ -4,6 +4,59 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-04-24 — API Endpoints Reference
+
+**Article:** `api-reference/endpoints.mdx`
+**Branch:** `docs/api-endpoints-reference`
+**PR:** (see below)
+**Status:** Done
+
+### What was written
+Full endpoint reference covering all 14 Qtap API endpoints, grouped into four sections: QR & Scan, Campaigns & Rewards, Members, and Analytics. No screenshots needed (reference documentation). Does not duplicate content from the overview article (auth, base URL, error format stay in overview). Each endpoint shows: auth level, request parameters table, curl example, success response JSON, and error table.
+
+Endpoints covered:
+- POST /api/scan (public)
+- GET /api/qr-codes/[code]/details (public)
+- GET /api/campaigns/active (auth)
+- GET /api/campaigns/member-eligible (auth)
+- POST /api/campaigns/[id]/track-open (auth)
+- POST /api/campaigns/[id]/track-click (auth)
+- POST /api/campaigns/rewards/issue (auth)
+- GET /api/campaigns/rewards/member/[memberId] (auth)
+- POST /api/campaigns/rewards/[code]/redeem (auth)
+- GET /api/campaigns/rewards/validate/[code] (public)
+- POST /api/members/[id]/push-token (auth)
+- GET /api/members/[id]/campaign-eligibility (auth)
+- POST /api/analytics/track-event (auth)
+- GET /api/analytics/campaigns/[id]/performance (auth)
+
+### Research sources
+- `API_DOCUMENTATION.md` in app repo — full endpoint list with request/response shapes (975 lines)
+- `api-reference/overview.mdx` — reviewed to avoid duplication
+
+### Anti-slop fixes applied
+- Em dash in intro: "session cookie — pass it with" → replaced with comma + restructured sentence
+- No rule-of-three in prose: scan description originally had 3-item list, rewritten to avoid listing
+- No banned words found
+- No self-narration phrases found
+
+### Screenshots
+None needed. API reference article.
+
+### Errors / challenges
+- `sed -i` failed with "couldn't open temporary file" (permission denied for temp file in CWD); fixed by using Python in bash sandbox to strip conflict markers from docs.json instead
+- docs.json stash-pop conflict (same as previous runs): trailing newlines in stash vs. clean main; resolved by stripping bytes after `<<<<<<< Updated upstream` marker using Python
+- `mcp__Desktop_Commander__read_file` returns `{"fileType":"unsupported"}` for .bat files — content not readable that way; use bash sandbox to read instead
+- grep detects docs.json as binary when conflict markers present — use `cat -A` to inspect line endings instead
+
+### Insights for future runs
+- Python in bash sandbox (`python3 -c "..."`) is the most reliable way to fix docs.json conflict markers (avoids sed -i permission issues, avoids Windows PowerShell path issues)
+- docs.json stash-pop conflict will recur every run as long as prior branches left stashed changes; consider clearing old stashes at start of each run with `git stash clear`
+- `api-reference/endpoints.mdx` is the LAST article in the Notion board with Status = Not started (all others were marked "Already published" or "Done")
+- After this PR: check for screenshot-refresh tasks (Done = YES, Needs Screenshots = YES, Notes does NOT contain "screenshots added")
+
+---
+
 ## 2026-04-14 — Security Settings
 
 **Article:** `merchants/settings/security.mdx`

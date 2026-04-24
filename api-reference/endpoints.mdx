@@ -1,0 +1,723 @@
+---
+title: "API Endpoints Reference"
+sidebarTitle: "Endpoints"
+description: "Request and response reference for all 14 Qtap API endpoints, grouped by function."
+---
+
+Authentication, error codes, and the base URL are covered in the [Overview & Auth](/api-reference/overview) article. This page lists every endpoint with its parameters and response shapes.
+
+All endpoints return JSON. Public endpoints need no credentials. All other endpoints require a valid Supabase session cookie, passed as `-b "sb-access-token=<token>"` in curl or set automatically by the browser session in the dashboard.
+
+---
+
+## QR codes and scanning
+
+These two endpoints run without authentication, designed for the mobile app where no merchant session is present.
+
+### POST /api/scan
+
+The main entry point for recording loyalty interactions. When a customer presents a QR code in the app, this endpoint processes the result and returns what happened: points credited, stamp recorded, or reward triggered.
+
+**Authentication:** Public
+
+**Request body**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `code` | string | Yes | The QR code value |
+| `member_id` | string | No | Member performing the scan |
+| `location_id` | string | No | Location where the scan occurs |
+
+```bash
+curl -X POST "https://your-domain.com/api/scan" \
+  -H "Content-Type: application/json" \
+  -d '{"code": "abc123xyz", "member_id": "member_001", "location_id": "loc_456"}'
+```
+
+**Success response (200)**
+
+```json
+{
+  "success": true,
+  "message": "Scan processed successfully",
+  "action": "earn_points",
+  "points_value": 10,
+  "organization_name": "Morning Brew",
+  "data": {
+    "qr_code_id": "qr_789",
+    "action": "earn_points",
+    "result": "Points awarded",
+    "transaction_id": "txn_101112",
+    "scan_count": 5
+  }
+}
+```
+
+**Error responses**
+
+| Status | Cause |
+|--------|-------|
+| 400 | Invalid or malformed QR code |
+| 404 | QR code not found |
+| 410 | QR code is inactive or expired |
+| 429 | Scan limit reached |
+| 500 | Server error |
+
+---
+
+### GET /api/qr-codes/\[code\]/details
+
+Returns the current state of a QR code: name, action, points value, active status, expiry date, and remaining scan count. Use this to show a preview before the customer confirms.
+
+**Authentication:** Public
+
+**Path parameters**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `code` | string | The QR code value |
+
+```bash
+curl "https://your-domain.com/api/qr-codes/abc123xyz/details"
+```
+
+**Success response (200)**
+
+```json
+{
+  "success": true,
+  "data": {
+    "code": "abc123xyz",
+    "name": "Welcome Bonus",
+    "type": "multi_use",
+    "action": "earn_points",
+    "action_description": "Earn 10 loyalty points",
+    "points_value": 10,
+    "organization_name": "Morning Brew",
+    "location_name": "Downtown Branch",
+    "is_active": true,
+    "expires_at": "2026-12-31T23:59:59.000Z",
+    "remaining_scans": 95
+  }
+}
+```
+
+**Error responses**
+
+| Status | Cause |
+|--------|-------|
+| 404 | QR code not found |
+| 500 | Server error |
+
+---
+
+## Campaigns and rewards
+
+These endpoints cover the full reward lifecycle: listing active campaigns, checking member eligibility, issuing rewards, and processing redemptions at checkout.
+
+### GET /api/campaigns/active
+
+Returns all active campaigns for an organization.
+
+**Authentication:** Required
+
+**Query parameters**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `organization_id` | string | Yes | Filter campaigns by organization |
+
+```bash
+curl "https://your-domain.com/api/campaigns/active?organization_id=org_123" \
+  -b "sb-access-token=<token>"
+```
+
+**Success response (200)**
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "camp_001",
+      "name": "Summer Sale Campaign",
+      "status": "active",
+      "start_date": "2026-06-01T00:00:00.000Z",
+      "end_date": "2026-08-31T23:59:59.000Z",
+      "organization_id": "org_123"
+    }
+  ],
+  "count": 1
+}
+```
+
+**Error responses**
+
+| Status | Cause |
+|--------|-------|
+| 401 | Invalid or missing session token |
+| 500 | Server error |
+
+---
+
+### GET /api/campaigns/member-eligible
+
+Returns campaigns a specific member can currently receive. Use this when deciding whether to issue a reward.
+
+**Authentication:** Required
+
+**Query parameters**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `member_id` | string | Yes | Member to check eligibility for |
+| `organization_id` | string | Yes | Organization that owns the campaigns |
+
+```bash
+curl "https://your-domain.com/api/campaigns/member-eligible?member_id=member_001&organization_id=org_123" \
+  -b "sb-access-token=<token>"
+```
+
+**Success response (200)**
+
+```json
+{
+  "success": true,
+  "data": {
+    "eligible_campaigns": [
+      {
+        "id": "camp_001",
+        "name": "Summer Sale Campaign",
+        "reward_type": "discount",
+        "reward_value": 20
+      }
+    ],
+    "member_id": "member_001"
+  }
+}
+```
+
+**Error responses**
+
+| Status | Cause |
+|--------|-------|
+| 400 | Missing required query parameters |
+| 401 | Unauthorized |
+| 500 | Server error |
+
+---
+
+### POST /api/campaigns/\[id\]/track-open
+
+Records when a member opens a campaign push notification. Call this when the customer taps a notification to open the app.
+
+**Authentication:** Required
+
+**Path parameters**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id` | string | Campaign ID |
+
+**Request body**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `member_id` | string | Yes | Member who opened the notification |
+| `notification_id` | string | No | ID of the specific notification |
+| `opened_at` | string | No | ISO 8601 timestamp (defaults to now) |
+
+```bash
+curl -X POST "https://your-domain.com/api/campaigns/camp_001/track-open" \
+  -H "Content-Type: application/json" \
+  -b "sb-access-token=<token>" \
+  -d '{"member_id": "member_001", "notification_id": "notif_789"}'
+```
+
+**Success response (200)**
+
+```json
+{"success": true, "message": "Notification open tracked successfully"}
+```
+
+**Error responses**
+
+| Status | Cause |
+|--------|-------|
+| 400 | Missing member_id |
+| 401 | Unauthorized |
+| 404 | Campaign not found |
+| 500 | Server error |
+
+---
+
+### POST /api/campaigns/\[id\]/track-click
+
+Records when a member clicks through from a campaign notification. Paired with `track-open`, this feeds the click-through rate in campaign analytics.
+
+**Authentication:** Required
+
+**Path parameters**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id` | string | Campaign ID |
+
+**Request body**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `member_id` | string | Yes | Member who clicked |
+| `clicked_at` | string | No | ISO 8601 timestamp (defaults to now) |
+
+```bash
+curl -X POST "https://your-domain.com/api/campaigns/camp_001/track-click" \
+  -H "Content-Type: application/json" \
+  -b "sb-access-token=<token>" \
+  -d '{"member_id": "member_001"}'
+```
+
+**Success response (200)**
+
+```json
+{"success": true, "message": "Notification click tracked successfully"}
+```
+
+**Error responses**
+
+| Status | Cause |
+|--------|-------|
+| 400 | Missing member_id |
+| 401 | Unauthorized |
+| 404 | Campaign not found |
+| 500 | Server error |
+
+---
+
+### POST /api/campaigns/rewards/issue
+
+Issues a campaign reward to a member and returns the reward code. Call this after confirming eligibility via the eligibility endpoints.
+
+**Authentication:** Required
+
+**Request body**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `campaign_id` | string | Yes | Campaign to issue the reward for |
+| `member_id` | string | Yes | Member who receives the reward |
+| `notification_id` | string | No | Associated notification ID |
+| `expires_in_days` | number | No | Days until the reward expires |
+
+```bash
+curl -X POST "https://your-domain.com/api/campaigns/rewards/issue" \
+  -H "Content-Type: application/json" \
+  -b "sb-access-token=<token>" \
+  -d '{"campaign_id": "camp_001", "member_id": "member_001", "expires_in_days": 30}'
+```
+
+**Success response (200)**
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "reward_001",
+    "campaign_id": "camp_001",
+    "member_id": "member_001",
+    "reward_code": "RWD-A1B2C3D4",
+    "status": "active",
+    "issued_at": "2026-01-29T10:30:00.000Z",
+    "expires_at": "2026-02-28T10:30:00.000Z"
+  }
+}
+```
+
+**Error responses**
+
+| Status | Cause |
+|--------|-------|
+| 400 | Missing required fields |
+| 401 | Unauthorized |
+| 404 | Campaign or member not found |
+| 409 | Reward already issued to this member for this campaign |
+| 500 | Server error |
+
+---
+
+### GET /api/campaigns/rewards/member/\[memberId\]
+
+Lists all rewards belonging to a member, with optional status filtering and pagination.
+
+**Authentication:** Required
+
+**Path parameters**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `memberId` | string | Member ID |
+
+**Query parameters**
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `status` | string | No | all | Filter by `active`, `redeemed`, or `expired` |
+| `limit` | number | No | 20 | Page size |
+| `offset` | number | No | 0 | Skip N results |
+
+```bash
+curl "https://your-domain.com/api/campaigns/rewards/member/member_001?status=active&limit=10" \
+  -b "sb-access-token=<token>"
+```
+
+**Success response (200)**
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "reward_001",
+      "campaign_name": "Summer Sale Campaign",
+      "reward_code": "RWD-A1B2C3D4",
+      "status": "active",
+      "issued_at": "2026-01-29T10:30:00.000Z",
+      "expires_at": "2026-02-28T10:30:00.000Z"
+    }
+  ],
+  "pagination": {
+    "total": 25,
+    "limit": 10,
+    "offset": 0,
+    "has_more": true
+  }
+}
+```
+
+**Error responses**
+
+| Status | Cause |
+|--------|-------|
+| 401 | Unauthorized |
+| 404 | Member not found |
+| 500 | Server error |
+
+---
+
+### POST /api/campaigns/rewards/\[code\]/redeem
+
+Redeems a reward at checkout. Requires the staff member's ID and the location. Returns `409` if the reward was already redeemed, `410` if it has expired.
+
+**Authentication:** Required
+
+**Path parameters**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `code` | string | Reward code to redeem |
+
+**Request body**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `staff_id` | string | Yes | Staff member processing the redemption |
+| `location_id` | string | Yes | Location where it is being redeemed |
+
+```bash
+curl -X POST "https://your-domain.com/api/campaigns/rewards/RWD-A1B2C3D4/redeem" \
+  -H "Content-Type: application/json" \
+  -b "sb-access-token=<token>" \
+  -d '{"staff_id": "staff_001", "location_id": "loc_456"}'
+```
+
+**Success response (200)**
+
+```json
+{
+  "success": true,
+  "message": "Reward redeemed successfully",
+  "data": {
+    "reward": {
+      "reward_code": "RWD-A1B2C3D4",
+      "status": "redeemed",
+      "redeemed_at": "2026-01-29T14:00:00.000Z",
+      "redeemed_by": "staff_001"
+    },
+    "transaction_id": "txn_202122"
+  }
+}
+```
+
+**Error responses**
+
+| Status | Cause |
+|--------|-------|
+| 400 | Missing staff_id or location_id |
+| 401 | Unauthorized |
+| 404 | Reward code not found |
+| 409 | Reward already redeemed |
+| 410 | Reward has expired |
+| 500 | Server error |
+
+---
+
+### GET /api/campaigns/rewards/validate/\[code\]
+
+Checks whether a reward code is valid and can be redeemed. Returns the full reward, member, and campaign objects if it can. Use this before showing a redemption confirmation screen.
+
+**Authentication:** Public
+
+**Path parameters**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `code` | string | Reward code to validate |
+
+```bash
+curl "https://your-domain.com/api/campaigns/rewards/validate/RWD-A1B2C3D4"
+```
+
+**Success response (200)**
+
+```json
+{
+  "success": true,
+  "data": {
+    "valid": true,
+    "status": "active",
+    "can_redeem": true,
+    "reward": {
+      "id": "reward_001",
+      "reward_code": "RWD-A1B2C3D4",
+      "issued_at": "2026-01-29T10:30:00.000Z",
+      "expires_at": "2026-02-28T10:30:00.000Z"
+    },
+    "member": {
+      "id": "member_001",
+      "name": "Jane Doe"
+    },
+    "campaign": {
+      "id": "camp_001",
+      "name": "Summer Sale Campaign"
+    }
+  }
+}
+```
+
+**Error responses**
+
+| Status | Cause |
+|--------|-------|
+| 404 | Reward code not found |
+| 500 | Server error |
+
+---
+
+## Members
+
+These endpoints are used by the mobile app to register push tokens and fetch campaign eligibility per member.
+
+### POST /api/members/\[id\]/push-token
+
+Saves or updates the OneSignal player ID for a member's device. Call this when the customer grants push notification permission in the app, and again if the player ID changes.
+
+**Authentication:** Required
+
+**Path parameters**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id` | string | Member ID |
+
+**Request body**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `onesignal_player_id` | string | Yes | OneSignal player ID |
+| `platform` | string | No | `ios`, `android`, or `web` |
+| `app_version` | string | No | App version string (e.g. `2.1.0`) |
+
+```bash
+curl -X POST "https://your-domain.com/api/members/member_001/push-token" \
+  -H "Content-Type: application/json" \
+  -b "sb-access-token=<token>" \
+  -d '{"onesignal_player_id": "player_abc123", "platform": "ios", "app_version": "2.1.0"}'
+```
+
+**Success response (200)**
+
+```json
+{"success": true, "message": "Push token saved successfully"}
+```
+
+**Error responses**
+
+| Status | Cause |
+|--------|-------|
+| 400 | Missing onesignal_player_id |
+| 401 | Unauthorized |
+| 404 | Member not found |
+| 500 | Server error |
+
+---
+
+### GET /api/members/\[id\]/campaign-eligibility
+
+Returns the campaigns a specific member is currently eligible for. This covers the same data as `/api/campaigns/member-eligible` but accepts the member ID in the URL path rather than a query string.
+
+**Authentication:** Required
+
+**Path parameters**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id` | string | Member ID |
+
+```bash
+curl "https://your-domain.com/api/members/member_001/campaign-eligibility" \
+  -b "sb-access-token=<token>"
+```
+
+**Success response (200)**
+
+```json
+{
+  "success": true,
+  "data": {
+    "eligible_campaigns": [
+      {
+        "id": "camp_001",
+        "name": "Summer Sale Campaign",
+        "reward_type": "discount",
+        "reward_value": 20,
+        "start_date": "2026-06-01T00:00:00.000Z",
+        "end_date": "2026-08-31T23:59:59.000Z"
+      }
+    ],
+    "member_id": "member_001"
+  }
+}
+```
+
+**Error responses**
+
+| Status | Cause |
+|--------|-------|
+| 401 | Unauthorized |
+| 404 | Member not found |
+| 500 | Server error |
+
+---
+
+## Analytics
+
+### POST /api/analytics/track-event
+
+Records an analytics event. Use this for notification opens and clicks that originate outside the campaign-specific endpoints, or for any custom event type.
+
+**Authentication:** Required
+
+**Request body**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `event_type` | string | Yes | `scan`, `redeem`, `page_view`, or `notification_open` |
+| `campaign_id` | string | No | Associated campaign |
+| `member_id` | string | No | Associated member |
+| `metadata` | object | No | Additional key-value data |
+| `timestamp` | string | No | ISO 8601 timestamp (defaults to now) |
+
+```bash
+curl -X POST "https://your-domain.com/api/analytics/track-event" \
+  -H "Content-Type: application/json" \
+  -b "sb-access-token=<token>" \
+  -d '{
+    "event_type": "notification_open",
+    "campaign_id": "camp_001",
+    "member_id": "member_001",
+    "metadata": {"source": "push_notification", "device": "ios"}
+  }'
+```
+
+**Success response (200)**
+
+```json
+{"success": true, "data": {"event_id": "evt_abc123"}}
+```
+
+**Error responses**
+
+| Status | Cause |
+|--------|-------|
+| 400 | Missing event_type |
+| 401 | Unauthorized |
+| 500 | Server error |
+
+---
+
+### GET /api/analytics/campaigns/\[id\]/performance
+
+Returns aggregate performance metrics for a campaign over a time period. The response includes notification volume, open rate, click rate, rewards issued, redemption rate, and a daily time series breakdown.
+
+**Authentication:** Required
+
+**Path parameters**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `id` | string | Campaign ID |
+
+**Query parameters**
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `period` | string | No | `30d` | `7d`, `30d`, `90d`, or `all` |
+
+```bash
+curl "https://your-domain.com/api/analytics/campaigns/camp_001/performance?period=30d" \
+  -b "sb-access-token=<token>"
+```
+
+**Success response (200)**
+
+```json
+{
+  "success": true,
+  "data": {
+    "campaign": {
+      "id": "camp_001",
+      "name": "Summer Sale Campaign",
+      "status": "active"
+    },
+    "metrics": {
+      "total_notifications_sent": 1500,
+      "total_opens": 800,
+      "open_rate": 0.533,
+      "total_clicks": 350,
+      "click_rate": 0.233,
+      "total_rewards_issued": 200,
+      "total_rewards_redeemed": 120,
+      "redemption_rate": 0.6
+    },
+    "reward_breakdown": {
+      "active": 60,
+      "redeemed": 120,
+      "expired": 20,
+      "total": 200
+    }
+  }
+}
+```
+
+<Info>
+  `open_rate`, `click_rate`, and `redemption_rate` are decimals between 0 and 1. Multiply by 100 to get percentages.
+</Info>
+
+**Error responses**
+
+| Status | Cause |
+|--------|-------|
+| 400 | Invalid period value |
+| 401 | Unauthorized |
+| 404 | Campaign not found |
+| 500 | Server error |

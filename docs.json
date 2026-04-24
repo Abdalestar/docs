@@ -45,7 +45,8 @@
           "merchants/qr-codes/overview",
           "merchants/qr-codes/generating",
           "merchants/qr-codes/batch",
-          "merchants/nfc-tags"
+          "merchants/nfc-tags",
+          "merchants/nfc-tags-detail"
         ]
       },
       {
