@@ -8,7 +8,7 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 **Article:** `api-reference/endpoints.mdx`
 **Branch:** `docs/api-endpoints-reference`
-**PR:** (see below)
+**PR:** https://github.com/Abdalestar/docs/pull/24
 **Status:** Done
 
 ### What was written
@@ -54,6 +54,8 @@ None needed. API reference article.
 - docs.json stash-pop conflict will recur every run as long as prior branches left stashed changes; consider clearing old stashes at start of each run with `git stash clear`
 - `api-reference/endpoints.mdx` is the LAST article in the Notion board with Status = Not started (all others were marked "Already published" or "Done")
 - After this PR: check for screenshot-refresh tasks (Done = YES, Needs Screenshots = YES, Notes does NOT contain "screenshots added")
+- `gh pr create` fails with "unable to find git executable in PATH" even when git IS in PATH; the fix is `gh api repos/Abdalestar/docs/pulls --method POST --field title="..." --field head="..." --field base="main" --field body="..."` which uses gh API mode and bypasses the git check entirely
+- Always use `gh api` for PR creation instead of `gh pr create` in future runs
 
 ---
 
