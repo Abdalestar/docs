@@ -1,0 +1,75 @@
+---
+title: "Payment gateway integration"
+sidebarTitle: "Payment gateways"
+description: "Qtap handles loyalty. Your payment terminal handles payments. Here's how the two work together."
+---
+
+Qtap does not process customer payments and has no direct connection to payment gateways like Tap Payments or KNET. Your existing checkout setup stays exactly as it is.
+
+Loyalty happens as a second step after the customer pays. The customer pays through your terminal, then earns stamps or points by scanning a QR code or tapping an NFC tag.
+
+## How the counter flow works
+
+The payment and the loyalty step are separate actions at the counter:
+
+1. The customer pays using your existing terminal or app.
+2. Staff show the QR code (or the customer taps the NFC tag).
+3. Qtap records the stamp or awards points.
+
+For stamp cards, each scan adds one stamp regardless of how much the customer spent. For points programs, the points awarded per scan are set when you configure the QR code (for example, 10 points per visit). If you want points to reflect the actual spend amount, you need the API approach below.
+
+## Connecting loyalty to a payment via API
+
+If you want loyalty to fire automatically when a payment completes (so staff do not have to scan anything), a developer can call the Qtap scan endpoint from a payment webhook.
+
+The endpoint is public and needs no authentication token:
+
+```bash
+curl -X POST "https://dashboard.qtap.qa/api/scan" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "your-qr-code-value",
+    "member_id": "member_001",
+    "location_id": "loc_456"
+  }'
+```
+
+The response confirms the stamps or points awarded. Your developer can log that alongside the payment record.
+
+<Info>
+The `code` value comes from the QR code your dashboard generates. Find it under **QR Codes** in the sidebar. Each location has its own code.
+</Info>
+
+Most payment gateways used in Qatar fire a webhook when a payment succeeds. Your developer can listen for that event and call `POST /api/scan` at that moment. The Qtap side takes under a second to respond.
+
+## What your developer needs
+
+To wire this up, they need four things:
+
+- The QR code value from your Qtap dashboard (visible under **QR Codes**)
+- The member's Qtap ID (available once the customer is enrolled)
+- Your location ID (visible in **Settings → Locations**)
+- A webhook from your payment gateway that fires on successful payment
+
+<Warning>
+If the customer is not yet enrolled in your loyalty program, leave `member_id` out of the call. Qtap will record the scan but cannot attribute it to a member until they sign up.
+</Warning>
+
+## Gateway support in Qatar
+
+Qtap has no built-in plugin for any gateway. All of the gateways below support server-side webhooks or callbacks that a developer can use to trigger the scan:
+
+| Gateway | Webhook / callback |
+|---|---|
+| Tap Payments | Webhook on `CAPTURED` event |
+| MyFatoorah | `callbackUrl` on payment request |
+| KNET | Via acquirer callback (check with your bank) |
+| Mada | Via acquirer callback (check with your bank) |
+
+If you are unsure whether your gateway supports this, check their developer documentation or ask your payment provider.
+
+## Without a developer
+
+The API approach requires development work. If you do not have a developer available, the counter scan works fine for most businesses. Staff scan after each payment, which adds a few seconds to checkout. You can also use an NFC tag at the counter so customers tap themselves without staff involvement.
+
+For questions about setting up a custom integration, email support@qtap.qa.
