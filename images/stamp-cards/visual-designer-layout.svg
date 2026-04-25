@@ -1,0 +1,90 @@
+<svg viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Card Designer layout with design panels on the left and phone preview on the right">
+  <rect width="760" height="420" fill="#F8F5F2"/>
+
+  <!-- Header -->
+  <rect x="16" y="16" width="728" height="50" rx="8" fill="#423F4C"/>
+  <text x="40" y="46" fill="white" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="700">Card Designer</text>
+  <rect x="580" y="27" width="148" height="30" rx="6" fill="#8E4A63"/>
+  <text x="654" y="47" text-anchor="middle" fill="white" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="600">Save &amp; Continue</text>
+
+  <!-- Left panel -->
+  <rect x="16" y="80" width="360" height="310" rx="8" fill="white" stroke="#E0DCE0" stroke-width="1.5"/>
+
+  <!-- Tab bar -->
+  <rect x="24" y="88" width="344" height="38" rx="6" fill="#F3F0EE"/>
+  <rect x="28" y="91" width="80" height="32" rx="5" fill="white"/>
+  <text x="68" y="112" text-anchor="middle" fill="#423F4C" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="600">Templates</text>
+  <text x="160" y="112" text-anchor="middle" fill="#6B6770" font-family="system-ui,-apple-system,sans-serif" font-size="12">Colors</text>
+  <text x="248" y="112" text-anchor="middle" fill="#6B6770" font-family="system-ui,-apple-system,sans-serif" font-size="12">Icons</text>
+  <text x="336" y="112" text-anchor="middle" fill="#6B6770" font-family="system-ui,-apple-system,sans-serif" font-size="12">Layout</text>
+
+  <!-- Template cards row 1 -->
+  <rect x="28" y="142" width="104" height="92" rx="8" fill="#2D1B4E14" stroke="#E0DCE0" stroke-width="1"/>
+  <circle cx="80" cy="174" r="22" fill="#2D1B4E"/>
+  <text x="80" y="179" text-anchor="middle" fill="white" font-family="system-ui,-apple-system,sans-serif" font-size="11">Cafe</text>
+  <text x="80" y="224" text-anchor="middle" fill="#423F4C" font-family="system-ui,-apple-system,sans-serif" font-size="10">Coffee Shop</text>
+
+  <rect x="144" y="142" width="104" height="92" rx="8" fill="#D32F2F14" stroke="#E0DCE0" stroke-width="1"/>
+  <circle cx="196" cy="174" r="22" fill="#D32F2F"/>
+  <text x="196" y="179" text-anchor="middle" fill="white" font-family="system-ui,-apple-system,sans-serif" font-size="11">Pizza</text>
+  <text x="196" y="224" text-anchor="middle" fill="#423F4C" font-family="system-ui,-apple-system,sans-serif" font-size="10">Pizza Place</text>
+
+  <rect x="260" y="142" width="104" height="92" rx="8" fill="#E91E6314" stroke="#E0DCE0" stroke-width="1"/>
+  <circle cx="312" cy="174" r="22" fill="#E91E63"/>
+  <text x="312" y="179" text-anchor="middle" fill="white" font-family="system-ui,-apple-system,sans-serif" font-size="11">Salon</text>
+  <text x="312" y="224" text-anchor="middle" fill="#423F4C" font-family="system-ui,-apple-system,sans-serif" font-size="10">Salon &amp; Spa</text>
+
+  <!-- Template cards row 2 -->
+  <rect x="28" y="248" width="104" height="92" rx="8" fill="#1976D214" stroke="#E0DCE0" stroke-width="1"/>
+  <circle cx="80" cy="280" r="22" fill="#1976D2"/>
+  <text x="80" y="285" text-anchor="middle" fill="white" font-family="system-ui,-apple-system,sans-serif" font-size="11">Shop</text>
+  <text x="80" y="330" text-anchor="middle" fill="#423F4C" font-family="system-ui,-apple-system,sans-serif" font-size="10">Retail Store</text>
+
+  <rect x="144" y="248" width="104" height="92" rx="8" fill="#311B9214" stroke="#E0DCE0" stroke-width="1"/>
+  <circle cx="196" cy="280" r="22" fill="#311B92"/>
+  <text x="196" y="285" text-anchor="middle" fill="white" font-family="system-ui,-apple-system,sans-serif" font-size="11">Game</text>
+  <text x="196" y="330" text-anchor="middle" fill="#423F4C" font-family="system-ui,-apple-system,sans-serif" font-size="10">Gaming Cafe</text>
+
+  <rect x="260" y="248" width="104" height="92" rx="8" fill="#8E4A6314" stroke="#E0DCE0" stroke-width="1"/>
+  <circle cx="312" cy="280" r="22" fill="#8E4A63"/>
+  <text x="312" y="285" text-anchor="middle" fill="white" font-family="system-ui,-apple-system,sans-serif" font-size="14">+</text>
+  <text x="312" y="330" text-anchor="middle" fill="#423F4C" font-family="system-ui,-apple-system,sans-serif" font-size="10">Blank</text>
+
+  <!-- Right panel -->
+  <rect x="392" y="80" width="352" height="310" rx="8" fill="white" stroke="#E0DCE0" stroke-width="1.5"/>
+  <text x="568" y="108" text-anchor="middle" fill="#423F4C" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="600">Preview</text>
+
+  <!-- Phone body -->
+  <rect x="462" y="118" width="212" height="258" rx="24" fill="#1F2937"/>
+  <!-- Screen -->
+  <rect x="470" y="126" width="196" height="242" rx="18" fill="#111"/>
+
+  <!-- Loyalty card on screen -->
+  <rect x="479" y="148" width="178" height="192" rx="10" fill="#2D1B4E"/>
+  <text x="568" y="168" text-anchor="middle" fill="white" font-family="system-ui,-apple-system,sans-serif" font-size="10" font-weight="700">Your Business</text>
+
+  <!-- Stamps row 1: 5 filled -->
+  <circle cx="514" cy="192" r="11" fill="#FFD700"/>
+  <circle cx="540" cy="192" r="11" fill="#FFD700"/>
+  <circle cx="568" cy="192" r="11" fill="#FFD700"/>
+  <circle cx="596" cy="192" r="11" fill="#FFD700"/>
+  <circle cx="622" cy="192" r="11" fill="#FFD700"/>
+
+  <!-- Stamps row 2: 2 filled, 3 empty -->
+  <circle cx="514" cy="218" r="11" fill="#FFD700"/>
+  <circle cx="540" cy="218" r="11" fill="#FFD700"/>
+  <circle cx="568" cy="218" r="11" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="596" cy="218" r="11" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="622" cy="218" r="11" fill="rgba(255,255,255,0.2)"/>
+
+  <!-- Reward text -->
+  <text x="568" y="250" text-anchor="middle" fill="white" font-family="system-ui,-apple-system,sans-serif" font-size="9" font-weight="600">Get a FREE reward!</text>
+  <text x="568" y="266" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-family="system-ui,-apple-system,sans-serif" font-size="8">7 / 10 stamps</text>
+
+  <!-- Caption below phone -->
+  <text x="568" y="374" text-anchor="middle" fill="#6B6770" font-family="system-ui,-apple-system,sans-serif" font-size="10">Appears in the Qtap customer app</text>
+
+  <!-- Section labels -->
+  <text x="196" y="408" text-anchor="middle" fill="#8E4A63" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="600">Design panels</text>
+  <text x="568" y="408" text-anchor="middle" fill="#8E4A63" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="600">Live phone preview</text>
+</svg>
