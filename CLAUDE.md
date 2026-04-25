@@ -4,7 +4,59 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
-## 2026-04-14 — Security Settings
+## 2026-04-25 — Analytics Reports Hub
+
+**Article:** `merchants/analytics/reports.mdx`
+**Branch:** `docs/analytics-reports-hub`
+**PR:** (to be filled after push)
+**Status:** Done
+
+### What was written
+Hub/index article for the `/analytics/reports` route. Describes all four detailed reports available in the Reports section and links to each sub-article:
+- Points Activity Report — paginated transaction log (earned, redeemed, adjusted, expired), 50 rows/page
+- Revenue Impact Report — 3 stat cards (total revenue, loyalty transactions, avg revenue/transaction) + dual-axis line chart
+- Staff Performance Report — table per staff member: stamps issued, points issued, rewards processed, members served, daily averages
+- Location Comparison — card per location: stamps, points, redemptions, new members, revenue estimate; only shows locations with activity in period
+
+Also added `merchants/analytics/reports` to the Analytics nav group in docs.json (between overview and location-comparison).
+
+### Research sources
+- `app/(dashboard)/analytics/reports/page.tsx` — hub page with 4 report card definitions
+- `app/(dashboard)/analytics/reports/points-activity/page.tsx` — table columns, type badges, pagination
+- `app/(dashboard)/analytics/reports/revenue-impact/page.tsx` — 3 stat cards, dual-axis chart
+- `app/(dashboard)/analytics/reports/staff-performance/page.tsx` — table columns
+- `app/(dashboard)/analytics/reports/location-comparison/page.tsx` — per-location card fields
+- `merchants/analytics/overview.mdx` — checked to avoid content duplication
+
+### Anti-slop fixes applied
+- No em dashes in draft
+- No rule-of-three: all item lists are 4 or 5 items
+- No contrast framing
+- No banned words (leverage, seamless, enhance, etc.)
+- No self-narration phrases
+- "that is a conversation worth having" — direct honest callout (staff performance section)
+- "A branch with no loyalty activity during that window won't show up." — specific, useful edge-case note
+
+### Screenshots
+None attempted. This is a hub/nav article with no flow to walk through. No screenshots required.
+
+### Diagrams
+None created. Hub article lists sub-reports; no multi-step flow or lifecycle to diagram.
+
+### Errors / challenges
+- `git checkout -f main` after editing docs.json reverted the file; re-applied the edit before committing
+- Force checkout discards working-tree changes — must create branch BEFORE editing tracked files in future, or use `git stash` to save changes first
+- Previous runs left 3 stashes on old branches; cleared with `git stash clear` after checking out main
+
+### Insights for future runs
+- All four sub-report articles (`points-activity.mdx`, `revenue-impact.mdx`, `staff-performance.mdx`, `location-comparison.mdx`) are stubs with "Coming soon" content. Each needs a full write-up. They should be added as high-priority tasks.
+- The `analytics/reports` hub page uses `useRouteGuard()` with no additional permission check beyond the standard analytics access.
+- `git checkout -f main` cleanly discards local changes to tracked files but leaves untracked files in place. Safe for new MDX files, dangerous for docs.json edits — always branch first, then edit.
+- `git stash clear` can be run safely at the start of each run to clean up old stashes from previous branch work.
+
+---
+
+## 2026-04-24 — API Endpoints Reference
 
 **Article:** `merchants/settings/security.mdx`
 **Branch:** `docs/settings-security`
