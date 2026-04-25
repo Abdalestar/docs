@@ -8,7 +8,7 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 **Article:** `merchants/analytics/reports.mdx`
 **Branch:** `docs/analytics-reports-hub`
-**PR:** (to be filled after push)
+**PR:** https://github.com/Abdalestar/docs/pull/26
 **Status:** Done
 
 ### What was written
