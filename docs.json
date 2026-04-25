@@ -107,6 +107,12 @@
         "pages": [
           "support/faq"
         ]
+      },
+      {
+        "group": "Integrations",
+        "pages": [
+          "integrations/payment-gateways"
+        ]
       }
     ]
   },
