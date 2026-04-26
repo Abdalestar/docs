@@ -1,0 +1,53 @@
+---
+title: "Campaign detail"
+sidebarTitle: "Managing a campaign"
+description: "What you see when you open a campaign, and how to pause, resume, or delete it."
+---
+
+Click any campaign on the Campaigns page to open its detail view.
+
+## Status
+
+The badge next to the campaign name shows its current state.
+
+| Status | What it means |
+|--------|---------------|
+| Draft | Saved but not yet running. No notifications are going out. |
+| Active | Running. Qtap is checking for trigger conditions and sending when they're met. |
+| Paused | Temporarily stopped. Nothing sends until you resume. |
+| Ended | No longer running. Stats are still visible. |
+
+## Performance
+
+Four numbers at the top of the page track campaign activity.
+
+- **Total sent** — push notifications sent for this campaign
+- **Opened** — how many recipients opened the notification
+- **Redeemed** — how many members used the attached reward
+- **Est. revenue** — a revenue estimate based on redemptions
+
+These come from the campaign record and update after each send.
+
+## Pause, resume, and delete
+
+The buttons in the top-right corner change based on what the campaign is currently doing.
+
+An active campaign shows **Pause**. Pausing stops new sends. If notifications were already queued for that day, they may still go out. A birthday campaign mid-day pause, for example, does not cancel messages already in flight.
+
+A paused campaign shows **Resume**. Resuming makes the campaign active immediately.
+
+**Delete** is permanent. You get a single confirmation prompt before Qtap removes the campaign and all its stats.
+
+## Configuration
+
+This card shows the campaign description, trigger settings, and reward type.
+
+The trigger settings appear as raw JSON — the stored values from when you created the campaign. A birthday campaign shows something like `"days_before": 3`. A win-back campaign shows `"inactive_days": 30` and `"max_sends": 2`.
+
+## Notification message
+
+If you wrote a notification during setup, the title and message body appear here. If you skipped that step, this section shows "No notification message configured."
+
+<Info>
+  The detail page shows your campaign settings but does not have an edit form. To change the trigger, reward, or notification text, pause the campaign, note your settings, then delete and recreate it.
+</Info>
