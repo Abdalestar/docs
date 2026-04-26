@@ -1,0 +1,59 @@
+---
+title: "Notification history"
+sidebarTitle: "Notification history"
+description: "Track delivery, manage drafts, cancel scheduled sends, and check open and click rates from the Notifications page."
+---
+
+Go to **Notifications** in the sidebar to see every push notification your organization has created. The page lists up to 50 notifications, most recent first, organized into tabs by status so you can act on them without hunting through a single list.
+
+<Frame caption="Notification status lifecycle: a draft can be sent immediately or scheduled for later. Both paths flow through Sending before resolving to Sent or Failed.">
+  <img src="/images/notifications-history/status-lifecycle.svg" alt="Diagram showing notification status flow: Draft transitions to Sending via Send Now, or to Scheduled then Sending via Schedule; Sending resolves to Sent on success or Failed on error" />
+</Frame>
+
+## Tabs
+
+**All** shows every notification together, regardless of status. It's the fastest way to see recent activity without switching tabs.
+
+**Drafts** lists saved notifications that haven't been sent or scheduled yet. Each draft card has a **Send** button that delivers it immediately to the segment you chose when composing it. You can also delete drafts from this tab.
+
+**Scheduled** shows notifications queued for a future time. Each card displays the scheduled date and time. To cancel before it goes out, open the three-dot menu on the card and choose **Delete**. Once a notification starts sending, it can't be stopped.
+
+**Sent** is a read-only log of delivered notifications. Cards show recipients, open rate, and click rate. Sent notifications can't be deleted or resent.
+
+**Templates** opens the template manager, where you can create, edit, and delete reusable message drafts. See [Push Notifications](/merchants/campaigns/push-notifications) for details on loading a template when composing a new notification.
+
+## Status badges
+
+Each card carries a badge so you can see where a notification stands at a glance.
+
+| Status | Meaning |
+|--------|----------|
+| Draft | Saved but not sent or scheduled |
+| Scheduled | Queued to send at a specific time |
+| Sending | Delivery in progress |
+| Sent | Delivery complete |
+| Failed | Delivery attempt did not complete |
+
+When a card shows **Sending**, Qtap is batching messages to your segment. For large audiences this takes several minutes — the system sends up to 10 messages per minute per organization. The badge updates to **Sent** when all recipients have been processed.
+
+A **Failed** notification appears in the All tab with a red badge. There's no retry button — to send the same message again, create a new notification with the same content, then delete the failed one.
+
+## Delivery stats
+
+Sent notification cards show three figures below the message body:
+
+- **Sent** — the number of members the notification reached
+- **Opened** — percentage who opened it
+- **Clicked** — percentage who tapped a link inside it
+
+Rates update in near real time as members interact.
+
+Only members who have the Qtap app installed and have push notifications enabled appear in the recipient count. Members without the app, or who turned off notifications, aren't included.
+
+## Who can access
+
+Owners and managers can view and act on the Notifications page. Staff members see an access-denied screen.
+
+<Info>
+To compose a new notification, see [Push Notifications](/merchants/campaigns/push-notifications).
+</Info>

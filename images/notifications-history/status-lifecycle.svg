@@ -1,0 +1,78 @@
+<svg viewBox="0 0 860 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Notification status lifecycle: Draft transitions to Sending via Send Now, or to Scheduled then Sending via Schedule; Sending resolves to Sent on success or Failed on error">
+  <defs>
+    <marker id="arr-p" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#8E4A63"/>
+    </marker>
+    <marker id="arr-g" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#059669"/>
+    </marker>
+    <marker id="arr-r" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#DC2626"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6B6770"/>
+    </marker>
+  </defs>
+
+  <rect width="860" height="290" fill="#F8F5F2"/>
+
+  <!-- Draft box -->
+  <rect x="20" y="105" width="150" height="58" rx="10" fill="#6B6770"/>
+  <text x="95" y="129" text-anchor="middle" fill="#F8F5F2"
+        font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="700">Draft</text>
+  <text x="95" y="149" text-anchor="middle" fill="#E5E7EB"
+        font-family="system-ui,-apple-system,sans-serif" font-size="10">Saved, not sent</text>
+
+  <!-- Scheduled box -->
+  <rect x="310" y="208" width="158" height="58" rx="10" fill="#3B82F6"/>
+  <text x="389" y="232" text-anchor="middle" fill="#F8F5F2"
+        font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="700">Scheduled</text>
+  <text x="389" y="252" text-anchor="middle" fill="#DBEAFE"
+        font-family="system-ui,-apple-system,sans-serif" font-size="10">Queued for later</text>
+
+  <!-- Sending box -->
+  <rect x="310" y="95" width="158" height="58" rx="10" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/>
+  <text x="389" y="119" text-anchor="middle" fill="#92400E"
+        font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="700">Sending</text>
+  <text x="389" y="139" text-anchor="middle" fill="#92400E"
+        font-family="system-ui,-apple-system,sans-serif" font-size="10">Delivery in progress</text>
+
+  <!-- Sent box -->
+  <rect x="640" y="48" width="150" height="58" rx="10" fill="#059669"/>
+  <text x="715" y="72" text-anchor="middle" fill="#F8F5F2"
+        font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="700">Sent</text>
+  <text x="715" y="92" text-anchor="middle" fill="#A7F3D0"
+        font-family="system-ui,-apple-system,sans-serif" font-size="10">Delivery complete</text>
+
+  <!-- Failed box -->
+  <rect x="640" y="198" width="150" height="58" rx="10" fill="#DC2626"/>
+  <text x="715" y="222" text-anchor="middle" fill="#F8F5F2"
+        font-family="system-ui,-apple-system,sans-serif" font-size="14" font-weight="700">Failed</text>
+  <text x="715" y="242" text-anchor="middle" fill="#FECACA"
+        font-family="system-ui,-apple-system,sans-serif" font-size="10">Delivery incomplete</text>
+
+  <!-- Arrow 1: Draft to Sending Send now -->
+  <line x1="170" y1="124" x2="307" y2="124" stroke="#8E4A63" stroke-width="2.5" marker-end="url(#arr-p)"/>
+  <text x="238" y="114" text-anchor="middle" fill="#423F4C"
+        font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600">Send now</text>
+
+  <!-- Arrow 2: Draft to Scheduled Schedule (dashed) -->
+  <line x1="95" y1="163" x2="318" y2="214" stroke="#6B6770" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-gray)"/>
+  <text x="188" y="202" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui,-apple-system,sans-serif" font-size="11">Schedule</text>
+
+  <!-- Arrow 3: Scheduled to Sending Send time (vertical, dashed) -->
+  <line x1="389" y1="208" x2="389" y2="155" stroke="#6B6770" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-gray)"/>
+  <text x="415" y="185" text-anchor="start" fill="#6B6770"
+        font-family="system-ui,-apple-system,sans-serif" font-size="10">Send time</text>
+
+  <!-- Arrow 4: Sending to Sent -->
+  <line x1="468" y1="115" x2="637" y2="78" stroke="#059669" stroke-width="2" marker-end="url(#arr-g)"/>
+  <text x="549" y="84" text-anchor="middle" fill="#059669"
+        font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600">Success</text>
+
+  <!-- Arrow 5: Sending to Failed -->
+  <line x1="468" y1="140" x2="637" y2="208" stroke="#DC2626" stroke-width="2" marker-end="url(#arr-r)"/>
+  <text x="549" y="190" text-anchor="middle" fill="#DC2626"
+        font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600">Error</text>
+</svg>
