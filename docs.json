@@ -75,7 +75,8 @@
         "pages": [
           "merchants/members/overview",
           "merchants/members/profiles",
-          "merchants/members/redemptions"
+          "merchants/members/redemptions",
+          "merchants/redemptions"
         ]
       },
       {
