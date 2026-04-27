@@ -1,0 +1,56 @@
+<svg viewBox="0 0 800 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stamp card status flow diagram showing Draft, Active, and Inactive states">
+  <defs>
+    <marker id="arrow-dark" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#423F4C"/>
+    </marker>
+    <marker id="arrow-muted" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6B6770"/>
+    </marker>
+  </defs>
+
+  <rect width="800" height="310" fill="#F8F5F2" rx="8"/>
+
+  <rect x="60" y="105" width="170" height="80" rx="12" fill="#F0D793"/>
+  <text x="145" y="141" text-anchor="middle" fill="#423F4C"
+        font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700">Draft</text>
+  <text x="145" y="163" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif" font-size="12">Not visible to customers</text>
+
+  <rect x="315" y="105" width="170" height="80" rx="12" fill="#8E4A63"/>
+  <text x="400" y="141" text-anchor="middle" fill="white"
+        font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700">Active</text>
+  <text x="400" y="163" text-anchor="middle" fill="#F0D793"
+        font-family="system-ui, -apple-system, sans-serif" font-size="12">Live to customers</text>
+
+  <rect x="570" y="105" width="170" height="80" rx="12" fill="#F8F5F2" stroke="#6B6770" stroke-width="2"/>
+  <text x="655" y="141" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700">Inactive</text>
+  <text x="655" y="163" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif" font-size="12">Stamps paused</text>
+
+  <line x1="232" y1="126" x2="313" y2="126" stroke="#423F4C" stroke-width="2" marker-end="url(#arrow-dark)"/>
+  <text x="272" y="116" text-anchor="middle" fill="#423F4C"
+        font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600">Publish</text>
+
+  <line x1="313" y1="159" x2="232" y2="159" stroke="#6B6770" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-muted)"/>
+  <text x="272" y="178" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif" font-size="11">Save as Draft</text>
+
+  <line x1="487" y1="126" x2="568" y2="126" stroke="#423F4C" stroke-width="2" marker-end="url(#arrow-dark)"/>
+  <text x="528" y="116" text-anchor="middle" fill="#423F4C"
+        font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600">Deactivate</text>
+
+  <line x1="568" y1="159" x2="487" y2="159" stroke="#6B6770" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-muted)"/>
+  <text x="528" y="178" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif" font-size="11">Activate</text>
+
+  <path d="M 655 187 L 655 245 L 145 245 L 145 187"
+        fill="none" stroke="#6B6770" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow-muted)"/>
+  <text x="400" y="265" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif" font-size="11">Convert to Draft</text>
+
+  <line x1="60" y1="290" x2="90" y2="290" stroke="#423F4C" stroke-width="2"/>
+  <text x="96" y="294" fill="#423F4C" font-family="system-ui, -apple-system, sans-serif" font-size="11">From edit wizard</text>
+  <line x1="240" y1="290" x2="270" y2="290" stroke="#6B6770" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="276" y="294" fill="#6B6770" font-family="system-ui, -apple-system, sans-serif" font-size="11">From Cards list menu</text>
+</svg>
