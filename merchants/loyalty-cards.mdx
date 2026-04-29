@@ -1,0 +1,86 @@
+---
+title: "Stamp Cards"
+sidebarTitle: "Your stamp cards"
+description: "View, filter, and manage all your stamp cards from one place."
+---
+
+The Stamp Cards page at `/cards` shows every card your business has created. Filter by status or click any card to open the editor.
+
+<Frame caption="The Stamp Cards list showing cards with status badges and a visual card preview.">
+  <img src="/images/loyalty-cards/cards-list-final.png" alt="Stamp cards list view" />
+</Frame>
+
+## Status tabs
+
+Once you have at least one card, four tabs appear above the card grid. Each tab shows a count of the cards in that group.
+
+**All** shows every card regardless of state. **Active** limits the view to cards that customers can currently earn stamps on. **Draft** shows cards you've saved but not published. **Inactive** shows cards you've paused.
+
+The counts update as soon as you change a card's status.
+
+## What each card shows
+
+Each card in the grid displays a visual preview: the card color, stamp icon, name, and stamp goal. A status badge in the top-left corner of each card shows whether it's active, a draft, or inactive. Click anywhere on the card preview to open the editor.
+
+## Card actions
+
+The three-dot menu on each card opens a list of actions. What you see depends on the card's current status.
+
+<AccordionGroup>
+  <Accordion title="Draft cards">
+    - **Edit** — opens the card editor
+    - **Duplicate** — creates a draft copy with "(Copy)" appended to the name
+    - **Publish** — makes the card live immediately
+    - **Delete** — permanently removes the card and all associated data
+  </Accordion>
+
+  <Accordion title="Active cards">
+    - **Edit** — opens the card editor
+    - **Duplicate** — creates a draft copy
+    - **Deactivate** — pauses the card without deleting it
+    - **Delete** — permanently removes the card and all associated data
+  </Accordion>
+
+  <Accordion title="Inactive cards">
+    - **Edit** — opens the card editor
+    - **Duplicate** — creates a draft copy
+    - **Activate** — puts the card back into service
+    - **Convert to Draft** — moves the card back to draft for editing before relaunching
+    - **Delete** — permanently removes the card and all associated data
+  </Accordion>
+</AccordionGroup>
+
+When you **deactivate** a card, members who already have stamps keep their progress. They can still redeem any rewards they've already earned. New stamps cannot be issued against an inactive card.
+
+**Duplicate** copies all settings across, including rewards and location restrictions. Use it when you want a new card based on an existing one without redoing the setup from scratch.
+
+<Warning>
+Deleting a card is permanent. Member stamp histories tied to that card are removed too. The confirmation dialog that appears before the delete goes through is the only warning you'll get.
+</Warning>
+
+## Card lifecycle
+
+The diagram below shows how a card moves between its three states.
+
+<Frame caption="Stamp card status transitions: how Draft, Active, and Inactive states connect.">
+  <img src="/images/loyalty-cards/card-lifecycle.svg" alt="Stamp card lifecycle diagram" />
+</Frame>
+
+## Creating a card
+
+Click **Create Card** in the top right to open the four-step setup wizard. The wizard covers card design, rewards, location restrictions, and a final review before you publish.
+
+<Frame caption="The card creation wizard, step one: card design.">
+  <img src="/images/loyalty-cards/create-card-final.png" alt="Create stamp card wizard" />
+</Frame>
+
+Your plan limits how many active stamp cards you can have at once. If you've reached the limit, you'll see a message when you try to publish a draft. Go to **Settings → Billing** to upgrade.
+
+<CardGroup cols={2}>
+  <Card title="Creating a stamp card" href="/merchants/stamp-cards/creating">
+    Walkthrough of every field in the setup wizard
+  </Card>
+  <Card title="Stamp card rewards" href="/merchants/stamp-cards/rewards">
+    How to add main, sign-up, and milestone rewards
+  </Card>
+</CardGroup>
