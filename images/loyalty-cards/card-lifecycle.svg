@@ -1,0 +1,38 @@
+<svg viewBox="0 0 720 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stamp card status lifecycle diagram">
+  <rect width="720" height="270" fill="#F8F5F2" rx="10"/>
+
+  <!-- Draft box -->
+  <rect x="30" y="65" width="170" height="76" rx="10" fill="#F0D793"/>
+  <text x="115" y="98" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="700" fill="#423F4C">Draft</text>
+  <text x="115" y="120" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#6B6770">Not visible to customers</text>
+
+  <!-- Active box -->
+  <rect x="275" y="65" width="170" height="76" rx="10" fill="#8E4A63"/>
+  <text x="360" y="98" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="700" fill="white">Active</text>
+  <text x="360" y="120" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#F0D0DC">Live for customers</text>
+
+  <!-- Inactive box -->
+  <rect x="520" y="65" width="170" height="76" rx="10" fill="#F8F5F2" stroke="#C5C0C9" stroke-width="1.5"/>
+  <text x="605" y="98" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="16" font-weight="700" fill="#6B6770">Inactive</text>
+  <text x="605" y="120" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" fill="#6B6770">Stamps paused</text>
+
+  <!-- Draft to Active (Publish) top arrow -->
+  <line x1="202" y1="92" x2="272" y2="92" stroke="#423F4C" stroke-width="2"/>
+  <polygon points="272,87 282,92 272,97" fill="#423F4C"/>
+  <text x="237" y="84" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="600" fill="#423F4C">Publish</text>
+
+  <!-- Active to Inactive (Deactivate) top arrow -->
+  <line x1="447" y1="92" x2="517" y2="92" stroke="#423F4C" stroke-width="2"/>
+  <polygon points="517,87 527,92 517,97" fill="#423F4C"/>
+  <text x="482" y="84" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="12" font-weight="600" fill="#423F4C">Deactivate</text>
+
+  <!-- Inactive to Active (Activate) bottom path at y=175 -->
+  <path d="M 605 143 L 605 175 L 360 175 L 360 143" stroke="#6B6770" stroke-width="1.5" stroke-dasharray="5,3" fill="none"/>
+  <polygon points="355,143 360,133 365,143" fill="#6B6770"/>
+  <text x="482" y="193" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#6B6770">Activate</text>
+
+  <!-- Inactive to Draft (Convert to Draft) bottom path at y=220 -->
+  <path d="M 520 155 L 520 215 L 115 215 L 115 143" stroke="#6B6770" stroke-width="1.5" stroke-dasharray="5,3" fill="none"/>
+  <polygon points="110,143 115,133 120,143" fill="#6B6770"/>
+  <text x="318" y="237" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#6B6770">Convert to Draft</text>
+</svg>
