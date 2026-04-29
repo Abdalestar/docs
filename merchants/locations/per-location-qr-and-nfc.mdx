@@ -1,0 +1,53 @@
+---
+title: "Per-Location QR Codes and NFC Tags"
+description: "Tag QR codes and NFC tags to a single branch so analytics splits cleanly."
+---
+
+QR codes and NFC tags can be created for a specific location, so a scan at one branch never gets counted at another. This is the default for new codes, and worth keeping that way.
+
+## How a QR code is tied to a location
+
+When you generate a QR code from **QR Codes → New Code**, the form has a **Location** dropdown. Pick the branch. The location is encoded into the QR data, so every scan of that code is recorded against that location.
+
+If you have one location, the dropdown is hidden and the single location is used automatically.
+
+## Why you'd want different codes per branch
+
+Three reasons:
+
+1. **Analytics splits cleanly.** The Locations tab in Analytics shows real numbers per branch, not a guess based on the staff member who stamped.
+2. **Different cards per branch.** If a card is valid at Location A only, generate the QR code at Location A so it can't accidentally be put up at Location B.
+3. **Staff restrictions.** A Staff role assigned to Location A can stamp customers from QR codes generated for Location A. They can't from QR codes generated for Location B.
+
+## Generating one set of codes per branch
+
+A pattern that works for most merchants:
+
+- Print a few **table cards** with QR codes labeled with the branch name.
+- Print one **counter card** for each branch, with a bigger QR code, for customers who haven't joined yet.
+- Use **Batch QR Generation** to print one batch of unique single-use codes per branch (Growth plan and above).
+
+Keep a copy of the printed cards in a labeled envelope per branch so you can replace damaged ones.
+
+## NFC tags by location
+
+When you register an NFC tag from **NFC Tags → New Tag**, the form has the same **Location** dropdown. Pick the branch where the tag will live. From then on, every tap of that tag records a scan at that location.
+
+NFC tags are physical chips, so once you've registered a tag for Location A, the chip stays at Location A. Don't move tags between branches without re-registering them, or your analytics will split at the wrong time.
+
+## Multi-location codes
+
+If you really need a single QR code that works at any branch (for example, on a shared receipt template), pick **All locations** in the dropdown. The code records the scanning staff member's location at the time of the scan, instead of being tied to one branch.
+
+<Warning>
+  Multi-location codes only work properly if your staff are correctly assigned. A staff with no location assigned will record scans against the merchant default location, which may not match where they actually are.
+</Warning>
+
+<CardGroup cols={2}>
+  <Card title="Generating QR Codes" icon="qrcode" href="/merchants/qr-codes/generating">
+    Field-by-field walkthrough of the QR generator.
+  </Card>
+  <Card title="NFC Tags" icon="signal-stream" href="/merchants/nfc-tags">
+    Register and configure physical NFC tags.
+  </Card>
+</CardGroup>

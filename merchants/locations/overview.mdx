@@ -1,0 +1,61 @@
+---
+title: "Locations Overview"
+description: "How locations work in Qtap and what changes when you add a second one."
+---
+
+A location is one physical branch of your business. If you have one shop, you have one location. If you run three cafes, you have three. Most things in Qtap (stamps, redemptions, QR codes, staff) are tied to a location.
+
+## What you can do per location
+
+For each location you can:
+
+- Assign which staff work there.
+- Restrict which loyalty cards are valid there.
+- Generate QR codes specific to that branch.
+- Tap the location into the analytics filter to see only its numbers.
+- Set hours of operation that show up on your merchant page.
+
+## When you only have one location
+
+If your account has a single location, the location selector is hidden in most places. Stamps, QR codes, and analytics all work without you having to pick a branch each time. The location is still there in the background, you just don't have to think about it.
+
+## When you add a second location
+
+When the second location is created, a few things change:
+
+- The **Location** column appears in the Members and Redemptions tables.
+- Loyalty card setup adds a **Locations** step where you pick which branches the card is valid at.
+- The Analytics page gains a **Locations** tab for side-by-side comparison.
+- New staff invites prompt you to pick which location they belong to.
+
+Nothing breaks for existing data. Stamps and members from before the second location was added stay tagged to the original.
+
+## Plan limits
+
+Each plan includes a number of locations:
+
+- **Starter** — 1 location
+- **Growth** — 2 locations
+- **Elite** — 5 locations
+- **Franchise** — 15 locations
+
+If you need more than the plan allows, buy the **Extra Location** add-on for $15 per month each (less on Elite and Franchise). The cap on the Franchise plan is 15 unless you talk to us.
+
+## Active vs. inactive
+
+Every location has a status: Active or Inactive. Only active locations:
+
+- Show on your merchant page.
+- Accept stamps and redemptions.
+- Count toward your plan's location limit.
+
+Flip a location to inactive when it's temporarily closed for renovation or seasonal break, instead of deleting it. You keep the historical analytics.
+
+<CardGroup cols={2}>
+  <Card title="Adding and Editing" icon="map-pin" href="/merchants/locations/adding-and-editing">
+    Walk through the location form field by field.
+  </Card>
+  <Card title="Assigning Staff to Locations" icon="users" href="/merchants/locations/assigning-staff">
+    Restrict where each staff member can stamp and redeem.
+  </Card>
+</CardGroup>
