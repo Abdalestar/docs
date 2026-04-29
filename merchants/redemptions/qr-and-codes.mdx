@@ -1,0 +1,60 @@
+---
+title: "Reward QR Codes and Codes"
+description: "How reward codes are created, what they look like, and how to verify one."
+---
+
+Every reward Qtap issues comes with two ways to redeem it: a 6-character text code and a QR code. They both point at the same reward. Either one works at the counter.
+
+## What the codes look like
+
+- **Text code.** Six characters, uppercase letters and numbers (no zero, no letter O, to avoid confusion). Example: `ABCD12`.
+- **QR code.** A scannable square barcode that encodes the same code in a format the dashboard scanner can read.
+
+The customer sees both in their app, side by side. They can read the text code out loud or hold the QR code up to be scanned.
+
+## How a code is generated
+
+Qtap generates the code automatically the moment a reward is issued. You don't generate it yourself.
+
+A reward gets issued when:
+
+- A customer earns it (reached the stamp goal, hit a milestone).
+- A campaign sends one out.
+- An Owner or Manager issues one manually from the member's profile.
+
+The code stays valid until the reward is redeemed, expires, or is canceled.
+
+## Validating a code
+
+There are three places a code is validated:
+
+1. **Scan button on the Redemptions page.** Opens your camera and reads the QR code.
+2. **Redemption Code field.** Type the 6 characters and press Enter.
+3. **Look up member → Pending Rewards.** The dashboard already knows the codes for that member.
+
+If the code is good, the reward fills in. If it's not, you'll see an error message. The next page covers what each error means.
+
+## How long codes stay valid
+
+A reward code is valid until one of these happens:
+
+- The customer redeems it (the most common case).
+- The expiry date passes (if the reward has one). The code stops working at midnight on the expiry day, in your account's time zone.
+- An Owner cancels the reward from the member's profile.
+
+## Reusing a code
+
+Codes are single use. Once a reward is redeemed, the code can't be used again, even at a different location. If a customer comes back asking to redeem the same reward twice, that's a sign they didn't actually receive the item the first time. Check the redemption history before reissuing.
+
+## Custom-branded QR codes
+
+The scannable QR codes for earning stamps can be designed with your colors and logo, on the Custom QR Branding add-on. Reward QR codes that customers show at the counter use a standard black-and-white pattern, since they need to scan reliably under any lighting.
+
+<CardGroup cols={2}>
+  <Card title="Generating QR Codes" icon="qrcode" href="/merchants/qr-codes/generating">
+    The earning side: QR codes you put on tables, receipts, or counters.
+  </Card>
+  <Card title="Troubleshooting Redemptions" icon="life-ring" href="/merchants/redemptions/troubleshooting">
+    What each code error means and how to fix it.
+  </Card>
+</CardGroup>

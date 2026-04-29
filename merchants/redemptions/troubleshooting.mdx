@@ -1,0 +1,75 @@
+---
+title: "Troubleshooting Redemptions"
+description: "What each error message means and how to fix the most common redemption problems."
+---
+
+This page covers the errors you'll see at the counter and what to do about each one.
+
+## “Code not found”
+
+The 6 characters typed in don't match any active reward. Common causes:
+
+- **Typo.** The letter O looks like the number 0, and the letter I looks like the number 1. Qtap doesn't use any of these characters in codes for that reason, so check that you've read the customer's screen correctly. Ask them to read it out instead of you reading it off their phone.
+- **Wrong code.** The customer is showing you a stamp earning QR code by mistake, not their reward. The reward code has the word “Reward” above it in the app.
+
+**Fix:** Use **Look up member** instead. Type their phone number and pick the right reward from the list.
+
+## “Reward already redeemed”
+
+The code worked, but the reward has been used. The screen shows when, where, and which staff member redeemed it.
+
+**Fix:** Check the redemption history on screen. If it was redeemed by mistake earlier today and the customer didn't get the item, an Owner can reissue the reward from **Members → [member] → Issue Reward**. Tell the customer to wait while you message the Owner.
+
+## “Reward expired”
+
+The reward had an expiry date set when it was created, and that date has passed.
+
+**Fix:** You cannot redeem an expired reward. As a goodwill gesture, an Owner can issue the customer a new reward manually from **Members → [member] → Issue Reward**.
+
+## “Reward canceled”
+
+An Owner removed this reward from the member's account before it was redeemed.
+
+**Fix:** Talk to the Owner. The reward was canceled for a reason, and you should know why before issuing another one.
+
+## “Wrong location”
+
+You're trying to redeem a reward that is restricted to a different location. The card the reward came from has a list of valid locations, and your current location isn't in it.
+
+**Fix:** Check what card the reward is from (shown on the redemption screen). If you can see the card has a small list of locations, the reward is location-locked. The customer needs to redeem at one of the listed branches. If you think this is wrong, the Owner can edit the card's locations from **Cards → [card] → Locations**.
+
+## Camera won't open when scanning
+
+The browser is blocking camera access for the dashboard.
+
+**Fix:**
+
+- **Chrome / Edge:** Click the lock icon in the address bar, set Camera to Allow, refresh the page.
+- **Safari (iPad):** Open Settings on the device, then Safari, then Camera, and set qtap.qa to Allow.
+- **Firefox:** Click the camera icon in the address bar and pick Allow for this session.
+
+If the camera still doesn't open, type the 6-character code instead. Manual code entry works the same way.
+
+## The Redeem button is grayed out
+
+You've found the member but the button is disabled.
+
+**Fix:** Two things to check:
+
+1. Has a reward actually been picked from the list, or is the screen still on “Select a reward”? Click a row.
+2. Is your role **Staff** and you're at a location you're not assigned to? Your name in the bottom of the sidebar shows your assigned locations. Move to an assigned location, or ask a Manager to redeem.
+
+## I redeemed by mistake
+
+There's no undo button. The reward is marked as used and disappears from the customer's app.
+
+**Fix:** Owners and Managers can issue a replacement reward from **Members → [member] → Issue Reward**. Pick the same reward type and add a note like “Replacement for accidental redemption.”
+
+<CardGroup cols={2}>
+  <Card title="Staff Workflow" icon="hand" href="/merchants/redemptions/staff-workflow">
+    The clean redemption flow when nothing goes wrong.
+  </Card>
+  <Card title="Contact Support" icon="life-ring" href="/support/contact">
+    Reach a human if none of the above fixes the problem.
+  </Card>
+</CardGroup>
