@@ -18,7 +18,8 @@
           "merchants/welcome",
           "merchants/onboarding-wizard",
           "merchants/dashboard-overview",
-          "merchants/first-loyalty-program"
+          "merchants/first-loyalty-program",
+          "merchants/key-concepts"
         ]
       },
       {
@@ -45,19 +46,41 @@
           "merchants/qr-codes/overview",
           "merchants/qr-codes/generating",
           "merchants/qr-codes/batch",
+          "merchants/qr-codes/scan-analytics",
           "merchants/nfc-tags"
+        ]
+      },
+      {
+        "group": "Members",
+        "pages": [
+          "merchants/members/overview",
+          "merchants/members/profiles",
+          "merchants/members/segments-and-tags",
+          "merchants/members/redemptions"
+        ]
+      },
+      {
+        "group": "Redemptions",
+        "pages": [
+          "merchants/redemptions/overview",
+          "merchants/redemptions/staff-workflow",
+          "merchants/redemptions/qr-and-codes",
+          "merchants/redemptions/troubleshooting"
         ]
       },
       {
         "group": "Campaigns",
         "pages": [
           "merchants/campaigns/overview",
+          "merchants/campaigns/welcome",
           "merchants/campaigns/birthday",
           "merchants/campaigns/winback",
           "merchants/campaigns/milestone",
+          "merchants/campaigns/points-multiplier",
+          "merchants/campaigns/flash-sale",
           "merchants/campaigns/rewards",
-          "merchants/campaigns/analytics",
-          "merchants/campaigns/push-notifications"
+          "merchants/campaigns/push-notifications",
+          "merchants/campaigns/analytics"
         ]
       },
       {
@@ -67,23 +90,41 @@
           "merchants/analytics/location-comparison",
           "merchants/analytics/points-activity",
           "merchants/analytics/revenue-impact",
-          "merchants/analytics/staff-performance"
+          "merchants/analytics/staff-performance",
+          "merchants/analytics/ai-insights",
+          "merchants/analytics/exports-and-reports"
         ]
       },
       {
-        "group": "Members",
+        "group": "Locations",
         "pages": [
-          "merchants/members/overview",
-          "merchants/members/profiles",
-          "merchants/members/redemptions"
+          "merchants/locations/overview",
+          "merchants/locations/adding-and-editing",
+          "merchants/locations/assigning-staff",
+          "merchants/locations/per-location-qr-and-nfc",
+          "merchants/locations/filtering-analytics"
         ]
       },
       {
-        "group": "Staff",
+        "group": "Staff & Permissions",
         "pages": [
           "merchants/staff/overview",
+          "merchants/staff/inviting-staff",
           "merchants/staff/roles-permissions",
+          "merchants/staff/custom-permissions",
           "merchants/staff/activity-logs"
+        ]
+      },
+      {
+        "group": "Billing & Subscription",
+        "pages": [
+          "merchants/billing/plans-overview",
+          "merchants/billing/free-trial",
+          "merchants/billing/upgrading-and-downgrading",
+          "merchants/billing/add-ons",
+          "merchants/billing/invoices-and-receipts",
+          "merchants/billing/payment-methods",
+          "merchants/billing/refunds-and-cancellation"
         ]
       },
       {
@@ -97,15 +138,36 @@
         ]
       },
       {
+        "group": "Integrations",
+        "pages": [
+          "merchants/integrations/overview",
+          "merchants/integrations/stripe",
+          "merchants/integrations/onesignal-push",
+          "merchants/integrations/email-resend",
+          "merchants/integrations/google-maps",
+          "merchants/integrations/coming-soon"
+        ]
+      },
+      {
         "group": "Customer App",
         "pages": [
-          "customer-app/settings-profile"
+          "customer-app/overview",
+          "customer-app/getting-started",
+          "customer-app/earning-rewards",
+          "customer-app/managing-rewards",
+          "customer-app/notifications",
+          "customer-app/settings-profile",
+          "customer-app/faq"
         ]
       },
       {
         "group": "Support",
         "pages": [
-          "support/faq"
+          "support/faq",
+          "support/troubleshooting",
+          "support/contact",
+          "support/glossary",
+          "support/changelog"
         ]
       }
     ]
