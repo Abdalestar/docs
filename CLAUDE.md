@@ -1,5 +1,61 @@
 # Qtap Docs Writer — Run Log
 
+---
+
+## 2026-04-29 — Merchant Page Overview
+
+**Article:** `merchants/settings/merchant-page-overview.mdx`
+**Branch:** `docs/merchant-page-overview`
+**PR:** (pending — see Phase 5 notes)
+**Status:** Done (screenshots pending)
+
+### What was written
+Article covering the Merchants management view (`/merchants` route). Covers:
+- Empty state: "No merchant yet" with Create Merchant button → navigates to /merchant-page editor
+- Active state card: logo, name + Active badge, description, category, location, phone, website, Google rating, loyalty card count
+- Real-time stats: members, stamps earned, points earned, redemptions (from `organization_members` table; stamps/points/redemptions only shown when > 0)
+- Actions: Preview (opens `/m/{slug}?preview=true` in new tab, only when slug set), Edit (→ /merchant-page editor), Delete (with confirmation dialog warning about permanent removal)
+- Access control: owner-only (permissions.ts: `/merchants` → `return false` for all non-owners)
+
+Also added `merchants/settings/merchant-page-overview` to the Settings group in `docs.json` (before `merchant-page`).
+
+### Research sources
+- `app/(dashboard)/merchants/page.tsx` — full UI: all states, real-time stats query, actions, delete dialog text
+- `lib/utils/permissions.ts` — confirms `/merchants` → `return false` for non-owners; owner always true
+- `docs/merchants/settings/merchant-page.mdx` — existing editor article; confirmed this new article covers the management view, not the editor form
+- `docs/.writing-rules/SKILL.md`, `banned-words`, `content-patterns` — all 4 anti-slop passes applied
+
+### Screenshots / diagrams
+- **Screenshots:** NOT captured. Automated run — no user present for `request_access`. `Needs Screenshots` flag left on Notion row.
+- **SVG diagram:** `images/merchants/merchant-page-overview-layout.svg` — two-panel layout showing empty state (left) and active profile card with stats and action buttons (right). Uses brand colors (#8E4A63 plum, #F0D793 gold, #423F4C charcoal).
+
+### Anti-slop fixes applied
+- No em dashes, no rule-of-three, no contrast framing, no rhetorical transitions
+- No banned words (leverage, seamless, enhance, utilize, implement, etc.)
+- Delete warning written as plain consequence, not promotional
+- Three-action section (Preview/Edit/Delete) uses full paragraphs of varying length, not staccato bullets
+
+### Errors / challenges
+- `git stash` failed initially due to stale `.git/index.lock` from prior process. Fixed by deleting the lock file via `del C:\Users\Abdallah\docs\.git\index.lock` in cmd.exe shell.
+- Desktop Commander's `read_file` returns only JSON metadata, not file content. Workaround: redirect git output to a temp file and read with `type` command.
+- `git` not in Desktop Commander's PowerShell PATH. Solution: use `shell: cmd` parameter in `start_process` — cmd.exe has git in PATH.
+- `powershell -Command "..."` fails inside Desktop Commander PowerShell (nested shell). Use bare PowerShell expressions directly.
+- Untracked files (MDX, SVG) survive `git stash` without `--include-untracked`, so they persisted correctly when switching branches.
+- docs.json edit was stashed with the old branch. Re-applied after creating the new branch.
+
+### Insights for future runs
+- `shell: cmd` in Desktop Commander's `start_process` reliably runs git. PowerShell shell does not have git in PATH.
+- Redirect git stdout to a temp file and read with `type` to capture output. Direct pipe to `Set-Content` fails with "Cannot run a document in the middle of a pipeline" when using `& $exe` syntax.
+- The `/merchants` dashboard route is NOT a franchise feature — it is the single-merchant profile management view for any plan. The "Franchise Merchant Management" Notion task was auto-discovered with wrong assumptions.
+- PRs #17 and #29 (both claiming to document the /merchants route) were never merged. The actual docs repo on main did not have merchant-profile.mdx. Always verify file existence in the repo rather than trusting Notion Done status.
+- Two Notion tasks described the same /merchants route: "Merchant Page management view" (P2) and "Franchise Merchant Management" (P2). Picked the more accurately described one and marked the other as duplicate.
+
+### Gap discovery (Phase 6)
+- "Franchise Merchant Management" (Notion ID: 34f1ae8f) — this task describes the /merchants route incorrectly as a franchise feature. The route is now covered by this article. Task should be marked Done as duplicate.
+- "Loyalty Card Detail" (Notion ID: 34d1ae8f-748c-812d) — claimed by agent-k7m3p2 on 2026-04-28, still "In progress" with no PR. May be stale. Recommend Abdalle check and reset if needed.
+
+
+
 Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---

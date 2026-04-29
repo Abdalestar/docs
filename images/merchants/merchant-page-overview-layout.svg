@@ -1,0 +1,113 @@
+<svg viewBox="0 0 820 320" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+
+  <!-- Background -->
+  <rect width="820" height="320" fill="#fafafa" rx="12"/>
+
+  <!-- ─────────────────────────────────────── -->
+  <!-- LEFT PANEL: Empty State -->
+  <!-- ─────────────────────────────────────── -->
+  <rect x="20" y="20" width="360" height="280" rx="10" fill="white" stroke="#e5e7eb" stroke-width="1.5"/>
+
+  <!-- Panel header bar -->
+  <rect x="20" y="20" width="360" height="44" rx="10" fill="#423F4C"/>
+  <rect x="20" y="44" width="360" height="20" fill="#423F4C"/>
+  <text x="40" y="48" font-size="14" font-weight="600" fill="white">Merchants</text>
+  <text x="40" y="64" font-size="10" fill="#b0adb8">Manage your merchants.</text>
+
+  <!-- Empty state icon circle -->
+  <circle cx="200" cy="155" r="28" fill="#f3f4f6"/>
+  <!-- Store icon (simplified) -->
+  <rect x="186" y="147" width="28" height="22" rx="2" fill="none" stroke="#9ca3af" stroke-width="1.8"/>
+  <polyline points="184,149 200,141 216,149" fill="none" stroke="#9ca3af" stroke-width="1.8" stroke-linejoin="round"/>
+  <rect x="193" y="159" width="8" height="10" rx="1" fill="#9ca3af"/>
+
+  <!-- Empty state text -->
+  <text x="200" y="198" font-size="12" font-weight="600" fill="#111827" text-anchor="middle">No merchant yet</text>
+  <text x="200" y="212" font-size="9.5" fill="#6b7280" text-anchor="middle">Create a merchant to show</text>
+  <text x="200" y="224" font-size="9.5" fill="#6b7280" text-anchor="middle">customers your business profile.</text>
+
+  <!-- Create Merchant button -->
+  <rect x="152" y="238" width="96" height="28" rx="6" fill="#8E4A63"/>
+  <text x="200" y="257" font-size="11" font-weight="600" fill="white" text-anchor="middle">+ Create Merchant</text>
+
+  <!-- State label -->
+  <text x="200" y="293" font-size="10" fill="#8E4A63" text-anchor="middle" font-weight="500">EMPTY STATE</text>
+
+  <!-- ─────────────────────────────────────── -->
+  <!-- ARROW -->
+  <!-- ─────────────────────────────────────── -->
+  <line x1="390" y1="160" x2="425" y2="160" stroke="#8E4A63" stroke-width="2" stroke-dasharray="5,3"/>
+  <polygon points="425,155 435,160 425,165" fill="#8E4A63"/>
+  <text x="412" y="152" font-size="9" fill="#8E4A63" text-anchor="middle">Click Edit or Create</text>
+
+  <!-- ─────────────────────────────────────── -->
+  <!-- RIGHT PANEL: Active State -->
+  <!-- ─────────────────────────────────────── -->
+  <rect x="440" y="20" width="360" height="280" rx="10" fill="white" stroke="#e5e7eb" stroke-width="1.5"/>
+
+  <!-- Panel header bar -->
+  <rect x="440" y="20" width="360" height="44" rx="10" fill="#423F4C"/>
+  <rect x="440" y="44" width="360" height="20" fill="#423F4C"/>
+  <text x="460" y="48" font-size="14" font-weight="600" fill="white">Merchants</text>
+  <text x="460" y="64" font-size="10" fill="#b0adb8">Manage your merchants.</text>
+
+  <!-- Edit Merchant button top-right -->
+  <rect x="718" y="27" width="68" height="24" rx="5" fill="#6b4f5e"/>
+  <text x="752" y="44" font-size="9.5" font-weight="500" fill="white" text-anchor="middle">✎ Edit Merchant</text>
+
+  <!-- Profile card -->
+  <rect x="456" y="80" width="328" height="192" rx="8" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+
+  <!-- Logo placeholder -->
+  <rect x="470" y="94" width="48" height="48" rx="8" fill="#f3f4f6" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="494" y="124" font-size="10" fill="#9ca3af" text-anchor="middle">🏪</text>
+
+  <!-- Business name + badge -->
+  <text x="530" y="108" font-size="13" font-weight="700" fill="#111827">Sunrise Café</text>
+  <rect x="618" y="96" width="40" height="16" rx="4" fill="#d1fae5"/>
+  <text x="638" y="108" font-size="9" fill="#065f46" font-weight="600" text-anchor="middle">Active</text>
+
+  <!-- Description -->
+  <text x="530" y="124" font-size="9.5" fill="#6b7280">Award-winning specialty coffee in Doha</text>
+
+  <!-- Meta info row -->
+  <text x="530" y="141" font-size="9" fill="#6b7280">☕ Café  📍 Al Sadd  📞 +974 5555 1234  ⭐ 4.8</text>
+  <text x="530" y="155" font-size="9" fill="#6b7280">2 loyalty cards</text>
+
+  <!-- Stats row -->
+  <rect x="466" y="163" width="310" height="1" fill="#f3f4f6"/>
+
+  <!-- Members stat -->
+  <rect x="470" y="172" width="56" height="36" rx="5" fill="#eff6ff"/>
+  <text x="498" y="188" font-size="18" font-weight="700" fill="#2563eb" text-anchor="middle">142</text>
+  <text x="498" y="202" font-size="8" fill="#6b7280" text-anchor="middle">members</text>
+
+  <!-- Stamps stat -->
+  <rect x="534" y="172" width="56" height="36" rx="5" fill="#fffbeb"/>
+  <text x="562" y="188" font-size="18" font-weight="700" fill="#d97706" text-anchor="middle">891</text>
+  <text x="562" y="202" font-size="8" fill="#6b7280" text-anchor="middle">stamps</text>
+
+  <!-- Points stat -->
+  <rect x="598" y="172" width="56" height="36" rx="5" fill="#ecfdf5"/>
+  <text x="626" y="188" font-size="16" font-weight="700" fill="#059669" text-anchor="middle">4.2k</text>
+  <text x="626" y="202" font-size="8" fill="#6b7280" text-anchor="middle">points</text>
+
+  <!-- Redemptions stat -->
+  <rect x="662" y="172" width="56" height="36" rx="5" fill="#faf5ff"/>
+  <text x="690" y="188" font-size="18" font-weight="700" fill="#7c3aed" text-anchor="middle">38</text>
+  <text x="690" y="202" font-size="8" fill="#6b7280" text-anchor="middle">redeemed</text>
+
+  <!-- Action buttons -->
+  <rect x="466" y="218" width="60" height="24" rx="5" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="496" y="234" font-size="9.5" fill="#374151" text-anchor="middle">👁 Preview</text>
+
+  <rect x="532" y="218" width="52" height="24" rx="5" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+  <text x="558" y="234" font-size="9.5" fill="#374151" text-anchor="middle">✎ Edit</text>
+
+  <rect x="590" y="218" width="56" height="24" rx="5" fill="#fef2f2" stroke="#fecaca" stroke-width="1"/>
+  <text x="618" y="234" font-size="9.5" fill="#dc2626" text-anchor="middle">🗑 Delete</text>
+
+  <!-- State label -->
+  <text x="620" y="293" font-size="10" fill="#8E4A63" text-anchor="middle" font-weight="500">ACTIVE STATE</text>
+
+</svg>
