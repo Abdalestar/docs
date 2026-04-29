@@ -1,6 +1,67 @@
 ---
 title: "Revenue Impact"
-description: "Understanding how your loyalty program affects sales and repeat visits"
+description: "How much your loyalty program is worth in repeat business, in plain numbers."
 ---
 
-Coming soon
+Revenue Impact is the dashboard's estimate of how much extra business your loyalty program brings in. It's not exact accounting, it's a useful picture of trends. Go to **Analytics** in the left sidebar and open the **Revenue Impact** tab.
+
+<Note>
+  Revenue numbers depend on you setting an **item value** on each reward when you create it. If you skip the item value, that reward shows as $0 in the report.
+</Note>
+
+## How the number is calculated
+
+Qtap multiplies redemptions by the item value you set on each reward, then sums it up. For example:
+
+- 30 redemptions of a Free Coffee at $4 each = $120 in redeemed value.
+- 10 redemptions of a Free Pastry at $3 each = $30 in redeemed value.
+- Revenue Impact = $150 for the period.
+
+This is the value you've given away. The point of the loyalty program is that the visits earning those rewards are worth more than the rewards themselves.
+
+## What you'll see on the page
+
+### Total Revenue Impact (est.)
+
+The headline number for the period you selected. The label says **est.** because it's an estimate based on the item values you entered, not your real receipts.
+
+### Revenue by Reward
+
+Bar chart showing which rewards drove the most redemption value. The reward at the top is the one members value the most.
+
+### Revenue by Location
+
+If you have multiple locations, this bar chart breaks the impact down by location. It's the same numbers as the Location Comparison view, filtered to revenue.
+
+### Revenue by Campaign
+
+If you've run any campaigns with rewards attached, this chart shows how much of the impact came from each campaign. Use it to decide which campaigns to repeat.
+
+## Setting accurate item values
+
+The report is only as good as the values you enter. To check or fix a reward's value:
+
+<Steps>
+  <Step title="Open the reward">
+    Go to **Cards** in the left sidebar, click your card, then click the reward in the Rewards section.
+  </Step>
+  <Step title="Set Item Value">
+    In the reward editor, find the **Item Value** field and enter the menu price of the item.
+  </Step>
+  <Step title="Save">
+    Click **Save**. New redemptions of this reward use the updated value. Past redemptions keep the old value.
+  </Step>
+</Steps>
+
+## Exporting the report
+
+Click **Export** at the top right of the page. You can download as CSV (for spreadsheets) or PDF (for sharing).
+
+<CardGroup cols={2}>
+  <Card title="Stamp Card Rewards" icon="gift" href="/merchants/stamp-cards/rewards">
+    Set the item value when you create or edit a reward.
+  </Card>
+  <Card title="Campaign Analytics" icon="megaphone" href="/merchants/campaigns/analytics">
+    See revenue per campaign in detail.
+  </Card>
+</CardGroup>
