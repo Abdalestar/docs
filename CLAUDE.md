@@ -6,7 +6,7 @@
 
 **Article:** `merchants/settings/merchant-page-overview.mdx`
 **Branch:** `docs/merchant-page-overview`
-**PR:** (pending — see Phase 5 notes)
+**PR:** https://github.com/Abdalestar/docs/pull/33
 **Status:** Done (screenshots pending)
 
 ### What was written
