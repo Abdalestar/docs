@@ -6,7 +6,7 @@
 
 **Article:** `merchants/stamp-cards/managing.mdx`
 **Branch:** `docs/stamp-cards-managing`
-**PR:** (see below)
+**PR:** https://github.com/Abdalestar/docs/pull/34
 **Status:** Done (screenshots pending)
 
 ### What was written
