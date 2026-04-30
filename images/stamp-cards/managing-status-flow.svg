@@ -1,0 +1,53 @@
+<svg viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+
+  <!-- Background -->
+  <rect width="700" height="280" fill="#FAF8F5" rx="12"/>
+
+  <!-- Title -->
+  <text x="350" y="32" text-anchor="middle" font-size="13" font-weight="600" fill="#423F4C">Stamp Card Status Transitions</text>
+
+  <!-- DRAFT box -->
+  <rect x="60" y="80" width="140" height="56" rx="10" fill="#FFF8E7" stroke="#D97706" stroke-width="1.5"/>
+  <text x="130" y="107" text-anchor="middle" font-size="13" font-weight="700" fill="#92400E">Draft</text>
+  <text x="130" y="124" text-anchor="middle" font-size="10" fill="#92400E">Not visible to members</text>
+
+  <!-- ACTIVE box -->
+  <rect x="280" y="80" width="140" height="56" rx="10" fill="#F0FDF4" stroke="#16A34A" stroke-width="1.5"/>
+  <text x="350" y="107" text-anchor="middle" font-size="13" font-weight="700" fill="#166534">Active</text>
+  <text x="350" y="124" text-anchor="middle" font-size="10" fill="#166534">Live for members</text>
+
+  <!-- INACTIVE box -->
+  <rect x="500" y="80" width="140" height="56" rx="10" fill="#F3F4F6" stroke="#9CA3AF" stroke-width="1.5"/>
+  <text x="570" y="107" text-anchor="middle" font-size="13" font-weight="700" fill="#374151">Inactive</text>
+  <text x="570" y="124" text-anchor="middle" font-size="10" fill="#374151">Hidden from new members</text>
+
+  <!-- Draft → Active arrow (top, going right) -->
+  <line x1="200" y1="98" x2="278" y2="98" stroke="#8E4A63" stroke-width="1.8" marker-end="url(#arrow-plum)"/>
+  <text x="239" y="90" text-anchor="middle" font-size="10" fill="#8E4A63" font-weight="600">Publish</text>
+
+  <!-- Active → Inactive arrow (top, going right) -->
+  <line x1="420" y1="98" x2="498" y2="98" stroke="#8E4A63" stroke-width="1.8" marker-end="url(#arrow-plum)"/>
+  <text x="459" y="90" text-anchor="middle" font-size="10" fill="#8E4A63" font-weight="600">Deactivate</text>
+
+  <!-- Inactive → Active arrow (bottom, going left) -->
+  <path d="M 500 134 Q 459 175 420 134" fill="none" stroke="#F0D793" stroke-width="1.8" marker-end="url(#arrow-gold)"/>
+  <text x="459" y="175" text-anchor="middle" font-size="10" fill="#8E4A63" font-weight="600">Activate</text>
+
+  <!-- Inactive → Draft arrow (long arc bottom) -->
+  <path d="M 500 136 Q 350 230 200 136" fill="none" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-gray)"/>
+  <text x="350" y="240" text-anchor="middle" font-size="10" fill="#6B7280" font-weight="600">Convert to Draft</text>
+
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrow-plum" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#8E4A63"/>
+    </marker>
+    <marker id="arrow-gold" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#8E4A63"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#6B7280"/>
+    </marker>
+  </defs>
+
+</svg>

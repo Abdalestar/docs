@@ -1,0 +1,64 @@
+---
+title: "Managing Your Stamp Cards"
+sidebarTitle: "Managing Cards"
+description: "View, filter, and manage all your stamp cards from one place."
+---
+
+The Stamp Cards page (`/cards`) is where you see every stamp card in your account. From here you can check which cards are live, edit their settings, change their status, duplicate them for reuse, or delete ones you no longer need.
+
+<Frame caption="The Stamp Cards list showing cards in different statuses.">
+  <img src="/images/stamp-cards/managing-list.png" alt="Stamp cards list with status tabs and card previews" />
+</Frame>
+
+## The card grid
+
+Each card appears as a visual preview showing the card name, description, stamp count, and the colors and icons you chose when designing it. Clicking any card takes you directly to its edit page.
+
+Above each card preview is a status badge showing whether the card is Active, Draft, or Inactive.
+
+## Filtering by status
+
+When you have more than one card, four filter tabs appear above the grid: **All**, **Active**, **Drafts**, and **Inactive**, each showing a count. Selecting a tab narrows the grid to only cards in that state.
+
+If no cards match the selected filter (for example, you switch to Drafts when all your cards are active), you'll see a "No draft cards found" message in place of the grid.
+
+## Card actions
+
+Open the three-dot menu on any card to see what actions are available. The options change depending on the card's current status.
+
+**Edit** is always available. It goes to the card detail page where you can change settings, rewards, and design.
+
+**Duplicate** creates a copy of the card. It gets the same name with "(Copy)" appended, copies all settings, and includes any rewards you had configured. The copy starts as a draft, so you can adjust it before publishing.
+
+**Delete** permanently removes the card and all associated data. A confirmation dialog warns you before anything is deleted. This cannot be undone.
+
+### Changing a card's status
+
+<Frame caption="Status flow: Draft, Active, and Inactive each have specific transition options.">
+  <img src="/images/stamp-cards/managing-status-flow.svg" alt="Stamp card status transitions: Draft to Active, Active to Inactive, Inactive back to Active or Draft" />
+</Frame>
+
+The menu shows different status options based on where the card currently sits.
+
+A draft card has a **Publish** option, which activates it and makes it visible to members. An active card shows **Deactivate**, which stops new stamps from being issued while keeping existing member progress intact. An inactive card has two choices: **Activate** to make it live again, or **Convert to Draft** to return it to draft state for further editing.
+
+<Info>
+Deactivating a card does not erase member progress. Existing members keep their stamps and can still redeem any rewards they have already earned.
+</Info>
+
+## Empty state
+
+If you haven't created any stamp cards yet, the page shows an empty state with a prompt to create your first card. The **Create Your First Card** button takes you to the card creation form at `/cards/new`. The same **Create Card** button is always visible in the top-right corner once you have cards.
+
+## Access
+
+Owners and managers can access the Stamp Cards page. Staff members get an access-denied screen because the default staff permission for `stamp_cards` is set to `none`. Managers have `edit` permission by default, which gives them full access to the list and all card actions. You can adjust individual permissions from the Staff page.
+
+<CardGroup cols={2}>
+  <Card title="Creating a Stamp Card" href="/merchants/stamp-cards/creating">
+    Step-by-step walkthrough for setting up a new stamp card.
+  </Card>
+  <Card title="Designing Your Card" href="/merchants/stamp-cards/designing">
+    How to customize colors, icons, and the card's look in the member app.
+  </Card>
+</CardGroup>

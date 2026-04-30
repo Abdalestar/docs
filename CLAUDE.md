@@ -1,5 +1,65 @@
 # Qtap Docs Writer — Run Log
 
+---
+
+## 2026-04-30 — Managing Stamp Cards
+
+**Article:** `merchants/stamp-cards/managing.mdx`
+**Branch:** `docs/stamp-cards-managing`
+**PR:** (see below)
+**Status:** Done (screenshots pending)
+
+### What was written
+Article covering the Stamp Cards list page (`/cards` route). Covers:
+- The card grid: visual card previews (CardPreview component) showing name, description, stamps, colors/icons
+- Status badge per card: Draft (amber), Active (green), Inactive (gray)
+- Status filter tabs: All, Active, Drafts, Inactive with counts (only shown when cards exist)
+- Card actions via three-dot menu: Edit, Duplicate, status changes, Delete
+- Status transitions: Draft → Publish → Active; Active → Deactivate → Inactive; Inactive → Activate → Active or Convert to Draft → Draft
+- Duplicate behavior: copies all settings + rewards, "(Copy)" appended to name, starts as draft
+- Delete: permanent, includes confirmation dialog, cannot be undone
+- Empty state: "No stamp cards yet" with Create Your First Card button → `/cards/new`
+- Access control: owners always; managers default `stamp_cards: 'edit'`; staff blocked (`stamp_cards: 'none'`)
+
+Also added `merchants/stamp-cards/managing` to the Stamp Cards group in `docs.json` (after overview).
+
+**Clarification note:** The Notion task ("Loyalty Cards List") described this route as showing "stamp cards and points programs together." The source code shows it is stamp cards only. Points programs have a separate `/points` route. Article written to reflect what the page actually does.
+
+### Research sources
+- `app/(dashboard)/cards/page.tsx` — full UI: tabs, grid, status config, all dropdown actions, empty states, delete dialog text
+- `lib/utils/permissions.ts` — confirms `/cards` → `perms.stamp_cards !== 'none'`; owner always true
+- `lib/validations/staff.ts` — confirms manager `stamp_cards: 'edit'`, staff `stamp_cards: 'none'`
+- `docs/.writing-rules/SKILL.md`, `banned-words`, `content-patterns` — all 4 anti-slop passes applied
+
+### Screenshots / diagrams
+- **Screenshots:** NOT captured. Automated run — user not present for `request_access`. `Needs Screenshots` flag left on Notion row.
+- **SVG diagram:** `images/stamp-cards/managing-status-flow.svg` — status transition diagram showing Draft→Active→Inactive and reverse paths. Uses brand colors (#8E4A63 plum, #F0D793 gold, #423F4C charcoal).
+
+### Anti-slop fixes applied
+- Em dash on "creates a copy of the card — same name" → split to two sentences
+- Em dash on "Staff members cannot — they see" → rewritten to active construction
+- 3-item bullet list for status states → converted to flowing prose paragraph
+- No banned words (leverage, seamless, enhance, utilize, implement, etc.)
+- No contrast framing, no rule-of-three decorative groupings
+
+### Errors / challenges
+- Bash sandbox cannot remove `.git/index.lock` on the Windows mount (permission denied). Fixed using Desktop Commander `del` in cmd shell — but in this run the lock file wasn't present on the Windows side.
+- `git checkout main` from bash sandbox fails when docs.json was modified (would be overwritten). Fixed: `git stash` first, then checkout, create branch, `git stash pop`.
+- Desktop Commander cmd.exe syntax: `del "path"` with double-quoted paths fails when path contains colons (drive letter). Use `del path` without quotes, or `git -C path command` form.
+
+### Insights for future runs
+- The `/cards` route is stamp cards only. Do not confuse with a "loyalty cards" overview. Points programs are at `/points`. The Notion task auto-discovered this incorrectly.
+- `git -C C:\path command` in Desktop Commander cmd shell works for git without `cd` needing quotes around the path.
+- Status transitions for stamp cards: Draft can only Publish. Active can only Deactivate. Inactive can Activate or Convert to Draft. No other transitions exist in the UI.
+- `CardPreview` component renders the card's visual appearance (colors, stamp slots, icons) — the list page is primarily a visual gallery, not a data table.
+
+### Gap discovery (Phase 6)
+- `/cards/[id]` (Notion ID: 34d1ae8f-748c-812d) — the card detail/edit page after clicking a card. Already tracked in Notion as "Loyalty Card Detail" with Status "In progress" (stale claim by agent-k7m3p2 since 2026-04-28). Recommend resetting to "Not started".
+- `/cards/new` — the card creation form. Covered by existing `merchants/stamp-cards/creating.mdx` (confirmed from docs.json and file existence). No gap.
+- `/cards/design` — found in `app/(dashboard)/cards/design/` subdirectory. May be the stamp card visual designer (separate from the creation wizard). Already tracked as "Stamp Card Visual Designer" (PR #27, Done).
+
+---
+
 Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---

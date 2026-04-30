@@ -25,6 +25,7 @@
         "group": "Stamp Cards",
         "pages": [
           "merchants/stamp-cards/overview",
+          "merchants/stamp-cards/managing",
           "merchants/stamp-cards/creating",
           "merchants/stamp-cards/designing",
           "merchants/stamp-cards/rewards",
