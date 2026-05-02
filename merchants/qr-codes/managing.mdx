@@ -1,0 +1,76 @@
+---
+title: "QR Code Detail"
+sidebarTitle: "Managing a QR code"
+description: "View scan analytics, rename, reassign, enable or disable, download, and delete a QR code."
+---
+
+Go to **QR Codes** in the sidebar and click any row to open its detail page. The page is split into a QR preview panel and a main content area.
+
+## QR Preview
+
+The right panel (or top of the page on mobile) shows a live rendering of the code. Below the image, the code's unique string and its full scan URL are shown for reference.
+
+The code string is system-generated at creation and cannot be changed. Clicking **Copy** copies the code string to your clipboard.
+
+Use the two download buttons beneath the preview to export the code:
+
+- **PNG** — a 500 × 500 pixel image ready to print or display on screen
+- **SVG** — a scalable vector file for use in design tools
+
+## Stats at a Glance
+
+Four stat cards appear at the top of the main area:
+
+| Card | What it shows |
+|---|---|
+| Total Scans | Lifetime scan count for this code |
+| Type | The code type set at creation (for example, reusable or batch) |
+| Action | What the scan does: stamp, points, or redeem |
+| Status | Active or Inactive |
+
+## Scan Activity
+
+If the code has been scanned at least once, a line chart shows scan volume per day over the last seven days. No chart appears when there is no scan history.
+
+## Details
+
+A details card lists the metadata set when the code was created:
+
+- **Created** — date and time the code was generated
+- **Location** — the location the code is assigned to, or "All Locations" if unassigned
+- **Points Value** — points awarded per scan (only shown when the action is "points")
+- **Max Scans** — the scan limit, if one was configured
+- **Expires** — the expiry date and time, if one was set
+
+## Editing a QR Code
+
+Click **Edit** at the top of the page to open the edit form inline. Three fields are available:
+
+- **Name** — the internal label for the code. Customers do not see this.
+- **Location** — the location the code is assigned to, or "All Locations".
+- **Active** — toggle to enable or disable the code without deleting it.
+
+The code string is read-only and cannot be modified. Qtap generates it at creation and links all scan history to it — changing it would break any printed or saved copies already in the field.
+
+Click **Save Changes** to apply your edits, or click **Cancel** to discard them.
+
+## Recent Scans
+
+Below the details card, the page lists the ten most recent scans with their timestamps and IP addresses.
+
+## Deleting a QR Code
+
+Click the trash icon at the top of the page. A confirmation dialog explains that this action cannot be undone and that all scan history for the code will also be deleted permanently.
+
+<Warning>
+If customers have printed or saved this code, deleting it means their copies stop working immediately. Set the code to **Inactive** instead if you want to disable it temporarily while keeping the history.
+</Warning>
+
+<CardGroup cols={2}>
+  <Card title="Generating QR Codes" href="/merchants/qr-codes/generating">
+    Create a new QR code for stamping, points, or redemptions.
+  </Card>
+  <Card title="QR Codes Overview" href="/merchants/qr-codes/overview">
+    How QR codes work and what types are available.
+  </Card>
+</CardGroup>
