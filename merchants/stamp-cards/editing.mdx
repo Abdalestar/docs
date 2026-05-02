@@ -1,0 +1,92 @@
+---
+title: "Edit a stamp card"
+sidebarTitle: "Editing stamp cards"
+description: "Change the design, rewards, locations, or advanced settings of an existing stamp card."
+---
+
+The edit page for a stamp card opens when you click any card on the Cards list (`/cards`). It uses the same four-step wizard as creation, but all fields load pre-filled with the card's current data. You can update any setting, add or remove rewards, and then save as a draft or publish.
+
+<Frame caption="The edit wizard opens pre-filled with the card's current design and rewards. The live preview updates as you make changes.">
+  <img src="/images/stamp-cards/edit-wizard-flow.svg" alt="Edit stamp card wizard: four steps (Card Design, Rewards, Locations, Review) with Save Draft and Publish Card outcomes" />
+</Frame>
+
+## Opening the edit page
+
+Go to **Cards** in the sidebar. Click any card in the grid. The page title reads "Edit Stamp Card" and the card's current status appears as a badge next to the title. An arrow in the top left takes you back to the list without saving.
+
+<Info>
+  Active and inactive cards can both be edited. Saving an active card with "Save as Draft" changes its status to Draft and takes it offline until you publish again.
+</Info>
+
+## The four steps
+
+### Step 1: Card design
+
+This step covers the card's name, visual settings, and text fields:
+
+- **Name** (required to save at any point)
+- **Description** shown on the card
+- **Stamps required** to complete the card
+- **Card color** and **card icon** (front of the card)
+- **Stamp icon** (shown inside each stamp slot)
+- **Business name**, **website URL**, and **terms and conditions** (card back)
+
+Below the main fields is an **Advanced Settings** panel. It is collapsed by default. Click it to expand.
+
+**Stamping rules.** The *Stamping Delay* field sets the minimum number of minutes between stamps for the same customer. If you receive a lot of accidental double-stamps at the till, a 30–60 minute delay fixes that. The *Daily Stamp Cap* limits how many stamps one customer can earn in a day; leave it blank if there is no limit. The *Allow Multiple Stamps* toggle lets staff give several stamps in one transaction, which works well for "one stamp per item" setups.
+
+**Expiration.** The *Stamp Expiry* field sets the number of days after which stamps expire from inactivity. Leave it blank for stamps that never expire.
+
+**Bonus stamps.** Two sliders set bonus stamps: the *Welcome Bonus* (0–10 stamps, given when a customer first joins this card) and the *Birthday Bonus* (0–10 stamps, given on a customer's birthday if their birthday is saved in their profile).
+
+**Redemption.** The *Allow Partial Redemption* toggle lets customers redeem milestone rewards before they complete the full card.
+
+### Step 2: Rewards
+
+Add or edit what customers earn. Each card needs at least one main reward, which triggers when the card is fully stamped. You can also add milestone rewards that trigger at specific stamp counts before the card is complete.
+
+### Step 3: Locations
+
+Choose which of your locations this card is valid at. At least one is required to publish. If you have only one location, it is selected automatically.
+
+### Step 4: Review
+
+The Review step shows a summary of the card. Each section has an edit link that takes you back to the relevant step. At the bottom you will find two buttons:
+
+- **Save as Draft** keeps the card offline. The status becomes Draft regardless of what it was before.
+- **Publish Card** makes the card live. The status becomes Active.
+
+Both options send you back to the Cards list after saving.
+
+## Live preview
+
+On large screens, a phone-sized preview appears on the right side of the page while you work. It shows the front and back of the card exactly as customers will see it in the Qtap app, and it updates as you type. On smaller screens the preview is hidden.
+
+## Saving before you reach Review
+
+You do not need to reach the Review step to save. A **Save Draft** button appears below the step indicator on Steps 1 through 3. The card's name must be filled in to save. Use this if you need to stop and come back later.
+
+## What happens after you save
+
+After saving or publishing you land back on the Cards list. If you published, the card's status badge changes to Active and customers can see it in the app.
+
+Rewards on an active card are replaced immediately when you save. Customers who already earned stamps keep their progress, so changing the required stamp count does not reset anyone's card.
+
+## Access
+
+Owners can always edit stamp cards. Managers can by default (their `stamp_cards` permission is `edit`). Staff cannot access the edit page unless an owner grants them explicit stamp card access in the Staff settings.
+
+<AccordionGroup>
+  <Accordion title="I see 'Card not found' when I open a card">
+    This happens if the card was deleted by someone else after you loaded the Cards list. Go back to the list and confirm the card is still there.
+  </Accordion>
+  <Accordion title="The Publish Card button is greyed out on the Review step">
+    Publishing requires a card name, at least one main reward, and at least one location. Check Steps 1, 2, and 3 for any missing fields.
+  </Accordion>
+  <Accordion title="Can I change a card's color or icon while it is active?">
+    Yes. Design changes to an active card take effect right away. Customers see the updated card the next time they open the app.
+  </Accordion>
+  <Accordion title="What happens to existing stamp counts if I change the stamps required?">
+    Customer progress stays where it is. If someone has 8 stamps and you raise the target from 10 to 12, they still have 8 and need 4 more to complete the card.
+  </Accordion>
+</AccordionGroup>

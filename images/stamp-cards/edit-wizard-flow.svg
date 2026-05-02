@@ -1,0 +1,125 @@
+<svg viewBox="0 0 720 420" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <!-- Background -->
+  <rect width="720" height="420" fill="#FAFAFA" rx="12"/>
+
+  <!-- Title -->
+  <text x="360" y="34" text-anchor="middle" font-size="14" font-weight="600" fill="#423F4C">Editing a stamp card — wizard flow</text>
+
+  <!-- Entry: Cards list -->
+  <rect x="30" y="60" width="130" height="48" rx="8" fill="#423F4C"/>
+  <text x="95" y="80" text-anchor="middle" font-size="11" font-weight="600" fill="#F0D793">Cards list</text>
+  <text x="95" y="96" text-anchor="middle" font-size="10" fill="#F0D793">/cards</text>
+
+  <!-- Arrow to step 1 -->
+  <line x1="160" y1="84" x2="188" y2="84" stroke="#8E4A63" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="174" y="78" text-anchor="middle" font-size="9" fill="#8E4A63">click card</text>
+
+  <!-- Step 1: Design -->
+  <rect x="190" y="58" width="110" height="52" rx="8" fill="#8E4A63"/>
+  <text x="245" y="78" text-anchor="middle" font-size="11" font-weight="600" fill="white">1. Card Design</text>
+  <text x="245" y="93" text-anchor="middle" font-size="9" fill="#F0D793">name · stamps · style</text>
+  <text x="245" y="106" text-anchor="middle" font-size="9" fill="#F0D793">+ Advanced Settings</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="300" y1="84" x2="328" y2="84" stroke="#8E4A63" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 2: Rewards -->
+  <rect x="330" y="58" width="100" height="52" rx="8" fill="#8E4A63"/>
+  <text x="380" y="78" text-anchor="middle" font-size="11" font-weight="600" fill="white">2. Rewards</text>
+  <text x="380" y="93" text-anchor="middle" font-size="9" fill="#F0D793">what customers earn</text>
+  <text x="380" y="106" text-anchor="middle" font-size="9" fill="#F0D793">milestone bonuses</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="430" y1="84" x2="458" y2="84" stroke="#8E4A63" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 3: Locations -->
+  <rect x="460" y="58" width="100" height="52" rx="8" fill="#8E4A63"/>
+  <text x="510" y="78" text-anchor="middle" font-size="11" font-weight="600" fill="white">3. Locations</text>
+  <text x="510" y="93" text-anchor="middle" font-size="9" fill="#F0D793">where customers</text>
+  <text x="510" y="106" text-anchor="middle" font-size="9" fill="#F0D793">can earn stamps</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="560" y1="84" x2="588" y2="84" stroke="#8E4A63" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 4: Review -->
+  <rect x="590" y="58" width="100" height="52" rx="8" fill="#8E4A63"/>
+  <text x="640" y="78" text-anchor="middle" font-size="11" font-weight="600" fill="white">4. Review</text>
+  <text x="640" y="93" text-anchor="middle" font-size="9" fill="#F0D793">confirm all settings</text>
+  <text x="640" y="106" text-anchor="middle" font-size="9" fill="#F0D793">save or publish</text>
+
+  <!-- Save Draft outcome -->
+  <line x1="640" y1="110" x2="640" y2="150" stroke="#423F4C" stroke-width="1.5" marker-end="url(#arrowDark)"/>
+  <rect x="570" y="152" width="140" height="44" rx="8" fill="#E8E6EC" stroke="#423F4C" stroke-width="1.5"/>
+  <text x="640" y="170" text-anchor="middle" font-size="11" font-weight="600" fill="#423F4C">Save as Draft</text>
+  <text x="640" y="186" text-anchor="middle" font-size="9" fill="#666">status stays / becomes Draft</text>
+
+  <!-- Publish outcome -->
+  <line x1="590" y1="130" x2="480" y2="150" stroke="#F0D793" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowGold)"/>
+  <rect x="400" y="152" width="140" height="44" rx="8" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+  <text x="470" y="170" text-anchor="middle" font-size="11" font-weight="600" fill="#8E4A63">Publish Card</text>
+  <text x="470" y="186" text-anchor="middle" font-size="9" fill="#8E4A63">status → Active</text>
+
+  <!-- Both arrows back to Cards list -->
+  <line x1="640" y1="196" x2="640" y2="240" stroke="#423F4C" stroke-width="1.5"/>
+  <line x1="470" y1="196" x2="470" y2="240" stroke="#8E4A63" stroke-width="1.5"/>
+  <line x1="470" y1="240" x2="640" y2="240" stroke="#8E4A63" stroke-width="1.5"/>
+  <line x1="555" y1="240" x2="555" y2="260" stroke="#8E4A63" stroke-width="1.5" marker-end="url(#arrowPlum)"/>
+  <rect x="470" y="262" width="170" height="38" rx="8" fill="#423F4C"/>
+  <text x="555" y="278" text-anchor="middle" font-size="11" font-weight="600" fill="#F0D793">Back to Cards list</text>
+  <text x="555" y="292" text-anchor="middle" font-size="9" fill="white">/cards</text>
+
+  <!-- Advanced Settings callout -->
+  <rect x="190" y="130" width="200" height="155" rx="8" fill="white" stroke="#8E4A63" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="290" y="152" text-anchor="middle" font-size="11" font-weight="700" fill="#8E4A63">Advanced Settings</text>
+  <text x="290" y="168" text-anchor="middle" font-size="9" fill="#423F4C">(collapsible panel on Step 1)</text>
+
+  <!-- Four groups in Advanced Settings -->
+  <rect x="205" y="175" width="170" height="24" rx="4" fill="#F5F3F7"/>
+  <text x="213" y="191" font-size="9" fill="#423F4C">⏱ Stamping Rules</text>
+  <text x="370" y="191" text-anchor="end" font-size="8" fill="#666">delay · daily cap · multi-stamp</text>
+
+  <rect x="205" y="203" width="170" height="22" rx="4" fill="#F5F3F7"/>
+  <text x="213" y="218" font-size="9" fill="#423F4C">📅 Expiration</text>
+  <text x="370" y="218" text-anchor="end" font-size="8" fill="#666">stamp expiry days</text>
+
+  <rect x="205" y="229" width="170" height="22" rx="4" fill="#F5F3F7"/>
+  <text x="213" y="244" font-size="9" fill="#423F4C">🎁 Bonus Stamps</text>
+  <text x="370" y="244" text-anchor="end" font-size="8" fill="#666">welcome · birthday (0–10)</text>
+
+  <rect x="205" y="255" width="170" height="22" rx="4" fill="#F5F3F7"/>
+  <text x="213" y="270" font-size="9" fill="#423F4C">🔓 Redemption</text>
+  <text x="370" y="270" text-anchor="end" font-size="8" fill="#666">allow partial redemption</text>
+
+  <!-- Dashed line from Step 1 to advanced settings box -->
+  <line x1="245" y1="110" x2="245" y2="128" stroke="#8E4A63" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Mobile Preview callout -->
+  <rect x="30" y="310" width="340" height="80" rx="8" fill="white" stroke="#423F4C" stroke-width="1.5"/>
+  <text x="200" y="332" text-anchor="middle" font-size="11" font-weight="700" fill="#423F4C">Live Preview (large screens only)</text>
+  <text x="200" y="350" text-anchor="middle" font-size="9" fill="#666">Updates as you type. Shows front and back of the</text>
+  <text x="200" y="364" text-anchor="middle" font-size="9" fill="#666">card exactly as customers will see it in the app.</text>
+  <text x="200" y="378" text-anchor="middle" font-size="9" fill="#666">Hidden on smaller screens.</text>
+
+  <!-- Save Draft badge note -->
+  <rect x="385" y="310" width="305" height="80" rx="8" fill="white" stroke="#423F4C" stroke-width="1.5"/>
+  <text x="537" y="332" text-anchor="middle" font-size="11" font-weight="700" fill="#423F4C">Save Draft vs Publish</text>
+  <text x="537" y="350" text-anchor="middle" font-size="9" fill="#666">"Save Draft" is visible on Steps 1–3 anytime.</text>
+  <text x="537" y="364" text-anchor="middle" font-size="9" fill="#666">You must reach Step 4 (Review) to publish.</text>
+  <text x="537" y="378" text-anchor="middle" font-size="9" fill="#666">Publishing requires a name, reward, and location.</text>
+
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#8E4A63"/>
+    </marker>
+    <marker id="arrowDark" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#423F4C"/>
+    </marker>
+    <marker id="arrowGold" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#8E4A63"/>
+    </marker>
+    <marker id="arrowPlum" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#8E4A63"/>
+    </marker>
+  </defs>
+</svg>
