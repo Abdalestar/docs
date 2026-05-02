@@ -1,0 +1,90 @@
+---
+title: "Edit a points program"
+sidebarTitle: "Editing programs"
+description: "Update the name, rewards, expiry rules, or appearance of an existing points program."
+---
+
+The edit page for a points program opens when you click any program on the Points list (`/points`). All fields load pre-filled with the program's current settings. You can change anything and save as a draft or activate right away.
+
+<Frame caption="The edit form opens pre-filled with the program's current settings. A live card preview updates on the right as you make changes.">
+  <img src="/images/points/edit-form-flow.svg" alt="Edit points program: form sections (Basic Information, Appearance, Rewards, Expiry, Availability, Terms) with Save as Draft and Save & Activate outcomes" />
+</Frame>
+
+## Opening the edit page
+
+Go to **Points** in the sidebar and click any program in the list. The page title reads "Edit Points Program."
+
+On large screens, a phone-sized card preview appears to the right of the form and updates as you type. On smaller screens the preview is hidden.
+
+<Info>
+  Draft and active programs can both be edited. Saving an active program as a draft takes it offline until you activate it again.
+</Info>
+
+## Program details
+
+The **Basic Information** section covers how customers identify and interact with the program:
+
+- **Program Name** (required): shown on the card in the Qtap app
+- **Points per currency**: how many points a customer earns per unit of currency spent. A value of 2 means a 10 QAR purchase earns 20 points.
+- **Currency**: the currency used for point calculations. Defaults to QAR.
+- **Description**: a short line shown on the card, like "Earn 1 point per QAR spent."
+
+The **Appearance** section lets you change the **Card Color** (eight color swatches) and **Card Icon** (ten emoji options including diamond, star, trophy, and gift). An inline preview shows how the card looks with your current selections.
+
+The **Terms & Conditions** field at the bottom of the form is optional. Any text here appears on the back of the card in the app.
+
+## Rewards
+
+The Rewards section shows a list of the program's current rewards. Each row displays the reward name, the points needed to redeem it, and an optional staff note. Click any reward row to edit it. Click the × button on the right side of a row to remove it.
+
+To add a reward, click **Add Reward**. A dialog opens with four fields:
+
+- **Reward name** (required): what the customer receives, for example "Free Coffee" or "10% Off"
+- **Points required** (required): the number of points that triggers this reward
+- **Reward image**: optional PNG or JPEG up to 1 MB, shown alongside the reward in the app
+- **Staff note**: an internal note visible only to staff at the point of redemption, not to customers
+
+Click **Save reward** to add it to the list. You can have rewards at different points thresholds and can add as many as you need.
+
+## Points expiry
+
+By default, points never expire. Turn on the **Enable Points Expiry** toggle to set an expiry policy. Two fields appear when the toggle is on.
+
+**Expiry Period (days)** sets how many days before points expire. **Expiry Type** controls when that countdown starts. "From date earned" begins counting from the moment points are issued. "From last activity" resets the clock whenever the member earns or redeems points. "End of calendar year" expires all points at the end of the year they were earned, regardless of when.
+
+## Availability period
+
+If you want enrollment to stop after a certain date, turn on the **Limited Availability** toggle. You can set an **Available From** date, an **Available Until** date, or both. Members can only join the program between those dates.
+
+Leaving the toggle off means the program is open for enrollment indefinitely.
+
+## Saving your changes
+
+Two save buttons appear at the bottom of the form.
+
+**Save as Draft** saves without making the program visible to customers. The status becomes Draft. Use this when you want to update a live program's settings before the changes go public.
+
+**Save & Activate** publishes the changes immediately. The status becomes Active and members can see the updated program in the app.
+
+Both options send you back to the Points list when saving is complete.
+
+When you save, the program's existing rewards are replaced with whatever is in the Rewards section at the time you click save. Members keep the points they have already earned. Changing the points-per-currency rate or updating the rewards list does not adjust existing balances.
+
+## Access
+
+Owners can always edit points programs. Managers can by default (their `points_programs` permission is `edit`). Staff cannot access the edit page unless an owner grants them explicit points program access in Staff settings.
+
+<AccordionGroup>
+  <Accordion title="I see 'Program not found' when I open a program">
+    This happens if the program was deleted by someone else after you loaded the Points list. Go back to the list and confirm the program is still there.
+  </Accordion>
+  <Accordion title="I changed the points rate — do existing member balances change?">
+    No. The new rate applies to purchases going forward. Points members have already accumulated are not recalculated.
+  </Accordion>
+  <Accordion title="Can I change the card color or icon while the program is active?">
+    Yes. Appearance changes take effect right away. Members see the updated card the next time they open the app.
+  </Accordion>
+  <Accordion title="What happens to my rewards if I save as draft?">
+    The draft saves with whatever rewards are in the list at the time you click Save as Draft. You can keep editing and add more rewards before activating.
+  </Accordion>
+</AccordionGroup>

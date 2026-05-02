@@ -1,0 +1,109 @@
+<svg viewBox="0 0 760 440" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+  <!-- Background -->
+  <rect width="760" height="440" fill="#FAFAFA" rx="12"/>
+
+  <!-- Title -->
+  <text x="380" y="32" text-anchor="middle" font-size="14" font-weight="600" fill="#423F4C">Editing a points program — form flow</text>
+
+  <!-- Entry: Points list -->
+  <rect x="20" y="55" width="120" height="48" rx="8" fill="#423F4C"/>
+  <text x="80" y="75" text-anchor="middle" font-size="11" font-weight="600" fill="#F0D793">Points list</text>
+  <text x="80" y="91" text-anchor="middle" font-size="10" fill="#F0D793">/points</text>
+
+  <!-- Arrow to form -->
+  <line x1="140" y1="79" x2="168" y2="79" stroke="#8E4A63" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="154" y="73" text-anchor="middle" font-size="9" fill="#8E4A63">click program</text>
+
+  <!-- Form container -->
+  <rect x="170" y="42" width="360" height="310" rx="10" fill="white" stroke="#8E4A63" stroke-width="1.5"/>
+  <text x="350" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="#8E4A63">Edit Points Program</text>
+
+  <!-- Section rows -->
+  <!-- Basic Information -->
+  <rect x="185" y="72" width="330" height="36" rx="5" fill="#F5F3F7"/>
+  <text x="200" y="86" font-size="10" font-weight="600" fill="#423F4C">Basic Information</text>
+  <text x="200" y="100" font-size="9" fill="#666">Program name · points per currency · currency · description</text>
+
+  <!-- Appearance -->
+  <rect x="185" y="113" width="330" height="36" rx="5" fill="#F5F3F7"/>
+  <text x="200" y="127" font-size="10" font-weight="600" fill="#423F4C">Appearance</text>
+  <text x="200" y="141" font-size="9" fill="#666">Card color (8 swatches) · card icon (10 emoji)</text>
+
+  <!-- Rewards -->
+  <rect x="185" y="154" width="330" height="44" rx="5" fill="#F5F3F7"/>
+  <text x="200" y="168" font-size="10" font-weight="600" fill="#423F4C">Rewards</text>
+  <text x="200" y="182" font-size="9" fill="#666">Edit or remove existing rewards · Add Reward dialog</text>
+  <text x="200" y="193" font-size="9" fill="#666">(name · points required · image · staff note)</text>
+
+  <!-- Points Expiry -->
+  <rect x="185" y="203" width="330" height="36" rx="5" fill="#F5F3F7"/>
+  <text x="200" y="217" font-size="10" font-weight="600" fill="#423F4C">Points Expiry</text>
+  <text x="200" y="231" font-size="9" fill="#666">Toggle · expiry days · expiry type (earn / activity / year)</text>
+
+  <!-- Availability Period -->
+  <rect x="185" y="244" width="330" height="36" rx="5" fill="#F5F3F7"/>
+  <text x="200" y="258" font-size="10" font-weight="600" fill="#423F4C">Availability Period</text>
+  <text x="200" y="272" font-size="9" fill="#666">Toggle · available from date · available until date</text>
+
+  <!-- Terms -->
+  <rect x="185" y="285" width="330" height="28" rx="5" fill="#F5F3F7"/>
+  <text x="200" y="299" font-size="10" font-weight="600" fill="#423F4C">Terms &amp; Conditions</text>
+  <text x="200" y="311" font-size="9" fill="#666">Optional text shown on card back</text>
+
+  <!-- Actions row -->
+  <rect x="185" y="318" width="330" height="24" rx="5" fill="#E8E6EC"/>
+  <text x="350" y="334" text-anchor="middle" font-size="9" font-weight="600" fill="#423F4C">Cancel · Save as Draft · Save &amp; Activate</text>
+
+  <!-- Outcomes -->
+  <!-- Save as Draft arrow -->
+  <line x1="280" y1="366" x2="230" y2="390" stroke="#423F4C" stroke-width="1.5" marker-end="url(#arrowDark)"/>
+  <rect x="150" y="392" width="140" height="38" rx="8" fill="#E8E6EC" stroke="#423F4C" stroke-width="1.5"/>
+  <text x="220" y="408" text-anchor="middle" font-size="11" font-weight="600" fill="#423F4C">Save as Draft</text>
+  <text x="220" y="422" text-anchor="middle" font-size="9" fill="#666">status → Draft (offline)</text>
+
+  <!-- Save & Activate arrow -->
+  <line x1="420" y1="366" x2="470" y2="390" stroke="#8E4A63" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowPlum)"/>
+  <rect x="400" y="392" width="150" height="38" rx="8" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+  <text x="475" y="408" text-anchor="middle" font-size="11" font-weight="600" fill="#8E4A63">Save &amp; Activate</text>
+  <text x="475" y="422" text-anchor="middle" font-size="9" fill="#8E4A63">status → Active</text>
+
+  <!-- Both back to points list -->
+  <line x1="220" y1="430" x2="220" y2="445" stroke="#423F4C" stroke-width="1" opacity="0"/>
+  <!-- simplified: just label -->
+  <text x="350" y="443" text-anchor="middle" font-size="9" fill="#666">Both redirect to /points</text>
+
+  <!-- Live Preview sidebar callout -->
+  <rect x="548" y="42" width="195" height="130" rx="8" fill="white" stroke="#423F4C" stroke-width="1.5"/>
+  <text x="645" y="60" text-anchor="middle" font-size="11" font-weight="700" fill="#423F4C">Live Preview</text>
+  <text x="645" y="76" text-anchor="middle" font-size="9" fill="#666">(large screens only)</text>
+  <text x="645" y="94" text-anchor="middle" font-size="9" fill="#666">Phone-sized card preview</text>
+  <text x="645" y="108" text-anchor="middle" font-size="9" fill="#666">updates as you type.</text>
+  <text x="645" y="122" text-anchor="middle" font-size="9" fill="#666">Shows front and back</text>
+  <text x="645" y="136" text-anchor="middle" font-size="9" fill="#666">of the card.</text>
+  <text x="645" y="154" text-anchor="middle" font-size="9" fill="#666">Hidden on small screens.</text>
+
+  <!-- After-save callout -->
+  <rect x="548" y="185" width="195" height="110" rx="8" fill="white" stroke="#423F4C" stroke-width="1.5"/>
+  <text x="645" y="203" text-anchor="middle" font-size="11" font-weight="700" fill="#423F4C">After saving</text>
+  <text x="645" y="221" text-anchor="middle" font-size="9" fill="#666">Rewards are replaced</text>
+  <text x="645" y="235" text-anchor="middle" font-size="9" fill="#666">with the current list.</text>
+  <text x="645" y="253" text-anchor="middle" font-size="9" fill="#666">Member point balances</text>
+  <text x="645" y="267" text-anchor="middle" font-size="9" fill="#666">are NOT affected by</text>
+  <text x="645" y="281" text-anchor="middle" font-size="9" fill="#666">rate or reward changes.</text>
+
+  <!-- Connector from form to preview -->
+  <line x1="530" y1="100" x2="546" y2="100" stroke="#423F4C" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#8E4A63"/>
+    </marker>
+    <marker id="arrowDark" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#423F4C"/>
+    </marker>
+    <marker id="arrowPlum" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#8E4A63"/>
+    </marker>
+  </defs>
+</svg>
