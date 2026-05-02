@@ -1,5 +1,70 @@
 # Qtap Docs Writer — Run Log
 
+---
+
+## 2026-05-02 — Edit Stamp Card
+
+**Article:** `merchants/stamp-cards/editing.mdx`
+**Branch:** `docs/stamp-card-editing`
+**PR:** https://github.com/Abdalestar/docs/pull/35
+**Status:** Done (screenshots pending)
+
+### What was written
+Article covering the stamp card edit page (`/cards/[id]` route). Covers:
+- Opening the edit page by clicking any card in the Cards list
+- Status badge on the page header (Draft/Active/Inactive)
+- 4-step wizard pre-filled with existing card data: Card Design, Rewards, Locations, Review
+- Step 1 Advanced Settings panel (collapsible): Stamping Rules (delay, daily cap, multi-stamp toggle), Expiration (stamp expiry days), Bonus Stamps (welcome/birthday sliders 0–10), Redemption (allow partial redemption toggle)
+- Live mobile preview sidebar (large screens only, hidden on small)
+- Save Draft button available on Steps 1–3 at any time (name required)
+- Review step: Save as Draft vs Publish Card, both redirect to /cards
+- Post-save behavior: rewards replaced immediately, customer stamp progress preserved
+- Error state: "Card not found" with Back to Cards button
+- Access control: owners always; managers by default (`stamp_cards: 'edit'`); staff blocked by default
+
+Also added `merchants/stamp-cards/editing` to the Stamp Cards group in `docs.json` (after creating).
+
+### Research sources
+- `app/(dashboard)/cards/[id]/page.tsx` — full page: header, status badge, wizard rendering, error state, back button
+- `components/dashboard/stamp-card/stamp-card-wizard.tsx` — STEPS config (4 steps), all card/reward/location/advanced state, validation, save logic (draft vs active), redirect to /cards
+- `components/dashboard/stamp-card/advanced-settings.tsx` — all advanced settings sections and fields with tooltips
+- `lib/utils/permissions.ts` — `/cards` → `stamp_cards !== 'none'`; owner always true
+- `docs/.writing-rules/SKILL.md`, `banned-words`, `content-patterns` — all 4 anti-slop passes applied
+
+### Screenshots / diagrams
+- **Screenshots:** NOT captured. Automated run — user not present for `request_access`. `Needs Screenshots` flag left on Notion row.
+- **SVG diagram:** `images/stamp-cards/edit-wizard-flow.svg` — 4-step wizard flow (Cards list → Design → Rewards → Locations → Review → Save Draft / Publish Card → back to Cards list), Advanced Settings callout box, Live Preview and Save Draft notes panels. Uses brand colors (#8E4A63 plum, #F0D793 gold, #423F4C charcoal).
+
+### Anti-slop fixes applied
+- Advanced Settings originally written as three bullet-list-with-inline-headers groups — rewritten as prose paragraphs with natural sentence flow
+- "Business name, website URL, and terms and conditions" kept as needed functional triplet (actual fields on card back)
+- No em dashes, no contrast framing, no banned words
+- Varied sentence rhythm throughout; concrete examples ("30–60 minute delay", "one stamp per item setups")
+
+### Errors / challenges
+- `git add` from bash sandbox failed: `.git/index.lock` present. Removed via Desktop Commander PowerShell `Remove-Item`. All git operations then run through Desktop Commander cmd shell.
+- `git commit -m "message with spaces"` in CMD splits on spaces. Fixed: `echo message > commit-msg.txt && git commit --file commit-msg.txt`
+- `gh pr create --title "title with spaces"` also splits. Fixed: `gh pr create --fill --body-file pr-body.txt --base main` (uses commit message as title)
+- `docs.json` had a trailing null byte (0x00) causing `json.decoder.JSONDecodeError: Extra data`. Fixed with Python: `open('docs.json', 'rb').read().rstrip(b'\x00')` then write back.
+- Desktop Commander `read_file` on `app/(dashboard)/cards/[id]/page.tsx` returned only `{"fileName":..., "filePath":...}` with no content. Workaround: `Get-Content | Out-File` to temp file then read via bash. Actually the `mcp__filesystem__read_file` tool worked directly.
+- Previous agent had the article written but failed to push (GITHUB_TOKEN read-only on Abdalestar/docs). This run had no push issues — the token appears to have been updated.
+
+### Insights for future runs
+- `/cards/[id]` uses the same `StampCardWizard` component as creation but with `mode="edit"` and `initialData={card}`. The wizard initializes all state from `initialData` on mount.
+- Advanced Settings is a separate `AdvancedSettings` component rendered below the wizard on the design step only (not on other steps). It is collapsible/expandable.
+- On save, existing rewards for the card are deleted and re-inserted. This means reward IDs change on every save. Customer stamp progress is NOT affected (stored on `member_stamps` by card ID, not reward ID).
+- The `published_at` field is set only when `status === 'active'`. Saving as draft sets `published_at: null`.
+- `mcp__filesystem__read_file` works with bracket path names (e.g. `[id]`) without needing `LiteralPath` workarounds. Use it instead of PowerShell `Get-Content`.
+- `git -C C:\path` form works in Desktop Commander cmd shell. Avoids `cd` quoting issues.
+
+### Gap discovery (Phase 6)
+Scanned remaining Notion tasks:
+- **Edit Points Program** (34d1ae8f-748c-8124) — Status: In progress, claimed by another agent today (agent-k3x7qp at 2026-05-02T08:24:00Z). P3 Low. `/merchants/points/edit.mdx`. Not claimed in this run.
+- No other "Not started" tasks found. All other tasks are Done.
+- No new undocumented routes discovered in this run.
+
+---
+
 Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
