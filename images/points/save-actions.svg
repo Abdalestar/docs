@@ -1,0 +1,82 @@
+<svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="What happens when you save an edit: Save as Draft hides the program, Save and Activate publishes changes immediately">
+  <rect width="760" height="260" fill="#F8F5F2"/>
+
+  <!-- Title -->
+  <text x="380" y="30" text-anchor="middle" fill="#423F4C"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="13" font-weight="600">What happens when you save</text>
+
+  <!-- Left box: Current state -->
+  <rect x="30" y="60" width="160" height="80" rx="10" fill="#423F4C"/>
+  <text x="110" y="92" text-anchor="middle" fill="white"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="12" font-weight="600">Your program</text>
+  <text x="110" y="112" text-anchor="middle" fill="#F0D793"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="11">(any status)</text>
+
+  <!-- Arrow 1: Save as Draft -->
+  <line x1="192" y1="82" x2="358" y2="82" stroke="#6B6770" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="354,77 364,82 354,87" fill="#6B6770"/>
+  <text x="278" y="74" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="11">Save as Draft</text>
+
+  <!-- Arrow 2: Save &amp; Activate -->
+  <line x1="192" y1="118" x2="358" y2="138" stroke="#8E4A63" stroke-width="1.5"/>
+  <polygon points="353,133 364,138 356,147" fill="#8E4A63"/>
+  <text x="278" y="115" text-anchor="middle" fill="#8E4A63"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="11" font-weight="600">Save &amp; Activate</text>
+
+  <!-- Draft result box -->
+  <rect x="368" y="50" width="160" height="70" rx="10" fill="white" stroke="#6B6770" stroke-width="1.5"/>
+  <text x="448" y="76" text-anchor="middle" fill="#423F4C"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="12" font-weight="600">Draft</text>
+  <text x="448" y="96" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="10">Hidden from members</text>
+  <text x="448" y="112" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="10">Balances preserved</text>
+
+  <!-- Active result box -->
+  <rect x="368" y="140" width="160" height="70" rx="10" fill="#8E4A63"/>
+  <text x="448" y="166" text-anchor="middle" fill="white"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="12" font-weight="600">Active</text>
+  <text x="448" y="186" text-anchor="middle" fill="#F0D793"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="10">Visible to members</text>
+  <text x="448" y="202" text-anchor="middle" fill="#F0D793"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="10">Changes apply immediately</text>
+
+  <!-- Warning box -->
+  <rect x="560" y="50" width="180" height="160" rx="10" fill="white" stroke="#F0D793" stroke-width="2"/>
+  <text x="650" y="75" text-anchor="middle" fill="#423F4C"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="11" font-weight="700">Note on points rate</text>
+  <text x="650" y="97" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="10">Changing "points per</text>
+  <text x="650" y="113" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="10">currency" only affects</text>
+  <text x="650" y="129" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="10">future transactions.</text>
+  <text x="650" y="149" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="10">Points members already</text>
+  <text x="650" y="165" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="10">earned are not changed.</text>
+
+  <!-- Divider line -->
+  <line x1="30" y1="230" x2="730" y2="230" stroke="#F0D793" stroke-width="1"/>
+  <text x="380" y="248" text-anchor="middle" fill="#6B6770"
+        font-family="system-ui, -apple-system, sans-serif"
+        font-size="10">Both actions redirect you back to the Points list after saving.</text>
+</svg>

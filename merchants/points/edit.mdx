@@ -1,0 +1,90 @@
+---
+title: "Edit a Points Program"
+sidebarTitle: "Edit a program"
+description: "Update an existing points program's name, earn rate, rewards, and other settings."
+---
+
+Go to **Points** in the left sidebar. Each program card shows the name, earn rate, and current status. Click any card to open the edit page.
+
+The edit form looks the same as the creation form, but opens with your program's current values already filled in.
+
+<Frame caption="The Points list. Click a program card to open it for editing.">
+  <img src="/images/points/points-list-final.png" alt="Points programs list" />
+</Frame>
+
+## What you can change
+
+<Frame caption="The edit form showing Basic Information, Appearance, and the live card preview.">
+  <img src="/images/points/edit-form-top-final.png" alt="Edit form top section with basic info and appearance" />
+</Frame>
+
+**Basic Information**
+
+- **Program Name** — what members see on the card in the app. Changes take effect as soon as you save and activate.
+- **Description** — the short line that appears below the program name on the card.
+- **Points per currency** — how many points a member earns per unit of currency spent. Read the note below before changing this on an active program.
+- **Currency** — the currency your program uses. Defaults to QAR.
+
+**Appearance**
+
+Click a color swatch to change the card background color. Select a different emoji from the icon row. The preview card on the right side of the page updates as you type, so you can see how it will look in the app before saving.
+
+**Rewards**
+
+<Frame caption="The Rewards section. Click a reward row to edit it, or click the X to remove it.">
+  <img src="/images/points/edit-form-rewards-final.png" alt="Rewards section showing the list of configured rewards" />
+</Frame>
+
+Click **Add reward** to open the reward editor. Click any existing reward row to update its name, points threshold, image, or staff note.
+
+<Frame caption="The reward editor dialog. Set a name and the number of points needed to earn this reward.">
+  <img src="/images/points/edit-form-reward-dialog-final.png" alt="Reward editor dialog with name and points fields" />
+</Frame>
+
+When you save the program, the full reward list is replaced with whatever appears on screen. If you remove a reward using the X button, it is gone after the next save. Members who already earned that reward keep it, but no new members can earn it from that point forward.
+
+**Points Expiry and Availability**
+
+<Frame caption="The Points Expiry and Availability Period sections. Both are disabled by default.">
+  <img src="/images/points/edit-form-expiry-final.png" alt="Points expiry toggle and availability period date fields" />
+</Frame>
+
+Turn on **Points Expiry** to set how long points last before they expire. You can choose whether the clock starts from when points are earned, from the member's last activity, or at the end of the calendar year.
+
+Turn on **Availability Period** to restrict when new members can join the program and earn points. Existing members are not removed when the period ends.
+
+**Terms and Conditions**
+
+Optional text shown on the back of the card in the member app. Update this if your redemption rules change.
+
+## Changing the earn rate on an active program
+
+If you update **Points per currency**, the new rate applies to purchases from that point forward. Points members already earned stay as they are.
+
+For example, if you increase from 1 point per QAR to 2 points per QAR, a member with 200 existing points keeps their 200 points. Their next QAR 10 purchase earns 20 points instead of 10.
+
+## Save as Draft or Save & Activate
+
+<Frame caption="How each save option changes the program's status and member visibility.">
+  <img src="/images/points/save-actions.svg" alt="Diagram showing Save as Draft hides the program from members and Save and Activate publishes changes immediately" />
+</Frame>
+
+At the bottom of the form, choose how to save:
+
+- **Save as Draft** — saves all changes but hides the program from members. Useful for staging updates before publishing.
+- **Save & Activate** — publishes all changes immediately. Active programs update in place, so members see the new settings on their next app refresh. Draft programs go live.
+
+Both options take you back to the Points list after saving.
+
+<Note>
+Switching a live program to Draft preserves all existing member balances. Members just cannot earn new points while the program is in draft mode.
+</Note>
+
+<CardGroup cols={2}>
+  <Card title="Creating a Points Program" href="/merchants/points/creating">
+    Set up a new points program from scratch.
+  </Card>
+  <Card title="Points Operations" href="/merchants/points/operations">
+    Award points to members at the counter.
+  </Card>
+</CardGroup>

@@ -36,6 +36,7 @@
         "pages": [
           "merchants/points/overview",
           "merchants/points/creating",
+          "merchants/points/edit",
           "merchants/points/operations"
         ]
       },
