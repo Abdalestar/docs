@@ -1,0 +1,97 @@
+---
+title: "Merchant Page Editor"
+description: "How to design your public merchant page: cover photo, logo, branding, location, and loyalty card appearance."
+---
+
+The Merchant Page editor is where you design the page your customers see in the Qtap app. Go to **Merchant Page** in the sidebar to open it. On large screens, a live preview on the right updates as you fill in fields or pick colors.
+
+<Frame caption="The editor has three sections on the left, with a live phone preview on the right. Click Create Merchant at the bottom to publish.">
+  <img src="/images/merchants/merchant-page-editor-flow.svg" alt="Merchant Page Editor layout: Merchant Profile, Location Details, and Loyalty Cards sections, with live preview sidebar and Create/Update Merchant actions" />
+</Frame>
+
+## Merchant Profile
+
+These fields control how your business appears on the customer-facing page.
+
+**Merchant Name** is your business name as customers see it.
+
+**Cover Photo** appears as the banner at the top of your public page. Accepted formats are PNG and JPEG, up to 5MB. Use a 1200×600px image (2:1 ratio) for the best crop. Once an image is uploaded, **Change** and remove (×) buttons appear on the thumbnail.
+
+**Merchant Logo** is the circular logo shown on your page. Accepted formats are PNG, JPEG, and SVG, up to 10MB. A square image crops cleanly into the circle; non-square images may appear cut off.
+
+**Merchant Logo (Transparent PNG)** is a second logo field used specifically on mobile loyalty cards. Qtap displays this PNG as the stamp icon inside the card. Upload a square PNG with a transparent background, up to 10MB, ideally at 512×512px. The upload area has a checkered background so you can verify the transparency before saving.
+
+**Description** is a short text description of your business, shown below your name on the public page.
+
+**Google Rating** is a slider from 0.0 to 5.0 (in 0.1 increments). This is a display value you set manually; it does not pull from Google. The rating appears next to your business name on the customer page.
+
+**Category** is a dropdown with eight options: Restaurants, Cafes, Retail, Beauty, Health, Services, Entertainment, and Other. Qtap uses this to classify your business in the app.
+
+## Location Details
+
+The Location Details section has five fields:
+
+- **Location Name**: the name of the branch or location shown to customers
+- **Address**: the full street address
+- **Phone Number**: your contact number for this location
+- **Working Hours**: opening hours as a free-text string (for example, "Sat–Thu 9am–10pm")
+- **Website URL**: your business website
+
+Phone and working hours sit side by side in a two-column layout on the form.
+
+## Loyalty Cards
+
+The Loyalty Cards section shows one configuration block per loyalty program. Stamp card accounts start with a stamp card; points accounts start with a points card.
+
+### Stamp card configuration
+
+- **Card Color**: 12 color swatches
+- **Stamp Icon**: 12 emoji options, or upload a custom image (PNG, JPEG, or SVG under 500KB)
+- **Stamps Required**: the number of stamps to complete the card
+- **Stamps to show on preview**: a slider that sets how many stamps appear filled in the live preview (preview-only, does not affect real customer data)
+
+### Points card configuration
+
+- **Card Color**: 12 color swatches
+- **Card Icon**: 12 emoji options with the same custom upload option
+- **Points per currency**: how many points one unit of currency earns
+- **Preview Points Balance**: the balance shown in the live preview
+
+### Rewards
+
+Each card has a **Rewards & Interim Rewards** subsection. Click **Add Reward** to open the reward dialog. Click any listed reward to edit it, or click × to remove it.
+
+The dialog has these fields:
+
+- **Reward Type**: *Main*, *Sign Up*, or *Interim*. Main triggers when a customer completes the full card; the trigger value is set automatically to the card's Stamps Required. Sign Up is awarded when a customer first joins the program. Interim appears as a gift icon at a specific stamp or point milestone; selecting it shows an additional trigger value field.
+- **Reward Name** (required): shown to customers
+- **Reward Image** (optional): PNG or JPEG up to 2MB
+- **Staff Notes** (internal): visible only to staff, not customers
+- **Expiry** (optional): days after earning before the reward expires (1–365). Leave blank for no expiry.
+
+Click **Add Reward** to save, or **Save Changes** if you are editing an existing reward.
+
+## Live preview
+
+On large screens, a phone-sized preview sits in the right column and updates in real time as you edit. It shows the merchant page header, your loyalty card in its current color and icon, and the location details. On smaller screens the preview is hidden.
+
+## Saving and resetting
+
+**Preview** opens your page at `/m/your-slug?preview=true` in a new tab. It uses your current unsaved edits, so you can review the result before committing.
+
+**Create Merchant** (first save) sends your data to the server and publishes your page. After the first save, the button becomes **Update Merchant**.
+
+**Delete** appears only after you have saved at least once. Clicking it shows a confirmation dialog: "Are you sure you want to reset your merchant page? This will clear your cover photo, logo, and all merchant page settings." Confirming resets all of the editor's fields and unpublishes your page. Loyalty programs and member data are not affected.
+
+<Warning>
+Only account owners can access the Merchant Page editor. Managers and staff see an access denied screen. There is no per-role permission to grant access to this page.
+</Warning>
+
+<CardGroup cols={2}>
+  <Card title="Settings" href="/merchants/settings/merchant-page">
+    Edit your business name, contact details, hours, and social links
+  </Card>
+  <Card title="Stamp Cards" href="/merchants/stamp-cards/overview">
+    Set up the stamp card that appears on your merchant page
+  </Card>
+</CardGroup>
