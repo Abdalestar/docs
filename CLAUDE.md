@@ -4,6 +4,88 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-05-07 — Analytics Overview Screenshots (Attempt 2)
+
+**Article:** `merchants/analytics/overview.mdx`
+**Branch:** `docs/analytics-overview-update`
+**PR:** https://github.com/Abdalestar/docs/pull/41
+**Status:** Screenshots still not captured — all automated approaches blocked
+
+### Goal
+Add real screenshots to PR #41 (analytics overview rewrite). Article content is complete and committed; only the `<Frame>` image tags are missing.
+
+### All approaches tried and why each failed
+
+**1. `mcp__Claude_in_Chrome__upload_image` relay**
+Plan: take Chrome MCP screenshot → use upload_image with the ID to push it to a `<input type="file">` on the local server.
+Result: `"Unable to access message history to retrieve image"` — Chrome MCP screenshot IDs (`ss_XXXXX`) are not accessible to the `upload_image` tool. The two tools don't share an image store.
+
+**2. `fetch()` / XHR from analytics page to localhost server**
+Result: `"Failed to fetch"` — the analytics page is HTTPS. Connections from HTTPS to `http://127.0.0.1:7777` are blocked as mixed content by Chrome. Both `fetch()` and XHR are affected. No CSP meta tag exists; the restriction is browser mixed-content enforcement.
+
+**3. `<script src="http://127.0.0.1:7777/...">` to load html2canvas from local server**
+Result: Same mixed-content block applies to script loads from HTTPS pages.
+
+**4. dom-to-image-more (17KB, injected inline)**
+Fix applied: replaced `})(this)` with `})(window)` in the IIFE to make it work in eval context.
+Library injected successfully (`window.domtoimage` defined), BUT: `domtoimage.toPng()` throws `(intermediate value).join is not a function` in the CSS `resolveAll` chain. The failure occurs when iterating `document.styleSheets` — at least one stylesheet (likely a cross-origin Next.js chunk or CDN font) causes the `cssRules` iterator to return a non-array. The error persists even with `disableEmbedFonts: true`.
+
+**5. Raw SVG foreignObject canvas approach**
+Built an SVG string from `node.outerHTML`, created a Blob URL, tried loading it as an `<img>` to draw to canvas.
+Result: `img load error: "error"` — the browser refuses to render the SVG because it contains references to external resources (images, fonts, stylesheets from other origins). The canvas would be tainted regardless.
+
+**6. html2canvas (199KB)**
+Not attempted — 199KB source code = ~50K tokens inline in a single javascript_tool call. Too expensive for context window. Could be split into 4 chunks of ~50KB stored in globals then eval'd, but dom-to-image (simpler library) already failed at the CSS step, so html2canvas would likely fail the same way.
+
+**7. `gif_creator` tool**
+Result: `"Tab X is not in the MCP tab group. GIF recording only works for tabs within the MCP tab group."` — the analytics tab was opened before the MCP session, so it is not in the MCP's visual Chrome tab group. Even a new tab created with `tabs_create_mcp` and navigated to the analytics URL gets the same error.
+
+**8. `mcp__computer-use__request_access`**
+Result: Timed out after 180s — user not present for automated run. Without approval, no computer-use tools are available.
+
+**9. PowerShell PrintWindow + Win32 API (from previous session)**
+Result: Captures the wrong Chrome tab because PrintWindow captures the HWND's current visible content, which depends on which tab Chrome has active at the OS level — not which tab the Chrome MCP has logically active.
+
+### What DOES work (confirmed)
+- `<a href="data:..." download="filename.png">` + `.click()` from `javascript_tool` on the analytics tab **does** trigger a Chrome download to `C:\Users\Abdallah\Downloads\`. Confirmed with a test canvas (340-byte `test-canvas.png` saved successfully).
+- dom-to-image injection itself works (`window.domtoimage` is defined and has `toPng`, `toCanvas` etc.).
+
+### How to fix dom-to-image for this page
+The `resolveAll` function in dom-to-image-more reads `document.styleSheets`, filters for `CSSRule.FONT_FACE_RULE` rules, and calls `.join("\n")` on the results. On the Next.js analytics page, at least one stylesheet causes the cssRules iterator to return something that is not a plain array by the time `.join` is called.
+
+Patch option: monkey-patch `window.domtoimage.impl.fontFaces.resolveAll` before calling `toPng`:
+```javascript
+var orig = window.domtoimage.impl.fontFaces.resolveAll;
+window.domtoimage.impl.fontFaces = {
+  resolveAll: function() { return Promise.resolve(''); },
+  impl: { readAll: function() { return Promise.resolve([]); } }
+};
+```
+This skips font inlining entirely. Combined with `disableInlineImages: false`, the rendered PNG will use browser-default fonts but should otherwise capture the UI layout correctly.
+
+### Recommended approach for manual run
+1. Open the analytics dashboard at `https://dashboard.qtap.qa/analytics` and confirm it shows stamp card metrics.
+2. Approve `request_access` for Google Chrome when prompted (user must be present).
+3. Use `mcp__computer-use__screenshot` with `save_to_disk: true` — it returns a real filesystem path on Windows.
+4. Or: apply the dom-to-image monkey-patch above, then call `window.__captureSection('filename.png')` — the `<a download>` path DOES work and saves to Downloads.
+
+### Screenshots needed (6 total)
+- `analytics-metrics-stamp.png` — top of page: metrics grid (Total Stamps, Redemptions, New Members, Return Rate) + time period selector
+- `analytics-charts.png` — Stamps Over Time chart + Top Performing Staff bar chart
+- `analytics-insights.png` — Insights panel + AI Insights panel
+- `analytics-benchmarks.png` — Regional Benchmarks panel
+- `analytics-customers.png` — Churn Risk + Best Customers (side by side)
+- `analytics-ask-ai.png` — Ask AI About Your Data panel at bottom
+
+All screenshots save to `C:\Users\Abdallah\docs\images\merchants\analytics\` and should use `<Frame>` tags in the MDX article.
+
+### Errors / challenges
+- Port 7777 `EADDRINUSE`: multiple stale server processes (PIDs 79776, 82668). Kill with `taskkill /PID <pid> /F` before starting.
+- git HEAD null bytes: persisted from prior session; already fixed by Desktop Commander CMD `echo ref: refs/heads/main > .git\HEAD`.
+- `capture-server.js`, `images/merchants/analytics/*.png` (failed captures), `commit-msg.txt` etc. are untracked in the repo — do NOT commit them.
+
+---
+
 ## 2026-05-06 — Analytics Overview Rewrite
 
 **Article:** `merchants/analytics/overview.mdx`
