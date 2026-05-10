@@ -1,0 +1,36 @@
+<svg viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <!-- Page background -->
+  <rect width="1200" height="400" fill="#f8f8f9"/>
+
+  <!-- Card -->
+  <rect x="24" y="24" width="1152" height="352" rx="12" fill="white" stroke="#e5e7eb" stroke-width="1"/>
+
+  <!-- Section heading -->
+  <text x="48" y="66" font-size="17" font-weight="700" fill="#1f2937">Role Permissions</text>
+  <line x1="48" y1="82" x2="1152" y2="82" stroke="#e5e7eb" stroke-width="1"/>
+
+  <!-- Owner row -->
+  <!-- Left accent bar -->
+  <rect x="48" y="102" width="4" height="60" rx="2" fill="#7c3aed"/>
+  <!-- Role title pill -->
+  <rect x="64" y="106" width="72" height="26" rx="6" fill="#f3f0ff"/>
+  <text x="100" y="123" font-size="13" font-weight="600" fill="#7c3aed" text-anchor="middle">Owner</text>
+  <!-- Description -->
+  <text x="152" y="123" font-size="14" fill="#374151">Full access to everything including billing, settings, and staff management.</text>
+  <!-- Divider -->
+  <line x1="48" y1="172" x2="1152" y2="172" stroke="#f3f4f6" stroke-width="1"/>
+
+  <!-- Manager row -->
+  <rect x="48" y="192" width="4" height="60" rx="2" fill="#8E4A63"/>
+  <rect x="64" y="196" width="86" height="26" rx="6" fill="#fce7f3"/>
+  <text x="107" y="213" font-size="13" font-weight="600" fill="#9d174d" text-anchor="middle">Manager</text>
+  <text x="166" y="213" font-size="14" fill="#374151">Can manage members, create cards, view analytics, and issue stamps/points.</text>
+  <line x1="48" y1="262" x2="1152" y2="262" stroke="#f3f4f6" stroke-width="1"/>
+
+  <!-- Staff row -->
+  <rect x="48" y="282" width="4" height="60" rx="2" fill="#0891b2"/>
+  <rect x="64" y="286" width="60" height="26" rx="6" fill="#e0f2fe"/>
+  <text x="94" y="303" font-size="13" font-weight="600" fill="#0369a1" text-anchor="middle">Staff</text>
+  <text x="140" y="303" font-size="14" fill="#374151">Can issue stamps and points, view basic member info and limited analytics.</text>
+
+</svg>
