@@ -8,7 +8,7 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 **Article:** `merchants/staff/overview.mdx`
 **Branch:** `docs/staff-overview-screenshots`
-**PR:** (see below)
+**PR:** https://github.com/Abdalestar/docs/pull/42
 **Status:** Done — SVG diagrams used instead of real screenshots (all screenshot approaches blocked)
 
 ### Goal
@@ -81,7 +81,11 @@ The article said "Invite Staff Member" but the live UI shows "Invite Staff". Fix
 ### Deliverables
 - 2 SVG diagrams (accurate to live UI data)
 - `overview.mdx` updated with Frame tags + 2 anti-slop fixes + 1 button label correction
-- PR opened (see PR link in Notion)
+- PR #42 opened: https://github.com/Abdalestar/docs/pull/42
+- Notion task updated: Done, Needs Screenshots cleared, PR Link set, Date Completed 2026-05-10
+
+### Phase 6 gap discovery
+Scanned all 41 `page.tsx` files under `app/(dashboard)/` against the Notion task board. No new undocumented routes found. All routes have corresponding tracked tasks.
 
 ---
 
