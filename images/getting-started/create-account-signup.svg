@@ -1,0 +1,72 @@
+<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Qtap signup form: Create Your Account">
+  <defs>
+    <linearGradient id="authBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F9F5F7"/>
+      <stop offset="100%" stop-color="#F0EAF0"/>
+    </linearGradient>
+    <filter id="cardShadow" x="-10%" y="-5%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="8" flood-color="#8E4A63" flood-opacity="0.07"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="520" fill="url(#authBg)"/>
+
+  <!-- Browser chrome -->
+  <rect x="20" y="20" width="760" height="480" rx="12" fill="white" stroke="#E5E0DC" stroke-width="1.5"/>
+  <rect x="20" y="20" width="760" height="36" rx="12" fill="#F0EDE9"/>
+  <rect x="20" y="44" width="760" height="12" fill="#F0EDE9"/>
+  <circle cx="44" cy="38" r="6" fill="#D8534F" opacity="0.7"/>
+  <circle cx="62" cy="38" r="6" fill="#F0C752" opacity="0.7"/>
+  <circle cx="80" cy="38" r="6" fill="#4CAF70" opacity="0.7"/>
+  <rect x="120" y="30" width="520" height="16" rx="8" fill="white" stroke="#E5E0DC" stroke-width="1"/>
+  <text x="380" y="42" text-anchor="middle" fill="#6B6770" font-family="system-ui, -apple-system, sans-serif" font-size="10">dashboard.qtap.qa/signup</text>
+
+  <!-- Page background inside browser -->
+  <rect x="20" y="56" width="760" height="444" fill="url(#authBg)"/>
+
+  <!-- Auth card -->
+  <rect x="228" y="62" width="344" height="392" rx="12" fill="white" stroke="#EDE0E8" stroke-width="1" filter="url(#cardShadow)"/>
+
+  <!-- Q logo circle -->
+  <circle cx="400" cy="90" r="22" fill="#8E4A63"/>
+  <text x="400" y="98" text-anchor="middle" fill="white" font-family="Georgia, serif" font-size="20" font-weight="700">Q</text>
+
+  <!-- Title -->
+  <text x="400" y="126" text-anchor="middle" fill="#423F4C" font-family="Georgia, serif" font-size="19" font-weight="700">Create Your Account</text>
+  <text x="400" y="143" text-anchor="middle" fill="#6B6770" font-family="system-ui, -apple-system, sans-serif" font-size="12">Start your free 14-day trial</text>
+
+  <!-- Business Name -->
+  <text x="248" y="165" fill="#423F4C" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600">Business Name</text>
+  <rect x="248" y="171" width="304" height="28" rx="6" fill="white" stroke="#D8D4D8" stroke-width="1.5"/>
+  <text x="260" y="189" fill="#BDB8BD" font-family="system-ui, -apple-system, sans-serif" font-size="12">My Coffee Shop</text>
+
+  <!-- Business Email -->
+  <text x="248" y="215" fill="#423F4C" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600">Business Email</text>
+  <rect x="248" y="221" width="304" height="28" rx="6" fill="white" stroke="#D8D4D8" stroke-width="1.5"/>
+  <text x="260" y="239" fill="#BDB8BD" font-family="system-ui, -apple-system, sans-serif" font-size="12">you@business.com</text>
+
+  <!-- Password -->
+  <text x="248" y="265" fill="#423F4C" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600">Password</text>
+  <rect x="248" y="271" width="304" height="28" rx="6" fill="white" stroke="#D8D4D8" stroke-width="1.5"/>
+  <text x="260" y="289" fill="#BDB8BD" font-family="system-ui, -apple-system, sans-serif" font-size="14" letter-spacing="4">&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;</text>
+  <!-- Eye icon -->
+  <ellipse cx="537" cy="285" rx="7" ry="5" fill="none" stroke="#C8C4C8" stroke-width="1.5"/>
+  <circle cx="537" cy="285" r="2.5" fill="#C8C4C8"/>
+  <!-- Password hint -->
+  <text x="248" y="311" fill="#9E99A0" font-family="system-ui, -apple-system, sans-serif" font-size="10">Must be 8+ characters with uppercase, lowercase, and number</text>
+
+  <!-- Terms checkbox -->
+  <rect x="248" y="323" width="11" height="11" rx="2" fill="white" stroke="#C8C4C8" stroke-width="1.5"/>
+  <text x="264" y="333" fill="#6B6770" font-family="system-ui, -apple-system, sans-serif" font-size="11">I agree to the <tspan fill="#8E4A63">Terms of Service</tspan> and <tspan fill="#8E4A63">Privacy Policy</tspan></text>
+
+  <!-- Start Free Trial button -->
+  <rect x="248" y="346" width="304" height="36" rx="8" fill="#8E4A63"/>
+  <text x="400" y="368" text-anchor="middle" fill="white" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600">Start Free Trial</text>
+
+  <!-- Already have an account -->
+  <text x="400" y="404" text-anchor="middle" fill="#6B6770" font-family="system-ui, -apple-system, sans-serif" font-size="12">Already have an account? <tspan fill="#8E4A63">Log in</tspan></text>
+
+  <!-- Page footer -->
+  <text x="400" y="488" text-anchor="middle" fill="#9E99A0" font-family="system-ui, -apple-system, sans-serif" font-size="10"><tspan fill="#8E4A63">Terms &amp; Conditions</tspan> &#xB7; <tspan fill="#8E4A63">Privacy Policy</tspan></text>
+</svg>
