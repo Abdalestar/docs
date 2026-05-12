@@ -1,0 +1,133 @@
+<svg viewBox="0 0 780 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Edit Permissions dialog showing the Role and Permissions tab with six permission categories">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#423F4C" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="780" height="900" fill="#F8F5F2"/>
+
+  <!-- Dialog card -->
+  <rect x="40" y="30" width="700" height="840" rx="12" fill="white" filter="url(#shadow)"/>
+
+  <!-- Dialog header -->
+  <text x="64" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700" fill="#423F4C">Edit Permissions</text>
+  <text x="64" y="94" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6B6770">Configure permissions and location access for this staff member</text>
+
+  <!-- Divider -->
+  <line x1="40" y1="108" x2="740" y2="108" stroke="#F0D793" stroke-width="1"/>
+
+  <!-- Tabs -->
+  <rect x="64" y="120" width="308" height="40" rx="8" fill="#F8F5F2"/>
+  <!-- Active tab: Role & Permissions -->
+  <rect x="66" y="122" width="150" height="36" rx="6" fill="white"/>
+  <rect x="66" y="122" width="150" height="36" rx="6" fill="none" stroke="#E2DAD5" stroke-width="1"/>
+  <!-- Shield icon placeholder -->
+  <circle cx="84" cy="140" r="7" fill="none" stroke="#8E4A63" stroke-width="1.5"/>
+  <text x="96" y="145" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#423F4C">Role &amp; Permissions</text>
+  <!-- Inactive tab: Locations -->
+  <circle cx="226" cy="140" r="7" fill="none" stroke="#6B6770" stroke-width="1.5"/>
+  <text x="238" y="145" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#6B6770">Locations</text>
+
+  <!-- Role dropdown -->
+  <text x="64" y="188" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#423F4C">Role</text>
+  <rect x="64" y="196" width="300" height="38" rx="6" fill="white" stroke="#E2DAD5" stroke-width="1"/>
+  <text x="80" y="219" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#423F4C">Manager</text>
+  <text x="344" y="219" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6B6770">&#9660;</text>
+  <text x="64" y="252" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6B6770">Managers have full access to all features except billing and staff management.</text>
+
+  <!-- Custom permissions toggle -->
+  <rect x="64" y="266" width="652" height="56" rx="8" fill="white" stroke="#E2DAD5" stroke-width="1"/>
+  <text x="84" y="288" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#423F4C">Use Custom Permissions</text>
+  <text x="84" y="306" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6B6770">Override the default role permissions</text>
+  <!-- Toggle switch (off state) -->
+  <rect x="678" y="279" width="26" height="16" rx="8" fill="#E2DAD5"/>
+  <circle cx="686" cy="287" r="6" fill="white"/>
+
+  <!-- Permission categories label -->
+  <text x="64" y="348" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#423F4C">Permission Categories</text>
+
+  <!-- Category 1: Members -->
+  <text x="64" y="372" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#8E4A63">Members</text>
+  <!-- Permission rows -->
+  <rect x="64" y="380" width="304" height="40" rx="6" fill="#F8F5F2" stroke="#E2DAD5" stroke-width="1"/>
+  <rect x="72" y="393" width="14" height="14" rx="3" fill="white" stroke="#E2DAD5" stroke-width="1.5"/>
+  <rect x="72" y="393" width="14" height="14" rx="3" fill="#8E4A63" opacity="0.8"/>
+  <text x="95" y="403" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#423F4C">View members</text>
+  <text x="95" y="415" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">Can view member list and details</text>
+
+  <rect x="376" y="380" width="340" height="40" rx="6" fill="white" stroke="#E2DAD5" stroke-width="1"/>
+  <rect x="384" y="393" width="14" height="14" rx="3" fill="white" stroke="#E2DAD5" stroke-width="1.5"/>
+  <text x="407" y="403" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#423F4C">Add members</text>
+  <text x="407" y="415" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">Can create new members</text>
+
+  <!-- Category 2: Loyalty -->
+  <text x="64" y="438" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#8E4A63">Loyalty</text>
+  <rect x="64" y="446" width="304" height="40" rx="6" fill="#F8F5F2" stroke="#E2DAD5" stroke-width="1"/>
+  <rect x="72" y="459" width="14" height="14" rx="3" fill="#8E4A63" opacity="0.8"/>
+  <text x="95" y="469" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#423F4C">Issue stamps</text>
+  <text x="95" y="481" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">Can issue stamps to members</text>
+
+  <rect x="376" y="446" width="340" height="40" rx="6" fill="#F8F5F2" stroke="#E2DAD5" stroke-width="1"/>
+  <rect x="384" y="459" width="14" height="14" rx="3" fill="#8E4A63" opacity="0.8"/>
+  <text x="407" y="469" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#423F4C">Award points</text>
+  <text x="407" y="481" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">Can award points to members</text>
+
+  <!-- Category 3: Cards & Programs -->
+  <text x="64" y="504" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#8E4A63">Cards &amp; Programs</text>
+  <rect x="64" y="512" width="304" height="40" rx="6" fill="#F8F5F2" stroke="#E2DAD5" stroke-width="1"/>
+  <rect x="72" y="525" width="14" height="14" rx="3" fill="#8E4A63" opacity="0.8"/>
+  <text x="95" y="535" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#423F4C">View cards</text>
+  <text x="95" y="547" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">Can view stamp cards and programs</text>
+
+  <rect x="376" y="512" width="340" height="40" rx="6" fill="white" stroke="#E2DAD5" stroke-width="1"/>
+  <rect x="384" y="525" width="14" height="14" rx="3" fill="white" stroke="#E2DAD5" stroke-width="1.5"/>
+  <text x="407" y="535" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#423F4C">Create cards</text>
+  <text x="407" y="547" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">Can create new cards and programs</text>
+
+  <!-- Category 4: QR & NFC -->
+  <text x="64" y="570" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#8E4A63">QR &amp; NFC</text>
+  <rect x="64" y="578" width="304" height="40" rx="6" fill="#F8F5F2" stroke="#E2DAD5" stroke-width="1"/>
+  <rect x="72" y="591" width="14" height="14" rx="3" fill="#8E4A63" opacity="0.8"/>
+  <text x="95" y="601" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#423F4C">View QR codes</text>
+  <text x="95" y="613" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">Can view QR codes and NFC tags</text>
+
+  <rect x="376" y="578" width="340" height="40" rx="6" fill="white" stroke="#E2DAD5" stroke-width="1"/>
+  <rect x="384" y="591" width="14" height="14" rx="3" fill="white" stroke="#E2DAD5" stroke-width="1.5"/>
+  <text x="407" y="601" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#423F4C">Generate QR codes</text>
+  <text x="407" y="613" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">Can generate new QR codes</text>
+
+  <!-- Category 5: Analytics -->
+  <text x="64" y="636" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#8E4A63">Analytics</text>
+  <rect x="64" y="644" width="304" height="40" rx="6" fill="#F8F5F2" stroke="#E2DAD5" stroke-width="1"/>
+  <rect x="72" y="657" width="14" height="14" rx="3" fill="#8E4A63" opacity="0.8"/>
+  <text x="95" y="667" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#423F4C">View analytics</text>
+  <text x="95" y="679" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">Can access analytics dashboard</text>
+
+  <rect x="376" y="644" width="340" height="40" rx="6" fill="white" stroke="#E2DAD5" stroke-width="1"/>
+  <rect x="384" y="657" width="14" height="14" rx="3" fill="white" stroke="#E2DAD5" stroke-width="1.5"/>
+  <text x="407" y="667" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#423F4C">Export data</text>
+  <text x="407" y="679" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">Can export analytics data</text>
+
+  <!-- Category 6: Notifications -->
+  <text x="64" y="702" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#8E4A63">Notifications</text>
+  <rect x="64" y="710" width="304" height="40" rx="6" fill="white" stroke="#E2DAD5" stroke-width="1"/>
+  <rect x="72" y="723" width="14" height="14" rx="3" fill="white" stroke="#E2DAD5" stroke-width="1.5"/>
+  <text x="95" y="733" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#423F4C">View notifications</text>
+  <text x="95" y="745" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">Can view notification history</text>
+
+  <rect x="376" y="710" width="340" height="40" rx="6" fill="white" stroke="#E2DAD5" stroke-width="1"/>
+  <rect x="384" y="723" width="14" height="14" rx="3" fill="white" stroke="#E2DAD5" stroke-width="1.5"/>
+  <text x="407" y="733" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#423F4C">Send notifications</text>
+  <text x="407" y="745" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">Can send push notifications</text>
+
+  <!-- Dialog footer -->
+  <line x1="40" y1="766" x2="740" y2="766" stroke="#E2DAD5" stroke-width="1"/>
+  <!-- Cancel button -->
+  <rect x="564" y="778" width="80" height="36" rx="6" fill="white" stroke="#E2DAD5" stroke-width="1"/>
+  <text x="604" y="800" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#423F4C">Cancel</text>
+  <!-- Save button -->
+  <rect x="656" y="778" width="120" height="36" rx="6" fill="#8E4A63"/>
+  <text x="716" y="800" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="white">Save Changes</text>
+</svg>
