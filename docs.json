@@ -55,6 +55,7 @@
           "merchants/campaigns/birthday",
           "merchants/campaigns/winback",
           "merchants/campaigns/milestone",
+          "merchants/campaigns/welcome",
           "merchants/campaigns/rewards",
           "merchants/campaigns/analytics",
           "merchants/campaigns/push-notifications"
