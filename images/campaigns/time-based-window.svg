@@ -1,0 +1,43 @@
+<svg viewBox="0 0 800 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Timeline showing a push notification sent at 1 pm before a 2 to 5 pm offer window">
+  <!-- Background -->
+  <rect width="800" height="160" fill="#F8F5F2"/>
+
+  <!-- Timeline track -->
+  <rect x="50" y="83" width="700" height="6" rx="3" fill="#6B6770" opacity="0.2"/>
+
+  <!-- Offer window: 2 pm (x=290) to 5 pm (x=640) -->
+  <rect x="290" y="70" width="350" height="30" rx="6" fill="#F0D793"/>
+  <text x="465" y="90" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#423F4C">Offer window  2 pm – 5 pm</text>
+
+  <!-- Notification marker at 1 pm (x=170) -->
+  <circle cx="170" cy="86" r="13" fill="#8E4A63"/>
+  <text x="170" y="91" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="white" font-weight="700">!</text>
+
+  <!-- Dashed arrow from notification to offer window start -->
+  <line x1="184" y1="86" x2="282" y2="86" stroke="#8E4A63" stroke-width="2" stroke-dasharray="5,3"/>
+  <polygon points="279,81 290,86 279,91" fill="#8E4A63"/>
+
+  <!-- Lead time label above dashed line -->
+  <text x="232" y="75" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8E4A63" font-weight="600">← 1 hour before →</text>
+
+  <!-- Tick marks -->
+  <line x1="50" y1="89" x2="50" y2="104" stroke="#6B6770" stroke-width="1.5" opacity="0.5"/>
+  <line x1="170" y1="89" x2="170" y2="104" stroke="#8E4A63" stroke-width="2"/>
+  <line x1="290" y1="70" x2="290" y2="104" stroke="#423F4C" stroke-width="2"/>
+  <line x1="410" y1="89" x2="410" y2="104" stroke="#6B6770" stroke-width="1.5" opacity="0.4"/>
+  <line x1="530" y1="89" x2="530" y2="104" stroke="#6B6770" stroke-width="1.5" opacity="0.4"/>
+  <line x1="640" y1="70" x2="640" y2="104" stroke="#423F4C" stroke-width="2"/>
+  <line x1="750" y1="89" x2="750" y2="104" stroke="#6B6770" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Time labels below -->
+  <text x="50" y="122" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6B6770">12 pm</text>
+  <text x="170" y="122" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#8E4A63">1 pm</text>
+  <text x="290" y="122" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#423F4C">2 pm</text>
+  <text x="410" y="122" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6B6770">3 pm</text>
+  <text x="530" y="122" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6B6770">4 pm</text>
+  <text x="640" y="122" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#423F4C">5 pm</text>
+  <text x="750" y="122" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6B6770">6 pm</text>
+
+  <!-- Notification sent label below circle -->
+  <text x="170" y="143" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#8E4A63" font-weight="600">Notification sent</text>
+</svg>

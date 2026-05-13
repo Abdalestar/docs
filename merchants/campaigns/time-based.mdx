@@ -1,0 +1,78 @@
+---
+title: "Time-Based Promotion Campaigns"
+sidebarTitle: "Time-Based Promotions"
+description: "Set up offers that run automatically on specific days and times each week, such as happy hours or weekly specials."
+---
+
+A Time-Based Promotion campaign sends push notifications to your members on the days and hours you choose. It repeats automatically every week without any action from you.
+
+Cafes and restaurants in Qatar use it for happy hours (Monday to Thursday, 2 pm to 5 pm) or Friday lunch deals. Any offer that runs on the same weekly schedule is a good candidate.
+
+## Setting up a time-based campaign
+
+Click **Campaigns** in the left sidebar, then click **New Campaign**. The wizard walks you through seven steps:
+
+<Steps>
+  <Step title="Type">
+    Select **Time-Based Promotion**. Give the campaign a name. Something like "Happy Hour" or "Thursday Special" works well. Add an optional description. Click **Next**.
+  </Step>
+  <Step title="Trigger">
+    Set which days the campaign runs. Monday through Friday are on by default, so deselect Saturday and Sunday if you want weekdays only.
+
+    Then set the offer window: **Start time** and **End time** (defaulting to 2:00 pm to 5:00 pm), and how far in advance to notify customers: 30 minutes, 1 hour (default), or 2 hours before the window opens.
+
+    Click **Next**.
+  </Step>
+  <Step title="Reward">
+    Optionally attach a reward. Members receive it in their wallet when the notification arrives. If the offer only needs foot traffic and no digital voucher, skip this step and click **Next**.
+  </Step>
+  <Step title="Message">
+    Write the notification title and body. Push notifications truncate on most phones after about 100 characters, so keep the body short. Click **Next**.
+  </Step>
+  <Step title="Conditions">
+    Optionally narrow who receives the campaign. Setting "Days since last visit is less than 60" targets only recently active members and keeps the list focused. Leave blank to reach all members. Click **Next**.
+  </Step>
+  <Step title="A/B Test">
+    Optionally set up two message variants to see which performs better. Click **Next**.
+  </Step>
+  <Step title="Review">
+    Check the summary. Click **Activate** to start the campaign now, or **Save as Draft** to return later.
+  </Step>
+</Steps>
+
+## How the timing works
+
+The notification goes out before the offer window opens, not when it starts. If your start time is 2:00 pm and you notify 1 hour before, members get the push at 1:00 pm. That gives them time to plan a visit rather than scrambling at the last minute.
+
+<Frame caption="With a 1-hour lead time and a 2 pm start, the notification fires at 1 pm.">
+  <img src="/images/campaigns/time-based-window.svg" alt="Timeline showing a push notification sent at 1 pm before a 2–5 pm offer window" />
+</Frame>
+
+## Notification frequency
+
+This campaign fires on every active day, every week. Set to Monday through Friday, that's five notifications per week per member. That adds up quickly.
+
+Use the **Conditions** step to keep it reasonable. Filtering by visit recency — for example, "Days since last visit is less than 90" — focuses sends on members who are still engaged with your loyalty program.
+
+<Warning>
+Members with push notifications turned off won't receive anything, regardless of campaign settings.
+</Warning>
+
+## Managing the campaign
+
+After activating, the campaign appears on the Campaigns page with a status of **Active**. Click the three-dot menu on the campaign card to:
+
+- **Pause** — stops future sends without deleting the campaign
+- **Edit** — change active days, times, reward, or message
+- **Delete** — removes the campaign permanently
+
+Pausing stops notifications from that point forward. It does not cancel any notifications already queued for that day.
+
+<CardGroup cols={2}>
+  <Card title="Campaign Rewards" href="/merchants/campaigns/rewards">
+    Add a reward to your time-based promotion.
+  </Card>
+  <Card title="Campaign Analytics" href="/merchants/campaigns/analytics">
+    Track opens and redemptions once the campaign is live.
+  </Card>
+</CardGroup>
