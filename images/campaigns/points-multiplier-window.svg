@@ -1,0 +1,44 @@
+<svg viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Points Multiplier active window diagram">
+  <rect width="800" height="220" fill="#F8F5F2"/>
+
+  <!-- Title -->
+  <text x="400" y="28" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#423F4C">Points Multiplier — how points calculate during the active window</text>
+
+  <!-- Timeline bar -->
+  <rect x="60" y="60" width="680" height="12" rx="6" fill="#D8D5D0"/>
+  <!-- Active window highlight -->
+  <rect x="260" y="60" width="280" height="12" rx="6" fill="#8E4A63"/>
+
+  <!-- Tick marks and labels -->
+  <!-- Before start -->
+  <line x1="260" y1="55" x2="260" y2="78" stroke="#423F4C" stroke-width="1.5"/>
+  <text x="260" y="100" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6B6770">Start date</text>
+
+  <!-- End -->
+  <line x1="540" y1="55" x2="540" y2="78" stroke="#423F4C" stroke-width="1.5"/>
+  <text x="540" y="100" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6B6770">End date</text>
+
+  <!-- Zone labels -->
+  <text x="160" y="52" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6B6770">Before</text>
+  <text x="400" y="52" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" fill="#8E4A63">Active window</text>
+  <text x="640" y="52" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6B6770">After</text>
+
+  <!-- Scan example boxes -->
+  <!-- Before scan -->
+  <rect x="80" y="120" width="160" height="70" rx="10" fill="white" stroke="#D8D5D0" stroke-width="1.5"/>
+  <text x="160" y="145" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6B6770">Customer scans QR</text>
+  <text x="160" y="163" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#423F4C">100 pts earned</text>
+  <text x="160" y="180" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6B6770">normal rate</text>
+
+  <!-- During scan -->
+  <rect x="320" y="120" width="160" height="70" rx="10" fill="#8E4A63"/>
+  <text x="400" y="145" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#F0D793">Customer scans QR</text>
+  <text x="400" y="163" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="white">200 pts earned</text>
+  <text x="400" y="180" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#F0D793">2x multiplier active</text>
+
+  <!-- After scan -->
+  <rect x="560" y="120" width="160" height="70" rx="10" fill="white" stroke="#D8D5D0" stroke-width="1.5"/>
+  <text x="640" y="145" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6B6770">Customer scans QR</text>
+  <text x="640" y="163" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#423F4C">100 pts earned</text>
+  <text x="640" y="180" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6B6770">normal rate</text>
+</svg>

@@ -1,0 +1,130 @@
+---
+title: "Points Multiplier and Flash Sale Campaigns"
+sidebarTitle: "Points Multiplier & Flash Sale"
+description: "Run time-limited points boosts or surprise flash sales to get members visiting during quiet periods."
+---
+
+Two campaign types exist specifically for urgency: Points Multiplier and Flash Sale. Both run for a fixed window, send one push notification per member, and end automatically when time runs out.
+
+<Frame caption="The Campaigns list. Points Multiplier and Flash Sale appear alongside other campaign types in the wizard.">
+  <img src="/images/campaigns/campaigns-list-final.png" alt="Campaigns list page in the Qtap dashboard" />
+</Frame>
+
+## Points Multiplier
+
+A Points Multiplier campaign boosts the points members earn on QR code scans during a date range you set. If your standard QR gives 100 points and you run a 2x campaign, every scan during the window credits 200 points instead. The calculation happens automatically at scan time — members don't need to do anything differently.
+
+<Info>
+Points Multiplier only applies to points-type QR codes. Stamp card scans are not affected.
+</Info>
+
+<Frame caption="How points calculate before, during, and after the multiplier window.">
+  <img src="/images/campaigns/points-multiplier-window.svg" alt="Timeline showing normal points before and after the window, doubled points during" />
+</Frame>
+
+### Setting up a Points Multiplier campaign
+
+Go to **Campaigns** in the left sidebar and click **New Campaign**. The wizard has seven steps.
+
+**Step 1: Type**
+
+Select **Points Multiplier** from the campaign type list. Give it a name (e.g., "Summer Double Points") and an optional description. Click **Next**.
+
+<Frame caption="Selecting Points Multiplier in the campaign type wizard.">
+  <img src="/images/campaigns/wizard-type-points-multiplier-final.png" alt="Campaign wizard with Points Multiplier selected" />
+</Frame>
+
+**Step 2: Trigger**
+
+Configure the multiplier window:
+
+- **Points Multiplier** — choose 1.5x, 2x, 3x, 5x, or 10x
+- **Start Date** and **End Date** — the calendar dates the campaign is active
+- **Start Time** and **End Time** (optional) — narrow the window to specific hours each day, e.g. 2:00 PM to 6:00 PM only
+
+If you leave the time fields empty, the multiplier applies all day every day within the date range.
+
+<Frame caption="Trigger configuration for a Points Multiplier campaign.">
+  <img src="/images/campaigns/wizard-pm-trigger-final.png" alt="Points Multiplier trigger settings showing multiplier dropdown and date/time fields" />
+</Frame>
+
+Click **Next**.
+
+**Steps 3–7: Reward, Message, Conditions, A/B Test, Review**
+
+These steps are the same across all campaign types. You can attach a bonus reward (free item, bonus stamps, bonus points, or a discount), write the push notification text, add audience conditions, set up an A/B message test, then review everything before activating.
+
+At **Step 7**, click **Activate** to start the campaign immediately, or **Save Draft** to activate it later.
+
+### What members see
+
+When the campaign goes live, each member receives one push notification through the Qtap app. When they scan a QR code during the active window, the app shows the multiplied total: "You earned 200 points! (2x bonus active)". After the end date passes, scans return to the normal rate without any action on your part.
+
+### Gotchas
+
+- Each member receives the campaign notification once. If someone misses it, they won't be notified again.
+- The execution engine checks eligibility every 15 minutes. Members who join after the campaign activates may get the notification on the next run rather than immediately.
+- If you have multiple active Points Multiplier campaigns, only the first matching one applies to each scan.
+
+---
+
+## Flash Sale
+
+A Flash Sale campaign sends a push notification to all your members announcing a time-limited offer. You set when it starts, how long it runs, and what the offer is. Qtap ends the campaign automatically when the duration expires or when a redemption cap you set is reached.
+
+<Frame caption="Flash Sale lifecycle from draft to ended.">
+  <img src="/images/campaigns/flash-sale-lifecycle.svg" alt="Diagram showing Draft, Active, Paused, and Ended states for a flash sale" />
+</Frame>
+
+### Setting up a Flash Sale campaign
+
+**Step 1: Type**
+
+Select **Flash Sale** from the campaign type list. Give it a name (e.g., "Friday Afternoon Deal") and click **Next**.
+
+**Step 2: Trigger**
+
+Configure the offer:
+
+- **Sale Type** — choose from Discount (%), Bonus Points, or Bonus Stamps
+- **Value** — the discount percentage or the number of bonus points/stamps
+- **Start Time** — the exact date and time the sale begins
+- **Duration** — how long the sale runs: 1, 2, 4, 8, 24, 48, or 72 hours
+- **Max Redemptions** (optional) — leave blank for unlimited, or set a cap to end the sale early once enough customers redeem
+
+<Frame caption="Trigger settings for a Flash Sale campaign.">
+  <img src="/images/campaigns/wizard-fs-trigger-final.png" alt="Flash Sale trigger showing sale type, value, start time, duration, and max redemptions fields" />
+</Frame>
+
+Click **Next** and complete the remaining steps.
+
+**Steps 3–7: Reward, Message, Conditions, A/B Test, Review**
+
+For flash sales, the reward step is where you define what the customer gets when they redeem the offer in store. The message step is where you write the notification text — keep it direct about the offer and the deadline. At Step 7, click **Activate** or **Save Draft**.
+
+### How it ends
+
+Qtap ends the campaign when either:
+
+- The duration runs out (start time + duration hours), or
+- The total redeemed count reaches the Max Redemptions cap you set
+
+Once ended, the campaign stays in your list with status "Ended" so you can review how many members redeemed it.
+
+### Gotchas
+
+- Flash sale notifications go out once per member. Someone who doesn't open the notification won't be reminded.
+- If you don't set a Max Redemptions cap, the offer stays available until the duration expires, regardless of how many people redeem it.
+- The "sale type" controls the offer in the notification. The reward in Step 3 is a separate item — for example, you could send a Bonus Points flash sale notification and also attach a Free Item reward for members who open it.
+
+---
+
+## Managing active campaigns
+
+Both campaign types appear on the **Campaigns** page as cards. Open the three-dot menu on any card to pause, resume, or end the campaign early.
+
+Pausing a Points Multiplier campaign stops the multiplier from applying to new scans. Members who scanned during the active period keep the points they already earned. Pausing a Flash Sale stops new notifications from going out and prevents further redemptions until you resume it.
+
+<Info>
+Campaign notifications are sent via the Qtap member app. Members without push notifications enabled won't receive them, though the campaign still records their eligibility.
+</Info>

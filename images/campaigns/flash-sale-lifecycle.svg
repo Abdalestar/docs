@@ -1,0 +1,50 @@
+<svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flash Sale lifecycle diagram">
+  <rect width="800" height="200" fill="#F8F5F2"/>
+
+  <!-- Title -->
+  <text x="400" y="28" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#423F4C">Flash Sale — lifecycle from start to end</text>
+
+  <!-- State boxes -->
+  <!-- Draft -->
+  <rect x="30" y="60" width="130" height="56" rx="10" fill="white" stroke="#D8D5D0" stroke-width="1.5"/>
+  <text x="95" y="84" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#6B6770">Draft</text>
+  <text x="95" y="103" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6B6770">saved, not running</text>
+
+  <!-- Arrow -->
+  <line x1="162" y1="88" x2="198" y2="88" stroke="#423F4C" stroke-width="1.5"/>
+  <polygon points="198,83 210,88 198,93" fill="#423F4C"/>
+  <text x="186" y="80" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">Activate</text>
+
+  <!-- Active -->
+  <rect x="210" y="60" width="150" height="56" rx="10" fill="#8E4A63"/>
+  <text x="285" y="84" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="white">Active</text>
+  <text x="285" y="103" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#F0D793">notifications sending</text>
+
+  <!-- Arrow to Paused -->
+  <line x1="360" y1="70" x2="430" y2="70" stroke="#423F4C" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <polygon points="430,65 442,70 430,75" fill="#423F4C"/>
+  <text x="396" y="62" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">Pause</text>
+
+  <!-- Paused -->
+  <rect x="444" y="52" width="130" height="36" rx="10" fill="white" stroke="#D8D5D0" stroke-width="1.5"/>
+  <text x="509" y="75" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#6B6770">Paused</text>
+
+  <!-- Arrow back to Active -->
+  <line x1="509" y1="88" x2="509" y2="108" stroke="#423F4C" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="509" y1="108" x2="285" y2="108" stroke="#423F4C" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <polygon points="280,103 268,108 280,113" fill="#423F4C"/>
+  <text x="390" y="122" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">Resume</text>
+
+  <!-- Arrow Active to Ended (time-based) -->
+  <line x1="360" y1="100" x2="616" y2="100" stroke="#423F4C" stroke-width="1.5"/>
+  <polygon points="616,95 628,100 616,105" fill="#423F4C"/>
+
+  <!-- Ended -->
+  <rect x="630" y="60" width="140" height="56" rx="10" fill="#F0D793"/>
+  <text x="700" y="82" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="600" fill="#423F4C">Ended</text>
+  <text x="700" y="99" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">duration elapsed, or</text>
+  <text x="700" y="112" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10" fill="#6B6770">max redemptions hit</text>
+
+  <!-- End note -->
+  <text x="400" y="160" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" fill="#6B6770">Qtap auto-ends a flash sale when the duration expires or the max redemptions cap is reached.</text>
+</svg>
