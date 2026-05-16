@@ -1,0 +1,97 @@
+---
+title: "Reward Redemption"
+description: "How staff confirm and record reward redemptions at the counter."
+---
+
+A campaign reward lands in a member's Qtap wallet automatically. Collecting it requires one more step: a staff member confirms it at the counter when the member visits. The Redemptions page is where that happens.
+
+<Frame>
+  <img src="/images/campaigns/redemptions-enter-code.png" alt="Redemptions page with Enter Code selected" />
+</Frame>
+
+## Who can access this page
+
+Any staff account with stamp or points issue permissions can open the Redemptions page. All roles — owner, manager, and staff — have those permissions by default. If a team member cannot see the page in the sidebar, an owner can check their permissions under **Settings → Staff**.
+
+## Redeeming a reward
+
+The page opens on the **Redeem** tab. Staff choose between two methods depending on whether the member has their Qtap app handy.
+
+### Enter Code
+
+Members see a 6-character code in their app when they earn a reward. Entering this code is the quickest path to confirmation.
+
+<Steps>
+  1. Click **Redemptions** in the left sidebar.
+  2. Click the **Enter Code** button.
+  3. Type the 6-character code from the member's app. The field converts to uppercase automatically.
+  4. Qtap displays the reward name and the member it belongs to.
+  5. Click **Confirm Redemption** to record it.
+</Steps>
+
+A green confirmation screen appears with the reward name and member name. The reward status updates to redeemed in the member's account immediately.
+
+<Warning>
+The confirmation button only appears for rewards that are still valid. If the code belongs to a reward that has expired or was already used, no confirm option is shown.
+</Warning>
+
+### Look Up Customer
+
+When a member doesn't have their code available, staff can find them by searching for their name, email address, phone number, or Qtap ID.
+
+<Steps>
+  1. Click **Redemptions** in the left sidebar.
+  2. Click the **Look Up Customer** button.
+  3. Type at least 2 characters into the search field. Results appear as you type.
+  4. Click the member's card to select them.
+  5. Qtap lists all rewards that member can redeem right now.
+  6. Click **Redeem** next to the reward the member wants to use.
+  7. A dialog shows the reward name and member name. Click **Confirm** to process it.
+</Steps>
+
+<Frame>
+  <img src="/images/campaigns/redemptions-lookup.png" alt="Look Up Customer view with member card and reward list" />
+</Frame>
+
+## Points-eligible rewards
+
+For merchants running a points program, the lookup view includes a second section below the member's earned rewards. This section lists rewards the member has accumulated enough points to unlock, even if no campaign triggered them automatically. Staff can redeem these in the same flow.
+
+The confirmation dialog for a points reward shows the point cost and the member's projected balance after redemption, so staff and the member can confirm the trade-off before committing.
+
+<Info>
+This section only appears when your loyalty program is configured as a points program. Stamp card merchants see only the standard earned-rewards list.
+</Info>
+
+## Redemption history
+
+Click the **History** tab to see the last 50 redemptions across all members.
+
+| Column | What it shows |
+|---|---|
+| Member | Who claimed the reward |
+| Reward | What they redeemed |
+| Stamp Card | The program the reward belongs to |
+| Redeemed At | Date and time of the redemption |
+| Staff | Which team member processed it |
+
+The list updates as new redemptions come in. It does not paginate past 50 rows — use [Member Profiles](/merchants/members/profiles) or the [Analytics](/merchants/analytics/overview) section to review older history.
+
+<Frame>
+  <img src="/images/campaigns/redemptions-history.png" alt="History tab showing recent redemptions table" />
+</Frame>
+
+<CardGroup cols={2}>
+  <Card title="Campaign Rewards" icon="gift" href="/merchants/campaigns/rewards">
+    Configure what reward members earn when a campaign fires
+  </Card>
+  <Card title="Member Profiles" icon="user" href="/merchants/members/profiles">
+    View a member's full reward and visit history
+  </Card>
+  <Card title="Staff Permissions" icon="lock" href="/merchants/staff/roles-permissions">
+    Control which staff members can process redemptions
+  </Card>
+  <Card title="Campaigns Overview" icon="megaphone" href="/merchants/campaigns/overview">
+    All campaign types and how triggers work
+  </Card>
+</CardGroup>
