@@ -1,0 +1,103 @@
+---
+title: "Campaign audience conditions"
+sidebarTitle: "Audience conditions"
+description: "Filter which members receive a campaign by adding rules on top of the main trigger."
+---
+
+Audience conditions are an optional filter you add in **Step 5** of the campaign wizard. They narrow down who actually receives the notification, on top of whatever the trigger already selects.
+
+A win-back campaign, for example, fires at everyone inactive for 60 days. Add a condition like "Total Stamps greater than 5" and only members who actually visited at least five times will get the message. That keeps the campaign from going to people who signed up once and never came back.
+
+Leave Step 5 empty if you want the campaign to reach every member the trigger selects.
+
+<Frame caption="Step 5 in the campaign wizard before any conditions are added. The campaign targets everyone the trigger selects.">
+  <img src="/images/campaigns/conditions-empty-final.png" alt="Empty conditions step in the campaign wizard" />
+</Frame>
+
+## Adding a condition
+
+<Steps>
+  <Step title="Open Step 5">
+    Work through the wizard until you reach **Conditions**. Click **Add Condition Group**.
+  </Step>
+  <Step title="Set the rule">
+    The group starts with one rule. Pick a **field** (what to check), an **operator** (how to compare), and a **value**.
+  </Step>
+  <Step title="Continue">
+    Click **Next** when you're ready. You can always add more rules or groups before reviewing.
+  </Step>
+</Steps>
+
+<Frame caption="A condition group with a single rule. The campaign only sends to members with more than five stamps.">
+  <img src="/images/campaigns/conditions-with-group-final.png" alt="Condition group with a single stamp rule" />
+</Frame>
+
+## Fields
+
+| Field | What it checks |
+|---|---|
+| Total Stamps | Lifetime stamps earned on any card |
+| Total Points | Lifetime points earned across all programs |
+| Total Redemptions | How many rewards the member has redeemed |
+| Days Since Last Visit | Days since their last stamp or point was recorded |
+| Member Age (days) | Days since they joined your program |
+| Tags | Custom tags on their profile |
+| Location | Their assigned branch — enter the branch ID, not the name |
+
+## Operators
+
+| Operator | When to use it |
+|---|---|
+| Equals | Must be an exact match |
+| Greater than | Above a number |
+| Less than | Below a number |
+| Between | Within a range — type the range as `10-20` |
+| Contains | Tag or location includes the text you enter |
+| Does not contain | Tag or location excludes the text you enter |
+
+## AND vs OR logic
+
+Each group has a selector at the top: **Match ALL of** or **Match ANY of** the rules inside it.
+
+- **All of (AND)** — the member must pass every rule in the group to qualify.
+- **Any of (OR)** — the member needs to pass just one rule.
+
+<Frame caption="Two rules in a group set to AND. The member must meet both to qualify for the campaign.">
+  <img src="/images/campaigns/conditions-two-rules-final.png" alt="Condition group with two rules using AND logic" />
+</Frame>
+
+<Frame caption="AND requires all rules to pass. OR requires at least one.">
+  <img src="/images/campaigns/conditions-logic.svg" alt="Diagram comparing AND vs OR condition group logic" />
+</Frame>
+
+## Multiple groups
+
+Click **Add Condition Group** again to add more groups. A member who passes any one group qualifies, regardless of the others.
+
+<Tip>
+Start with one condition and check how many members it catches before adding more rules. The more conditions you stack, the smaller the eligible group — it can drop to zero faster than you expect.
+</Tip>
+
+## Removing conditions
+
+Click the trash icon next to a rule to remove it. If you delete the last rule in a group, the whole group is removed.
+
+## Examples
+
+**Loyal members only for a birthday offer**
+Add "Total Stamps greater than 20" to a birthday campaign. Members who have only visited once or twice won't receive it.
+
+**New members who haven't redeemed anything yet**
+Combine "Member Age (days) less than 90" AND "Total Redemptions equals 0" to target people still in the early phase of their membership.
+
+**One-location promotion**
+Set "Location contains [branch-id]" on a time-based campaign to restrict it to one branch.
+
+**Exclude unengaged members from a win-back**
+Set "Total Stamps greater than 2" on a win-back campaign so you're only contacting people who visited more than twice before going quiet.
+
+<Info>
+Conditions apply on top of the campaign trigger, not instead of it. A member still needs to match the trigger (inactive for 60 days, birthday this week, etc.) before conditions are even checked.
+</Info>
+
+{/* TODO: Code analysis found that `conditions` from the wizard form are not included in the createCampaign payload (new/page.tsx) and there is no conditions column in the campaigns Supabase table. Conditions appear to be evaluated only for campaign_type='custom' via target_conditions in the execute engine. Verify with engineering whether conditions are being persisted and evaluated for standard campaign types before this article is published, or update the article scope to cover only custom campaigns. */}
