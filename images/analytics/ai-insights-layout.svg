@@ -1,0 +1,138 @@
+<svg viewBox="0 0 840 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI Insights Panel layout diagram showing four sections">
+  <rect width="840" height="520" fill="#F8F5F2"/>
+
+  <!-- Title -->
+  <text x="420" y="32" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#423F4C">AI Insights Panel &#x2014; four sections</text>
+
+  <!-- &#x2500;&#x2500; Section 1: Recommendations &#x2500;&#x2500; -->
+  <rect x="30" y="52" width="375" height="200" rx="12" fill="white" stroke="#e8e0ea" stroke-width="1.5"/>
+  <!-- header bar -->
+  <rect x="30" y="52" width="375" height="44" rx="12" fill="#8E4A63" opacity="0.08"/>
+  <rect x="30" y="78" width="375" height="18" fill="#8E4A63" opacity="0.08"/>
+  <!-- icon -->
+  <circle cx="58" cy="74" r="12" fill="#8E4A63" opacity="0.15"/>
+  <text x="58" y="79" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13">&#x1F4A1;</text>
+  <text x="80" y="71" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="#423F4C">Recommendations</text>
+  <text x="80" y="86" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#6B6770">What to do next, based on your numbers</text>
+  <!-- AI-powered badge -->
+  <rect x="285" y="61" width="106" height="20" rx="10" fill="#F0D793" opacity="0.6"/>
+  <text x="338" y="75" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#423F4C" font-weight="600">&#x2736; AI-powered</text>
+
+  <!-- rec card -->
+  <rect x="46" y="110" width="343" height="58" rx="8" fill="#F8F5F2" stroke="#e8e0ea" stroke-width="1"/>
+  <rect x="56" y="122" width="24" height="24" rx="6" fill="#8E4A63" opacity="0.1"/>
+  <text x="68" y="138" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11">&#x1F501;</text>
+  <text x="90" y="129" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600" fill="#423F4C">Send a win-back message</text>
+  <rect x="210" y="122" width="62" height="15" rx="7" fill="#f5e8ec" stroke="#dbbfc8" stroke-width="1"/>
+  <text x="241" y="133" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#8E4A63">high impact</text>
+  <rect x="278" y="122" width="38" height="15" rx="7" fill="#f0f7f0"/>
+  <text x="297" y="133" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#4a7c4a">easy</text>
+  <text x="90" y="144" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#6B6770">12 members haven't visited in 30+ days.</text>
+  <!-- action link -->
+  <text x="90" y="160" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#8E4A63">Send a reminder &#x2192;</text>
+
+  <!-- rec card 2 -->
+  <rect x="46" y="176" width="343" height="36" rx="8" fill="#F8F5F2" stroke="#e8e0ea" stroke-width="1"/>
+  <text x="68" y="200" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="11">&#x1F3AF;</text>
+  <text x="90" y="197" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600" fill="#423F4C">Launch a birthday campaign</text>
+  <rect x="225" y="187" width="66" height="15" rx="7" fill="#f0e8f5" stroke="#d0b8e0" stroke-width="1"/>
+  <text x="258" y="198" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#6B3080">medium impact</text>
+
+  <!-- rec card 3 (partial) -->
+  <rect x="46" y="218" width="343" height="20" rx="8" fill="#F8F5F2" stroke="#e8e0ea" stroke-width="1"/>
+  <text x="90" y="232" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#6B6770">...</text>
+
+  <!-- &#x2500;&#x2500; Section 2: Trends &#x2500;&#x2500; -->
+  <rect x="435" y="52" width="375" height="200" rx="12" fill="white" stroke="#e8e0ea" stroke-width="1.5"/>
+  <rect x="435" y="52" width="375" height="44" rx="12" fill="#8E4A63" opacity="0.08"/>
+  <rect x="435" y="78" width="375" height="18" fill="#8E4A63" opacity="0.08"/>
+  <circle cx="463" cy="74" r="12" fill="#8E4A63" opacity="0.15"/>
+  <text x="463" y="79" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13">&#x1F4C8;</text>
+  <text x="485" y="71" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="#423F4C">Trends</text>
+  <text x="485" y="86" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#6B6770">How key metrics moved this period</text>
+
+  <!-- trend rows -->
+  <line x1="451" y1="120" x2="794" y2="120" stroke="#f0eaf2" stroke-width="1"/>
+  <!-- row 1 -->
+  <rect x="451" y="123" width="26" height="26" rx="6" fill="#f0f7f0"/>
+  <text x="464" y="140" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" fill="#4a7c4a">&#x2191;</text>
+  <text x="487" y="133" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600" fill="#423F4C">Stamps issued</text>
+  <text x="487" y="146" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#6B6770">More stamps than last period</text>
+  <text x="785" y="138" text-anchor="end" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="#4a7c4a">+12.5%</text>
+  <line x1="451" y1="158" x2="794" y2="158" stroke="#f0eaf2" stroke-width="1"/>
+  <!-- row 2 -->
+  <rect x="451" y="161" width="26" height="26" rx="6" fill="#fef3f3"/>
+  <text x="464" y="178" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" fill="#c0392b">&#x2193;</text>
+  <text x="487" y="171" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600" fill="#423F4C">Redemptions</text>
+  <text x="487" y="184" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#6B6770">Fewer rewards claimed</text>
+  <text x="785" y="176" text-anchor="end" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="#c0392b">-8.1%</text>
+  <line x1="451" y1="196" x2="794" y2="196" stroke="#f0eaf2" stroke-width="1"/>
+  <!-- row 3 -->
+  <rect x="451" y="199" width="26" height="26" rx="6" fill="#f5f5f5"/>
+  <text x="464" y="216" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="14" fill="#6B6770">&#x2014;</text>
+  <text x="487" y="209" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600" fill="#423F4C">New members</text>
+  <text x="487" y="222" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#6B6770">Sign-ups holding steady</text>
+  <text x="785" y="213" text-anchor="end" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="#6B6770">0%</text>
+  <line x1="451" y1="235" x2="794" y2="235" stroke="#f0eaf2" stroke-width="1"/>
+  <text x="612" y="248" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#6B6770">one row per metric...</text>
+
+  <!-- &#x2500;&#x2500; Section 3: Predictions (Next 7 days) &#x2500;&#x2500; -->
+  <rect x="30" y="270" width="375" height="220" rx="12" fill="#fdf8e8" stroke="#F0D793" stroke-width="1.5"/>
+  <rect x="30" y="270" width="375" height="44" rx="12" fill="#F0D793" opacity="0.3"/>
+  <rect x="30" y="296" width="375" height="18" fill="#F0D793" opacity="0.3"/>
+  <circle cx="58" cy="292" r="12" fill="#F0D793" opacity="0.6"/>
+  <text x="58" y="297" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13">&#x1F4CA;</text>
+  <text x="80" y="289" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="#423F4C">Next 7 days</text>
+  <text x="80" y="304" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#6B6770">Forecasts from your recent activity</text>
+
+  <!-- prediction cards 2-col -->
+  <rect x="46" y="325" width="160" height="88" rx="8" fill="white" stroke="#F0D793" stroke-width="1.5"/>
+  <text x="56" y="342" font-family="system-ui,-apple-system,sans-serif" font-size="10" font-weight="600" fill="#423F4C">Stamps this week</text>
+  <rect x="136" y="334" width="56" height="15" rx="7" fill="#f0f7f0"/>
+  <text x="164" y="345" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#4a7c4a">high conf.</text>
+  <text x="56" y="368" font-family="system-ui,-apple-system,sans-serif" font-size="24" font-weight="700" fill="#8E4A63">47</text>
+  <text x="56" y="385" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#6B6770">Based on last 4 weeks avg</text>
+  <text x="56" y="404" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#8E4A63">View members &#x2192;</text>
+
+  <rect x="220" y="325" width="160" height="88" rx="8" fill="white" stroke="#F0D793" stroke-width="1.5"/>
+  <text x="230" y="342" font-family="system-ui,-apple-system,sans-serif" font-size="10" font-weight="600" fill="#423F4C">Redemptions likely</text>
+  <rect x="308" y="334" width="58" height="15" rx="7" fill="#f5f5f5"/>
+  <text x="337" y="345" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#6B6770">medium</text>
+  <text x="230" y="368" font-family="system-ui,-apple-system,sans-serif" font-size="24" font-weight="700" fill="#8E4A63">6</text>
+  <text x="230" y="385" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#6B6770">Based on redemption rate trend</text>
+  <text x="230" y="404" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#8E4A63">Open campaigns &#x2192;</text>
+
+  <text x="209" y="440" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#6B6770">one card per forecasted metric</text>
+  <text x="209" y="475" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#B8916A">Refreshes every 5 minutes</text>
+
+  <!-- &#x2500;&#x2500; Section 4: Anomalies (Worth a look) &#x2500;&#x2500; -->
+  <rect x="435" y="270" width="375" height="220" rx="12" fill="white" stroke="#e8e0ea" stroke-width="1.5"/>
+  <rect x="435" y="270" width="375" height="44" rx="12" fill="#8E4A63" opacity="0.08"/>
+  <rect x="435" y="296" width="375" height="18" fill="#8E4A63" opacity="0.08"/>
+  <circle cx="463" cy="292" r="12" fill="#c0392b" opacity="0.1"/>
+  <text x="463" y="297" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="13">&#x26A0;</text>
+  <text x="485" y="289" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="#423F4C">Worth a look</text>
+  <text x="485" y="304" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#6B6770">Unusual patterns spotted in your data</text>
+
+  <!-- anomaly card - warning -->
+  <rect x="451" y="326" width="343" height="76" rx="8" fill="#fff8e6" stroke="#F0D793" stroke-width="1.5"/>
+  <text x="461" y="342" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600" fill="#423F4C">Redemptions</text>
+  <rect x="533" y="331" width="56" height="16" rx="8" fill="white" stroke="#F0D793" stroke-width="1"/>
+  <text x="561" y="343" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#B8916A">warning</text>
+  <text x="620" y="342" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#6B6770">May 15</text>
+  <text x="461" y="357" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#423F4C">50% drop from daily average.</text>
+  <text x="461" y="371" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#6B6770">Expected 8, saw 4</text>
+  <text x="461" y="385" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#423F4C">Likely cause: staff shift change.</text>
+  <text x="461" y="397" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#6B6770">What to do: remind staff to scan cards.</text>
+
+  <!-- anomaly card - info -->
+  <rect x="451" y="410" width="343" height="32" rx="8" fill="#f0f4fb" stroke="#c0d0e8" stroke-width="1"/>
+  <text x="461" y="427" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#423F4C">Stamps spike on Thursdays &#x2014; </text>
+  <rect x="600" y="417" width="30" height="16" rx="8" fill="white" stroke="#c0d0e8" stroke-width="1"/>
+  <text x="615" y="429" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#4060a0">info</text>
+
+  <text x="612" y="460" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#6B6770">one card per anomaly detected</text>
+
+  <!-- connector label at bottom -->
+  <text x="420" y="510" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#6B6770">Panel appears below the main metrics on Analytics &#x2192; Analytics Overview. Updates when you change the time period.</text>
+</svg>

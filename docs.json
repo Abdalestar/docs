@@ -64,6 +64,7 @@
         "group": "Analytics",
         "pages": [
           "merchants/analytics/overview",
+          "merchants/analytics/ai-insights",
           "merchants/analytics/location-comparison",
           "merchants/analytics/points-activity",
           "merchants/analytics/revenue-impact",
