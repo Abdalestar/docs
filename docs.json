@@ -64,11 +64,11 @@
         "group": "Analytics",
         "pages": [
           "merchants/analytics/overview",
-          "merchants/analytics/wrapped",
           "merchants/analytics/location-comparison",
           "merchants/analytics/points-activity",
           "merchants/analytics/revenue-impact",
-          "merchants/analytics/staff-performance"
+          "merchants/analytics/staff-performance",
+          "merchants/analytics/wrapped"
         ]
       },
       {

@@ -1,78 +1,64 @@
 ---
-title: "Analytics Wrapped"
-sidebarTitle: "Wrapped"
-description: "A weekly, monthly, and yearly summary of your loyalty program — stamps, points, new members, top customers, and more."
+title: "Your Wrapped"
+sidebarTitle: "Analytics Wrapped"
+description: "A weekly, monthly, and yearly summary of your loyalty program activity, shown as a set of highlight cards."
 ---
 
-Analytics Wrapped compiles everything that happened in your loyalty program over a completed time window and presents it as a clean summary. Open it when you want a quick picture of a week, a month, or a full year without digging through charts.
-
-<Info>
-  Wrapped is available on the **Growth plan and above**. If you're on the Starter plan, the page shows a lock screen with a link to upgrade at **Settings → Billing**.
-</Info>
+"Your Wrapped" shows how your loyalty program performed over a completed period. You get six numbers (stamps, points, redemptions, new members, estimated revenue, growth rate), your most active customer, and your busiest day of the week.
 
 ## Opening Wrapped
 
-In the dashboard sidebar, go to **Analytics**, then click **Wrapped**. The page loads showing your last complete week by default.
+Go to **Analytics** in the left sidebar and choose **Your Wrapped**. You'll see three tabs: **Weekly**, **Monthly**, and **Yearly**.
 
-## Choosing a period
+Each tab covers the most recently completed period, not the one currently in progress. If you open the Weekly tab on a Wednesday, you're seeing last week's numbers (Sunday to Saturday), not the current partial week.
 
-Three tabs sit at the top:
-
-- **Weekly** — the last complete Sunday through Saturday
-- **Monthly** — the last full calendar month
-- **Yearly** — the last full calendar year
-
-Switching tabs reloads the summary for that window. Your current week, month, or year is not shown because the data is not final yet.
-
-<Frame caption="The Analytics Wrapped page showing the four summary cards for a weekly period.">
-  <img src="/images/analytics/wrapped-layout.svg" alt="Analytics Wrapped page layout with four cards: Your Numbers, Highlights, Top Customer, and Busiest Day" />
+<Frame caption="The Weekly tab showing key metrics for the previous completed week.">
+  <img src="/images/analytics/wrapped-weekly-final.png" alt="Your Wrapped page showing the Weekly tab with metrics, highlights, top customer, and busiest day cards" />
 </Frame>
 
-## What you see
+## What each tab covers
 
-Each period has up to four cards.
+<Frame caption="Each tab always shows a completed period. The current week, month, or year never appears until it finishes.">
+  <img src="/images/analytics/wrapped-periods.svg" alt="Diagram showing Weekly covers last Sun-Sat, Monthly covers last calendar month, Yearly covers last calendar year" />
+</Frame>
 
-**Your Numbers**
+| Tab | What it shows |
+|-----|---------------|
+| Weekly | Previous Sunday to Saturday |
+| Monthly | Previous full calendar month |
+| Yearly | Previous full calendar year |
 
-A two-column grid with six figures from the period:
+## What's on the page
 
-| Metric | What it shows |
-|--------|--------------|
-| Total Stamps | Stamps issued across all your locations |
-| Points Earned | Points added to member balances |
-| Redemptions | Rewards redeemed by members |
-| New Members | Members who joined during the period |
-| Est. Revenue | An estimate based on activity logged by the system |
-| Growth | New members as a percentage of your member count at the start of the period |
+**Your Numbers** lists six figures: total stamps issued, points earned, redemptions, new members, estimated revenue, and growth rate. Growth rate is the number of new members divided by your total membership at the start of the period. An account that had 200 members at the start of the week and gained 20 shows a 10% growth rate.
 
-The Growth percentage can read low or zero for new businesses. If you had 10 members at the start of a week and gained 1, Growth shows 10%.
+**Highlights** writes the same data as plain sentences: "342 stamps issued" or "Tuesday was your busiest day." Up to five highlights appear depending on what activity you had.
 
-**Highlights**
+**Top Customer** shows the member who visited most during the period, with their name and visit count. The card only appears when there was activity to rank.
 
-Plain-English bullets summarizing what stood out — total stamps, points earned, new joins, your most active customer, and your busiest day. The bullets only appear for metrics that have a non-zero value, so a slow week might have only two or three lines.
+**Busiest Day** shows the weekday with the most combined stamp and points activity. It also only appears when data exists.
 
-**Top Customer**
+<Frame caption="The Monthly tab showing the same card layout for the previous full calendar month.">
+  <img src="/images/analytics/wrapped-monthly-final.png" alt="Your Wrapped page on the Monthly tab showing metrics for the previous month" />
+</Frame>
 
-The member with the most logged activity in the period, along with a count of their visits. This card only appears when the system has activity data for at least one member.
+## Plan requirement
 
-**Busiest Day**
+Wrapped is on Growth, Elite, and Franchise plans. If you're on Starter, the page shows an upgrade prompt instead of data. Your current plan is under **Settings > Billing**.
 
-The day of the week that had the highest combined stamp and point activity. This card only appears when the period has enough daily data to rank days.
+<Info>
+Revenue figures are estimates. Qtap does not process payments, so the revenue number comes from your redemption activity, not actual transaction amounts.
+</Info>
 
-## Sharing your summary
+## If no data appears
 
-A **Share** button sits in the top right of each period view. Use it to export or copy the Wrapped summary for your team or social media.
+A new account or a period with no scans or redemptions shows "No data available for this period yet." Switch to the Monthly or Yearly tab — those cover longer windows and may have older activity to show.
 
-## No data yet
-
-If a period shows "No data available for this period yet," nothing was recorded in that window. This is normal for:
-
-- New accounts where data collection has just started
-- The Yearly tab early in a calendar year (the previous year may have no data if the account is recent)
-- Any week or month before you enrolled your first member
-
-The page will populate automatically once activity is logged.
-
-<Tip>
-  The Analytics overview at **Analytics → Overview** shows your live data with time period filters. Use it for day-to-day monitoring. Use Wrapped for a finished-period snapshot you can share.
-</Tip>
+<CardGroup cols={2}>
+  <Card title="Analytics Overview" href="/merchants/analytics/overview">
+    Your full set of stamps, points, and member metrics
+  </Card>
+  <Card title="Billing" href="/merchants/settings/billing">
+    View your current plan and upgrade to unlock Wrapped
+  </Card>
+</CardGroup>
