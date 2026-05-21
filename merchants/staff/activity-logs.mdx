@@ -1,6 +1,84 @@
 ---
 title: "Staff Activity Logs"
-description: "Viewing a history of stamp and redemption actions by staff"
+sidebarTitle: "Activity Logs"
+description: "View a timestamped record of every action your staff takes in the dashboard."
 ---
 
-Coming soon
+The activity log records everything your team does in the dashboard. Open it to see a timestamped history of staff actions and the customers they involved. If something happened in your account, it's here.
+
+## Open the log
+
+Go to **Staff** in the sidebar. At the top of the page, click **Activity Log**.
+
+<Frame caption="The Activity Log button sits at the top of your Staff page.">
+  <img src="/images/staff/staff-list-activity-button-final.png" alt="Staff list page showing the Activity Log button in the header" />
+</Frame>
+
+## What each row shows
+
+The log table has five columns:
+
+| Column | What it contains |
+|--------|------------------|
+| Date & Time | When the action happened, in your local time |
+| Staff | The team member who took the action ("System" for automated events) |
+| Action | What happened: a badge like "Stamp Issued" or "Reward Redeemed" |
+| Member | The customer involved, if any |
+| Details | Any extra data recorded with the event |
+
+The log shows the 200 most recent entries across your whole account. If you need to go further back, use the date range filter to narrow your search.
+
+<Frame caption="The staff activity log with recent actions listed.">
+  <img src="/images/staff/activity-log-final.png" alt="Staff activity log showing a table of recent staff actions" />
+</Frame>
+
+## Filter the log
+
+The filter bar above the table has four controls:
+
+- **Staff Member**: show only one team member's actions
+- **Action Type**: limit by event type (Stamp Issued, Points Issued, Reward Redeemed, and others)
+- **From**: start of the date range
+- **To**: end of the date range
+
+You can combine filters. To remove them all at once, click **Clear**.
+
+<Frame caption="Filters applied to show a specific staff member's stamp actions.">
+  <img src="/images/staff/activity-log-filtered-final.png" alt="Activity log with Staff Member and Action Type filters applied" />
+</Frame>
+
+## Export to CSV
+
+Click **Export CSV** at the top of the page to download the current view as a spreadsheet. The file includes a header section with your organization name and the export date, then one row per entry.
+
+The button is greyed out if no entries match your current filters. Clear or adjust the filters before exporting if you see this.
+
+<Info>
+The export reflects whatever filters are active when you click it. To export your full history (up to 200 entries), clear all filters first.
+</Info>
+
+## Action types in the log
+
+| Action | What it means |
+|--------|---------------|
+| Stamp Issued | A staff member added stamps to a member's card |
+| Points Issued | A staff member awarded points to a member |
+| Reward Redeemed | A reward was processed at the counter |
+| Member Joined | A customer enrolled in your loyalty program |
+| Member Visit | A returning member checked in or scanned |
+| Campaign Sent | A campaign message went out to members |
+| Campaign Redeemed | A member redeemed an offer from a campaign |
+| Notification Sent | A push notification was dispatched |
+
+## Who can access this page
+
+Owners and managers can view the full activity log. Staff members cannot access it.
+
+<CardGroup cols={2}>
+  <Card title="Staff Overview" href="/merchants/staff/overview">
+    Invite team members and manage the staff list
+  </Card>
+  <Card title="Roles and Permissions" href="/merchants/staff/roles-permissions">
+    Control what each role can see and do
+  </Card>
+</CardGroup>
