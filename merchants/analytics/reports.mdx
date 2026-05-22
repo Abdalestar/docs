@@ -1,47 +1,66 @@
 ---
 title: "Detailed Reports"
 sidebarTitle: "Reports"
-description: "Four specialized reports that go beyond the main analytics overview: points transactions, revenue trends, staff output, and location performance."
+description: "Four purpose-built reports for drilling into points transactions, revenue, staff activity, and multi-location comparisons."
 ---
 
-The Analytics overview page shows aggregate numbers for your loyalty program. The detailed reports go further, letting you look at the underlying data for specific parts of your operation.
+The Detailed Reports section lives inside Analytics and gives you a closer look at specific parts of your loyalty data. Open Analytics from the left sidebar and click **Detailed Reports** in the sub-navigation, or go to `Analytics → Reports` in the dashboard.
 
-Each report has the same time period selector in the top right corner. Pick **7 days**, **30 days**, **90 days**, or **12 months** to control the date range for the data on the page.
+<Frame caption="The Detailed Reports hub with links to all four reports.">
+  <img src="/images/analytics/reports-hub-final.png" alt="Detailed Reports hub showing four report cards" />
+</Frame>
+
+Each report has its own time period selector. Changing it on one report does not affect the others or the main Analytics overview.
 
 ## Points Activity
 
-A complete transaction log for your points program. Every time a member earns, redeems, adjusts, or expires points, a row is recorded here. Each entry shows the member's name, the date and time, a type badge (Earned, Redeemed, Adjusted, or Expired), the number of points, the associated purchase amount if there was one, and a description.
+A paginated transaction log showing every point that moved in your program during the selected period. Each row shows the date, member name, transaction type (Earned, Redeemed, Adjusted, or Expired), the point amount, the associated purchase amount if one was recorded, and a description. Pages load 50 rows at a time.
 
-The table shows 50 rows per page. Use the pagination controls at the bottom to move through older records.
+<Frame caption="Points Activity report showing transactions with type badges and point amounts.">
+  <img src="/images/analytics/points-activity-final.png" alt="Points Activity report transaction table" />
+</Frame>
 
-<Card title="Points Activity Report" icon="file-text" href="/merchants/analytics/points-activity">
-  Full transaction log with type, member, points, and purchase amount columns
-</Card>
+This is your audit trail. If a member disputes their balance, the Points Activity report is where you check what actually happened.
 
 ## Revenue Impact
 
-This report correlates your loyalty program activity with revenue over time. At the top, three summary numbers give you the totals for the selected period: total revenue, number of loyalty transactions, and the average revenue per transaction.
+Shows how loyalty transaction volume tracks against revenue over time. Three summary cards at the top give you total revenue, total loyalty transactions, and the average revenue per transaction for the period. Below them, a dual-axis line chart plots revenue on the left axis and transaction count on the right, so you can see whether the two move together.
 
-Below those, a dual-axis line chart plots revenue on the left axis and transaction volume on the right. You can see whether periods of high loyalty activity line up with higher sales, or spot gaps that might be worth looking into.
-
-<Card title="Revenue Impact Report" icon="dollar-sign" href="/merchants/analytics/revenue-impact">
-  Revenue totals and transaction counts on one dual-axis chart
-</Card>
+<Frame caption="Revenue Impact report with summary cards and a dual-axis line chart.">
+  <img src="/images/analytics/revenue-impact-final.png" alt="Revenue Impact report with line chart" />
+</Frame>
 
 ## Staff Performance
 
-A ranked table of your staff members showing what each one did in the selected period: stamps issued, points issued, rewards processed, members served, and daily averages for stamps and points. If you notice one person's numbers are well below everyone else's, that is a conversation worth having.
+Lists each staff member with six metrics for the selected period: stamps issued, points issued, rewards processed, members served, average stamps per day, and average points per day. Staff who had zero transactions in the window do not appear in the table.
 
-<Card title="Staff Performance Report" icon="users" href="/merchants/analytics/staff-performance">
-  Per-staff breakdown of stamps, points, rewards, and daily averages
-</Card>
+<Frame caption="Staff Performance report showing per-staff metrics.">
+  <img src="/images/analytics/staff-performance-final.png" alt="Staff Performance report table" />
+</Frame>
+
+Use this alongside the daily stamp count in Analytics Overview. If the overview shows a busy period but one staff member's numbers are flat, it usually means that person was absent, not that they underperformed.
 
 ## Location Comparison
 
-If you run more than one location, this report puts them side by side. Each location gets its own card with five numbers: stamps issued, points issued, redemptions, new members, and estimated revenue for the period.
+Compares your branches on five metrics: stamps, points, redemptions, new members, and estimated revenue. Each location gets its own card. If you run a single-location business, you'll see one card.
 
-Only locations that had at least one scan during the selected period appear. A branch with no loyalty activity during that window won't show up.
+<Frame caption="Location Comparison report showing per-branch performance cards.">
+  <img src="/images/analytics/location-comparison-final.png" alt="Location Comparison report with location cards" />
+</Frame>
 
-<Card title="Location Comparison" icon="map-pin" href="/merchants/analytics/location-comparison">
-  Per-location cards with stamps, points, redemptions, and revenue
-</Card>
+<Info>
+Location Comparison only shows branches that had at least one transaction in the selected period. A branch you opened recently or that was closed for part of the period may show fewer metrics than others.
+</Info>
+
+## Access
+
+Reports follow the same permissions as the rest of Analytics. Managers have full access. For staff members, access depends on whether you granted them analytics permissions in their role settings.
+
+<CardGroup cols={2}>
+  <Card title="Analytics Overview" href="/merchants/analytics/overview">
+    The main Analytics page with charts, segments, and export tools
+  </Card>
+  <Card title="Staff roles" href="/merchants/staff/roles-permissions">
+    Control which sections each staff member can access
+  </Card>
+</CardGroup>
