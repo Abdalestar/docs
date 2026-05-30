@@ -1,59 +1,87 @@
 ---
 title: "Points Operations"
-description: "Award points to members at the counter based on a purchase amount, or manually adjust a member's balance."
+description: "Give members points for purchases and adjust balances when something needs correcting."
 ---
 
-Points Operations is where staff go to give members points for purchases and to correct a member's balance when needed. It requires an active points program set up under your account.
+Points Operations is where your staff award points at the counter and fix balance mistakes. The page has three tabs: **Award Points**, **Adjust/Deduct**, and **Recent Activity**. You need an active points program before anything on this page works.
+
+<Frame caption="The Points Operations page with the Award Points tab open.">
+  <img src="/images/points/points-ops-award-final.png" alt="Points Operations — Award Points tab" />
+</Frame>
+
+<Info>
+Staff need the **Award points** permission to use this page. You can grant it in **Staff → Roles & Permissions**.
+</Info>
 
 ## Award points for a purchase
 
-The **Award Points** tab lets staff enter a transaction amount and Qtap calculates how many points to give based on your program's earn rate.
+The **Award Points** tab calculates how many points a transaction earns based on your program's rate. Search for the member, enter the amount, and confirm.
 
 <Steps>
-  1. Go to **Points Operations**.
-  2. On the **Award Points** tab, type the member's name, email, or phone number into the search field.
-  3. Select the member from the results.
-  4. Enter the **Transaction Amount** in the currency field. Qtap shows a preview of how many points this amount earns based on your program's points-per-currency rate.
-  5. Optionally add a **Description** to note what the purchase was for.
-  6. Click **Award Points** and confirm in the dialog.
+  <Step title="Search for the member">
+    Type the member's name, email, or phone number in the search field and select them from the list.
+  </Step>
+  <Step title="Enter the transaction amount">
+    Type the purchase amount in the **Transaction Amount** field. The preview updates as you type to show exactly how many points this amount earns.
+  </Step>
+  <Step title="Add an optional note">
+    Use the **Note** field to record what the purchase was for. This appears in the transaction log.
+  </Step>
+  <Step title="Confirm the award">
+    Click **Award Points** and confirm in the dialog. Points are added to the member's balance right away, and a success screen shows their new total.
+  </Step>
 </Steps>
 
-Points are added to the member's balance immediately. A success screen shows how many points were awarded and the member's new balance.
-
 <Note>
-If your points program has a minimum transaction amount set, purchases below that amount will calculate as 0 points. The preview updates as you type so you can see this before confirming.
+If your points program has a minimum transaction amount, purchases below it calculate as 0 points. The preview shows this before you confirm.
 </Note>
 
-## Award points manually
+### Award a specific number of points instead
 
-If you need to give a specific number of points rather than calculating from a purchase amount, toggle on **Enter points manually** below the transaction amount field. Type the points directly and skip the currency calculation.
+If you want to give a set number of points rather than calculate from an amount, switch to **Manual Points** using the toggle above the transaction field. Type the exact points to award and skip the amount calculation.
 
-## Adjust a member's balance
+## Adjust/Deduct a member's balance
 
-Use the **Adjust Balance** tab to add or remove points outside of a normal transaction — for example, to fix a data entry mistake or honor a special exception.
+Use the **Adjust/Deduct** tab to add or remove points outside a normal transaction. Common reasons: fixing a data entry error, honoring a one-off exception, or reversing a duplicate award.
+
+<Frame caption="The Adjust/Deduct tab lets you add or remove points with a required reason.">
+  <img src="/images/points/points-ops-adjust-final.png" alt="Points Operations — Adjust/Deduct tab" />
+</Frame>
 
 <Steps>
-  1. Click the **Adjust Balance** tab.
-  2. Search for and select the member.
-  3. Choose **Add** or **Deduct**.
-  4. Enter the number of points.
-  5. Enter a **Reason** — this is recorded in the transaction history and visible to other staff.
-  6. Click **Adjust Points** and confirm.
+  <Step title="Select the member">
+    Search for and select the member whose balance you want to change.
+  </Step>
+  <Step title="Choose Add or Deduct">
+    Click **Add Points** or **Deduct Points**. The button changes color to make the direction clear before you confirm.
+  </Step>
+  <Step title="Enter the amount and reason">
+    Type the number of points and fill in the **Reason** field. The reason is required and is saved to the transaction history so other staff can see why the change was made.
+  </Step>
+  <Step title="Confirm">
+    Click the action button and confirm in the dialog.
+  </Step>
 </Steps>
 
 <Warning>
-Adjustments are logged with your staff account and the reason you enter. There is no way to undo a balance adjustment, so double-check the amount before confirming.
+Deductions send the member a push notification or email. There is no way to undo a balance adjustment after you confirm, so double-check the amount and direction first.
 </Warning>
 
-## Recent transactions
+## Recent Activity
 
-The bottom of the Points Operations page shows the last 20 points transactions across all members. Each row shows the member name, points amount, transaction type, and date. This gives staff a quick way to confirm a recent award went through correctly.
+The **Recent Activity** tab shows the last 20 points transactions across all your members. Each row shows the member, transaction type, points, amount, description, and date.
+
+<Frame caption="The Recent Activity tab shows the latest 20 transactions at a glance.">
+  <img src="/images/points/points-ops-history-final.png" alt="Points Operations — Recent Activity tab" />
+</Frame>
+
+Use this tab to quickly confirm a recent award went through or to spot an unexpected transaction.
 
 <CardGroup cols={2}>
   <Card title="Points Programs" href="/merchants/points/overview">
-    Set up your earn rate, minimum transactions, and expiry rules.
+    Set up your earn rate, minimum transaction, and expiry rules.
   </Card>
   <Card title="Member Profiles" href="/merchants/members/profiles">
-    See a member's full points history and current balance.
+    View a member's full points history and current balance.
   </Card>
 </CardGroup>
