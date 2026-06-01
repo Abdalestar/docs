@@ -57,7 +57,8 @@
           "merchants/campaigns/milestone",
           "merchants/campaigns/rewards",
           "merchants/campaigns/analytics",
-          "merchants/campaigns/push-notifications"
+          "merchants/campaigns/push-notifications",
+          "merchants/notifications"
         ]
       },
       {

@@ -1,0 +1,67 @@
+---
+title: "Notifications hub"
+sidebarTitle: "Notifications"
+description: "See all your push notifications in one place — drafts, scheduled sends, sent history, and reusable templates."
+---
+
+The Notifications page at **Notifications** in the left sidebar is where every push notification you create lands. It gives you a single view of what's queued, what's gone out, and how it performed.
+
+<Frame caption="The Notifications hub showing the All tab with status badges and per-notification stats.">
+  <img src="/images/notifications/notifications-list-final.png" alt="Notifications page with All, Drafts, Scheduled, Sent, and Templates tabs. Notification cards show title, status badge, and message preview." />
+</Frame>
+
+## Tabs
+
+The page has five tabs, each filtering notifications by status.
+
+**All** — every notification regardless of status. Good for a quick scan of recent activity.
+
+**Drafts** — saved notifications you haven't sent yet. Each card shows a **Send** button so you can dispatch a draft without opening it.
+
+**Scheduled** — notifications queued to go out at a specific time. You can delete them here before they send.
+
+**Sent** — the delivery history. Each card shows the recipient count, delivery rate, open rate, and click rate.
+
+**Templates** — reusable message drafts. Open the Templates tab to create, edit, or delete templates. To use one, click **New Notification** and choose **Use Template** inside the form.
+
+## Creating a notification
+
+Click **New Notification** in the top right. The form has three sections: the message (title, body, and optional image), the audience segment, and the send time.
+
+<Frame caption="The New Notification form — message on the left, live phone preview on the right.">
+  <img src="/images/notifications/new-notification-form-final.png" alt="New Notification form with Title, Message, and image upload fields on the left. A phone mockup preview on the right shows how the notification will appear on the member's screen." />
+</Frame>
+
+You can **Send Now**, **Save as Draft**, or **Schedule** for a later date and time. See [Push Notifications](/merchants/campaigns/push-notifications) for a full walkthrough of every field and the seven audience segments.
+
+## Notification lifecycle
+
+<Frame caption="A notification moves from Draft or Scheduled into Sending, then ends as Sent or Failed.">
+  <img src="/images/notifications/notification-lifecycle.svg" alt="Notification lifecycle diagram: Draft (saved) or Scheduled (waiting for time) both enter Sending, which ends as Sent (stats available) or Failed (can be retried)." />
+</Frame>
+
+A Draft stays in Drafts until you send it or delete it. A Scheduled notification waits until its send time, then moves through Sending to Sent automatically. A Failed notification stays visible with its error status — delete it and try again.
+
+## Reading sent stats
+
+Every notification in the **Sent** tab shows four numbers:
+
+- **Sent** — how many members received the notification
+- **Delivered** — the percentage that reached a device
+- **Opened** — the percentage who tapped to read it
+- **Clicked** — the percentage who tapped a link inside
+
+Stats update as members interact with the notification, usually within a few minutes.
+
+<Info>
+Only members who have the Qtap app installed and push notifications turned on will receive messages. The segment audience counts on the New Notification form show exactly how many members will qualify at the time you compose.
+</Info>
+
+<CardGroup cols={2}>
+  <Card title="Push Notifications" href="/merchants/campaigns/push-notifications">
+    Full walkthrough of creating, scheduling, and targeting notifications.
+  </Card>
+  <Card title="Members" href="/merchants/members/overview">
+    Send a notification directly to a specific member from their profile.
+  </Card>
+</CardGroup>
