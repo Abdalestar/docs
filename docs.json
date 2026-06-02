@@ -89,10 +89,10 @@
       {
         "group": "Settings",
         "pages": [
+          "merchants/settings/profile",
           "merchants/settings/billing",
           "merchants/settings/locations",
           "merchants/settings/notifications",
-          "merchants/settings/merchant-page",
           "merchants/settings/security"
         ]
       },
