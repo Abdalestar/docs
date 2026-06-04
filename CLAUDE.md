@@ -4,6 +4,54 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-04 — Stamp Operations Article
+
+**Article:** `merchants/stamp-cards/operations-log.mdx`
+**Branch:** `claude/intelligent-hamilton-jPWSz`
+**PR:** https://github.com/Abdalestar/docs/pull/59
+**Status:** Done (screenshots captured but pending binary push)
+
+### What was written
+
+Full article covering the `/stamp-operations` page (`Stamp Operations`). Documents:
+- Two tabs: Award Stamps and Recent Activity
+- Award Stamps flow: member search by name/email/phone/Qtap ID, card dropdown, branch selector (multi-location only), quantity input capped at remaining stamps, "Card Complete!" indicator, Issue Stamp confirm dialog
+- Member auto-enrollment flow (amber notice when member not in card)
+- Recent Activity table: last 20 transactions, columns Member/Stamp Card/Action/Source/Branch/Staff/Date
+- Source types: Manual (`manual_code`), QR Scan (`qr_scan`), NFC Tap (`nfc_tap`) — Staff column empty for QR/NFC rows
+- Access control: all roles (`owner`, `manager`, `staff`) have `issue_stamps: true` by default; custom permissions can restrict per staff member
+- Empty state: "No Active Stamp Cards" with link to `/cards`
+
+### Research sources
+
+- `app/(dashboard)/stamp-operations/page.tsx` (41KB) — full page: tab names, form fields, source type values, enrollment dialog, success dialog, empty state
+- `lib/utils/permissions.ts` — route guard: `/stamp-operations` requires `perms.issue_stamps === true`
+- `lib/validations/staff.ts` — DEFAULT_PERMISSIONS: `issue_stamps: true` for both `manager` and `staff` roles
+
+### Screenshots
+
+Two screenshots captured from `pexojas444@isfew.com` account (Playwright, 1440x900):
+- `images/stamp-cards/stamp-operations-award.png` — 42282 bytes (optimized from 73655)
+- `images/stamp-cards/stamp-operations-history.png` — 86070 bytes (optimized from 152720)
+
+Screenshots committed to local branch at `/tmp/qtap-docs` but could NOT be pushed via GitHub MCP (binary write restriction: 403 on REST API). Needs manual `git push` or GitHub UI upload to complete.
+
+### Errors / challenges
+
+- First test account (`gocekeh608@onbap.com`, "Falcon Gym") has no stamp cards configured — empty state renders, no tabs visible. Switched to `pexojas444@isfew.com` which has active stamp cards.
+- `git push` via local git config fails (403 — token lacks push permissions to remote).
+- GitHub REST API for file creation also returns 403 for binary files.
+- `mcp__github__push_files` works for text files (MDX, JSON) but PNG binary content cannot be reliably passed through the tool's UTF-8 string parameter.
+- MCP push_files used successfully for text files; base64 PNG content not attempted (would likely double-encode).
+
+### Gap discovery
+
+- `analytics/reports` hub page at `/analytics/reports` — links to all 4 detailed report sub-pages. Fully undocumented and is the main navigation entry point. Added to Notion as P2 Medium (`merchants/analytics/reports-hub.mdx`).
+- `onboarding` page at `/onboarding` — 8-step wizard (welcome, business type, goal, business details, location, loyalty type, payment, complete). Only runs once on first signup; existing merchants redirect to `/`. Likely already covered by `merchants/onboarding-wizard.mdx` — no new task created.
+- `analytics/wrapped` and `merchants` overview and `notifications` hub — all previously discovered in prior sessions; already in Notion.
+
+---
+
 ## 2026-05-07 — Analytics Overview Screenshots (Attempt 2)
 
 **Article:** `merchants/analytics/overview.mdx`
