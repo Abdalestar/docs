@@ -1,0 +1,71 @@
+---
+title: "Stamp Operations"
+description: "Issue stamps at the counter and review every stamp transaction with staff attribution and source tracking."
+---
+
+The Stamp Operations page (`/stamp-operations`) has two tabs. Award Stamps is for issuing stamps to a member at the counter. Recent Activity is a log of every stamp event recorded against your program.
+
+<Frame>
+  <img src="/images/stamp-cards/stamp-operations-award.png" alt="Award Stamps tab showing the member search form, card selector, and stamp progress grid" />
+</Frame>
+
+## Award Stamps
+
+Type the member's name, email, phone number, or Qtap ID into the search field and select them from the results.
+
+Once you select a member, a card dropdown appears on the right side of the form. Choose the stamp card to add stamps to. The form shows the member's current stamp count and a visual grid of filled and empty positions.
+
+If your account has more than one location, a branch selector appears. Choose the branch where the transaction is taking place; the activity log credits that location.
+
+Set the stamp quantity. The default is 1. The field caps at however many stamps remain before the card is complete. When the quantity you enter would complete the card, a "Card Complete!" indicator appears before you confirm.
+
+Click **Issue Stamp** and confirm. The stamps are added immediately. A success screen shows the member's new stamp count and any rewards triggered.
+
+### Member not yet enrolled
+
+If the selected member has not joined the chosen stamp card, an amber notice appears next to the card selector. Confirming the action enrolls them in the card and issues the stamp in one step.
+
+## Recent Activity
+
+<Frame>
+  <img src="/images/stamp-cards/stamp-operations-history.png" alt="Recent Activity tab showing the last 20 stamp transactions with source and staff columns" />
+</Frame>
+
+The Recent Activity tab shows the last 20 stamp transactions across your program.
+
+| Column | What it shows |
+|--------|---------------|
+| Member | Customer name |
+| Stamp Card | The card stamps were applied to |
+| Action | Stamp count change, such as "+1 stamp" or "+3 stamps" |
+| Source | Channel that recorded the stamps (see below) |
+| Branch | Location where the transaction happened |
+| Staff | Staff member who issued the stamps, for manual transactions only |
+| Date | Date and time |
+
+### Source types
+
+The Source column tells you which channel recorded each transaction:
+
+- **Manual** — a staff member issued stamps from the Award Stamps tab
+- **QR Scan** — the member scanned a QR code at a location
+- **NFC Tap** — the member tapped an NFC tag
+
+For QR Scan and NFC Tap rows, the Staff column is empty because no staff action was involved.
+
+## Access
+
+Stamp Operations is open to owners, managers, and staff by default. All three roles have `issue_stamps` enabled in their default permission set.
+
+An owner can revoke access for a specific staff member by turning off `issue_stamps` in that person's custom permissions on the Staff page. The change takes effect immediately.
+
+If no stamp cards exist yet, the page shows an empty state with a link to create one.
+
+<CardGroup cols={2}>
+  <Card title="Issuing Stamps Manually" icon="stamp" href="/merchants/stamp-cards/manual-stamps">
+    Step-by-step guide to finding a member and issuing stamps at the counter.
+  </Card>
+  <Card title="Staff Roles and Permissions" icon="shield" href="/merchants/staff/roles-permissions">
+    Control which staff members can access Stamp Operations.
+  </Card>
+</CardGroup>
