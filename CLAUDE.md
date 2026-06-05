@@ -4,6 +4,46 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-05 — Birthday Campaigns Screenshot Refresh
+
+**Article:** `merchants/campaigns/birthday.mdx`
+**Branch:** `claude/intelligent-hamilton-JDb6e`
+**PR:** https://github.com/Abdalestar/docs/pull/60
+**Status:** Done — screenshots embedded as data URIs
+
+### What was done
+Embedded three JPEG screenshots (300px wide, q25 quality) directly in the MDX article as inline `data:image/jpeg;base64,...` data URIs inside `<Frame><img src="...">` tags. Screenshots show:
+- Campaign wizard Type step with Birthday Rewards selected
+- Campaign wizard Trigger step showing send timing options  
+- Campaigns list showing an active Birthday Rewards campaign
+
+Notion updated: `Needs Screenshots` → NO, `PR Link` → #60.
+
+### Why data URIs instead of separate image files
+
+- `GITHUB_TOKEN` is a read-only fine-grained PAT — REST API blob/tree/commit endpoints return 403
+- `mcp__github__push_files` uses GitHub App credentials (write access) but stores `content` as UTF-8 text, so passing raw base64 would create a text file containing the base64 string rather than a binary image
+- Data URIs sidestep both constraints: the browser decodes them natively, and the MDX file itself is plain text
+
+### Image size decisions
+
+First attempt used 700px/q45 JPEGs (~22K chars base64 each, 63K total MDX). Pushing via a sub-agent failed with `"Claude's response exceeded the 32000 output token maximum"` — the agent tried to echo the full file content before calling push_files.
+
+Solution: regenerated at 300px/q25 (~3400 chars base64 each, 13K total MDX). This keeps the push_files call well within the 32K output token limit while maintaining legibility for UI documentation.
+
+### Errors / challenges
+- Sub-agent approach failed with 32K output token limit when file was 63K chars. Fix: reduce image size so the model can include the full content directly in push_files call.
+- PIL `cannot write mode P as JPEG`: source PNGs were palette-mode. Fix: `.convert('RGB')` before JPEG save.
+- `push_files` takes `content` as a plain string, not `encoding` + base64 blob. There is no way to push binary files via this tool.
+
+### Insights for future runs
+- For screenshot-heavy articles in this remote environment (no computer-use, no binary push), the data URI approach works well for images up to ~5KB each. Larger images should be hosted externally or captured with a user-present session.
+- The 32K output token limit applies to the model's full response including tool call JSON. A push_files call with 13K chars of content uses ~4K tokens — safe margin. A call with 63K chars of content uses ~16K+ tokens — borderline but possible if the model generates minimal other output.
+- `CLAUDE_CODE_MAX_OUTPUT_TOKENS` env var controls the limit; may be raisable for future screenshot-heavy runs.
+- Playwright screenshot capture (used in prior 2026-05-17 run) produces 1200px PNG files (34–62KB). At that size, base64 encoding yields 45–83K chars per image — too large for direct model reproduction in a tool call.
+
+---
+
 ## 2026-05-07 — Analytics Overview Screenshots (Attempt 2)
 
 **Article:** `merchants/analytics/overview.mdx`
@@ -158,9 +198,9 @@ Full rewrite of the existing Analytics Overview article, which had factual error
 ### What was written
 Article covering the Merchant Page Editor (`/merchant-page` route). Covers:
 - Intro: how to open the editor (Merchant Page in sidebar), live preview behavior on large screens
-- Merchant Profile section (7 fields): Merchant Name, Cover Photo (PNG/JPEG 5MB 1200×600px), Merchant Logo (PNG/JPEG/SVG 10MB), Merchant Logo Transparent PNG (stamp icon, 512×512px 10MB), Description, Google Rating (slider 0.0–5.0, manual), Category (8 options: Restaurants/Cafes/Retail/Beauty/Health/Services/Entertainment/Other)
+- Merchant Profile section (7 fields): Merchant Name, Cover Photo (PNG/JPEG 5MB 1200x600px), Merchant Logo (PNG/JPEG/SVG 10MB), Merchant Logo Transparent PNG (stamp icon, 512x512px 10MB), Description, Google Rating (slider 0.0-5.0, manual), Category (8 options: Restaurants/Cafes/Retail/Beauty/Health/Services/Entertainment/Other)
 - Location Details section (5 fields): Location Name, Address, Phone Number, Working Hours (free text), Website URL; phone and hours in 2-column layout
-- Loyalty Cards section: one config block per program; stamp card config (color swatches, stamp icon, stamps required, preview slider); points card config (color, icon, points per currency, preview balance); Rewards & Interim Rewards subsection (Add Reward dialog: type Main/Sign Up/Interim, name, image 2MB, staff notes, expiry days 1–365)
+- Loyalty Cards section: one config block per program; stamp card config (color swatches, stamp icon, stamps required, preview slider); points card config (color, icon, points per currency, preview balance); Rewards & Interim Rewards subsection (Add Reward dialog: type Main/Sign Up/Interim, name, image 2MB, staff notes, expiry days 1-365)
 - Live preview: right-column phone preview, large screens only, hidden on small
 - Saving and resetting: Preview button (opens `/m/slug?preview=true` in new tab with unsaved state), Create Merchant (first save POST), Update Merchant (subsequent saves PUT), Delete (confirmation dialog, resets page fields, loyalty programs unaffected)
 - Warning callout: owner-only route; managers and staff see access denied; no per-role override
@@ -175,7 +215,7 @@ Also added `merchants/settings/merchant-page-editor` to the Settings group in `d
 
 ### Screenshots / diagrams
 - **Screenshots:** NOT captured. Automated run — user not present for `request_access`. `Needs Screenshots` flag left on Notion row.
-- **SVG diagram:** `images/merchants/merchant-page-editor-flow.svg` — three left-column section cards (Merchant Profile, Location Details, Loyalty Cards), middle Actions box (Create Merchant, Update Merchant, Preview, Delete buttons + Access note), right column outcomes (Page published, Preview new tab, Page reset) and Live Preview callout. Uses brand colors (#8E4A63 plum, #F0D793 gold, #423F4C charcoal). 820×480px.
+- **SVG diagram:** `images/merchants/merchant-page-editor-flow.svg` — three left-column section cards (Merchant Profile, Location Details, Loyalty Cards), middle Actions box (Create Merchant, Update Merchant, Preview, Delete buttons + Access note), right column outcomes (Page published, Preview new tab, Page reset) and Live Preview callout. Uses brand colors (#8E4A63 plum, #F0D793 gold, #423F4C charcoal). 820x480px.
 
 ### Anti-slop fixes applied
 - Em dashes in all bullet field descriptions → replaced with colons
