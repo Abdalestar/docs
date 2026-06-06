@@ -183,6 +183,48 @@ Rules:
 - Never seed Supabase data. Capture honest empty states only when nothing exists.
 - **Never** write base64/data-URI text into a `.png`. Binary only.
 
+### 8b. Flow capture (preferred for how-to articles): `flow-capture.mjs`
+
+A single page shot is not enough for a how-to. When the article explains a task
+("set up staff", "create a campaign", "issue points"), capture the **whole flow**:
+navigate to the section, then walk every meaningful step — open the dialog, fill
+the form, open the row menu, open the permissions panel — capturing a screenshot
+at each. Annotate and crop where it helps the reader.
+
+```bash
+# Write a flow describing the user journey (see .routine/flows/staff.json), then:
+node .routine/flow-capture.mjs .routine/flows/<task>.json
+node .routine/validate-images.mjs <article>.mdx
+```
+
+Each `step` may `goto` a path, run `actions` (`click`, `fill`, `select`, `hover`,
+`press`, `wait`) against text/`has-text`/CSS selectors, wait, then capture. Per
+step you can:
+- **Crop**: `clipTo: "[role=dialog]"` (auto bounding box + `clipPadding`) or an
+  explicit `clip: {x,y,width,height}`. Crop dialogs and menus so the reader sees
+  the relevant component, not the whole screen.
+- **Annotate** (`annotate: [...]`), drawn in the brand palette and removed after
+  the shot:
+  - `box` around a target (add `number` for a step badge),
+  - `arrow` pointing at a target (optional `from`),
+  - `label` (a callout chip near a target) and `caption` (a bottom bar) — use
+    `label` on **cropped** shots (a bottom `caption` is outside the crop),
+  - `redact` to cover real customer PII (emails/phones) on list pages.
+
+How to build a flow reliably (do this, don't guess selectors):
+1. Open the section and dump the interactive elements (button text, dialog inputs
+   by `name`, `[role=menuitem]` text, `[role=dialog]` text) with a throwaway probe.
+2. Note the real selectors, then write the flow.
+3. **Never trigger destructive or outbound actions** while capturing — fill forms
+   but do not click Send Invite / Save / Remove / Delete; do not send real
+   invitations or notifications. Capture the filled state, then move on.
+4. Number the steps in the article and let each annotated screenshot carry one step.
+
+The worked example `.routine/flows/staff.json` captures: the Staff page (buttons
+badged), the filled Invite dialog (cropped, email boxed + labelled), the row menu
+(Edit Permissions / Remove), and the Edit Permissions dialog (cropped, the custom
+toggle boxed) — without sending an invite or saving anything.
+
 ---
 
 ## 9. SVG diagrams (complement, never a substitute)
