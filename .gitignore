@@ -1,0 +1,10 @@
+# Node / Playwright / Sharp tooling artifacts (created during screenshot runs)
+node_modules/
+package.json
+package-lock.json
+
+# Screenshot run artifacts
+.routine/smoke-test.png
+.routine/smoke-failure.png
+.routine/pages.*.json
+!.routine/pages.example.json
