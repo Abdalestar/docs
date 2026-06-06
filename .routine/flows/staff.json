@@ -1,0 +1,63 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/staff",
+  "account": "demo@najma.coffee",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "01-staff-overview",
+      "goto": "/staff",
+      "waitFor": "button:has-text('Invite Staff')",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Invite Staff')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Activity Log')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "The Staff page lists your team. Invite a new member (1) or review their activity (2)." }
+      ]
+    },
+    {
+      "name": "02-invite-dialog",
+      "actions": [
+        { "click": "button:has-text('Invite Staff')" },
+        { "fill": ["input[name=first_name]", "Sara"] },
+        { "fill": ["input[name=last_name]", "Al-Khalifa"] },
+        { "fill": ["input[name=email]", "sara@najma.coffee"] },
+        { "wait": 700 }
+      ],
+      "waitFor": "text=Invite Team Member",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "input[name=email]", "color": "plum" },
+        { "type": "label", "target": "input[name=email]", "text": "They get an email invite to set up their account", "color": "plum" }
+      ]
+    },
+    {
+      "name": "03-row-menu",
+      "actions": [
+        { "press": "Escape" },
+        { "wait": 1200 },
+        { "click": ":nth-match(button[aria-haspopup=\"menu\"], 4)" },
+        { "wait": 800 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('Edit Permissions')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Each teammate's menu: edit their permissions, or remove their access." }
+      ]
+    },
+    {
+      "name": "04-edit-permissions",
+      "actions": [
+        { "click": "[role=menuitem]:has-text('Edit Permissions')" },
+        { "wait": 1600 }
+      ],
+      "waitFor": "text=Use Custom Permissions",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "text=Use Custom Permissions", "color": "plum" },
+        { "type": "label", "target": "text=Use Custom Permissions", "text": "Override the role defaults per teammate", "color": "plum" }
+      ]
+    }
+  ]
+}
