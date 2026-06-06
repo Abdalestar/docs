@@ -1,0 +1,9 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "loginPath": "/login",
+  "defaultWaitMs": 2500,
+  "pages": [
+    { "path": "/", "name": "dashboard-home", "section": "getting-started", "waitMs": 3000 },
+    { "path": "/analytics", "name": "analytics-overview", "section": "merchants/analytics", "waitFor": "text=Total Stamps", "waitMs": 3000 }
+  ]
+}
