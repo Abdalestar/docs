@@ -1,0 +1,100 @@
+---
+title: "Notifications"
+sidebarTitle: "Notifications"
+description: "View and manage all your push notifications: drafts, scheduled messages, delivery stats, and reusable templates."
+---
+
+The **Notifications** page is where you manage everything you've sent, queued, or drafted. You can finish a draft, edit a scheduled message before it goes out, check delivery stats on sent notifications, and build a library of templates for messages you use regularly.
+
+To compose and send a new notification, see [Push Notifications](/merchants/campaigns/push-notifications).
+
+<Frame caption="The Notifications page showing the inbox tabs and notification cards.">
+  <img src="/images/notifications/notifications-inbox-final.png" alt="Notifications page with five tabs: All, Drafts, Scheduled, Sent, and Templates" />
+</Frame>
+
+## Tabs
+
+**All** shows every notification regardless of status, newest first. Use this when you want to see the full picture without filtering.
+
+**Drafts** lists notifications you saved without sending. Each draft card has a **Send** button so you can deliver it immediately without opening the compose form. Delete a draft from the three-dot menu on the card.
+
+**Scheduled** shows notifications queued for a future time. You can delete a scheduled notification before it goes out; it won't send. After it sends, the card moves to Sent automatically.
+
+**Sent** shows delivered notifications. Cards here are read-only. Each card shows the number of members who received the notification, the open rate, and the click rate.
+
+**Templates** is a separate management interface for reusable messages. See [Managing templates](#managing-templates) below.
+
+## Notification statuses
+
+Each notification card displays a status badge that tells you where it is in its lifecycle.
+
+<Frame caption="Notification lifecycle from draft through to sent or failed.">
+  <img src="/images/notifications/notification-status-flow.svg" alt="Diagram showing notification states: Draft leads to Scheduled or Sending, which lead to Sent or Failed" />
+</Frame>
+
+| Status | What it means |
+|---|---|
+| Draft | Saved but not sent. You can edit it, send it, or delete it. |
+| Scheduled | Queued to go out at a specific date and time. |
+| Sending | Currently being delivered by OneSignal. |
+| Sent | Delivered. Shows open and click rate stats. |
+| Failed | OneSignal encountered a delivery error. |
+
+## Delivery stats
+
+Sent notification cards show four stats:
+
+- **Sent**: the total number of members who received the notification
+- **Delivered**: the percentage who the system confirmed received it
+- **Opened**: the percentage who opened it
+- **Clicked**: the percentage who tapped a link inside it
+
+Stats update in real time as members interact.
+
+## Managing templates
+
+Templates save message drafts you can load when composing future notifications. They are shared across your whole organization.
+
+<Frame caption="The Templates tab showing template cards with edit and delete actions.">
+  <img src="/images/notifications/notifications-templates-final.png" alt="Templates tab with reusable message cards, each showing the template name, notification title, message preview, and edit and delete buttons" />
+</Frame>
+
+### Creating a template
+
+1. Go to the **Templates** tab.
+2. Click **New Template**.
+3. Fill in three required fields and one optional field:
+   - **Template Name**: an internal label for your own reference, not sent to customers. Example: "Weekend promo."
+   - **Notification Title**: the bold headline of the notification. Maximum 100 characters.
+   - **Message**: the body text. Maximum 500 characters.
+   - **Image URL**: optional. A link to an image that appears below the message. Recommended size is 1440 x 720 px.
+4. Click **Save Template**.
+
+### Editing a template
+
+Click the pencil icon on the template card. The same form opens with the saved values. Change what you need and save.
+
+Editing a template does not affect notifications that were already sent using that template. Only future uses pick up the changes.
+
+### Deleting a template
+
+Click the trash icon on the template card. A confirmation dialog asks you to confirm before deleting. This cannot be undone.
+
+System templates (created by Qtap, marked with a system badge) cannot be deleted.
+
+### Using a template when composing
+
+When composing a new notification, click **Use Template** in the header of the message form. A dropdown lists all your templates by name. Selecting one fills the Title, Message, and Image URL fields. You can edit the text before sending; the template itself is not affected.
+
+## Access
+
+Owners and managers can access the Notifications page. Staff members cannot, unless a custom permission explicitly grants them campaign access.
+
+<CardGroup cols={2}>
+  <Card title="Send a push notification" href="/merchants/campaigns/push-notifications">
+    Compose a message, pick an audience, and send or schedule it.
+  </Card>
+  <Card title="Members" href="/merchants/members/overview">
+    Send a direct notification to a specific member from their profile.
+  </Card>
+</CardGroup>
