@@ -71,5 +71,17 @@ genuinely down dashboard.
 
 See `.routine/pages.example.json`. One entry per screenshot:
 `{ "path": "/analytics", "name": "analytics-overview", "section": "merchants/analytics", "waitFor": "text=Total Stamps", "waitMs": 3000 }`.
-Credentials default to the test accounts; override with `QTAP_EMAIL` /
-`QTAP_PASSWORD` env vars.
+
+## Test accounts
+
+The primary demo account is **`demo@najma.coffee` / `Test1234!`** (Najma Coffee,
+a points program with the richest data: 180 members, 1.7M points, 64 QR codes, 7
+active campaigns). The scripts fall back to these if it ever fails:
+
+1. `demo@najma.coffee` / `Test1234!` — Najma Coffee (points, richest)
+2. `pexojas444@isfew.com` / `Test1234!` — Dana Salon & Spa (stamp cards, populated)
+3. `gocekeh608@onbap.com` / `Test1234!` — Falcon Gym (sparse/empty states)
+4. `toyasiv479@isfew.com` / `Test1234!` — Tea Time (light data)
+
+Override the primary with `QTAP_EMAIL` / `QTAP_PASSWORD` env vars. Use the stamp
+account (Dana) for any stamp-card-specific screenshot, since Najma is points-only.
