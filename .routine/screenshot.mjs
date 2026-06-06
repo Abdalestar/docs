@@ -41,7 +41,10 @@ const DEFAULT_WAIT = cfg.defaultWaitMs ?? 2500;
 const PAGES = cfg.pages || [];
 
 const TEST_ACCOUNTS = [
-  { email: process.env.QTAP_EMAIL || 'redacted@example.com', password: process.env.QTAP_PASSWORD || 'REDACTED' },
+  // Primary demo account (points program, richest data). Override with env vars.
+  { email: process.env.QTAP_EMAIL || 'demo@example.com', password: process.env.QTAP_PASSWORD || 'REDACTED' },
+  // Fallbacks: Dana Salon (stamp cards, populated), then the older test accounts.
+  { email: 'redacted@example.com', password: 'REDACTED' },
   { email: 'redacted@example.com', password: 'REDACTED' },
   { email: 'redacted@example.com', password: 'REDACTED' },
 ];

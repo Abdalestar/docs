@@ -22,7 +22,10 @@ const DEPLOY_URL   = process.env.DEPLOY_URL   || 'https://dashboard.qtap.qa';
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://qeriqybbomqqkdqaylhl.supabase.co';
 
 const TEST_ACCOUNTS = [
-  { email: process.env.QTAP_EMAIL || 'redacted@example.com', password: process.env.QTAP_PASSWORD || 'REDACTED' },
+  // Primary demo account (points program, richest data). Override with env vars.
+  { email: process.env.QTAP_EMAIL || 'demo@example.com', password: process.env.QTAP_PASSWORD || 'REDACTED' },
+  // Fallbacks: Dana Salon (stamp cards, populated), then the older test accounts.
+  { email: 'redacted@example.com', password: 'REDACTED' },
   { email: 'redacted@example.com', password: 'REDACTED' },
   { email: 'redacted@example.com', password: 'REDACTED' },
 ];
