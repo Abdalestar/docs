@@ -1,0 +1,53 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "campaigns",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "campaign-stats-list",
+      "goto": "/campaigns",
+      "waitFor": "text=New Campaign",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "box", "target": ":nth-match(button[aria-haspopup=\"menu\"], 4)", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Each campaign card shows its reach and open and redeem rates. Open the menu on a card (1) to see its full stats." }
+      ]
+    },
+    {
+      "name": "campaign-stats-menu",
+      "actions": [
+        { "click": ":nth-match(button[aria-haspopup=\"menu\"], 4)" },
+        { "wait": 1000 }
+      ],
+      "waitFor": "[role=menuitem]:has-text('View Stats')",
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('View Stats')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "The card menu has two options: View Stats (1) opens the full performance page, and Delete removes the campaign." }
+      ]
+    },
+    {
+      "name": "campaign-stats-cards",
+      "actions": [
+        { "click": "[role=menuitem]:has-text('View Stats')" },
+        { "wait": 1000 }
+      ],
+      "waitFor": "text=Est. Revenue",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "text=Total Sent", "number": 1, "color": "plum" },
+        { "type": "box", "target": "text=Opened", "number": 2, "color": "plum" },
+        { "type": "box", "target": "text=Redeemed", "number": 3, "color": "plum" },
+        { "type": "box", "target": "text=Est. Revenue", "number": 4, "color": "plum" },
+        { "type": "label", "target": "text=Est. Revenue", "text": "An estimate from redemptions, not actual sales", "color": "charcoal" },
+        { "type": "caption", "text": "A campaign opens to four headline numbers: members reached, opens, redemptions, and estimated revenue." }
+      ]
+    },
+    {
+      "name": "campaign-stats-details",
+      "waitFor": "text=Notification Message",
+      "waitMs": 2500,
+      "fullPage": true
+    }
+  ]
+}
