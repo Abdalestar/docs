@@ -4,11 +4,11 @@
   "name": "Qtap Help Center",
   "basePath": "/docs",
   "colors": {
-    "primary": "#6B1A2E",
-    "light": "#8E2440",
-    "dark": "#4A0F1E"
+    "primary": "#8E4A63",
+    "light": "#C98BA0",
+    "dark": "#6E384C"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
   "navigation": {
     "groups": [
       {
@@ -111,8 +111,8 @@
     ]
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png"
   },
   "navbar": {
     "links": [
