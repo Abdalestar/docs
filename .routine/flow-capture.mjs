@@ -14,8 +14,7 @@
 // {
 //   "deployUrl": "https://dashboard.qtap.qa",   // optional default
 //   "section": "merchants/staff",                // images/<section>/<name>.png
-//   "account": "demo@najma.coffee",              // or "stamp" / "points" alias, or email
-//   "password": "Test1234!",                      // optional (defaults to Test1234!)
+//   "account": "points",                         // alias: "points" (default) or "stamp"
 //   "defaultWaitMs": 2500,
 //   "steps": [
 //     {
@@ -58,20 +57,22 @@ const SECTION = flow.section || 'misc';
 const DEFAULT_WAIT = flow.defaultWaitMs ?? 2500;
 const VIEWPORT = flow.viewport || { width: 1440, height: 900 };
 
-const ACCOUNT_ALIASES = {
-  points: 'demo@najma.coffee',
-  najma: 'demo@najma.coffee',
-  stamp: 'pexojas444@isfew.com',
-  dana: 'pexojas444@isfew.com',
-};
-const primaryEmail = ACCOUNT_ALIASES[flow.account] || flow.account || process.env.QTAP_EMAIL || 'demo@najma.coffee';
-const primaryPass = flow.password || process.env.QTAP_PASSWORD || 'Test1234!';
-const ACCOUNTS = [
-  { email: primaryEmail, password: primaryPass },
-  { email: 'demo@najma.coffee', password: 'Test1234!' },
-  { email: 'pexojas444@isfew.com', password: 'Test1234!' },
-  { email: 'gocekeh608@onbap.com', password: 'Test1234!' },
-];
+// Credentials come from the environment ONLY (this repo is public). A flow selects
+// an account by ALIAS, never by a literal email/password:
+//   "points" / "najma" (default) -> QTAP_EMAIL / QTAP_PASSWORD
+//   "stamp"  / "dana"            -> QTAP_STAMP_EMAIL / QTAP_STAMP_PASSWORD
+function envAccount(alias) {
+  if (alias === 'stamp' || alias === 'dana') {
+    return { email: process.env.QTAP_STAMP_EMAIL, password: process.env.QTAP_STAMP_PASSWORD };
+  }
+  return { email: process.env.QTAP_EMAIL, password: process.env.QTAP_PASSWORD };
+}
+const ACCOUNTS = [envAccount(flow.account), envAccount('points')]
+  .filter((a) => a.email && a.password);
+if (ACCOUNTS.length === 0) {
+  console.log('FATAL: set QTAP_EMAIL/QTAP_PASSWORD (and QTAP_STAMP_EMAIL/QTAP_STAMP_PASSWORD for stamp flows)');
+  process.exit(64);
+}
 
 const COLORS = { plum: '#8E4A63', gold: '#F0D793', charcoal: '#423F4C', red: '#E5484D', light: '#F8F5F2' };
 const col = (c) => COLORS[c] || c || COLORS.plum;

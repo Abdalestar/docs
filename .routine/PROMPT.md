@@ -74,14 +74,13 @@ See `.routine/pages.example.json`. One entry per screenshot:
 
 ## Test accounts
 
-The primary demo account is **`demo@najma.coffee` / `Test1234!`** (Najma Coffee,
-a points program with the richest data: 180 members, 1.7M points, 64 QR codes, 7
-active campaigns). The scripts fall back to these if it ever fails:
+**Never commit credentials — this repo is public.** Accounts come from the routine's
+environment:
 
-1. `demo@najma.coffee` / `Test1234!` — Najma Coffee (points, richest)
-2. `pexojas444@isfew.com` / `Test1234!` — Dana Salon & Spa (stamp cards, populated)
-3. `gocekeh608@onbap.com` / `Test1234!` — Falcon Gym (sparse/empty states)
-4. `toyasiv479@isfew.com` / `Test1234!` — Tea Time (light data)
+- `QTAP_EMAIL` / `QTAP_PASSWORD` — primary demo account (a points program with rich
+  data). Used for most screenshots.
+- `QTAP_STAMP_EMAIL` / `QTAP_STAMP_PASSWORD` — stamp-card demo account. Used for
+  stamp-card screenshots (the points account's `/cards` page is empty).
 
-Override the primary with `QTAP_EMAIL` / `QTAP_PASSWORD` env vars. Use the stamp
-account (Dana) for any stamp-card-specific screenshot, since Najma is points-only.
+The scripts fail fast if these are unset. Set them in the environment config, never
+in a file.

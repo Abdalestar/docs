@@ -1,7 +1,7 @@
 {
   "deployUrl": "https://dashboard.qtap.qa",
   "section": "merchants/staff",
-  "account": "demo@najma.coffee",
+  "account": "points",
   "defaultWaitMs": 2500,
   "steps": [
     {
@@ -21,7 +21,7 @@
         { "click": "button:has-text('Invite Staff')" },
         { "fill": ["input[name=first_name]", "Sara"] },
         { "fill": ["input[name=last_name]", "Al-Khalifa"] },
-        { "fill": ["input[name=email]", "sara@najma.coffee"] },
+        { "fill": ["input[name=email]", "new.teammate@example.com"] },
         { "wait": 700 }
       ],
       "waitFor": "text=Invite Team Member",
