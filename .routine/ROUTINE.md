@@ -263,11 +263,17 @@ the smoke test passed, you must capture it.
 
 ## 10. Write the article
 
-Load and apply the anti-slop rules every time:
+Load and apply the anti-slop rules every time — the `stop-slop` skill first, then
+the Qtap house rules:
 
 ```bash
+cat .claude/skills/stop-slop/SKILL.md \
+    .claude/skills/stop-slop/references/phrases.md \
+    .claude/skills/stop-slop/references/structures.md
 cat .writing-rules/SKILL.md .writing-rules/banned-words .writing-rules/content-patterns
 ```
+
+Run a `stop-slop` pass over every paragraph and score it (revise below 35/50).
 
 Frontmatter:
 

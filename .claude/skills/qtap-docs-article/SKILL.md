@@ -14,9 +14,14 @@ Qtap is a B2B loyalty platform for merchants in Qatar (stamp cards + points, QR/
 campaigns, analytics, staff). The audience for these docs is non-technical small
 business owners. Follow this workflow every time you write or update an article.
 
-## 1. Load the house writing rules (always)
+## 1. Load the writing rules (always)
 
-Read and apply these before drafting prose. They are authoritative; do not skip them.
+Run an anti-slop pass with the **`stop-slop` skill** (`.claude/skills/stop-slop/`)
+on every paragraph you write — it lists the banned phrases, structures, and rhythms
+to remove, and a scoring rubric (revise below 35/50). Read its `SKILL.md` and the
+`references/` files.
+
+Then apply the Qtap house rules for voice and structure:
 
 - `.writing-rules/SKILL.md`
 - `.writing-rules/banned-words`

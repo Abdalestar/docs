@@ -2,7 +2,8 @@
 
 **Writing or updating any docs article? Use the `qtap-docs-article` skill**
 (`.claude/skills/qtap-docs-article/SKILL.md`). It defines the required workflow for
-every article in this repo: apply `.writing-rules/`, research before claiming,
+every article in this repo: run the **`stop-slop` skill** (`.claude/skills/stop-slop/`)
+anti-slop pass on the prose, apply `.writing-rules/`, research before claiming,
 capture real **annotated screenshot flows** with `.routine/flow-capture.mjs`,
 validate every image with `.routine/validate-images.mjs`, then open a PR.
 
