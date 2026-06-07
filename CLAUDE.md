@@ -1,3 +1,18 @@
+# Qtap Docs — Instructions for AI agents
+
+**Writing or updating any docs article? Use the `qtap-docs-article` skill**
+(`.claude/skills/qtap-docs-article/SKILL.md`). It defines the required workflow for
+every article in this repo: apply `.writing-rules/`, research before claiming,
+capture real **annotated screenshot flows** with `.routine/flow-capture.mjs`,
+validate every image with `.routine/validate-images.mjs`, then open a PR.
+
+Non-negotiables: never ship placeholder or base64-as-`png` images; never replace
+the screenshots a how-to needs with an SVG-only diagram; push images with `git push`
+(not the GitHub MCP, which stores base64 text). The automated scheduled routine is
+specified in `.routine/ROUTINE.md`.
+
+---
+
 # Qtap Docs Writer — Run Log
 
 Automated runs by the Qtap Documentation Writer agent are logged here.
