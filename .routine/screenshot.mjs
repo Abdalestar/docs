@@ -40,14 +40,16 @@ const LOGIN_PATH = cfg.loginPath || '/login';
 const DEFAULT_WAIT = cfg.defaultWaitMs ?? 2500;
 const PAGES = cfg.pages || [];
 
+// Credentials come from the environment ONLY. This repo is public — never hardcode
+// or commit account emails/passwords. Set QTAP_EMAIL / QTAP_PASSWORD in the
+// routine's environment configuration.
 const TEST_ACCOUNTS = [
-  // Primary demo account (points program, richest data). Override with env vars.
-  { email: process.env.QTAP_EMAIL || 'demo@example.com', password: process.env.QTAP_PASSWORD || 'REDACTED' },
-  // Fallbacks: Dana Salon (stamp cards, populated), then the older test accounts.
-  { email: 'redacted@example.com', password: 'REDACTED' },
-  { email: 'redacted@example.com', password: 'REDACTED' },
-  { email: 'redacted@example.com', password: 'REDACTED' },
-];
+  { email: process.env.QTAP_EMAIL, password: process.env.QTAP_PASSWORD },
+].filter((a) => a.email && a.password);
+if (TEST_ACCOUNTS.length === 0) {
+  console.log('FATAL: set QTAP_EMAIL and QTAP_PASSWORD in the environment');
+  process.exit(64);
+}
 
 const browser = await chromium.launch({ headless: true });
 const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, ignoreHTTPSErrors: true });
