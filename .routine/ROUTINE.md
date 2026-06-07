@@ -46,18 +46,19 @@ Plum `#8E4A63`, Gold `#F0D793`, Charcoal `#423F4C`, Light `#F8F5F2`, Muted `#6B6
 
 ## 2. Test accounts
 
-Primary: **`demo@example.com` / `REDACTED`** (Najma Coffee — points program, the
-richest demo data: ~180 members, ~1.7M points, 64 QR codes, 7 active campaigns).
-Fallbacks, in order:
+**Never commit credentials — this repo is public.** The routine reads accounts from
+its environment configuration:
 
-1. `demo@example.com` / `REDACTED` — Najma Coffee (points, richest)
-2. `redacted@example.com` / `REDACTED` — Dana Salon & Spa (**stamp cards**, populated)
-3. `redacted@example.com` / `REDACTED` — Falcon Gym (sparse / empty states)
-4. `redacted@example.com` / `REDACTED` — Tea Time (light data)
+- `QTAP_EMAIL` / `QTAP_PASSWORD` — the primary demo account (a **points** program
+  with rich data: members, points, QR codes, active campaigns). Use it for most
+  screenshots.
+- `QTAP_STAMP_EMAIL` / `QTAP_STAMP_PASSWORD` — a **stamp-card** demo account. Use it
+  for any stamp-card-specific screenshot (the points account's `/cards` page is an
+  empty state).
 
-Use the **stamp account (Dana)** for any stamp-card-specific screenshot, since
-Najma is points-only and its `/cards` page is an empty state. If every credential
-fails, add a dated note to the Notion parent page and stop the run.
+Set these in the routine's environment (see the Claude Code on the web environment
+config), not in any file. If the credentials are missing or fail, add a dated note
+to the Notion parent page and stop the run.
 
 ---
 

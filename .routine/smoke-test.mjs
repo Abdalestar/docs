@@ -21,14 +21,16 @@ import { chromium } from 'playwright';
 const DEPLOY_URL   = process.env.DEPLOY_URL   || 'https://dashboard.qtap.qa';
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://qeriqybbomqqkdqaylhl.supabase.co';
 
+// Credentials come from the environment ONLY. This repo is public — never hardcode
+// or commit account emails/passwords. Set QTAP_EMAIL / QTAP_PASSWORD in the
+// routine's environment configuration.
 const TEST_ACCOUNTS = [
-  // Primary demo account (points program, richest data). Override with env vars.
-  { email: process.env.QTAP_EMAIL || 'demo@example.com', password: process.env.QTAP_PASSWORD || 'REDACTED' },
-  // Fallbacks: Dana Salon (stamp cards, populated), then the older test accounts.
-  { email: 'redacted@example.com', password: 'REDACTED' },
-  { email: 'redacted@example.com', password: 'REDACTED' },
-  { email: 'redacted@example.com', password: 'REDACTED' },
-];
+  { email: process.env.QTAP_EMAIL, password: process.env.QTAP_PASSWORD },
+].filter((a) => a.email && a.password);
+if (TEST_ACCOUNTS.length === 0) {
+  console.log('SMOKE_FAIL: missing_credentials - set QTAP_EMAIL and QTAP_PASSWORD');
+  process.exit(1);
+}
 
 const OUT = new URL('./smoke-test.png', import.meta.url).pathname;
 

@@ -59,10 +59,12 @@ Each step can navigate, `click`/`fill`/`select`/`hover`/`press`, then capture wi
 
 Rules: discover real selectors first with a throwaway probe; **never** click
 destructive or outbound actions while capturing (no Send Invite / Save / Remove /
-Delete — fill the form and capture the filled state). Capture from the populated
-demo account (`demo@example.com`, points program); use the stamp-card account
-(`redacted@example.com`) for stamp-card pages. Plain single-page shots
-(`.routine/screenshot.mjs`) are fine for overview pages that aren't a procedure.
+Delete — fill the form and capture the filled state). Credentials come from the
+environment (`QTAP_EMAIL`/`QTAP_PASSWORD` for the points demo account,
+`QTAP_STAMP_EMAIL`/`QTAP_STAMP_PASSWORD` for the stamp-card one) — never hardcode
+them; this repo is public. Use the points account for most pages and the stamp
+account for stamp-card pages. Plain single-page shots (`.routine/screenshot.mjs`)
+are fine for overview pages that aren't a procedure.
 
 Draw an SVG (brand palette, `viewBox`, system font) only to show what a screenshot
 can't — a flow, state machine, relationship, or comparison. An SVG never replaces
