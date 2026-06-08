@@ -20,6 +20,55 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-08 — Redemptions Dashboard Screenshots (Backfill)
+
+**Article:** `merchants/redemptions.mdx`
+**Branch:** `claude/dreamy-newton-lxaer1`
+**PR:** https://github.com/Abdalestar/docs/pull/86
+**Status:** Done — real annotated screenshot flow shipped (5 PNGs + SVG), validated
+
+### What this run did
+The whole Notion board is `Done = YES` with no `Not started` rows, so this run was
+one screenshot **backfill** (the user asked for a single task). Picked the
+highest-value P2 `Needs Screenshots = YES` row, **Redemptions Dashboard**, which
+matched the request to ground a staff-operations flow in the qtap codebase.
+
+The article's prose was written in **PR #31**, which was never merged, so
+`merchants/redemptions.mdx` was not on `main`. This run carried that prose over
+**unchanged** and added the screenshots + SVG + nav entry so the page ships
+complete in one PR (flagged in the PR body and Notes).
+
+### Screenshots (SMOKE_OK, Playwright + the corrected pipeline)
+Captured live from the Najma Coffee **points** demo account (`demo@najma.coffee`)
+via `.routine/flow-capture.mjs` (`.routine/flows/redemptions.json`):
+- `redeem-overview.png` — Redeem tab, Enter Code (1) / Look Up Customer (2) badged
+- `enter-code.png` — 6-char code field filled, Look Up highlighted
+- `lookup-search.png` — customer search results, **emails redacted**
+- `member-points.png` — points balance + Available Rewards list, Redeem boxed
+- `confirm-points.png` — Confirm Redemption dialog (reward/customer/points cost/new
+  balance), cropped to the dialog, never clicked
+
+`validate-images.mjs` exits 0; pushed with `git` (binary, not base64).
+
+### Insights for future runs
+- This Linux sandbox has Chromium pre-installed at `/opt/pw-browsers`
+  (`PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers`); `npx playwright install chromium`
+  is a no-op and `--with-deps` fails on blocked apt PPAs — just run the scripts.
+- The `demo@najma.coffee` account is **not** in demo mode; `/redemptions` hits the
+  real org's seeded members (synthetic but email-shaped — redact the email column).
+  It is a **points** org, so the lookup flow exposes the points balance, Available
+  Rewards, and the points confirm dialog (reward `trigger_value` = pts required).
+- Selector gotcha: a Radix `TabsTrigger` renders as `<button>` with the same text as
+  an action button. `button:text-is('Redeem')` matched the **Redeem tab**, not the
+  reward button. Use `role=button[name="Redeem"]` (the tab is `role=tab`, and
+  "Confirm Redemption" doesn't contain the substring "Redeem").
+- The flow engine's `redact` resolves only `.first()` per spec; redact each row with
+  `selector >> nth=N`. Rows hidden by an inner `max-h-* overflow` scroll still
+  resolve a boundingBox and draw a stray bar — only redact the visible rows.
+- History tab was genuinely empty; captured no empty-table shot (never seed data).
+
+---
+
 ## 2026-05-07 — Analytics Overview Screenshots (Attempt 2)
 
 **Article:** `merchants/analytics/overview.mdx`
