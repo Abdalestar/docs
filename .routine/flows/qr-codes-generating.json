@@ -1,0 +1,74 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "01-qr-codes-list",
+      "goto": "/qr-codes",
+      "waitFor": "button:has-text('Generate QR Code')",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Generate QR Code')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "The QR Codes page lists every code with its type, action, and scan count. Start a new one with Generate QR Code (1)." }
+      ]
+    },
+    {
+      "name": "02-generate-form",
+      "actions": [
+        { "click": "button:has-text('Generate QR Code')" },
+        { "wait": 2500 }
+      ],
+      "waitFor": "text=Basic Information",
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "box", "target": "input[placeholder=\"e.g., Counter QR, Table 5, etc.\"]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label:has-text('Reusable')", "number": 2, "color": "plum" },
+        { "type": "label", "target": "text=Preview", "text": "The preview updates as you fill the form", "color": "plum" },
+        { "type": "caption", "text": "Name the code for your own reference (1), then choose how it can be scanned (2): reusable, one-time, or a batch of single-use codes." }
+      ]
+    },
+    {
+      "name": "03-action-points",
+      "actions": [
+        { "click": "label:has-text('Award Points')" },
+        { "wait": 1500 }
+      ],
+      "waitFor": "text=Award Points",
+      "waitMs": 1500,
+      "annotate": [
+        { "type": "box", "target": "label:has-text('Award Points')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "The action decides what a scan does: add a stamp to a card, award points to a program, or check a customer in." }
+      ]
+    },
+    {
+      "name": "04-appearance",
+      "actions": [
+        { "hover": "text=QR Color" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "text=Background Color",
+      "waitMs": 1200,
+      "annotate": [
+        { "type": "box", "target": "text=QR Color", "number": 1, "color": "plum" },
+        { "type": "box", "target": "text=Background Color", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Optional finishing touches: cap the number of scans, set an expiry date, and recolor the code (1, 2) to match your brand." }
+      ]
+    },
+    {
+      "name": "05-download-menu",
+      "goto": "/qr-codes",
+      "waitFor": "button:has-text('Generate QR Code')",
+      "waitMs": 4000,
+      "actions": [
+        { "click": ":nth-match(button[aria-haspopup=\"menu\"], 4)" },
+        { "wait": 1000 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('Download')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "To print or display a saved code, open its menu and choose Download (1). View Details opens a page with PNG and SVG export." }
+      ]
+    }
+  ]
+}
