@@ -20,6 +20,83 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-08 — Screenshot backfills: First Loyalty Program + Members (SMOKE_OK)
+
+**Tasks:** two screenshot backfills (no `Not started` rows remained on the board).
+**Status:** Done. Two PRs opened, both with real annotated screenshot flows.
+
+### Headline: screenshots WORK from the cloud sandbox now
+Every prior run log entry says screenshots failed (Chrome MCP, computer-use
+`request_access` timeouts, dom-to-image, mixed-content, base64 upload, etc.).
+**None of that applies anymore.** The corrected `.routine/` pipeline works
+end to end from this environment:
+
+- `node .routine/smoke-test.mjs` → `=== SMOKE_OK ===` (logged in as the points
+  demo account, captured a real 128 KB PNG).
+- `node .routine/flow-capture.mjs <flow>.json` captured real, annotated,
+  cropped, PII-redacted PNGs from the live dashboard for both accounts.
+- `git push` commits them as real binary; `validate-images.mjs` exits 0.
+
+Future runs: **do not** reach for Chrome MCP / computer-use / dom-to-image /
+base64 tricks. Just run the smoke test, then `flow-capture.mjs`, then
+`git push`. Playwright + Chromium install cleanly (`npm i playwright sharp`
++ `npx playwright install chromium`).
+
+### Task 1 — Your First Loyalty Program (P0)
+**Article:** `merchants/first-loyalty-program.mdx` · **PR:** #76 ·
+**Branch:** `docs/first-loyalty-program-screenshots` · stamp account (Dana Salon & Spa).
+5-step flow added (it had zero images): Cards page + Create Card; Card Design
+(name + stamp goal boxed, live preview); Add a reward dialog (cropped);
+Locations; Review (Publish Card / Save as Draft boxed). Prose unchanged.
+
+### Task 2 — Members overview (P1)
+**Article:** `merchants/members/overview.mdx` · **PR:** #77 ·
+**Branch:** `docs/members-overview-screenshots` · points account (Najma Coffee, 180 members).
+4-step flow added: members list (search/sort/Export CSV boxed, name + contact
+columns redacted); sort menu (cropped); per-member menu (cropped); bulk
+actions (select-all + bulk bar, PII redacted). Swapped the single generic
+reused hero (`getting-started/members-section.png`) for the new annotated
+list shot; otherwise prose unchanged.
+
+### Key technical insights for flow-capture
+- **The Cards list page needs ~6 s to render** (`waitFor` the Create Card
+  button + `waitMs: 6000`); 3.5 s shows only the nav chrome.
+- **Stamp-card wizard step indicator** (`button:has-text("Card Design"|"Rewards"|
+  "Locations"|"Review")`) jumps between steps **without validation** (`goToStep`
+  has no guard), so you can capture Locations/Review without saving a reward or
+  publishing. BUT a Radix popover accumulates after you open the reward dialog
+  and then intercepts later step clicks. **Fix:** give each wizard step its own
+  `goto: /cards/new` so every step does a single clean click from a fresh load.
+- On Review, **`Publish Card` is `disabled`** until the card is valid, so you
+  can't `hover` it to scroll into view — hover the enabled `Save as Draft`
+  instead, then box both.
+- **Members PII:** redact the Member + Contact columns with explicit `rect`s
+  (Member x≈329–572, Contact x≈572–859). Selecting all shifts the table down
+  ~82 px (tbody y 319→401), so the bulk-state redact rect starts at y≈395.
+  Crop the sort dropdown to `[role=listbox]` and the row menu to `[role=menu]`
+  (no PII in either) instead of redacting.
+- There are **two** search boxes on `/members`; target the page one by
+  placeholder `Search by name, email, or phone...`, not the nav search.
+- Label drift (left as-is per backfill rule, screenshots show real labels):
+  Cards button is **Create Card** (not New Card); review CTA is **Publish Card**;
+  reward buttons are **Add reward** / **Save reward**; members has **Export CSV**
+  (not Download), **Newest First** sort (not "Sort By"), **Send Notification** /
+  **Push not enabled** (not "Mute Notifications"), **Delete Member** (not Delete).
+
+### Notion
+Both rows already `Done` (backfills); flipped `Needs Screenshots` → NO, set PR
+Link + Date Completed + Notes. The whole board is now `Done` with zero
+`Not started` rows.
+
+### Gap discovery (1 added)
+- **QR Code Detail & Analytics** → `/qr-codes/[id]` (P3, Needs Screenshots YES).
+  ~600-line page with scan chart, edit/delete, recent scans — parallel to the
+  documented `/nfc-tags/[id]` but uncovered by the existing QR articles.
+  (`/onboarding`, `/staff/activity`, `/settings/notifications` are already
+  documented — not gaps.)
+
+---
+
 ## 2026-05-07 — Analytics Overview Screenshots (Attempt 2)
 
 **Article:** `merchants/analytics/overview.mdx`
