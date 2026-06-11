@@ -20,6 +20,49 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-11 — Campaign Rewards (types & code issuance)
+
+**Article:** `merchants/campaigns/rewards.mdx`
+**Branch:** `claude/eloquent-fermat-lmvv0s`
+**PR:** https://github.com/Abdalestar/docs/pull/104
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK)
+
+### What was written
+Filled the P1 Not-started row "Campaign Rewards: Types & How Codes Are Issued". The
+article on `main` (`merchants/campaigns/rewards.mdx`) was a "Coming soon" stub and the
+path was already in `docs.json` nav, so this run only replaced the stub body (no nav
+change). One new-article task this run, per the user request.
+
+**Facts (all grounded in qtap source):**
+- Five reward types from `components/dashboard/campaigns/steps/reward-config.tsx`:
+  Free Item (item name), Bonus Stamps (1–20), Bonus Points (1–1000), Discount (1–100%),
+  Special Badge (name + icon star/crown/trophy/medal/gem). Reward is optional.
+- Code issuance from `app/api/campaigns/execute/route.ts`: when a campaign with
+  `reward_type` + `reward_config` runs, one `campaign_rewards` row per processed member;
+  code `CAMP-` + 8 chars (A–Z0–9); 30-day default expiry; status issued→redeemed/expired.
+- Honoring: `app/api/campaigns/rewards/[code]/redeem/route.ts` only updates the member
+  balance for `bonus_stamps`/`bonus_points`. **free_item/discount/badge are honored
+  manually at the till** (no auto-discount, no POS integration). Documented as a Warning.
+
+### Screenshots
+3 real annotated PNGs (1440×1000) from the stamp demo account (Dana Salon & Spa, under
+its campaign limit so `/campaigns/new` renders) via `.routine/flow-capture.mjs`
+(`.routine/flows/campaign-rewards.json`): the five reward types (numbered), the Discount
+config field, and the Review summary. Wizard filled but never submitted (Activate /
+Save as Draft never clicked). No PII on these wizard screens. `validate-images.mjs` 3/3 OK.
+
+### Insights for future runs
+- SMOKE_OK first try. The campaign reward CODE redemption endpoints
+  (`/api/campaigns/rewards/validate/[code]`, `/[code]/redeem`) exist but are **not wired
+  into any dashboard UI** (no frontend usage; grep found none). So the sibling P1 row
+  "Redeeming a Campaign Reward Code (Staff Guide)" has no real dashboard screen to
+  screenshot — likely a staff-scanner/mobile feature. Picked the reward-types article
+  instead, whose surface (the wizard Reward + Review steps) is fully real.
+- The points demo account (Najma) is at its campaign limit; use the **stamp** account for
+  any `/campaigns/new` capture, as prior runs found.
+
+---
+
 ## 2026-06-11 — Upgrading Your Plan
 
 **Article:** `merchants/billing/upgrade.mdx`
