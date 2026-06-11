@@ -1,0 +1,102 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/campaigns",
+  "account": "stamp",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "wizard-01-campaigns-page",
+      "goto": "/campaigns",
+      "waitFor": "button:has-text('New Campaign')",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('New Campaign')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Open Campaigns in the sidebar, then click New Campaign to start the wizard." }
+      ]
+    },
+    {
+      "name": "wizard-02-type",
+      "goto": "/campaigns/new",
+      "actions": [
+        { "fill": ["#name", "Birthday Bonus"] },
+        { "wait": 600 }
+      ],
+      "waitFor": "text=Choose Campaign Type",
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "box", "target": "label[for='birthday']", "color": "plum" },
+        { "type": "box", "target": "#name", "color": "plum" },
+        { "type": "label", "target": "#name", "text": "Name needs 2 characters or more before Next turns on", "color": "plum" },
+        { "type": "caption", "text": "Step 1: choose one of the seven campaign types and give the campaign a name." }
+      ]
+    },
+    {
+      "name": "wizard-03-trigger",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "text=Configure Trigger",
+      "waitMs": 2000,
+      "annotate": [
+        { "type": "caption", "text": "Step 2: set the trigger. A birthday campaign asks how many days before to send." }
+      ]
+    },
+    {
+      "name": "wizard-04-reward",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "text=Choose Reward Type",
+      "waitMs": 2000,
+      "annotate": [
+        { "type": "caption", "text": "Step 3: attach a reward, or leave it blank to send a message on its own." }
+      ]
+    },
+    {
+      "name": "wizard-05-message",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 1000 },
+        { "click": "button:has-text('Use Template')" },
+        { "wait": 1000 }
+      ],
+      "waitFor": "text=Customize Message",
+      "waitMs": 2000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Use Template')", "color": "plum" },
+        { "type": "label", "target": "button:has-text('Use Template')", "text": "Fills a ready-made title and message you can edit", "color": "plum" },
+        { "type": "caption", "text": "Step 4: write the notification title and message. Tap a variable chip to personalize it." }
+      ]
+    },
+    {
+      "name": "wizard-06-conditions",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "text=Target Conditions",
+      "waitMs": 2000,
+      "annotate": [
+        { "type": "caption", "text": "Step 5: add optional conditions to narrow who receives the campaign. Leave empty to reach everyone." }
+      ]
+    },
+    {
+      "name": "wizard-07-review",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 1000 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "text=Review Your Campaign",
+      "waitMs": 2000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Save as Draft')", "number": 1, "color": "charcoal" },
+        { "type": "box", "target": "button:has-text('Activate Campaign')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Step 7: check the summary, then Save as Draft (1) to finish later or Activate Campaign (2) to start it." }
+      ]
+    }
+  ]
+}
