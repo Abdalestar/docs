@@ -20,6 +20,32 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-11 — Showing and scanning a QR code (customer scan flow)
+
+**Article:** `merchants/qr-codes/customer-scan-flow.mdx` (new)
+**Branch:** `claude/eloquent-fermat-8b1hya`
+**PR:** https://github.com/Abdalestar/docs/pull/102
+**Status:** Done. One task this run (highest-priority Not-started row, P0). 3 real screenshots + 1 SVG; validate-images 4/4 OK.
+
+### What was written
+New P0 how-to for the gap-audit row "Showing a QR Code to a Customer & How They Scan/Redeem". Covers displaying a code (PNG for print, SVG for posters/decals, the `dashboard.qtap.qa/scan/<code>` scan address), what the customer sees on success/failure, and the crediting rule. Redeeming is flagged as a separate staff step. Added to the QR Codes & NFC nav after Actions.
+
+**The P0 fact (grounded in source):** a scan credits stamps/points only when Qtap can identify who scanned. `app/api/scan/route.ts` gates step 7 (award) entirely on `member_id`; the public `app/scan/[code]/page.tsx` posts only `{ code }`, so a phone-camera scan logs `qr_code_scans` + increments `scan_count` but adds nothing to anyone. Crediting happens via the Qtap app (sends the member) or staff scanning the member code. `qr-codes/[id]/page.tsx` confirms the QR encodes `${origin}/scan/${code}`.
+
+### Screenshots
+- `customer-scan-show-code.png` — merchant QR preview card (scan URL + PNG/SVG), cropped, read-only.
+- `customer-scan-success.png` / `customer-scan-failed.png` — live `/scan/[code]` at phone width (430px viewport).
+- `customer-scan-paths.svg` — app-vs-camera crediting diagram (the app isn't capturable from the sandbox).
+- Flows: `.routine/flows/customer-scan-merchant.json` (1440px) and `customer-scan-result.json` (430px).
+
+### Insights / gotchas for future runs
+- **Najma points QR codes have `points_value = 0`**, so an anonymous points scan renders "You earned 0 points!" and an anonymous stamp scan renders "Stamp added! (undefined/undefined)" — both poor/misleading shots. The clean, honest success capture is the **reusable check-in** code `NAJMA-PEARL-TABLE` ("Check-in recorded! Thanks for visiting."), which awards nothing to anyone by design. One anonymous scan-count blip, no member, no notification.
+- `/scan/<nonexistent>` returns the 404 "QR code not found. It may have been deleted." failure card with **no write** — safe for the failure shot. A non-matching code (`NAJMA-DEMO-NOTFOUND`) was verified via Supabase first.
+- The customer scan page is public; the flow engine logs in (dashboard) then `goto`s `/scan/...` fine. Use a phone-width viewport (430px) for the customer shots, but keep the merchant dashboard shot at 1440px (the dashboard shows a "larger screen" notice below 768px).
+- SMOKE_OK first try; pipeline unchanged (npm i sharp playwright, chromium preinstalled at /opt/pw-browsers).
+
+---
+
 ## 2026-06-11 — Upgrading Your Plan
 
 **Article:** `merchants/billing/upgrade.mdx`
