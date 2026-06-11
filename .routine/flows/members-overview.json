@@ -1,0 +1,61 @@
+{
+  "section": "merchants/members",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "01-members-list",
+      "goto": "/members",
+      "waitFor": "button:has-text(\"Export CSV\")",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "redact", "rect": { "x": 327, "y": 315, "width": 535, "height": 585 } },
+        { "type": "box", "target": "input[placeholder=\"Search by name, email, or phone...\"]", "color": "plum" },
+        { "type": "box", "target": "button:has-text(\"Newest First\")", "color": "plum" },
+        { "type": "box", "target": "button:has-text(\"Export CSV\")", "color": "plum" },
+        { "type": "caption", "text": "The Members page lists every customer. Search, sort, and export from the controls along the top." }
+      ]
+    },
+    {
+      "name": "02-sort-options",
+      "actions": [
+        { "click": "button:has-text(\"Newest First\")" },
+        { "wait": 1000 }
+      ],
+      "clipTo": "[role=listbox]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "redact", "rect": { "x": 327, "y": 315, "width": 535, "height": 585 } }
+      ]
+    },
+    {
+      "name": "03-row-menu",
+      "actions": [
+        { "press": "Escape" },
+        { "wait": 600 },
+        { "click": "table tbody tr:first-child td:last-child button" },
+        { "wait": 1000 }
+      ],
+      "clipTo": "[role=menu]",
+      "clipPadding": 8,
+      "annotate": [
+        { "type": "redact", "rect": { "x": 327, "y": 315, "width": 535, "height": 585 } }
+      ]
+    },
+    {
+      "name": "04-bulk-actions",
+      "actions": [
+        { "press": "Escape" },
+        { "wait": 600 },
+        { "click": "thead button[role=checkbox]" },
+        { "wait": 1300 }
+      ],
+      "annotate": [
+        { "type": "redact", "rect": { "x": 327, "y": 395, "width": 535, "height": 505 } },
+        { "type": "box", "target": "thead button[role=checkbox]", "color": "plum" },
+        { "type": "box", "target": "text=/members selected/", "color": "plum" },
+        { "type": "caption", "text": "Tick the checkboxes to select members, then act on the whole selection at once." }
+      ]
+    }
+  ]
+}
