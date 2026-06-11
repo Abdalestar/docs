@@ -1,0 +1,61 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "viewport": { "width": 1440, "height": 1700 },
+  "steps": [
+    {
+      "name": "qr-code-detail-list",
+      "goto": "/qr-codes",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "tr:has-text(\"Pearl — Counter\")", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "From QR Codes, click any code in the table to open its detail page." }
+      ]
+    },
+    {
+      "name": "qr-code-detail-overview",
+      "actions": [
+        { "click": "tr:has-text(\"Pearl — Counter\") td:nth-child(2)" },
+        { "wait": 4500 }
+      ],
+      "waitFor": "text=Total Scans",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "label", "target": "[class*=\"grid-cols-4\"]", "text": "Total scans, type, action, and status", "color": "plum" },
+        { "type": "label", "target": ".recharts-responsive-container", "text": "Daily scans for the last 7 days", "color": "charcoal" },
+        { "type": "label", "target": "button:has-text(\"PNG\")", "text": "Download as PNG or SVG", "color": "plum" },
+        { "type": "caption", "text": "The detail page shows live scan stats, a 7-day activity chart, and download options." }
+      ]
+    },
+    {
+      "name": "qr-code-detail-edit",
+      "actions": [
+        { "click": "button:has-text(\"Edit\")" },
+        { "wait": 1800 }
+      ],
+      "waitFor": "text=Edit QR Code",
+      "waitMs": 1500,
+      "clipTo": "div:has(> div > #edit_name)",
+      "clipPadding": 24,
+      "annotate": [
+        { "type": "box", "target": "#edit_name", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button[role=\"combobox\"]", "number": 2, "color": "plum" },
+        { "type": "box", "target": "button[role=\"switch\"]", "number": 3, "color": "plum" },
+        { "type": "label", "target": "input[disabled]", "text": "The code value is locked", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "qr-code-detail-delete",
+      "actions": [
+        { "click": "button:has(svg.lucide-trash-2)" },
+        { "wait": 1500 }
+      ],
+      "waitFor": "[role=\"alertdialog\"]",
+      "waitMs": 1200,
+      "clipTo": "[role=\"alertdialog\"]",
+      "clipPadding": 20
+    }
+  ]
+}
