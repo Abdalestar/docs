@@ -44,6 +44,7 @@
         "pages": [
           "merchants/qr-codes/overview",
           "merchants/qr-codes/generating",
+          "merchants/qr-codes/actions",
           "merchants/qr-codes/batch",
           "merchants/nfc-tags"
         ]
