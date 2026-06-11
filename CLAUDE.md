@@ -71,6 +71,313 @@ out). `validate-images.mjs` passed 3/3.
 
 ---
 
+## 2026-06-08 — Redemptions Dashboard Screenshots (Backfill)
+
+**Article:** `merchants/redemptions.mdx`
+**Branch:** `claude/dreamy-newton-lxaer1`
+**PR:** https://github.com/Abdalestar/docs/pull/86
+**Status:** Done — real annotated screenshot flow shipped (5 PNGs + SVG), validated
+
+### What this run did
+The whole Notion board is `Done = YES` with no `Not started` rows, so this run was
+one screenshot **backfill** (the user asked for a single task). Picked the
+highest-value P2 `Needs Screenshots = YES` row, **Redemptions Dashboard**, which
+matched the request to ground a staff-operations flow in the qtap codebase.
+
+The article's prose was written in **PR #31**, which was never merged, so
+`merchants/redemptions.mdx` was not on `main`. This run carried that prose over
+**unchanged** and added the screenshots + SVG + nav entry so the page ships
+complete in one PR (flagged in the PR body and Notes).
+
+### Screenshots (SMOKE_OK, Playwright + the corrected pipeline)
+Captured live from the Najma Coffee **points** demo account (`demo@najma.coffee`)
+via `.routine/flow-capture.mjs` (`.routine/flows/redemptions.json`):
+- `redeem-overview.png` — Redeem tab, Enter Code (1) / Look Up Customer (2) badged
+- `enter-code.png` — 6-char code field filled, Look Up highlighted
+- `lookup-search.png` — customer search results, **emails redacted**
+- `member-points.png` — points balance + Available Rewards list, Redeem boxed
+- `confirm-points.png` — Confirm Redemption dialog (reward/customer/points cost/new
+  balance), cropped to the dialog, never clicked
+
+`validate-images.mjs` exits 0; pushed with `git` (binary, not base64).
+
+### Insights for future runs
+- This Linux sandbox has Chromium pre-installed at `/opt/pw-browsers`
+  (`PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers`); `npx playwright install chromium`
+  is a no-op and `--with-deps` fails on blocked apt PPAs — just run the scripts.
+- The `demo@najma.coffee` account is **not** in demo mode; `/redemptions` hits the
+  real org's seeded members (synthetic but email-shaped — redact the email column).
+  It is a **points** org, so the lookup flow exposes the points balance, Available
+  Rewards, and the points confirm dialog (reward `trigger_value` = pts required).
+- Selector gotcha: a Radix `TabsTrigger` renders as `<button>` with the same text as
+  an action button. `button:text-is('Redeem')` matched the **Redeem tab**, not the
+  reward button. Use `role=button[name="Redeem"]` (the tab is `role=tab`, and
+  "Confirm Redemption" doesn't contain the substring "Redeem").
+- The flow engine's `redact` resolves only `.first()` per spec; redact each row with
+  `selector >> nth=N`. Rows hidden by an inner `max-h-* overflow` scroll still
+  resolve a boundingBox and draw a stray bar — only redact the visible rows.
+- History tab was genuinely empty; captured no empty-table shot (never seed data).
+
+---
+
+## 2026-06-08 — Detailed Reports Hub (new article, real screenshots)
+
+**Article:** `merchants/analytics/reports-hub.mdx`
+**Branch:** `claude/dreamy-newton-1udqce`
+**PR:** https://github.com/Abdalestar/docs/pull/85
+**Status:** Done. Five real annotated screenshots shipped (validate-images 5/5 OK).
+
+### What was written
+New article documenting the `/analytics/reports` Detailed Reports hub (h1 "Detailed
+Reports", 4 cards) and the four reports it links to: Points Activity (transaction
+log table), Revenue Impact (3 tiles + dual-line chart), Staff Performance (per-staff
+table), Location Comparison (one card per branch). Documented the shared branch +
+time-period filters and access control. Added to the Analytics nav in `docs.json`
+after `overview`.
+
+### Screenshots
+Captured with `.routine/flow-capture.mjs` (flow at `.routine/flows/reports-hub.json`)
+from the live points demo account (Najma Coffee). The smoke test passed (SMOKE_OK,
+login as demo@najma.coffee). The flow engine + Playwright + git-push pipeline works
+in this Linux sandbox; the historical Chrome-MCP/Windows failures do not apply here.
+All five PNGs are real binary 1440x900 in `images/analytics/`.
+
+### Research sources
+- `app/(dashboard)/analytics/reports/page.tsx` — hub: 4 cards, titles, descriptions
+- `app/(dashboard)/analytics/reports/{points-activity,revenue-impact,staff-performance,location-comparison}/page.tsx` — columns, tiles, chart, filters
+- `lib/utils/permissions.ts` — `/analytics` guard is `perms.analytics !== 'none'` (owners + managers; staff `none` by default)
+
+### Honest gotchas documented
+- No sidebar link to the hub; reached at the `/analytics/reports` URL.
+- Revenue Impact figure is an estimate from transaction amounts, not a POS feed.
+- Stamp columns read 0 on a points-only program (expected).
+
+### Insights for future runs
+- The Reports hub (`/analytics/reports`) is an orphan route: nothing in `app/` or
+  `components/` links to it (verified by grep). The four sub-reports are linked only
+  from the hub's own cards.
+- Existing analytics images live under `images/analytics/` (not `images/merchants/analytics/`);
+  set the flow `section` to `analytics` to match `overview.mdx`.
+- Prior PR #26 ("Analytics Reports hub", path `reports.mdx`) was never merged; neither
+  `reports.mdx` nor `reports-hub.mdx` existed on `main`. This article uses the
+  Notion-tracked path `reports-hub.mdx`. The two paths should be reconciled if #26
+  is ever revived.
+- `a:has-text('<card title>')` resolves to the whole card anchor, so numbered boxes
+  land on the full card, not just the title text.
+
+---
+
+## 2026-06-08 — Billing Screenshots (backfill)
+
+**Article:** `merchants/settings/billing.mdx`
+**Branch:** `claude/dreamy-newton-p4pu2`
+**PR:** https://github.com/Abdalestar/docs/pull/82
+**Status:** Done (real screenshots shipped)
+
+### What was done
+Screenshot backfill into the already-published Billing article (P1, no prior images,
+`Needs Screenshots = YES`, no prior PR). Prose unchanged. Added three `<Frame>` blocks:
+- `billing-overview.png` — Overview tab: current plan, status badge, six usage meters
+  (Campaigns shows the red over-limit bar at 8 of 5).
+- `billing-plans.png` — Plans tab: four plan cards + Monthly/Annual toggle, Elite outlined.
+- `billing-addons.png` — Add-ons tab: pay-per-feature store, NFC Tag card highlighted.
+
+Captured from the live points demo account (Najma Coffee, plan = Elite) via
+`.routine/flow-capture.mjs`; flow config at `.routine/flows/billing.json`. SMOKE_OK.
+`validate-images.mjs` 3/3 OK, 1440x900, pushed as binary via `git push`.
+
+### Notes / insights
+- Smoke test **passes from the cloud web environment** (Playwright + chromium install,
+  login as demo@najma.coffee). The historical "screenshots impossible" failures were a
+  Windows-sandbox / MCP-binary problem; this environment captures and `git push`es binary
+  PNGs cleanly. The many `Needs Screenshots = YES` Done rows are now backfillable.
+- Billing is `/settings/billing` (its own route), a Radix Tabs page: Overview / Plans /
+  Add-ons / History. Inactive tab content is unmounted until clicked.
+- The demo account has no Stripe subscription (status badge "Free Plan" though plan limits
+  are Elite), so Manage Subscription / Cancel Plan buttons do not render — no outbound
+  Stripe action is reachable during capture. History/payment-method sections are also empty
+  on this account, so only Overview/Plans/Add-ons were captured.
+- Live label drift left as-is per backfill rule: prose "Click Buy" vs live "Purchase";
+  Extra Location shows the current tier's price ($12/mo) not the "$15–$9" range.
+- Board scan: no `Status = "Not started"` rows remain; `milestone.mdx` is a "Coming soon"
+  stub (not a real backfill target). Did one task per the run request.
+
+---
+
+## 2026-06-08 — Your Wrapped (Analytics)
+
+**Article:** `merchants/analytics/wrapped.mdx`
+**Branch:** `claude/dreamy-newton-E81pM`
+**Status:** Done. New article with a real 4-step annotated screenshot flow.
+
+### What was written
+New article for the `/analytics/wrapped` route ("Your Wrapped"), the auto-generated weekly/monthly/yearly recap of a merchant's loyalty program. Covers: the three period tabs (Weekly, Monthly, Yearly) and that each shows the **last completed** period (weekly = previous Sun–Sat, monthly = previous calendar month, yearly = previous calendar year); the **Your Numbers** card (Total Stamps, Points Earned, Redemptions, New Members, Est. Revenue, Growth) with what each means; **Highlights** (auto bullet lines, only those with data); **Top Customer** and **Busiest Day** conditional cards; the **Share** button; the "No data available for this period yet" empty state; plan gating; and access control. Added to the Analytics nav group in `docs.json` after `staff-performance`.
+
+### Research sources (all in `Abdalestar/qtap`)
+- `app/(dashboard)/analytics/wrapped/page.tsx` — page title "Your Wrapped", subtitle, "Auto-generated" badge, three tabs (default Weekly), card order, Share button, `FeatureGate feature="wrappedAnalytics"`, route guard + AccessDenied.
+- `hooks/use-wrapped.ts` — `getPeriodRange` confirms each tab = previous completed period; metric math (Growth = newMembers / membersBefore), highlights logic, empty state.
+- `types/wrapped.ts` — `WrappedSummary` shape, metric labels.
+- `components/dashboard/analytics/wrapped/wrapped-card.tsx` — card anatomy (metrics grid, highlights bullets).
+- `components/shared/feature-gate.tsx` + `lib/stripe/config.ts` — `wrappedAnalytics` is **false on Starter**, **true on Growth / Elite / Franchise**; Starter sees the upgrade prompt.
+- `lib/utils/permissions.ts` + `lib/validations/staff.ts` — `/analytics` needs `analytics !== 'none'`; owner always, manager default `full`, staff default `none` (no access).
+
+### Screenshots
+- Real 4-step flow captured from the live points demo account (Najma Coffee) via `.routine/flow-capture.mjs` (flow at `.routine/flows/analytics-wrapped.json`): `wrapped-overview.png` (Weekly, tabs boxed + labelled), `wrapped-numbers.png` (cropped Your Numbers card), `wrapped-monthly.png` (Monthly tab, period boxed), `wrapped-yearly.png` (Yearly tab, period boxed). The demo customer name in the Top Customer card and the matching Highlights line is redacted on every shot.
+- SMOKE_OK. All 4 PNGs are real binary; `validate-images.mjs` reports 4/4 OK. Pushed with `git push`, not the GitHub MCP.
+
+### Notes
+- The Wrapped page has **no sidebar or in-app link** that I could find (not in `components/layout/sidebar.tsx`, the analytics page, or the reports hub). It is reached at `/analytics/wrapped`. The article describes it as living "in the Analytics area" without inventing a click path.
+- Anti-slop: no em dashes, no banned words, removed an "X, not Y" contrast-framing sentence in the period section. ~430 words.
+
+---
+
+## 2026-06-08 — Win-Back Campaigns Screenshots
+
+**Article:** `merchants/campaigns/winback.mdx`
+**Branch:** `claude/dreamy-newton-ZnnCJ`
+**PR:** https://github.com/Abdalestar/docs/pull/80
+**Status:** Done — 6 real annotated screenshots captured and committed (validate-images 6/6 OK)
+
+### Task
+Screenshot backfill (no Not-started rows remained on the board, so per routine §3 this run did one backfill task). Picked the highest-priority `Needs Screenshots = YES` row whose article is on `main`: "Win-back Campaigns" (P1). Prose left unchanged; six `<Frame>` images added.
+
+### What worked (screenshots are unblocked now)
+- `smoke-test.mjs` returned `SMOKE_OK` (login + screenshot from the live dashboard both succeed in this sandbox). The historical "screenshots never work" problem is gone — recent runs (PRs #73–77) also captured successfully.
+- `flow-capture.mjs` walked the New Campaign wizard end to end and saved 6 annotated PNGs (1440×1000) under `images/campaigns/`.
+
+### Key gotcha discovered
+- The **points** demo account (Najma Coffee) is at its **5-campaign Elite-plan limit**, so `/campaigns/new` renders `Campaign Limit Reached` (from `new/page.tsx`'s `canCreate` guard) once the async campaign count loads. A first probe caught the wizard only because it rendered before the count resolved (`campaignCount === null`); later probes hit the limit screen. Fix: capture win-back from the **stamp** account (Dana Salon & Spa), which is under its limit. Win-back is account-agnostic, so the wizard shots are equally valid.
+
+### Research sources (qtap repo, read-only)
+- `components/dashboard/campaigns/campaign-wizard.tsx` — 7 steps (Type, Trigger, Reward, Message, Conditions, A/B Test, Review), `canProceed` gates, final buttons "Activate Campaign" / "Save as Draft"
+- `steps/type-selection.tsx` — campaign types incl. `win_back` → "Win-Back Campaign"; `#name` field
+- `steps/trigger-config.tsx` — win_back inactivity 14/30/60/90 days, max sends 1/2/3
+- `steps/reward-config.tsx` — five reward types (Free Item, Bonus Stamps, Bonus Points, Discount, Special Badge)
+- `steps/message-config.tsx` — `#notification-title` / `#notification-body`, Use Template, live preview
+- `app/(dashboard)/campaigns/new/page.tsx` — plan-limit guard that hides the wizard
+
+### Safety
+- Wizard was filled but **never submitted**: Activate / Save as Draft were not clicked, no campaign created. No outbound action (no invite/notification) fired during capture.
+
+### Notes for future runs
+- For any `/campaigns/new` capture, prefer the **stamp** account or confirm the points account is under its campaign limit first.
+- Live-label drift left as-is per the backfill rule: prose says Activate / Save Draft; live buttons read Activate Campaign / Save as Draft. Screenshots show the real labels.
+
+---
+
+## 2026-06-08 — Screenshot backfills: First Loyalty Program + Members (SMOKE_OK)
+
+**Tasks:** two screenshot backfills (no `Not started` rows remained on the board).
+**Status:** Done. Two PRs opened, both with real annotated screenshot flows.
+
+### Headline: screenshots WORK from the cloud sandbox now
+Every prior run log entry says screenshots failed (Chrome MCP, computer-use
+`request_access` timeouts, dom-to-image, mixed-content, base64 upload, etc.).
+**None of that applies anymore.** The corrected `.routine/` pipeline works
+end to end from this environment:
+
+- `node .routine/smoke-test.mjs` → `=== SMOKE_OK ===` (logged in as the points
+  demo account, captured a real 128 KB PNG).
+- `node .routine/flow-capture.mjs <flow>.json` captured real, annotated,
+  cropped, PII-redacted PNGs from the live dashboard for both accounts.
+- `git push` commits them as real binary; `validate-images.mjs` exits 0.
+
+Future runs: **do not** reach for Chrome MCP / computer-use / dom-to-image /
+base64 tricks. Just run the smoke test, then `flow-capture.mjs`, then
+`git push`. Playwright + Chromium install cleanly (`npm i playwright sharp`
++ `npx playwright install chromium`).
+
+### Task 1 — Your First Loyalty Program (P0)
+**Article:** `merchants/first-loyalty-program.mdx` · **PR:** #76 ·
+**Branch:** `docs/first-loyalty-program-screenshots` · stamp account (Dana Salon & Spa).
+5-step flow added (it had zero images): Cards page + Create Card; Card Design
+(name + stamp goal boxed, live preview); Add a reward dialog (cropped);
+Locations; Review (Publish Card / Save as Draft boxed). Prose unchanged.
+
+### Task 2 — Members overview (P1)
+**Article:** `merchants/members/overview.mdx` · **PR:** #77 ·
+**Branch:** `docs/members-overview-screenshots` · points account (Najma Coffee, 180 members).
+4-step flow added: members list (search/sort/Export CSV boxed, name + contact
+columns redacted); sort menu (cropped); per-member menu (cropped); bulk
+actions (select-all + bulk bar, PII redacted). Swapped the single generic
+reused hero (`getting-started/members-section.png`) for the new annotated
+list shot; otherwise prose unchanged.
+
+### Key technical insights for flow-capture
+- **The Cards list page needs ~6 s to render** (`waitFor` the Create Card
+  button + `waitMs: 6000`); 3.5 s shows only the nav chrome.
+- **Stamp-card wizard step indicator** (`button:has-text("Card Design"|"Rewards"|
+  "Locations"|"Review")`) jumps between steps **without validation** (`goToStep`
+  has no guard), so you can capture Locations/Review without saving a reward or
+  publishing. BUT a Radix popover accumulates after you open the reward dialog
+  and then intercepts later step clicks. **Fix:** give each wizard step its own
+  `goto: /cards/new` so every step does a single clean click from a fresh load.
+- On Review, **`Publish Card` is `disabled`** until the card is valid, so you
+  can't `hover` it to scroll into view — hover the enabled `Save as Draft`
+  instead, then box both.
+- **Members PII:** redact the Member + Contact columns with explicit `rect`s
+  (Member x≈329–572, Contact x≈572–859). Selecting all shifts the table down
+  ~82 px (tbody y 319→401), so the bulk-state redact rect starts at y≈395.
+  Crop the sort dropdown to `[role=listbox]` and the row menu to `[role=menu]`
+  (no PII in either) instead of redacting.
+- There are **two** search boxes on `/members`; target the page one by
+  placeholder `Search by name, email, or phone...`, not the nav search.
+- Label drift (left as-is per backfill rule, screenshots show real labels):
+  Cards button is **Create Card** (not New Card); review CTA is **Publish Card**;
+  reward buttons are **Add reward** / **Save reward**; members has **Export CSV**
+  (not Download), **Newest First** sort (not "Sort By"), **Send Notification** /
+  **Push not enabled** (not "Mute Notifications"), **Delete Member** (not Delete).
+
+### Notion
+Both rows already `Done` (backfills); flipped `Needs Screenshots` → NO, set PR
+Link + Date Completed + Notes. The whole board is now `Done` with zero
+`Not started` rows.
+
+### Gap discovery (1 added)
+- **QR Code Detail & Analytics** → `/qr-codes/[id]` (P3, Needs Screenshots YES).
+  ~600-line page with scan chart, edit/delete, recent scans — parallel to the
+  documented `/nfc-tags/[id]` but uncovered by the existing QR articles.
+  (`/onboarding`, `/staff/activity`, `/settings/notifications` are already
+  documented — not gaps.)
+---
+
+## 2026-06-08 — Member Redemptions Screenshots (backfill)
+
+**Article:** `merchants/members/redemptions.mdx`
+**Branch:** `claude/dreamy-newton-KLNir`
+**Status:** Done — 6 real screenshots added; prose unchanged
+
+### What was done
+Screenshot backfill for the Member Redemptions how-to (no Not-started rows remained on
+the Notion board, so the highest-priority `Needs Screenshots = YES` row was worked).
+Added a 6-step annotated flow captured from the live dashboard via
+`.routine/flow-capture.mjs`. Article was already on `main` with zero images.
+
+Captured (flows at `.routine/flows/redemptions.json` and `redemptions-history.json`):
+1. `redemptions-01-page` — page with the Enter Code / Look Up Customer buttons badged (points account).
+2. `redemptions-02-enter-code` — Enter Redemption Code card, sample code typed, Look Up boxed (cropped).
+3. `redemptions-03-lookup` — customer search with a matching result; email/phone redacted (cropped).
+4. `redemptions-04-rewards` — selected customer's points balance + Available Rewards, a Redeem button boxed (cropped).
+5. `redemptions-05-confirm` — Confirm Redemption dialog, Confirm button boxed (cropped). Dialog opened only; never confirmed.
+6. `redemptions-06-history` — populated History table (stamp account, 11 rows; points account history is empty).
+
+All 6 pass `validate-images.mjs` (6/6 OK, real binary PNGs). Pushed with `git push`.
+
+### Research sources
+- `app/(dashboard)/redemptions/page.tsx` — tabs (Redeem/History), method buttons (Enter Code / Look Up Customer), code lookup, member search (>= 2 chars), points-eligible rewards, Confirm Redemption dialog, history query (`transactions` where `type='redeem'`, limit 50).
+
+### Notes / gotchas
+- Live UI labels differ from the published prose (article says "Code" / "Lookup" tabs;
+  the live buttons are **Enter Code** / **Look Up Customer**). Left prose as-is per the
+  backfill no-prose-edit rule; the screenshots show the real labels.
+- Points demo account has rich member + points-eligible rewards but **empty** redemption
+  history; the stamp demo account has 11 history rows. Used points for steps 1-5 and
+  stamp for the History shot.
+- Never clicked Confirm Redemption (would process a real redemption). Customer email/phone
+  redacted on the search result; History/dialog show names only (demo-account seed data).
+
+---
+
 ## 2026-05-07 — Analytics Overview Screenshots (Attempt 2)
 
 **Article:** `merchants/analytics/overview.mdx`
