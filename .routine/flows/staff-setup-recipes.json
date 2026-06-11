@@ -1,0 +1,83 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/staff",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "setup-recipes-01-staff-page",
+      "goto": "/staff",
+      "waitFor": "button:has-text('Invite Staff')",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Invite Staff')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "text=Role Permissions", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Open Staff, then invite each teammate as a Cashier (Staff) or a Manager. The card at the bottom recaps what each role can do." }
+      ]
+    },
+    {
+      "name": "setup-recipes-02-invite-role",
+      "actions": [
+        { "click": "button:has-text('Invite Staff')" },
+        { "fill": ["input#first_name", "Ahmed"] },
+        { "fill": ["input#last_name", "Al-Mahmoud"] },
+        { "fill": ["input#email", "ahmed@example.com"] },
+        { "wait": 700 }
+      ],
+      "waitFor": "text=Invite Team Member",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "[role=dialog] [role=combobox]", "color": "plum" },
+        { "type": "label", "target": "[role=dialog] [role=combobox]", "text": "Pick Staff for counter team, Manager for a shift lead", "color": "plum" }
+      ]
+    },
+    {
+      "name": "setup-recipes-03-role-options",
+      "actions": [
+        { "click": "[role=dialog] [role=combobox]" },
+        { "wait": 900 }
+      ],
+      "waitFor": "text=Can issue stamps/points and view basic info",
+      "clipTo": "[role=listbox]",
+      "clipPadding": 8,
+      "annotate": [
+        { "type": "box", "target": "[role=option]:has-text('Manager')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "[role=option]:has-text('Staff')", "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "setup-recipes-04-custom-permissions",
+      "goto": "/staff",
+      "waitFor": "button:has-text('Invite Staff')",
+      "waitMs": 3000,
+      "actions": [
+        { "click": "tr:has-text('Ravi Menon') button[aria-haspopup=\"menu\"]" },
+        { "wait": 800 },
+        { "click": "[role=menuitem]:has-text('Edit Permissions')" },
+        { "wait": 1600 }
+      ],
+      "waitFor": "text=Use Custom Permissions",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "text=Use Custom Permissions", "color": "plum" },
+        { "type": "label", "target": "text=Use Custom Permissions", "text": "Turn this on to fine-tune one teammate", "color": "plum" }
+      ]
+    },
+    {
+      "name": "setup-recipes-05-locations",
+      "actions": [
+        { "click": "[role=tab]:has-text('Locations')" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "text=Access to All Locations",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "text=Access to All Locations", "color": "plum" },
+        { "type": "label", "target": "text=Access to All Locations", "text": "Restrict a cashier to one branch", "color": "plum" }
+      ]
+    }
+  ]
+}

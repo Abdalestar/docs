@@ -1,0 +1,76 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/nfc-tags",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "01-nfc-tags-page",
+      "goto": "/nfc-tags",
+      "waitFor": "text=Total Tags",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Add Tag')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "input[placeholder='Search by name or serial number...']", "number": 2, "color": "charcoal" },
+        { "type": "box", "target": "button:has-text('All Status')", "number": 3, "color": "charcoal" },
+        { "type": "caption", "text": "The NFC Tags page: four summary cards on top, a search and status filter, then every registered tag with its action, location, and tap count." }
+      ]
+    },
+    {
+      "name": "02-add-tag-dialog",
+      "goto": "/nfc-tags",
+      "actions": [
+        { "wait": 4000 },
+        { "click": "button:has-text('Add Tag')" },
+        { "wait": 1200 },
+        { "fill": ["input[placeholder='e.g., NTAG215-ABC123']", "NTAG215-7F3A9C"] },
+        { "fill": ["input[placeholder='e.g., Counter Tag, Table 5']", "Counter Tag"] },
+        { "click": "[role=dialog] button:has-text('Add Stamp')" },
+        { "wait": 700 },
+        { "click": "[role=option]:has-text('Award Points')" },
+        { "wait": 900 }
+      ],
+      "clipTo": "[role=dialog]",
+      "clipPadding": 18,
+      "waitMs": 600,
+      "annotate": [
+        { "type": "box", "target": "input[placeholder='e.g., NTAG215-ABC123']", "number": 1, "color": "plum" },
+        { "type": "box", "target": "[role=dialog] button:has-text('Award Points')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "[role=dialog] input[type=number]", "number": 3, "color": "plum" }
+      ]
+    },
+    {
+      "name": "03-tag-menu",
+      "goto": "/nfc-tags",
+      "actions": [
+        { "wait": 4000 },
+        { "click": "table tbody tr button" },
+        { "wait": 1000 }
+      ],
+      "clipTo": "[role=menu]",
+      "clipPadding": 22,
+      "waitMs": 500,
+      "annotate": [
+        { "type": "box", "target": "[role=menu]", "color": "plum" }
+      ]
+    },
+    {
+      "name": "04-tag-detail",
+      "goto": "/nfc-tags",
+      "actions": [
+        { "wait": 4000 },
+        { "click": "tr:has-text('West Bay') button" },
+        { "wait": 800 },
+        { "click": "text=View Details" },
+        { "wait": 4500 }
+      ],
+      "waitFor": "text=Total Taps",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Edit')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Each tag's detail page shows total taps, action, location, and status, plus the serial number, purchase date, and last tap. Use Edit to change its name, action, or status." }
+      ]
+    }
+  ]
+}

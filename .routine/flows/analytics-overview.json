@@ -1,0 +1,44 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "analytics",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "analytics-overview",
+      "goto": "/analytics",
+      "waitFor": "text=Points Earned",
+      "waitMs": 7000
+    },
+    {
+      "name": "analytics-time-period",
+      "actions": [
+        { "click": "button:has-text('Last 30 days')" },
+        { "wait": 1000 }
+      ],
+      "waitFor": "[role=option]:has-text('Last 90 days')",
+      "waitMs": 1200,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Last 30 days')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "[role=option]:has-text('This year')", "color": "plum" },
+        { "type": "caption", "text": "The time period selector sets how far back every metric and chart looks: today, 7 days, 30 days, 90 days, or this year." }
+      ]
+    },
+    {
+      "name": "analytics-export",
+      "actions": [
+        { "press": "Escape" },
+        { "click": "button:has-text('Export')" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "text=Export Analytics Report",
+      "waitMs": 800,
+      "clipTo": "[role=dialog]",
+      "clipPadding": 24,
+      "annotate": [
+        { "type": "box", "target": "[role=radiogroup]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "text=Include Sections", "number": 2, "color": "plum" }
+      ]
+    }
+  ]
+}
