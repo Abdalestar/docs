@@ -1,0 +1,23 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "stamp",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "02-add-stamp",
+      "goto": "/qr-codes/generate",
+      "waitFor": "text=Generate QR Code",
+      "actions": [
+        { "click": "label:has-text('Add Stamp')" },
+        { "wait": 1200 }
+      ],
+      "waitMs": 2200,
+      "annotate": [
+        { "type": "box", "target": "[role=combobox]:has-text('Select a stamp card')", "color": "plum" },
+        { "type": "label", "target": "[role=combobox]:has-text('Select a stamp card')", "text": "Pick which card a scan stamps", "color": "plum" },
+        { "type": "caption", "text": "Add Stamp: choose which stamp card each scan adds a stamp to." }
+      ]
+    }
+  ]
+}
