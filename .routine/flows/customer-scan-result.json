@@ -1,0 +1,27 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 430, "height": 920 },
+  "steps": [
+    {
+      "name": "customer-scan-success",
+      "goto": "/scan/NAJMA-PEARL-TABLE",
+      "waitFor": "text=Scan Successful",
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "caption", "text": "What the customer sees right after a scan goes through." }
+      ]
+    },
+    {
+      "name": "customer-scan-failed",
+      "goto": "/scan/NAJMA-DEMO-NOTFOUND",
+      "waitFor": "text=Scan Failed",
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "caption", "text": "An inactive, expired, or deleted code shows a clear failure message." }
+      ]
+    }
+  ]
+}

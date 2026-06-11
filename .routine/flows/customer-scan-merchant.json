@@ -1,0 +1,22 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "viewport": { "width": 1440, "height": 1700 },
+  "steps": [
+    {
+      "name": "customer-scan-show-code",
+      "goto": "/qr-codes/ca5e0006-0000-4000-a000-000000000001",
+      "waitFor": "text=Total Scans",
+      "waitMs": 4000,
+      "clipTo": "div[class*=\"sticky\"]",
+      "clipPadding": 20,
+      "annotate": [
+        { "type": "box", "target": "canvas", "number": 1, "color": "plum" },
+        { "type": "label", "target": "p:has-text(\"/scan/\")", "text": "Every code opens your Qtap scan page", "color": "charcoal" },
+        { "type": "box", "target": "button:has-text(\"PNG\")", "number": 2, "color": "plum" }
+      ]
+    }
+  ]
+}
