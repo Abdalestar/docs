@@ -20,6 +20,39 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-11 — Creating a Points Program (full walkthrough)
+
+**Article:** `merchants/points/creating.mdx`
+**Branch:** `claude/eloquent-fermat-to2ruv`
+**Status:** Done (committed + pushed to the branch; no PR opened this run per environment policy).
+
+### What was done
+Worked the highest-priority `Status = Not started` row, "Creating a Points Program (Full Walkthrough)" (P1, Points Programs). Locked it via Status = In progress first.
+
+The assigned branch already had the base `creating.mdx` (bulk-seeded prose, also on `main`) **plus 4 real screenshots** from a prior run (`creating-01..04`, validate-images OK). But the article was an incomplete, partly inaccurate stub vs the live form. This run made it a true full walkthrough:
+- Fixed labels: entry button is **Create Program** (not "New Points Program"); publish buttons are **Activate** / **Save as Draft** (not "Publish" / "Save Draft").
+- Removed the **Card Icon** claim: `CARD_ICONS` is defined in `points-program-form.tsx` but never rendered; the Appearance card only offers **Card Color**. The icon is a fixed default (💎).
+- Added the two sections the task listed that were missing: **Limits** (Max points per visit) and **FAQs** (up to 4).
+- Added an owner/manager access note (`/points` needs `points_programs !== 'none'`; staff default `none`).
+- Replaced the banned em dashes in the old prose with colons.
+
+### Research sources (qtap repo, read-only)
+- `app/(dashboard)/points/new/page.tsx` — H1 "Create Points Program", plan-limit gate (loyaltyCards = stamp_cards + points_programs, Elite = 10), mobile preview sidebar.
+- `components/dashboard/points-program-form.tsx` — the 9 form cards in order (Basic Information, Appearance [color only], Rewards, Locations, Points Expiry, Availability Period, Limits, Terms & Conditions, FAQs); reward dialog ("Add a points reward", name/points/image≤1MB/staff note); actions Cancel / Save as Draft / Activate.
+- `components/dashboard/shared/faqs-editor.tsx` — up to 4 Q&A, "Add question".
+- `lib/validations/loyalty.ts` `pointsProgramSchema`; `lib/utils/permissions.ts` + `lib/validations/staff.ts` (manager points_programs `edit`, staff `none`).
+- Supabase (read-only): Najma points org has 1 active loyalty card, well under the Elite limit, so `/points/new` renders the wizard (not the limit screen).
+
+### Screenshots
+SMOKE_OK. Kept the 4 prior real shots; added 2 new annotated crops via `flows/points-creating-extra.json` from the live Najma points account: `creating-05-limits.png` (Max points per visit, "leave empty for no cap") and `creating-06-faqs.png` (one Q&A filled). Filled the FAQ form but never saved/activated (no real program created). validate-images 6/6 OK.
+
+### Gotchas for future runs
+- **The assigned branch is NOT a clean fork of `origin/main`.** `claude/eloquent-fermat-to2ruv` already carries ~172 files of accumulated merged work (PRs #88–#100) ahead of `origin/main`, including this article's prior 4 screenshots. Always `git diff --stat origin/main..HEAD` and `validate-images` the existing refs before assuming an article needs from-scratch work.
+- A Notion row can read "Not started" while the article already exists on `main` and partway on the branch. Verify on disk + `git cat-file -e origin/main:<path>` before writing.
+- Opening a PR from this branch would sweep in all the unrelated accumulated work, so a per-task PR isn't clean here; pushed to the branch instead.
+
+---
+
 ## 2026-06-11 — Upgrading Your Plan
 
 **Article:** `merchants/billing/upgrade.mdx`
