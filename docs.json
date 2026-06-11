@@ -84,6 +84,7 @@
         "pages": [
           "merchants/members/overview",
           "merchants/members/profiles",
+          "merchants/members/export-delete",
           "merchants/members/redemptions",
           "merchants/redemptions"
         ]
