@@ -20,6 +20,56 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-11 — QR code troubleshooting
+
+**Article:** `merchants/qr-codes/troubleshooting.mdx`
+**Branch:** `claude/eloquent-fermat-5v6cq8`
+**Notion row:** "Troubleshooting: QR Code Not Working" (P2, was Not started)
+**Status:** Done. Real screenshots captured (SMOKE_OK this run).
+
+### What was written
+New troubleshooting article for QR codes that won't scan. Covers the four failure
+causes a merchant can diagnose from the QR Codes page, each tied to the exact
+customer-facing error string from `app/api/scan/route.ts`:
+- Inactive (`is_active` false, 410): "This QR code is no longer active." Fix: row
+  menu → Activate.
+- Expired (past `expires_at`, 410): "This QR code has expired." Not revivable;
+  regenerate.
+- Max (`scan_count >= max_scans`, 410): "This QR code has reached its maximum number
+  of scans." One-time codes reach this after a single scan. Regenerate.
+- Deleted (404): "QR code not found. It may have been deleted." Permanent; use
+  Deactivate to pause instead.
+- Anonymous scan nuance: `/api/scan` with no `member_id` logs the scan and increments
+  the count but awards nothing; the web `/scan/[code]` page only sends `{ code }`, so
+  scanning with a plain camera/browser instead of the Qtap app credits no member.
+- Stamp code not linked to a card (400): "This QR code is not linked to a stamp card.
+  Please contact the merchant." (Warning callout.)
+
+### Research sources (qtap repo, read-only)
+- `app/api/scan/route.ts` — all error branches + status codes + the no-member award skip
+- `app/scan/[code]/page.tsx` — customer scan page sends only `{ code }`
+- `components/dashboard/qr-codes/qr-code-list.tsx` — Status badges (Active / Inactive /
+  Expired / Max Reached) and the row menu (Activate/Deactivate, Delete)
+- `app/(dashboard)/qr-codes/[id]/page.tsx` — detail page Active switch, Max Scans, Expires
+
+### Screenshots (real, validated 3/3)
+Captured with `.routine/flow-capture.mjs` from the live points demo account
+(`demo@najma.coffee`), `.routine/flows/qr-troubleshooting.json`:
+- `qr-troubleshoot-status.png` — QR Codes list, Scans + Status columns boxed
+- `qr-troubleshoot-menu.png` — row menu (Deactivate, Delete) cropped
+- `qr-troubleshoot-limits.png` — detail Details panel (Max Scans, Expires) cropped
+
+### Notes / gotchas
+- Production UI differs slightly from the repo snapshot: the row menu has View Details,
+  Copy Code, Download, Deactivate, Delete (repo had fewer); the maxed status badge
+  renders as "Max" (repo source string is "Max Reached"). Prose matches the live UI.
+- Demo account had only Active and Max codes (64 active, 0 inactive/expired), so
+  Inactive/Expired states are described from source, not screenshotted.
+- Per session branch policy, committed to `claude/eloquent-fermat-5v6cq8` (not a
+  `docs/<slug>` branch).
+
+---
+
 ## 2026-05-07 — Analytics Overview Screenshots (Attempt 2)
 
 **Article:** `merchants/analytics/overview.mdx`
