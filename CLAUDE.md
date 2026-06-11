@@ -20,6 +20,46 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-11 — QR Code Actions + Stamp Cards Overview screenshots
+
+**Articles:** `merchants/qr-codes/actions.mdx` (new), `merchants/stamp-cards/overview.mdx` (backfill)
+**Branch:** `claude/eloquent-fermat-ieh14o`
+**PR:** https://github.com/Abdalestar/docs/pull/95
+**Status:** Done. Smoke test SMOKE_OK; screenshots captured this run (the pipeline works now).
+
+### Task 1 — New article: QR Code Actions (P1)
+Wrote `merchants/qr-codes/actions.mdx` explaining the action a scan runs. Grounded in
+`app/api/scan/route.ts` and the live Generate QR Code page. 3 annotated flow screenshots
+(points account: action overview + Award Points; stamp account: Add Stamp). Added to the
+QR Codes & NFC nav group. validate-images 3/3 OK.
+
+### Task 2 — Backfill: Stamp Cards Overview (P1)
+Added two annotated shots (the `/cards` list with three real Active cards + status filter
+tabs; the card row menu with Duplicate boxed) to the on-main article. Prose unchanged.
+validate-images 2/2 OK.
+
+### Insights for future runs (important)
+- **The live QR generator differs from the repo component.** `components/dashboard/qr-codes/qr-code-generator.tsx`
+  in Abdalestar/qtap is an OLDER, simpler version (Reusable/One-time + a 4-option action
+  Radix select including `reward`). The LIVE `/qr-codes/generate` page offers THREE action
+  choices as radio cards: **Add Stamp**, **Award Points**, **Check-In** (no Reward option),
+  plus a **Stamp Card** selector for Add Stamp and **Points Program** + **Points Value** for
+  Award Points. Type options are Reusable / One-Time Use / Batch Generate. Always probe the
+  live page; do not trust the repo component for labels.
+- **`reward` action is a no-op.** `scan/route.ts` step 7 has no `reward` branch; it returns
+  "Reward claimed successfully!" but awards/deducts nothing. It is also not creatable from the
+  live UI. Document reward redemption via the Redemptions screen instead.
+- **Notion "PR #NN merged" notes are unreliable.** PR #52 (ai-insights), #88 (manual-stamps
+  screenshots), and others claim merged/Done but the files/images are NOT on `main`. Always
+  verify with `git cat-file -e origin/main:<path>` before treating a row as backfilled.
+- Stamp Cards live route is `/cards`, H1 "Stamp Cards"; card row three-dot menu items are
+  Edit / Duplicate / Deactivate / Delete. The first `button[aria-haspopup=menu]` on the page
+  is the location filter, not a card menu (card menus start at the 4th match).
+- This environment pins all work to one assigned branch (`claude/eloquent-fermat-ieh14o`), so
+  both tasks shipped in a single PR rather than one PR per task.
+
+---
+
 ## 2026-05-07 — Analytics Overview Screenshots (Attempt 2)
 
 **Article:** `merchants/analytics/overview.mdx`
