@@ -94,6 +94,42 @@ Link + Date Completed + Notes. The whole board is now `Done` with zero
   documented `/nfc-tags/[id]` but uncovered by the existing QR articles.
   (`/onboarding`, `/staff/activity`, `/settings/notifications` are already
   documented — not gaps.)
+---
+
+## 2026-06-08 — Member Redemptions Screenshots (backfill)
+
+**Article:** `merchants/members/redemptions.mdx`
+**Branch:** `claude/dreamy-newton-KLNir`
+**Status:** Done — 6 real screenshots added; prose unchanged
+
+### What was done
+Screenshot backfill for the Member Redemptions how-to (no Not-started rows remained on
+the Notion board, so the highest-priority `Needs Screenshots = YES` row was worked).
+Added a 6-step annotated flow captured from the live dashboard via
+`.routine/flow-capture.mjs`. Article was already on `main` with zero images.
+
+Captured (flows at `.routine/flows/redemptions.json` and `redemptions-history.json`):
+1. `redemptions-01-page` — page with the Enter Code / Look Up Customer buttons badged (points account).
+2. `redemptions-02-enter-code` — Enter Redemption Code card, sample code typed, Look Up boxed (cropped).
+3. `redemptions-03-lookup` — customer search with a matching result; email/phone redacted (cropped).
+4. `redemptions-04-rewards` — selected customer's points balance + Available Rewards, a Redeem button boxed (cropped).
+5. `redemptions-05-confirm` — Confirm Redemption dialog, Confirm button boxed (cropped). Dialog opened only; never confirmed.
+6. `redemptions-06-history` — populated History table (stamp account, 11 rows; points account history is empty).
+
+All 6 pass `validate-images.mjs` (6/6 OK, real binary PNGs). Pushed with `git push`.
+
+### Research sources
+- `app/(dashboard)/redemptions/page.tsx` — tabs (Redeem/History), method buttons (Enter Code / Look Up Customer), code lookup, member search (>= 2 chars), points-eligible rewards, Confirm Redemption dialog, history query (`transactions` where `type='redeem'`, limit 50).
+
+### Notes / gotchas
+- Live UI labels differ from the published prose (article says "Code" / "Lookup" tabs;
+  the live buttons are **Enter Code** / **Look Up Customer**). Left prose as-is per the
+  backfill no-prose-edit rule; the screenshots show the real labels.
+- Points demo account has rich member + points-eligible rewards but **empty** redemption
+  history; the stamp demo account has 11 history rows. Used points for steps 1-5 and
+  stamp for the History shot.
+- Never clicked Confirm Redemption (would process a real redemption). Customer email/phone
+  redacted on the search result; History/dialog show names only (demo-account seed data).
 
 ---
 
