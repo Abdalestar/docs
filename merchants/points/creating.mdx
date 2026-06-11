@@ -1,29 +1,33 @@
 ---
 title: "Creating a Points Program"
-description: "How to set up a new points program in the Qtap dashboard."
+sidebarTitle: "Creating a program"
+description: "Set up a new points program in the Qtap dashboard, from program details and rewards to expiry, limits, and FAQs."
 ---
 
-To create a points program, go to **Points** in the left sidebar and click **New Points Program**. The form and a live card preview load side by side.
+Open **Points** in the left sidebar and click **Create Program**. The form opens with a live card preview beside it, so you can see how your program will look to members as you fill it in.
 
 <Frame caption="On the Points page, click Create Program to start a new points program.">
   <img src="/images/merchants/points/creating-01-list.png" alt="Points Programs page with the Create Program button highlighted" />
 </Frame>
 
+<Info>
+Owners and managers can create a points program. Staff do not have access to this page by default.
+</Info>
+
 <Note>
-Points programs and stamp cards share a plan limit. If you've reached your loyalty card limit, you'll see a message here with a link to upgrade under **Settings > Billing**.
+Points programs and stamp cards share one plan limit. If you have reached your loyalty card limit, this page shows a message with a link to upgrade under **Settings > Billing** instead of the form.
 </Note>
 
 ## Program details
 
-Fill in the program details at the top of the form:
+Start with the basics at the top of the form:
 
-1. **Program Name** — what members see on the card in the app. Required.
-2. **Description** — a short line that appears on the card, like "Earn 1 point per QAR spent."
-3. **Points per currency** — how many points a customer earns per one unit of currency. If you set this to 2, a customer spending 10 QAR earns 20 points. Defaults to 1.
-4. **Currency** — the currency your program uses. Defaults to QAR.
-5. **Card Icon** — choose an emoji to display on the card (diamond, star, trophy, gift, and others).
-6. **Card Color** — the background color of the card. Click the color swatch to open the picker.
-7. **Terms and conditions** — optional text displayed on the back of the card.
+1. **Program Name**: the name members see on their card in the app. Required.
+2. **Points per**: how many points a customer earns for each unit of currency. Set it to 2 and a customer who spends 10 QAR earns 20 points. Defaults to 1.
+3. **Currency**: the currency your prices are in. Defaults to QAR.
+4. **Description**: a short line shown on the card, like "Earn 1 point for every QAR you spend."
+
+Under **Appearance**, pick a **Card Color**. The preview on the right updates as you choose, so you can match your brand.
 
 <Frame caption="The program form, with the live card preview on the right updating as you type.">
   <img src="/images/merchants/points/creating-02-details.png" alt="New points program form showing the name, points per currency, description, and live preview" />
@@ -31,63 +35,81 @@ Fill in the program details at the top of the form:
 
 ## Rewards
 
-Rewards define what members get and how many points they need to earn it.
+Rewards are what members redeem their points for. Each reward has its own points cost, so you can offer a small reward early and a bigger one further along.
 
 <Steps>
 
 ### Click Add Reward
 
-Click **Add Reward** to open the reward editor.
+This opens the reward editor.
 
-### Fill in the reward details
+### Fill in the reward
 
-- **Reward Name** — what the customer receives (e.g., "Free Coffee", "10% Off")
-- **Points required** — the number of points that triggers this reward (e.g., 100)
-- **Reward Image** — optional PNG or JPEG up to 1MB, shown with the reward in the app
-- **Staff note** — an internal note visible only to staff at the point of redemption
+- **Reward name**: what the customer gets, like "Free Coffee" or "Medium Latte".
+- **Points required**: the number of points needed to redeem it, like 100.
+- **Reward image**: an optional PNG or JPEG up to 1MB, shown next to the reward in the app.
+- **Staff note**: an internal note for your team at redemption time. Members never see it.
 
 ### Save the reward
 
-Click **Save reward**. You can add as many rewards as you like, each at a different points threshold.
+Click **Save reward**. Add as many rewards as you like, each at its own points threshold.
 
 </Steps>
 
-<Frame caption="The reward editor: give the reward a name and the number of points needed to earn it.">
+<Frame caption="The reward editor: name the reward and set how many points it costs.">
   <img src="/images/merchants/points/creating-03-reward.png" alt="Add a points reward dialog with reward name and points required filled in" />
 </Frame>
 
-## Expiry rules
+## Locations
 
-By default, points never expire. To enable expiry, turn on the **Points expire** toggle and configure:
+Under **Locations**, choose the branches where members can earn points on this program. Leave every branch unchecked to make it valid at all of them. If you have not added any branches yet, add them first under **Settings > Locations**.
 
-- **Days** — how many days before points expire
-- **Expiry type** — choose from "From earn date," "From last activity," or "Calendar year"
+## Points expiry
+
+By default, points never expire. To add an expiry rule, turn on **Enable Points Expiry** and set:
+
+- **Expiry Period (days)**: how long points last.
+- **Expiry Type**: count from the date earned, from the member's last activity, or to the end of the calendar year.
 
 ## Availability period
 
-If you want the program to run only during a specific window, turn on the availability period toggle and set a start date and end date. Members can only earn points between those dates.
+Leave this off and members can join the program at any time. To run it only for a set window, turn on **Limited Availability** and set an **Available From** and **Available Until** date. Members can earn points only between those dates.
 
-## Valid Locations
+## Limits
 
-Select which locations this program applies to. If you leave all locations unchecked, the program works at all locations.
+Use **Max points per visit** to cap how many points a customer can earn in a single transaction. Leave it empty for no cap.
+
+<Frame caption="Set a per-visit points cap, or leave it empty for no limit.">
+  <img src="/images/merchants/points/creating-05-limits.png" alt="The Limits card with the Max points per visit field set to no limit" />
+</Frame>
+
+## Terms and FAQs
+
+Add any rules under **Terms & Conditions**. Members can read them from the card's terms sheet in the app.
+
+Under **FAQs**, answer up to four common questions about the program. Each question and answer shows in the card's Questions section.
+
+<Frame caption="Add up to four questions and answers that members can read on the card.">
+  <img src="/images/merchants/points/creating-06-faqs.png" alt="The FAQs card with one question and answer filled in" />
+</Frame>
 
 ## Saving and publishing
 
-At the bottom of the form, click **Publish** to make the program live immediately. Members can find and join it in the Qtap app right away.
+At the bottom of the form, click **Activate** to make the program live. Members can find and join it in the Qtap app right away.
 
-Click **Save Draft** to save without making it public. Draft programs are not visible to members.
+Click **Save as Draft** to keep it private while you keep working. Draft programs are not visible to members.
 
-<Frame caption="At the bottom of the form, Save as Draft keeps the program private; Activate makes it live for members.">
+<Frame caption="Save as Draft keeps the program private; Activate makes it live for members.">
   <img src="/images/merchants/points/creating-04-publish.png" alt="Bottom of the points program form showing the Save as Draft and Activate buttons" />
 </Frame>
 
 <Warning>
-Once a points program is active and members have joined, you can edit the program name, description, and rewards. Changing the points per currency setting will not retroactively adjust points members have already earned.
+After a program is active and members have joined, you can still edit its name, description, and rewards. Changing the points per currency rate does not change points members have already earned.
 </Warning>
 
 <CardGroup cols={2}>
   <Card title="Points Programs Overview" href="/merchants/points/overview">
-    How points programs work and what can be configured.
+    How points programs work and what you can set up.
   </Card>
   <Card title="Points Operations" href="/merchants/points/operations">
     How staff issue points to customers.

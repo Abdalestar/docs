@@ -1,0 +1,43 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/points",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "creating-05-limits",
+      "goto": "/points/new",
+      "waitFor": "text=Basic Information",
+      "waitMs": 3500,
+      "actions": [
+        { "hover": "#max_points_per_transaction" },
+        { "wait": 600 }
+      ],
+      "clipTo": "div.rounded-xl:has-text('Cap how many points')",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "#max_points_per_transaction", "color": "plum" },
+        { "type": "label", "target": "#max_points_per_transaction", "text": "Leave empty for no cap", "color": "plum" }
+      ]
+    },
+    {
+      "name": "creating-06-faqs",
+      "goto": "/points/new",
+      "waitFor": "text=Basic Information",
+      "waitMs": 3500,
+      "actions": [
+        { "click": "button:has-text('Add question')" },
+        { "wait": 400 },
+        { "fill": ["#faq-question-0", "Can I earn points on delivery orders?"] },
+        { "fill": ["textarea[aria-label='Answer 1']", "Yes, points apply to every paid order, including delivery."] },
+        { "hover": "button:has-text('Add question')" },
+        { "wait": 600 }
+      ],
+      "clipTo": "div.rounded-xl:has-text('Answer up to 4 common questions')",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "#faq-question-0", "color": "plum" }
+      ]
+    }
+  ]
+}
