@@ -20,6 +20,53 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-08 — Detailed Reports Hub (new article, real screenshots)
+
+**Article:** `merchants/analytics/reports-hub.mdx`
+**Branch:** `claude/dreamy-newton-1udqce`
+**PR:** https://github.com/Abdalestar/docs/pull/85
+**Status:** Done. Five real annotated screenshots shipped (validate-images 5/5 OK).
+
+### What was written
+New article documenting the `/analytics/reports` Detailed Reports hub (h1 "Detailed
+Reports", 4 cards) and the four reports it links to: Points Activity (transaction
+log table), Revenue Impact (3 tiles + dual-line chart), Staff Performance (per-staff
+table), Location Comparison (one card per branch). Documented the shared branch +
+time-period filters and access control. Added to the Analytics nav in `docs.json`
+after `overview`.
+
+### Screenshots
+Captured with `.routine/flow-capture.mjs` (flow at `.routine/flows/reports-hub.json`)
+from the live points demo account (Najma Coffee). The smoke test passed (SMOKE_OK,
+login as demo@najma.coffee). The flow engine + Playwright + git-push pipeline works
+in this Linux sandbox; the historical Chrome-MCP/Windows failures do not apply here.
+All five PNGs are real binary 1440x900 in `images/analytics/`.
+
+### Research sources
+- `app/(dashboard)/analytics/reports/page.tsx` — hub: 4 cards, titles, descriptions
+- `app/(dashboard)/analytics/reports/{points-activity,revenue-impact,staff-performance,location-comparison}/page.tsx` — columns, tiles, chart, filters
+- `lib/utils/permissions.ts` — `/analytics` guard is `perms.analytics !== 'none'` (owners + managers; staff `none` by default)
+
+### Honest gotchas documented
+- No sidebar link to the hub; reached at the `/analytics/reports` URL.
+- Revenue Impact figure is an estimate from transaction amounts, not a POS feed.
+- Stamp columns read 0 on a points-only program (expected).
+
+### Insights for future runs
+- The Reports hub (`/analytics/reports`) is an orphan route: nothing in `app/` or
+  `components/` links to it (verified by grep). The four sub-reports are linked only
+  from the hub's own cards.
+- Existing analytics images live under `images/analytics/` (not `images/merchants/analytics/`);
+  set the flow `section` to `analytics` to match `overview.mdx`.
+- Prior PR #26 ("Analytics Reports hub", path `reports.mdx`) was never merged; neither
+  `reports.mdx` nor `reports-hub.mdx` existed on `main`. This article uses the
+  Notion-tracked path `reports-hub.mdx`. The two paths should be reconciled if #26
+  is ever revived.
+- `a:has-text('<card title>')` resolves to the whole card anchor, so numbered boxes
+  land on the full card, not just the title text.
+
+---
+
 ## 2026-06-08 — Billing Screenshots (backfill)
 
 **Article:** `merchants/settings/billing.mdx`
