@@ -84,6 +84,7 @@
         "pages": [
           "merchants/staff/overview",
           "merchants/staff/roles-permissions",
+          "merchants/staff/setup-recipes",
           "merchants/staff/activity-logs"
         ]
       },
