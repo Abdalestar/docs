@@ -20,6 +20,33 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-08 — Your Wrapped (Analytics)
+
+**Article:** `merchants/analytics/wrapped.mdx`
+**Branch:** `claude/dreamy-newton-E81pM`
+**Status:** Done. New article with a real 4-step annotated screenshot flow.
+
+### What was written
+New article for the `/analytics/wrapped` route ("Your Wrapped"), the auto-generated weekly/monthly/yearly recap of a merchant's loyalty program. Covers: the three period tabs (Weekly, Monthly, Yearly) and that each shows the **last completed** period (weekly = previous Sun–Sat, monthly = previous calendar month, yearly = previous calendar year); the **Your Numbers** card (Total Stamps, Points Earned, Redemptions, New Members, Est. Revenue, Growth) with what each means; **Highlights** (auto bullet lines, only those with data); **Top Customer** and **Busiest Day** conditional cards; the **Share** button; the "No data available for this period yet" empty state; plan gating; and access control. Added to the Analytics nav group in `docs.json` after `staff-performance`.
+
+### Research sources (all in `Abdalestar/qtap`)
+- `app/(dashboard)/analytics/wrapped/page.tsx` — page title "Your Wrapped", subtitle, "Auto-generated" badge, three tabs (default Weekly), card order, Share button, `FeatureGate feature="wrappedAnalytics"`, route guard + AccessDenied.
+- `hooks/use-wrapped.ts` — `getPeriodRange` confirms each tab = previous completed period; metric math (Growth = newMembers / membersBefore), highlights logic, empty state.
+- `types/wrapped.ts` — `WrappedSummary` shape, metric labels.
+- `components/dashboard/analytics/wrapped/wrapped-card.tsx` — card anatomy (metrics grid, highlights bullets).
+- `components/shared/feature-gate.tsx` + `lib/stripe/config.ts` — `wrappedAnalytics` is **false on Starter**, **true on Growth / Elite / Franchise**; Starter sees the upgrade prompt.
+- `lib/utils/permissions.ts` + `lib/validations/staff.ts` — `/analytics` needs `analytics !== 'none'`; owner always, manager default `full`, staff default `none` (no access).
+
+### Screenshots
+- Real 4-step flow captured from the live points demo account (Najma Coffee) via `.routine/flow-capture.mjs` (flow at `.routine/flows/analytics-wrapped.json`): `wrapped-overview.png` (Weekly, tabs boxed + labelled), `wrapped-numbers.png` (cropped Your Numbers card), `wrapped-monthly.png` (Monthly tab, period boxed), `wrapped-yearly.png` (Yearly tab, period boxed). The demo customer name in the Top Customer card and the matching Highlights line is redacted on every shot.
+- SMOKE_OK. All 4 PNGs are real binary; `validate-images.mjs` reports 4/4 OK. Pushed with `git push`, not the GitHub MCP.
+
+### Notes
+- The Wrapped page has **no sidebar or in-app link** that I could find (not in `components/layout/sidebar.tsx`, the analytics page, or the reports hub). It is reached at `/analytics/wrapped`. The article describes it as living "in the Analytics area" without inventing a click path.
+- Anti-slop: no em dashes, no banned words, removed an "X, not Y" contrast-framing sentence in the period section. ~430 words.
+
+---
+
 ## 2026-06-08 — Win-Back Campaigns Screenshots
 
 **Article:** `merchants/campaigns/winback.mdx`
