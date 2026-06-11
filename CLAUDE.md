@@ -20,6 +20,40 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-08 — Win-Back Campaigns Screenshots
+
+**Article:** `merchants/campaigns/winback.mdx`
+**Branch:** `claude/dreamy-newton-ZnnCJ`
+**PR:** https://github.com/Abdalestar/docs/pull/80
+**Status:** Done — 6 real annotated screenshots captured and committed (validate-images 6/6 OK)
+
+### Task
+Screenshot backfill (no Not-started rows remained on the board, so per routine §3 this run did one backfill task). Picked the highest-priority `Needs Screenshots = YES` row whose article is on `main`: "Win-back Campaigns" (P1). Prose left unchanged; six `<Frame>` images added.
+
+### What worked (screenshots are unblocked now)
+- `smoke-test.mjs` returned `SMOKE_OK` (login + screenshot from the live dashboard both succeed in this sandbox). The historical "screenshots never work" problem is gone — recent runs (PRs #73–77) also captured successfully.
+- `flow-capture.mjs` walked the New Campaign wizard end to end and saved 6 annotated PNGs (1440×1000) under `images/campaigns/`.
+
+### Key gotcha discovered
+- The **points** demo account (Najma Coffee) is at its **5-campaign Elite-plan limit**, so `/campaigns/new` renders `Campaign Limit Reached` (from `new/page.tsx`'s `canCreate` guard) once the async campaign count loads. A first probe caught the wizard only because it rendered before the count resolved (`campaignCount === null`); later probes hit the limit screen. Fix: capture win-back from the **stamp** account (Dana Salon & Spa), which is under its limit. Win-back is account-agnostic, so the wizard shots are equally valid.
+
+### Research sources (qtap repo, read-only)
+- `components/dashboard/campaigns/campaign-wizard.tsx` — 7 steps (Type, Trigger, Reward, Message, Conditions, A/B Test, Review), `canProceed` gates, final buttons "Activate Campaign" / "Save as Draft"
+- `steps/type-selection.tsx` — campaign types incl. `win_back` → "Win-Back Campaign"; `#name` field
+- `steps/trigger-config.tsx` — win_back inactivity 14/30/60/90 days, max sends 1/2/3
+- `steps/reward-config.tsx` — five reward types (Free Item, Bonus Stamps, Bonus Points, Discount, Special Badge)
+- `steps/message-config.tsx` — `#notification-title` / `#notification-body`, Use Template, live preview
+- `app/(dashboard)/campaigns/new/page.tsx` — plan-limit guard that hides the wizard
+
+### Safety
+- Wizard was filled but **never submitted**: Activate / Save as Draft were not clicked, no campaign created. No outbound action (no invite/notification) fired during capture.
+
+### Notes for future runs
+- For any `/campaigns/new` capture, prefer the **stamp** account or confirm the points account is under its campaign limit first.
+- Live-label drift left as-is per the backfill rule: prose says Activate / Save Draft; live buttons read Activate Campaign / Save as Draft. Screenshots show the real labels.
+
+---
+
 ## 2026-06-08 — Screenshot backfills: First Loyalty Program + Members (SMOKE_OK)
 
 **Tasks:** two screenshot backfills (no `Not started` rows remained on the board).

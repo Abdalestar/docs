@@ -1,0 +1,98 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "campaigns",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 1000 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "winback-01-list",
+      "goto": "/campaigns",
+      "waitFor": "text=New Campaign",
+      "waitMs": 5000,
+      "annotate": [
+        { "type": "box", "target": "a:has-text('New Campaign')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Open Campaigns in the sidebar, then click New Campaign (1) to start the wizard." }
+      ]
+    },
+    {
+      "name": "winback-02-type",
+      "goto": "/campaigns/new",
+      "actions": [
+        { "wait": 4000 },
+        { "click": "label:has-text('Win-Back Campaign')" },
+        { "fill": ["#name", "We Miss You"] },
+        { "wait": 600 }
+      ],
+      "waitFor": "text=Choose Campaign Type",
+      "waitMs": 1500,
+      "annotate": [
+        { "type": "box", "target": "label:has-text('Win-Back Campaign')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#name", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Step 1 Type: choose Win-Back Campaign (1) and give it a name (2), then click Next." }
+      ]
+    },
+    {
+      "name": "winback-03-trigger",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 1500 }
+      ],
+      "waitFor": "text=Maximum sends per customer",
+      "waitMs": 1200,
+      "annotate": [
+        { "type": "box", "target": ":nth-match(button[role=combobox], 1)", "number": 1, "color": "plum" },
+        { "type": "box", "target": ":nth-match(button[role=combobox], 2)", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Step 2 Trigger: set the inactivity window (1) to 14, 30, 60, or 90 days, and the maximum sends per customer (2)." }
+      ]
+    },
+    {
+      "name": "winback-04-reward",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 1500 }
+      ],
+      "waitFor": "text=Choose Reward Type",
+      "waitMs": 1200,
+      "annotate": [
+        { "type": "box", "target": "label:has-text('Bonus Points')", "color": "plum" },
+        { "type": "caption", "text": "Step 3 Reward (optional): attach a reward to bring members back, or leave it empty to send only a message." }
+      ]
+    },
+    {
+      "name": "winback-05-message",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 1500 },
+        { "fill": ["#notification-title", "We miss you!"] },
+        { "fill": ["#notification-body", "It has been a while since your last visit. Here is a free coffee to welcome you back."] },
+        { "wait": 600 }
+      ],
+      "waitFor": "text=Notification Title",
+      "waitMs": 1200,
+      "annotate": [
+        { "type": "box", "target": "#notification-title", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#notification-body", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Step 4 Message: write the push title (1) and body (2). Use Template fills a suggested win-back message you can edit." }
+      ]
+    },
+    {
+      "name": "winback-06-review",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1500 }
+      ],
+      "waitFor": "button:has-text('Activate Campaign')",
+      "waitMs": 1200,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Activate Campaign')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Save as Draft')", "number": 2, "color": "charcoal" },
+        { "type": "caption", "text": "Step 7 Review: check the summary, then Activate Campaign (1) to start it now or Save as Draft (2) to publish later." }
+      ]
+    }
+  ]
+}
