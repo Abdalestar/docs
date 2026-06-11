@@ -20,6 +20,36 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-11 — Getting Started Checklist & Trial-Day Bonuses
+
+**Article:** `merchants/getting-started/checklist.mdx` (new)
+**Branch:** `claude/eloquent-fermat-7eoo2g`
+**PR:** https://github.com/Abdalestar/docs/pull/94
+**Status:** Done (hero card is an SVG; real screenshots cover dashboard + task pages)
+
+### What was written
+New article documenting the Getting Started card on the dashboard home and the trial-day bonuses it grants. Added to the Getting Started nav group in `docs.json` (after `dashboard-overview`).
+
+Facts (all verified against app source):
+- 7 tasks from `CHECKLIST_ITEMS` in `app/api/checklist/route.ts`: account_created + business_setup (auto-complete, 0 days), first_loyalty_card (+1), first_qr_code (+1), invite_staff (+1), first_member (0), first_campaign (+1).
+- Completion is computed from real counts (stamp_cards + points_programs, qr_codes, non-owner staff, organization_members, campaigns). Not manual checkboxes.
+- Visibility (`getting-started-checklist.tsx`): shows when `isTrialing || isNewOrg` (org created < 30 days) and not dismissed; returns null at `progress === 100`. Reward badges + Claim button gated on `isTrialing`. Bonus is claimed (POST /api/checklist), not auto; one-time per item (`checklist_rewards_claimed`).
+- Trial extension cap = 7 days total (`MAX_EXTENSION_DAYS` in `lib/billing/trial-extension.ts`); the 4 checklist days fit under it. extendTrial also updates Stripe trial_end when a subscription exists.
+- Dismiss (Skip / X) is permanent (sets `settings.getting_started_dismissed`).
+
+### Screenshots
+- SMOKE_OK. Login works with both env accounts.
+- **Both demo orgs (Najma points, Dana stamp) are at `progress=100`** — `/api/checklist` confirmed all 7 items complete — so the Getting Started card returns null and cannot be captured live. Seeding is not allowed (Supabase read-only). Left `Needs Screenshots = YES` for a future run with a fresh trialing account.
+- Shipped 3 REAL annotated screenshots via `flow-capture.mjs` (flow at `.routine/flows/getting-started.json`): dashboard home (Quick Actions boxed), QR Codes page (Generate QR Code), Staff page (Invite Staff). Captured filled/idle states only, no destructive/outbound clicks.
+- Built an accurate SVG of the card (`images/merchants/getting-started/checklist-card.svg`) from the component source: progress ring, 7 rows with reward badges, plus a legend showing offered → Claim +1d → +1d earned. `validate-images.mjs` 4/4 OK.
+
+### Insights for future runs
+- The checklist card only renders for trialing/new orgs with unfinished tasks. Established demo accounts will never show it. To screenshot the live card you need an org that is mid-onboarding (or a fresh trial signup).
+- `playwright install-deps` fails in this sandbox (apt repo signing errors), but the bundled chromium still launches headless and captures fine. Don't treat install-deps failure as a blocker.
+- The dashboard home `/` needs ~5.5s settle for metric tiles to leave skeleton state.
+
+---
+
 ## 2026-06-11 — QR code troubleshooting
 
 **Article:** `merchants/qr-codes/troubleshooting.mdx`
