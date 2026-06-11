@@ -1,0 +1,79 @@
+---
+title: "How an NFC tap awards a stamp or points"
+sidebarTitle: "How a tap works"
+description: "What happens when a customer taps an NFC tag: the stamp, points, or check-in it records, and how a tap differs from a QR scan."
+---
+
+When a customer taps their phone on one of your NFC tags, Qtap reads the tag's serial number and runs the action you set for it. That tap adds a stamp, awards points, or records a check-in, then logs the visit against the customer's account.
+
+<Frame caption="Each tag's Action column shows what a tap does, and the Taps column counts how many times it has been tapped.">
+  <img src="/images/merchants/nfc-tags/nfc-tap-list.png" alt="NFC Tags page with the Action and Taps columns called out" />
+</Frame>
+
+## A tap always belongs to a customer
+
+A customer taps with the Qtap app open, so every tap credits a real account. If the app can't identify the customer, the tap doesn't register. The first time someone taps one of your tags, Qtap adds them to your members and then runs the action, so you never have to sign them up by hand.
+
+## What each action does
+
+You choose one action per tag when you register it (see [NFC Tags](/merchants/nfc-tags)). A tap runs that action:
+
+<Steps>
+
+### Add Stamp
+
+Adds one stamp to the stamp card linked to the tag. The card's wait time between stamps and its daily cap still apply, so a customer can't tap twice in a row to collect extra. If the tag has no stamp card linked, the tap fails and tells the customer to ask staff.
+
+### Award Points
+
+Adds the points value set on the tag to the customer's balance.
+
+### Check-In
+
+Records the visit without adding a stamp or points. Use it when you only want to track who came in.
+
+</Steps>
+
+You set the action when you register a tag, and you can change it later from the tag's detail page.
+
+<Frame caption="The Action dropdown on a tag, with the three things a tap can do.">
+  <img src="/images/merchants/nfc-tags/nfc-tap-actions.png" alt="NFC tag action dropdown showing Add Stamp, Award Points, and Check-In" />
+</Frame>
+
+## Where to see tap activity
+
+Open **NFC Tags**, then choose **View Details** on any tag. The detail page shows four cards at the top with the Total Taps, the action, the assigned location, and the tag's status, followed by a Details panel with the serial number, purchase date, and last tap.
+
+<Frame caption="A tag's detail page: the running tap count, the action it runs, its location and status, and the tag's details.">
+  <img src="/images/merchants/nfc-tags/nfc-tap-detail.png" alt="NFC tag detail page showing Total Taps, Action, location, status, and details" />
+</Frame>
+
+The Total Taps number is the figure to watch for how often a tag gets used. It also shows next to each tag on the main list, and the summary cards there add up taps across every tag.
+
+## How a tap differs from a QR scan
+
+A tap and a scan both add stamps or points. Two differences are worth knowing before you decide which to use:
+
+<Warning>
+**Points multipliers don't apply to taps.** If you run a double-points or bonus-points campaign, that bonus lands on QR scans only. An NFC tap always awards the flat points value set on the tag.
+
+**A tap doesn't send the reward push.** When a customer finishes a stamp card, a QR scan sends them a "reward earned" notification. From a tap, the stamp and the reward still land, but that push message doesn't go out.
+</Warning>
+
+If you want a points bonus or the reward message to reach customers, send them to a QR code for those visits, or have your staff mention the reward at the counter.
+
+<Frame caption="What Qtap does the moment a customer taps a tag.">
+  <img src="/images/merchants/nfc-tags/nfc-tap-flow.svg" alt="Flow from a customer tap to the stamp, points, or check-in it records" />
+</Frame>
+
+<CardGroup cols={3}>
+  <Card title="NFC Tags" href="/merchants/nfc-tags">
+    Register and manage the tags that run these actions
+  </Card>
+  <Card title="QR Code Actions" href="/merchants/qr-codes/actions">
+    Compare how a QR scan handles the same actions
+  </Card>
+  <Card title="Stamp Cards" href="/merchants/stamp-cards/overview">
+    Set up the cards an Add Stamp tap links to
+  </Card>
+</CardGroup>
