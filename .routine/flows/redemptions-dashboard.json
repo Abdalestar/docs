@@ -1,0 +1,84 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "redemptions",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "redeem-overview",
+      "goto": "/redemptions",
+      "waitFor": "text=Enter Code",
+      "waitMs": 4000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Enter Code')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Look Up Customer')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "The Redemptions page opens on the Redeem tab. Pick how to find the reward: by code (1) or by customer (2)." }
+      ]
+    },
+    {
+      "name": "enter-code",
+      "actions": [
+        { "fill": ["input[placeholder='e.g. ABC123']", "K4M9X2"] },
+        { "wait": 600 }
+      ],
+      "waitMs": 1200,
+      "annotate": [
+        { "type": "box", "target": "input[placeholder='e.g. ABC123']", "color": "plum" },
+        { "type": "box", "target": "button:text-is('Look Up')", "color": "gold" },
+        { "type": "caption", "text": "Enter Code: type the 6-character code from the customer's phone, then click Look Up to load the reward." }
+      ]
+    },
+    {
+      "name": "lookup-search",
+      "actions": [
+        { "click": "button:has-text('Look Up Customer')" },
+        { "wait": 700 },
+        { "fill": ["input[placeholder*='Search by name']", "Khalid"] },
+        { "wait": 1800 }
+      ],
+      "waitMs": 1200,
+      "annotate": [
+        { "type": "box", "target": "input[placeholder*='Search by name']", "color": "plum" },
+        { "type": "box", "target": "div.divide-y", "color": "gold" },
+        { "type": "redact", "target": "button.w-full p.text-muted-foreground >> nth=0", "color": "charcoal" },
+        { "type": "redact", "target": "button.w-full p.text-muted-foreground >> nth=1", "color": "charcoal" },
+        { "type": "redact", "target": "button.w-full p.text-muted-foreground >> nth=2", "color": "charcoal" },
+        { "type": "redact", "target": "button.w-full p.text-muted-foreground >> nth=3", "color": "charcoal" },
+        { "type": "caption", "text": "Look Up Customer: search by name, email, phone, or Qtap ID (2+ characters). Click a customer to open their rewards." }
+      ]
+    },
+    {
+      "name": "member-points",
+      "actions": [
+        { "click": "button.w-full:has-text('Khalid')" },
+        { "wait": 2500 },
+        { "hover": "role=button[name=\"Redeem\"]" },
+        { "wait": 700 }
+      ],
+      "waitMs": 1200,
+      "annotate": [
+        { "type": "box", "target": "div.bg-blue-50", "color": "plum" },
+        { "type": "box", "target": "role=button[name=\"Redeem\"]", "color": "gold" },
+        { "type": "label", "target": "role=button[name=\"Redeem\"]", "text": "Click Redeem to start", "color": "plum" },
+        { "type": "caption", "text": "On a points program, the customer's balance and the rewards they can afford appear after you select them. Each shows the points it costs." }
+      ]
+    },
+    {
+      "name": "confirm-points",
+      "actions": [
+        { "hover": "role=button[name=\"Redeem\"]" },
+        { "wait": 400 },
+        { "click": "role=button[name=\"Redeem\"]" },
+        { "wait": 1500 }
+      ],
+      "waitMs": 800,
+      "clipTo": "[role=dialog]",
+      "clipPadding": 20,
+      "annotate": [
+        { "type": "box", "target": "[role=dialog] button:has-text('Confirm Redemption')", "color": "plum" },
+        { "type": "label", "target": "[role=dialog] button:has-text('Confirm Redemption')", "text": "Review, then confirm", "color": "plum" }
+      ]
+    }
+  ]
+}
