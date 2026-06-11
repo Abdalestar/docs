@@ -1,0 +1,42 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/getting-started",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "01-dashboard-home",
+      "goto": "/",
+      "waitFor": "text=Quick Actions",
+      "waitMs": 5500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Generate QR Code')", "color": "plum" },
+        { "type": "box", "target": "button:has-text('Invite Staff Member')", "color": "plum" },
+        { "type": "box", "target": "button:has-text('Create Campaign')", "color": "plum" },
+        { "type": "caption", "text": "Your dashboard home. During your trial and first 30 days, the Getting Started card sits at the top here. Quick Actions on the right launch the same setup tasks." }
+      ]
+    },
+    {
+      "name": "02-generate-qr",
+      "goto": "/qr-codes",
+      "waitFor": "button:has-text('Generate QR Code')",
+      "waitMs": 4000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Generate QR Code')", "number": 1, "color": "plum" },
+        { "type": "label", "target": "button:has-text('Generate QR Code')", "text": "Make your first code to earn +1 trial day", "color": "plum" },
+        { "type": "caption", "text": "Generating your first QR code checks off a task and adds a bonus day to your trial." }
+      ]
+    },
+    {
+      "name": "03-invite-staff",
+      "goto": "/staff",
+      "waitFor": "button:has-text('Invite Staff')",
+      "waitMs": 4000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Invite Staff')", "number": 1, "color": "plum" },
+        { "type": "label", "target": "button:has-text('Invite Staff')", "text": "Inviting a teammate earns another bonus day", "color": "plum" },
+        { "type": "caption", "text": "Inviting a team member is one more task that earns a bonus trial day." }
+      ]
+    }
+  ]
+}

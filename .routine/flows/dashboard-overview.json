@@ -1,0 +1,59 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "getting-started",
+  "account": "points",
+  "defaultWaitMs": 4500,
+  "steps": [
+    {
+      "name": "dashboard-home",
+      "goto": "/",
+      "waitFor": "[data-tour=\"metrics\"] .data-mono",
+      "waitMs": 5000,
+      "annotate": [
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] .space-y-2" },
+        { "type": "box", "target": "[data-tour=\"metrics\"]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Issue Points')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "The dashboard home: your four stat cards (1) and the Issue Points button (2)." }
+      ]
+    },
+    {
+      "name": "dashboard-activity",
+      "goto": "/",
+      "waitFor": "[data-tour=\"charts\"]",
+      "waitMs": 5000,
+      "clipTo": "[data-tour=\"charts\"]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "label", "target": "text=Activity Overview", "text": "Issued vs redeemed, last 30 days. Hover a point for that day's count.", "color": "plum" }
+      ]
+    },
+    {
+      "name": "dashboard-quick-actions",
+      "goto": "/",
+      "waitFor": "[data-tour=\"quick-actions\"]",
+      "waitMs": 4000,
+      "clipTo": "[data-tour=\"quick-actions\"]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "[data-tour=\"quick-actions\"] .grid", "color": "plum" }
+      ]
+    },
+    {
+      "name": "dashboard-issue",
+      "goto": "/",
+      "actions": [
+        { "wait": 4000 },
+        { "click": "button:has-text('Issue Points')" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "input#memberSearch",
+      "waitMs": 800,
+      "clipTo": "[role=dialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "input#memberSearch", "color": "plum" },
+        { "type": "label", "target": "input#memberSearch", "text": "Find a member by phone, email, or member code, then issue from their record.", "color": "plum" }
+      ]
+    }
+  ]
+}

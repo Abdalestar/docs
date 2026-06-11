@@ -5,6 +5,10 @@ description: "How to register, configure, and manage NFC tags for contactless lo
 
 NFC tags let customers stamp their card or earn points by tapping their phone against a physical tag, instead of scanning a QR code. You register each tag in the dashboard, configure what it does when tapped, and place it somewhere in your location.
 
+<Frame caption="The NFC Tags page lists every registered tag with its action, location, and tap count, above four summary cards.">
+  <img src="/images/merchants/nfc-tags/01-nfc-tags-page.png" alt="NFC Tags page with summary cards and the tag inventory table" />
+</Frame>
+
 ## How NFC tags work
 
 When a member taps their phone on an NFC tag, Qtap reads the tag's serial number and performs the action you've configured — adding a stamp to a specific stamp card, awarding points, or recording a check-in. The tap is logged with a timestamp and linked to the member's account.
@@ -49,6 +53,10 @@ The tag appears in your inventory immediately.
 
 </Steps>
 
+<Frame caption="The Add Tag form: enter the serial number, name the tag, then choose what a tap does.">
+  <img src="/images/merchants/nfc-tags/02-add-tag-dialog.png" alt="Add NFC Tag dialog with a serial number, the action set to Award Points, and a points value" />
+</Frame>
+
 <Warning>
 If you select **Add Stamp** as the action, you must have at least one active stamp card. If no stamp cards appear in the dropdown, create one first under **Cards** before adding the tag.
 </Warning>
@@ -65,6 +73,10 @@ Each row shows:
 - **Last Tapped** — the date of the most recent tap
 - **Status** — Active or Inactive
 
+<Frame caption="Open any tag's three-dot menu to view its details, assign a location, deactivate it, or delete it.">
+  <img src="/images/merchants/nfc-tags/03-tag-menu.png" alt="Tag row menu showing View Details, Assign Location, Deactivate, and Delete" />
+</Frame>
+
 ### Changing a tag's location
 
 Click the three-dot menu on any tag row and select **Assign Location**. Pick a location from the dropdown and confirm. You can also change this on the tag's detail page.
@@ -80,6 +92,10 @@ Click **View Details** on any tag to open its detail page. You'll see:
 - Total tap count, action type, location assignment, and current status
 - A line chart showing taps over the last 7 days
 - A list of recent taps with timestamps
+
+<Frame caption="A tag's detail page shows its total taps, action, location, and status, plus its serial number and key dates.">
+  <img src="/images/merchants/nfc-tags/04-tag-detail.png" alt="NFC tag detail page with stat cards and a details panel" />
+</Frame>
 
 ### Deleting a tag
 
