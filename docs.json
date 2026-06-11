@@ -45,6 +45,7 @@
           "merchants/qr-codes/overview",
           "merchants/qr-codes/generating",
           "merchants/qr-codes/batch",
+          "merchants/qr-codes/qr-code-detail",
           "merchants/nfc-tags"
         ]
       },
@@ -69,7 +70,8 @@
           "merchants/analytics/location-comparison",
           "merchants/analytics/points-activity",
           "merchants/analytics/revenue-impact",
-          "merchants/analytics/staff-performance"
+          "merchants/analytics/staff-performance",
+          "merchants/analytics/wrapped"
         ]
       },
       {

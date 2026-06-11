@@ -1,0 +1,75 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/members",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "redemptions-01-page",
+      "goto": "/redemptions",
+      "waitFor": "text=Enter Redemption Code",
+      "waitMs": 4000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Enter Code')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:text-is('Look Up Customer')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "The Redemptions page is where staff process rewards. Enter the customer's code (1), or look them up by name (2)." }
+      ]
+    },
+    {
+      "name": "redemptions-02-enter-code",
+      "actions": [
+        { "fill": ["input[placeholder='e.g. ABC123']", "ABC123"] },
+        { "wait": 600 }
+      ],
+      "clipTo": "input[placeholder='e.g. ABC123']",
+      "clipPadding": 130,
+      "annotate": [
+        { "type": "box", "target": "button:text-is('Look Up')", "color": "plum" },
+        { "type": "label", "target": "input[placeholder='e.g. ABC123']", "text": "Type the 6-character code from the customer's phone, then Look Up", "color": "plum" }
+      ]
+    },
+    {
+      "name": "redemptions-03-lookup",
+      "actions": [
+        { "click": "button:text-is('Look Up Customer')" },
+        { "wait": 800 },
+        { "fill": ["input[placeholder*='Search by name']", "mo"] },
+        { "wait": 2200 }
+      ],
+      "clipTo": "input[placeholder*='Search by name']",
+      "clipPadding": 150,
+      "annotate": [
+        { "type": "box", "target": "input[placeholder*='Search by name']", "color": "plum" },
+        { "type": "redact", "target": ".divide-y button p.text-muted-foreground", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "redemptions-04-rewards",
+      "actions": [
+        { "click": ".divide-y button" },
+        { "wait": 2800 },
+        { "hover": ":nth-match(button:has-text('Redeem'), 2)" },
+        { "wait": 700 }
+      ],
+      "clipTo": ".mt-4.space-y-3",
+      "clipPadding": 16,
+      "annotate": [
+        { "type": "box", "target": ":nth-match(button:has-text('Redeem'), 2)", "color": "plum" }
+      ]
+    },
+    {
+      "name": "redemptions-05-confirm",
+      "actions": [
+        { "click": ":nth-match(button:has-text('Redeem'), 2)" },
+        { "wait": 1600 }
+      ],
+      "waitFor": "[role=dialog] button:has-text('Confirm Redemption')",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "[role=dialog] button:has-text('Confirm Redemption')", "color": "plum" },
+        { "type": "label", "target": "[role=dialog] button:has-text('Confirm Redemption')", "text": "Check the details, then confirm", "color": "plum" }
+      ]
+    }
+  ]
+}
