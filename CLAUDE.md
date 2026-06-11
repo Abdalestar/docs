@@ -20,6 +20,35 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-11 — Campaign Timing and Repeat Sends
+
+**Article:** `merchants/campaigns/timing.mdx`
+**Branch:** `claude/eloquent-fermat-wcagj2`
+**PR:** https://github.com/Abdalestar/docs/pull/96
+**Status:** Done (3 real annotated screenshots + 1 SVG; validate-images 4/4 OK)
+
+### What was written
+New article on when campaigns run and why each member only receives a campaign once. Notion task "Campaign Timing & Duplicate-Send Rules" (P2). Added to the Campaigns nav group after Overview.
+
+**Facts (all grounded in source):**
+- Execution engine runs every 15 minutes: `vercel.json` cron `*/15 * * * *` calls `/api/campaigns/execute`.
+- Only `status='active'` campaigns are processed (`execute/route.ts` query); statuses draft/active/paused/ended from `types/campaign.ts`; badges from `campaign-card.tsx`.
+- One send per member per campaign: `hasAlreadyReceived()` skips members with a prior `sent` interaction. Exceptions: birthday re-sends after 365 days; win-back honours `WinBackTriggerConfig.max_sends`.
+- `total_sent` only counts pushes delivered to OneSignal (member needs app + `push_enabled`), so Sent can be lower than member count.
+- Start/end date gating (`isCampaignWithinDateRange`); flash sale auto-ends when `max_redemptions` reached.
+
+### Screenshots / diagrams
+- `.routine/flows/campaign-timing.json` (committed): 3 steps off `/campaigns` on the points demo (demo@najma.coffee) — status tabs boxed, one campaign card cropped (status badge / Pause / Sent), card menu (View Stats / Delete). No destructive clicks (Pause/Delete boxed, never clicked).
+- SVG `images/campaigns/campaign-timing-loop.svg`: the 15-min → active? → dates? → trigger? → already-sent? → send decision loop. Brand palette.
+
+### Insights for future runs
+- Smoke test passed first try (`=== SMOKE_OK ===`): Supabase 401 treated as reachable, login OK as demo@najma.coffee. Screenshots work headless from the sandbox via `.routine/flow-capture.mjs`; no Chrome-MCP/computer-use needed.
+- Points demo account has 7 active campaigns (Founders Club, Tuesday Triple Stars, Weekend Double Stars, We Miss You, Halfway to a Latte, Birthday Brew, National Day Flash, Najma Welcome Stars), all Active, 0 Paused/Draft. Can't screenshot a Paused/Draft badge from real data; documented those states in prose + SVG.
+- Reliable card crop selector: `div.rounded-xl:has(h3:has-text("<campaign name>"))` (shadcn Card class `rounded-xl border bg-card text-card-foreground shadow`). Menu trigger: `button[aria-haspopup="menu"]` scoped to that card.
+- Branch policy this session forced a single branch (`claude/eloquent-fermat-wcagj2`), so only the one new-article task ran; the screenshot-backfill second task was skipped rather than mixed into the same PR.
+
+---
+
 ## 2026-05-07 — Analytics Overview Screenshots (Attempt 2)
 
 **Article:** `merchants/analytics/overview.mdx`
