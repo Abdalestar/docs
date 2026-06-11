@@ -1,6 +1,102 @@
 ---
 title: "Milestone Campaigns"
-description: "Automated messages that trigger when members hit visit or points milestones"
+sidebarTitle: "Milestone"
+description: "Automatically reward members when they reach a total stamp goal."
 ---
 
-Coming soon
+A milestone campaign sends a push notification when a member reaches a total number of stamps you set, for example 50 stamps earned with you over time. You can attach a reward so reaching the goal comes with a treat. Qtap calls this campaign type **Milestone Celebration**.
+
+## How it works
+
+Once the campaign is active, Qtap checks your members regularly (about every 15 minutes) and finds anyone whose lifetime stamp total has reached your goal. Each matching member gets the notification, and if you attached a reward it lands in their wallet.
+
+The threshold counts every stamp a member has earned with you, not the progress on their current card. A member who has filled three 10-stamp cards and is partway through a fourth has earned more than 30 stamps in total, so a goal of 30 would already include them.
+
+Each member receives a milestone campaign once. If some members are already past the goal when you activate, they receive it on the next check.
+
+<Info>
+Owners and managers can create campaigns. Staff members don't have access to the Campaigns page by default.
+</Info>
+
+## Setting up a milestone campaign
+
+Go to **Campaigns** in the left sidebar and click **New Campaign**. The wizard has seven steps.
+
+<Frame caption="The Campaigns page. Click New Campaign to open the wizard.">
+  <img src="/images/merchants/campaigns/milestone-01-campaigns-list.png" alt="The Campaigns page with the New Campaign button highlighted" />
+</Frame>
+
+<Steps>
+
+### Step 1: Type
+
+Choose **Milestone Celebration** from the campaign type list. Give it a name, such as "50-Stamp Club", and an optional internal description. Click **Next**.
+
+<Frame caption="Choose Milestone Celebration and name the campaign.">
+  <img src="/images/merchants/campaigns/milestone-02-type.png" alt="Campaign type step with Milestone Celebration selected and a campaign name entered" />
+</Frame>
+
+### Step 2: Trigger
+
+Enter the total number of stamps a member must reach to trigger the campaign. The default is 50. Click **Next**.
+
+<Frame caption="Set the total stamp goal. The default is 50.">
+  <img src="/images/merchants/campaigns/milestone-03-trigger.png" alt="Trigger step showing the total stamps threshold set to 50" />
+</Frame>
+
+### Step 3: Reward (optional)
+
+Attach a reward so the milestone comes with something to claim. Choose from Free Item, Bonus Stamps, Bonus Points, Discount, or Special Badge, then fill in the details. The reward goes into the member's wallet and is valid for 30 days.
+
+Leave this step empty to send a message without a reward. Click **Next**.
+
+<Frame caption="Pick a reward, or skip to send only a message.">
+  <img src="/images/merchants/campaigns/milestone-04-reward.png" alt="Reward step with Free Item selected and a reward name entered" />
+</Frame>
+
+### Step 4: Message
+
+Write the push notification. The **title** and **message** are both required. Click **Use Template** to start from a ready milestone message, and use the personalization variables (such as Customer Name) to address members by name. The preview shows how the notification will read.
+
+<Frame caption="Write the notification or apply the template. The preview shows the result.">
+  <img src="/images/merchants/campaigns/milestone-05-message.png" alt="Message step with the milestone template applied and a live preview" />
+</Frame>
+
+### Step 5: Conditions (optional)
+
+Add conditions to narrow who receives the campaign, for example only members at a specific location. Leave it empty to include everyone who reaches the goal. Click **Next**.
+
+### Step 6: A/B Test (optional)
+
+Test two versions of the message to see which one members respond to. Leave it off if you don't need it. Click **Next**.
+
+### Step 7: Review
+
+Check the summary, then click **Activate Campaign** to start it, or **Save as Draft** to finish later.
+
+<Frame caption="Review the campaign, then activate it or save it as a draft.">
+  <img src="/images/merchants/campaigns/milestone-06-review.png" alt="Review step showing the campaign summary with the Activate Campaign and Save as Draft buttons" />
+</Frame>
+
+</Steps>
+
+## Managing the campaign
+
+An active campaign runs in the background. To pause it, open the three-dot menu on the campaign card on the Campaigns page and click **Pause**.
+
+<Note>
+Members receive the notification only if they have push notifications turned on. A member without push enabled still qualifies for the reward, but won't get the message announcing it.
+</Note>
+
+<Warning>
+The trigger counts a member's total stamps earned with you, so it fits stamp programs. If you run a points-only program, this campaign type still measures stamps rather than points.
+</Warning>
+
+<CardGroup cols={2}>
+  <Card title="Win-Back Campaigns" href="/merchants/campaigns/winback">
+    Re-engage members who haven't visited in a while.
+  </Card>
+  <Card title="Campaign Stats" href="/merchants/campaigns/stats">
+    See how many members each campaign reached and how they responded.
+  </Card>
+</CardGroup>

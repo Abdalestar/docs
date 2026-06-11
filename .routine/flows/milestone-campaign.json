@@ -1,0 +1,99 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/campaigns",
+  "account": "stamp",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "milestone-01-campaigns-list",
+      "goto": "/campaigns",
+      "waitFor": "text=New Campaign",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "box", "target": "a[href='/campaigns/new'] button", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Open Campaigns in the sidebar, then click New Campaign (1) to start the wizard." }
+      ]
+    },
+    {
+      "name": "milestone-02-type",
+      "goto": "/campaigns/new",
+      "waitFor": "text=Choose Campaign Type",
+      "waitMs": 3500,
+      "actions": [
+        { "click": "label[for='milestone']" },
+        { "wait": 400 },
+        { "fill": ["#name", "50-Stamp Club"] },
+        { "wait": 400 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "label[for='milestone']", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#name", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Choose Milestone Celebration (1) and give the campaign a name (2). Then click Next." }
+      ]
+    },
+    {
+      "name": "milestone-03-trigger",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 800 }
+      ],
+      "waitFor": "text=Configure Trigger",
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "box", "target": "input[type='number']", "number": 1, "color": "plum" },
+        { "type": "label", "target": "input[type='number']", "text": "Total stamps a member must reach", "color": "charcoal" },
+        { "type": "caption", "text": "Set the total number of stamps that triggers the reward. The default is 50." }
+      ]
+    },
+    {
+      "name": "milestone-04-reward",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 800 },
+        { "click": "label[for='reward-free_item']" },
+        { "wait": 400 },
+        { "fill": ["input[placeholder='e.g., Free coffee']", "Free dessert"] },
+        { "wait": 400 }
+      ],
+      "waitFor": "text=Choose Reward Type",
+      "waitMs": 2000,
+      "annotate": [
+        { "type": "box", "target": "label[for='reward-free_item']", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Pick a reward, or skip this step to send only a message. Members receive the reward in their wallet." }
+      ]
+    },
+    {
+      "name": "milestone-05-message",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 800 },
+        { "click": "button:has-text('Use Template')" },
+        { "wait": 600 }
+      ],
+      "waitFor": "text=Customize Message",
+      "waitMs": 2000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Use Template')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Write the notification, or click Use Template (1) for a ready milestone message. The preview shows how it looks." }
+      ]
+    },
+    {
+      "name": "milestone-06-review",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 700 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 700 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 900 }
+      ],
+      "waitFor": "button:has-text('Activate Campaign')",
+      "waitMs": 2000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Activate Campaign')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Save as Draft')", "number": 2, "color": "charcoal" },
+        { "type": "caption", "text": "Review your campaign, then Activate Campaign (1) to start it, or Save as Draft (2) to finish later." }
+      ]
+    }
+  ]
+}
