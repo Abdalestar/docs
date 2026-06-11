@@ -95,6 +95,7 @@
       {
         "group": "Settings",
         "pages": [
+          "merchants/billing/plans",
           "merchants/settings/billing",
           "merchants/settings/locations",
           "merchants/settings/notifications",
