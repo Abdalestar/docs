@@ -87,6 +87,7 @@
         "group": "Staff",
         "pages": [
           "merchants/staff/overview",
+          "merchants/staff/inviting",
           "merchants/staff/roles-permissions",
           "merchants/staff/activity-logs"
         ]
