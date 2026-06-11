@@ -20,6 +20,36 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-11 — Upgrading Your Plan
+
+**Article:** `merchants/billing/upgrade.mdx`
+**Branch:** `claude/eloquent-fermat-bgbr1y`
+**PR:** https://github.com/Abdalestar/docs/pull/98
+**Status:** Done (real screenshots shipped)
+
+### What was written
+New how-to for the P1 gap-audit row "Upgrading Your Plan" (Billing was the most under-covered section in the 2026-06-10 audit). Focused on the upgrade path only; does not duplicate the existing `settings/billing.mdx` mechanics article (cross-linked instead).
+
+Covers: owner-only access (managers/staff with billing access see **Contact Owner**); the Plans tab; the Monthly/Annual toggle and price table; and an honest account of what confirming does. The key correction over the old billing article: an upgrade is **not** always a Stripe Checkout redirect. For an existing paid subscription it is an immediate prorated `subscriptions.update`; only a first-time subscriber is sent to Stripe Checkout; during a trial it ends the trial and bills now; a declined card fails cleanly.
+
+### Research sources
+- `app/(dashboard)/settings/billing/page.tsx` — Plans tab, billing toggle, Upgrade confirmation dialog copy, `isOwner`/Contact Owner, status badge
+- `app/api/billing/checkout/route.ts` — owner check (role='owner', 403 otherwise), routes to `changePlan`
+- `lib/stripe/helpers.ts` `changePlan` — no live sub → Checkout; upgrade → `subscriptions.update` `proration_behavior: always_invoice`, `error_if_incomplete`; trial → `trial_end: 'now'`; downgrade → scheduled at period end
+- `lib/stripe/config.ts` `PLAN_TIERS` — monthly 29/49/79/199, annual 24/39/65/165, per-plan limits
+- `lib/utils/permissions.ts` — `/settings` guard is `perms.settings === true`
+- Supabase (read-only): Najma Coffee org is `elite` / `active`, no stripe_subscription_id → Franchise is the only upgrade target
+
+### Screenshots
+SMOKE_OK. 3 real annotated PNGs via `flow-capture.mjs` (`.routine/flows/billing-upgrade.json`), captured from the live dashboard as the points account (Najma Coffee, Elite): Plans tab, annual pricing after toggle, and the "Upgrade to Franchise?" confirmation (cropped). The flow stops at the dialog and never clicks Proceed to Checkout, so no real subscription changed. `validate-images.mjs` exits 0 (1440px shots + cropped dialog, all real binary).
+
+### Notes
+- `/settings/billing?subscribe=true` lands directly on the Plans tab (Tabs defaultValue), which made the flow deterministic.
+- Radix AlertDialog uses `role="alertdialog"` (not `dialog`); `clipTo: "[role=alertdialog]"` is what crops the confirmation correctly.
+- Demo org shows a "Free Plan" status badge despite being on Elite, because it has no `stripe_subscription_id`; avoided documenting that quirk.
+
+---
+
 ## 2026-06-11 — Campaign Timing and Repeat Sends
 
 **Article:** `merchants/campaigns/timing.mdx`
