@@ -1,0 +1,43 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "campaigns",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "timing-campaigns-list",
+      "goto": "/campaigns",
+      "waitFor": "text=New Campaign",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "box", "target": "[role=tablist]", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Campaigns are grouped by status. Only campaigns on the Active tab are running and able to send. Paused and Draft campaigns send nothing." }
+      ]
+    },
+    {
+      "name": "timing-campaign-card",
+      "clipTo": "div.rounded-xl:has(h3:has-text(\"We Miss You\"))",
+      "clipPadding": 14,
+      "waitMs": 1500,
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(h3:has-text(\"We Miss You\")) :text(\"Active\")", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has(h3:has-text(\"We Miss You\")) button:has-text(\"Pause\")", "number": 2, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has(h3:has-text(\"We Miss You\")) span:has-text(\"Sent:\")", "number": 3, "color": "plum" },
+        { "type": "label", "target": "div.rounded-xl:has(h3:has-text(\"We Miss You\")) span:has-text(\"Sent:\")", "text": "Counts pushes actually delivered", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "timing-card-menu",
+      "actions": [
+        { "click": "div.rounded-xl:has(h3:has-text(\"We Miss You\")) button[aria-haspopup=\"menu\"]" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "[role=menuitem]:has-text('Delete')",
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('View Stats')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "[role=menuitem]:has-text('Delete')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "A card's menu opens its full stats or deletes it. Deleting a campaign removes it and its history for good." }
+      ]
+    }
+  ]
+}
