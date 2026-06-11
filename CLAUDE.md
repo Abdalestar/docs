@@ -20,6 +20,57 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-11 — Inviting a Team Member
+
+**Article:** `merchants/staff/inviting.mdx`
+**Branch:** `docs/staff-inviting`
+**PR:** https://github.com/Abdalestar/docs/pull/90
+**Status:** Done with real screenshots (smoke test passed, 3 annotated shots shipped)
+
+### What was written
+New P1 how-to under Staff & Roles for the full invite journey: sending the
+owner-only invite on `/staff`, the Pending→Active status, and the
+accept-invite experience. Distinct from `staff/overview.mdx` (which covers
+inviting at a glance) by going deep on the accept side and the field details.
+
+**Verified facts:**
+- Invite is owner-only. `api/staff/invite/route.ts` returns 403 for non-owners,
+  and the Invite Staff button only renders when `currentStaff.role === 'owner'`.
+- Dialog title is "Invite Team Member"; submit button is "Send Invitation"
+  (not "Send Invite", which the overview article says).
+- Role defaults to Staff. Location assignment only applies to Staff; managers
+  are forced to All Locations (checkbox disabled when role=manager).
+- Accept page (`app/(auth)/accept-invite/page.tsx`): password must be 8+ chars
+  with uppercase, lowercase, and a number (stricter than the change-password
+  8-char-only rule in security.mdx). Expired link shows "Invalid or expired
+  invitation link."
+- Existing Qtap accounts: API falls back from invite link to a magic link and
+  links the new org to the existing account.
+
+### Screenshots
+Captured with `.routine/flow-capture.mjs` (new flow `.routine/flows/inviting.json`),
+account `demo@najma.coffee`. 3 shots: staff page (Invite Staff badged), filled
+invite dialog (cropped, email called out), staff table (Status column called
+out). `validate-images.mjs` passed 3/3.
+
+### Insights for future runs
+- The smoke test and screenshot pipeline both work as-is in this cloud sandbox.
+  No Chrome-MCP / computer-use / dom-to-image gymnastics needed anymore. Just
+  `npm install sharp playwright`, `npx playwright install chromium`, then run
+  the `.routine/*.mjs` scripts. This supersedes the long list of failed
+  approaches in the 2026-05-07 entry.
+- PR creation: the `mcp__GitHub-MCP__*` server returns 403 ("Resource not
+  accessible by integration"). Use the lowercase `mcp__github__create_pull_request`
+  server instead — that one works.
+- The points demo account's staff table has no Pending member (all Active), so
+  you can't capture a real Pending badge. Annotate the Status column header and
+  explain both states instead of faking one.
+- Don't navigate the logged-in merchant to `/accept-invite`; with a live session
+  it renders the password form against the owner's own account. Describe the
+  accept side in prose; the merchant isn't the audience for that screen anyway.
+
+---
+
 ## 2026-05-07 — Analytics Overview Screenshots (Attempt 2)
 
 **Article:** `merchants/analytics/overview.mdx`
