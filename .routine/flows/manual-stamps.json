@@ -1,0 +1,99 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "stamp-cards",
+  "account": "stamp",
+  "defaultWaitMs": 2500,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "stamp-ops-award",
+      "goto": "/stamp-operations",
+      "waitFor": "[role=tab]:has-text('Award Stamps')",
+      "waitMs": 4500,
+      "fullPage": true,
+      "annotate": [
+        { "type": "box", "target": "input[placeholder='Search members...']", "number": 1, "color": "plum" },
+        { "type": "box", "target": ":nth-match([role=combobox], 1)", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Stamp Operations: find the member (1), then choose the stamp card (2). Both tabs sit at the top." }
+      ]
+    },
+    {
+      "name": "stamp-ops-search",
+      "actions": [
+        { "fill": ["input[placeholder='Search members...']", "ah"] },
+        { "wait": 1300 }
+      ],
+      "clipTo": "div.rounded-xl:has-text('Select Member')",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "label", "target": "input[placeholder='Search members...']", "text": "Search by name, email, phone, or Qtap ID", "color": "plum" },
+        { "type": "redact", "target": ":nth-match(.divide-y button p.text-muted-foreground, 1)" },
+        { "type": "redact", "target": ":nth-match(.divide-y button p.text-muted-foreground, 2)" },
+        { "type": "redact", "target": ":nth-match(.divide-y button p.text-muted-foreground, 3)" },
+        { "type": "redact", "target": ":nth-match(.divide-y button p.text-muted-foreground, 4)" },
+        { "type": "redact", "target": ":nth-match(.divide-y button p.text-muted-foreground, 5)" },
+        { "type": "redact", "target": ":nth-match(.divide-y button p.text-muted-foreground, 6)" }
+      ]
+    },
+    {
+      "name": "stamp-ops-issue",
+      "actions": [
+        { "click": ":nth-match(.divide-y button, 1)" },
+        { "wait": 900 },
+        { "select": [":nth-match([role=combobox], 1)", "Glow Card"] },
+        { "wait": 1400 },
+        { "click": ":nth-match([role=combobox], 2)" },
+        { "wait": 600 },
+        { "click": ":nth-match([role=option], 1)" },
+        { "wait": 900 }
+      ],
+      "waitFor": "#stamps-qty",
+      "clipTo": "div.rounded-xl:has-text('Stamp Card')",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "#stamps-qty", "number": 1, "color": "plum" }
+      ]
+    },
+    {
+      "name": "stamp-ops-confirm",
+      "actions": [
+        { "click": "button:has-text('Issue Stamp')" },
+        { "wait": 900 }
+      ],
+      "waitFor": "text=Confirm Stamp Issue",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Confirm')", "color": "plum" }
+      ]
+    },
+    {
+      "name": "stamp-ops-history",
+      "actions": [
+        { "press": "Escape" },
+        { "wait": 700 },
+        { "click": "[role=tab]:has-text('Recent Activity')" },
+        { "wait": 2600 }
+      ],
+      "waitFor": "text=Recent Stamp Transactions",
+      "clipTo": "div.rounded-xl:has-text('Recent Stamp Transactions')",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "redact", "target": ":nth-match(tbody tr td:nth-child(1) span.font-medium, 1)" },
+        { "type": "redact", "target": ":nth-match(tbody tr td:nth-child(1) span.font-medium, 2)" },
+        { "type": "redact", "target": ":nth-match(tbody tr td:nth-child(1) span.font-medium, 3)" },
+        { "type": "redact", "target": ":nth-match(tbody tr td:nth-child(1) span.font-medium, 4)" },
+        { "type": "redact", "target": ":nth-match(tbody tr td:nth-child(1) span.font-medium, 5)" },
+        { "type": "redact", "target": ":nth-match(tbody tr td:nth-child(1) span.font-medium, 6)" },
+        { "type": "redact", "target": ":nth-match(tbody tr td:nth-child(1) span.font-medium, 7)" },
+        { "type": "redact", "target": ":nth-match(tbody tr td:nth-child(1) span.font-medium, 8)" },
+        { "type": "redact", "target": ":nth-match(tbody tr td:nth-child(1) span.font-medium, 9)" },
+        { "type": "redact", "target": ":nth-match(tbody tr td:nth-child(1) span.font-medium, 10)" },
+        { "type": "redact", "target": ":nth-match(tbody tr td:nth-child(1) span.font-medium, 11)" },
+        { "type": "redact", "target": ":nth-match(tbody tr td:nth-child(1) span.font-medium, 12)" },
+        { "type": "redact", "target": ":nth-match(tbody tr td:nth-child(1) span.font-medium, 13)" },
+        { "type": "redact", "target": ":nth-match(tbody tr td:nth-child(1) span.font-medium, 14)" }
+      ]
+    }
+  ]
+}

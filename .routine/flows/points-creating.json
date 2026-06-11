@@ -1,0 +1,73 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/points",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "creating-01-list",
+      "goto": "/points",
+      "waitFor": "button:has-text('Create Program')",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Create Program')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Open Points in the sidebar, then click Create Program to start a new program." }
+      ]
+    },
+    {
+      "name": "creating-02-details",
+      "goto": "/points/new",
+      "actions": [
+        { "fill": ["#name", "Coffee Rewards"] },
+        { "fill": ["#points_per_currency", "1"] },
+        { "fill": ["#description", "Earn 1 point for every QAR you spend."] },
+        { "wait": 700 }
+      ],
+      "waitFor": "text=Basic Information",
+      "waitMs": 1500,
+      "annotate": [
+        { "type": "box", "target": "#name", "color": "plum" },
+        { "type": "box", "target": "#points_per_currency", "color": "plum" },
+        { "type": "label", "target": "#name", "text": "The name members see on their card", "color": "plum" },
+        { "type": "caption", "text": "Fill in the program details: a name, how many points are earned per unit of currency, and a short description." }
+      ]
+    },
+    {
+      "name": "creating-03-reward",
+      "actions": [
+        { "click": "button:has-text('Add Reward')" },
+        { "fill": ["#pointsRewardName", "Free Coffee"] },
+        { "fill": ["#pointsRequired", "100"] },
+        { "wait": 700 }
+      ],
+      "waitFor": "text=Add a points reward",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "#pointsRewardName", "color": "plum" },
+        { "type": "box", "target": "#pointsRequired", "color": "plum" },
+        { "type": "label", "target": "#pointsRequired", "text": "Points needed to unlock this reward", "color": "plum" }
+      ]
+    },
+    {
+      "name": "creating-04-publish",
+      "goto": "/points/new",
+      "actions": [
+        { "click": "div.cursor-pointer:has-text('Unnamed reward') button" },
+        { "wait": 500 },
+        { "fill": ["#name", "Coffee Rewards"] },
+        { "fill": ["#points_per_currency", "1"] },
+        { "fill": ["#description", "Earn 1 point for every QAR you spend."] },
+        { "hover": "button:has-text('Save as Draft')" },
+        { "wait": 700 }
+      ],
+      "waitFor": "button:has-text('Save as Draft')",
+      "waitMs": 800,
+      "annotate": [
+        { "type": "label", "at": { "x": 620, "y": 792 }, "text": "1  Save as Draft keeps it private    2  Activate makes it live for members", "color": "charcoal" },
+        { "type": "box", "target": "button:has-text('Save as Draft')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Activate')", "number": 2, "color": "plum" }
+      ]
+    }
+  ]
+}

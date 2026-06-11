@@ -1,0 +1,39 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "01-qr-actions",
+      "goto": "/qr-codes/generate",
+      "waitFor": "text=Generate QR Code",
+      "actions": [
+        { "click": "label:has-text('Check-In')" },
+        { "wait": 1200 }
+      ],
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "box", "target": "label:has-text('Add Stamp')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label:has-text('Award Points')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "label:has-text('Check-In')", "number": 3, "color": "plum" },
+        { "type": "caption", "text": "Pick what a scan does. Each code runs one action: add a stamp (1), award points (2), or record a check-in (3)." }
+      ]
+    },
+    {
+      "name": "03-award-points",
+      "actions": [
+        { "click": "label:has-text('Award Points')" },
+        { "wait": 1400 }
+      ],
+      "waitFor": "text=Points Value",
+      "waitMs": 1500,
+      "annotate": [
+        { "type": "box", "target": "[role=combobox]:has-text('Select a points program')", "color": "plum" },
+        { "type": "box", "target": "#points_value", "color": "plum" },
+        { "type": "label", "target": "#points_value", "text": "How many points each scan adds", "color": "plum" },
+        { "type": "caption", "text": "Award Points: choose the program, then set the points each scan gives." }
+      ]
+    }
+  ]
+}

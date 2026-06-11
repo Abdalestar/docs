@@ -1,0 +1,81 @@
+{
+  "section": "merchants/first-loyalty-program",
+  "account": "stamp",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "01-create-card",
+      "goto": "/cards",
+      "waitFor": "button:has-text(\"Create Card\")",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Create Card\")", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Open the Cards page from the sidebar, then start a new card from the top right." }
+      ]
+    },
+    {
+      "name": "02-card-design",
+      "goto": "/cards/new",
+      "waitMs": 4000,
+      "actions": [
+        { "fill": ["#name", "Coffee Lovers Card"] },
+        { "fill": ["#description", "Buy 8 coffees, get the 9th free"] },
+        { "wait": 700 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "#name", "color": "plum" },
+        { "type": "box", "target": "#stamps", "color": "plum" },
+        { "type": "caption", "text": "Step 1, Card Design: name the card and set the stamp goal." }
+      ]
+    },
+    {
+      "name": "03-add-reward",
+      "goto": "/cards/new",
+      "waitMs": 4000,
+      "actions": [
+        { "fill": ["#name", "Coffee Lovers Card"] },
+        { "wait": 400 },
+        { "click": "button:has-text(\"Rewards\")" },
+        { "wait": 1400 },
+        { "click": "button:has-text(\"Add reward\")" },
+        { "wait": 1500 },
+        { "fill": ["[role=dialog] input[placeholder=\"Free coffee\"]", "Free coffee"] },
+        { "wait": 500 }
+      ],
+      "clipTo": "[role=dialog]",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "[role=dialog] input[placeholder=\"Free coffee\"]", "color": "plum" },
+        { "type": "label", "target": "[role=dialog] input[placeholder=\"Free coffee\"]", "text": "Name the reward customers earn", "color": "plum" }
+      ]
+    },
+    {
+      "name": "04-locations",
+      "goto": "/cards/new",
+      "waitMs": 4000,
+      "actions": [
+        { "click": "button:has-text(\"Locations\")" },
+        { "wait": 1600 }
+      ],
+      "annotate": [
+        { "type": "caption", "text": "Step 3, Locations: choose which of your locations the card is valid at." }
+      ]
+    },
+    {
+      "name": "05-review",
+      "goto": "/cards/new",
+      "waitMs": 4000,
+      "actions": [
+        { "click": "button:has-text(\"Review\")" },
+        { "wait": 1400 },
+        { "hover": "button:has-text(\"Save as Draft\")" },
+        { "wait": 500 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Publish Card\")", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text(\"Save as Draft\")", "number": 2, "color": "charcoal" },
+        { "type": "caption", "text": "Step 4, Review: publish the card to make it live, or save it as a draft to finish later." }
+      ]
+    }
+  ]
+}
