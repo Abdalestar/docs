@@ -1,0 +1,45 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "steps": [
+    {
+      "name": "qr-troubleshoot-status",
+      "goto": "/qr-codes",
+      "waitFor": "th:has-text('Status')",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "th:has-text('Scans')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "th:has-text('Status')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "On the QR Codes page, the Scans (1) and Status (2) columns tell you why a code stopped working: Active, Inactive, Expired, or Max." }
+      ]
+    },
+    {
+      "name": "qr-troubleshoot-menu",
+      "actions": [
+        { "click": ":nth-match(tbody tr button[aria-haspopup=\"menu\"], 1)" },
+        { "wait": 1100 }
+      ],
+      "waitFor": "[role=menuitem]:has-text('Deactivate')",
+      "clipTo": "[role=menu]",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('Deactivate')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "[role=menuitem]:has-text('Delete')", "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "qr-troubleshoot-limits",
+      "goto": "/qr-codes/ca5e0006-0000-4000-a000-0000000f424b",
+      "waitFor": "dt:has-text('Max Scans')",
+      "waitMs": 4500,
+      "clipTo": "dl",
+      "clipPadding": 18,
+      "annotate": [
+        { "type": "box", "target": "dt:has-text('Max Scans')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "dt:has-text('Expires')", "number": 2, "color": "plum" }
+      ]
+    }
+  ]
+}
