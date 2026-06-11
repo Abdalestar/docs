@@ -45,6 +45,7 @@
         "pages": [
           "merchants/qr-codes/overview",
           "merchants/qr-codes/generating",
+          "merchants/qr-codes/actions",
           "merchants/qr-codes/batch",
           "merchants/qr-codes/troubleshooting",
           "merchants/qr-codes/qr-code-detail",

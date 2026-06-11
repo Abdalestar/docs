@@ -1,0 +1,31 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/stamp-cards",
+  "account": "stamp",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "overview-01-cards-list",
+      "goto": "/cards",
+      "waitFor": "text=Stamp Cards",
+      "waitMs": 4000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Create Card')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Active (3)')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Your stamp cards, each with its status. Add a card (1) or filter by Active, Draft, or Inactive (2)." }
+      ]
+    },
+    {
+      "name": "overview-02-card-menu",
+      "actions": [
+        { "click": ":nth-match(button[aria-haspopup=\"menu\"], 4)" },
+        { "wait": 900 }
+      ],
+      "clipTo": "[role=menu]",
+      "clipPadding": 18,
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('Duplicate')", "color": "plum" }
+      ]
+    }
+  ]
+}
