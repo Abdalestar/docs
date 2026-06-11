@@ -91,6 +91,7 @@
         "group": "Settings",
         "pages": [
           "merchants/settings/billing",
+          "merchants/billing/upgrade",
           "merchants/settings/locations",
           "merchants/settings/notifications",
           "merchants/settings/merchant-page",

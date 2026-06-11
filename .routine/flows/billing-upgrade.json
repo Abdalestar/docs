@@ -1,0 +1,47 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/billing",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 1300 },
+  "steps": [
+    {
+      "name": "01-plans-tab",
+      "goto": "/settings/billing?subscribe=true",
+      "waitFor": "text=Choose Your Plan",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Annual')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Upgrade')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "On Settings then Billing, open the Plans tab. Pick monthly or annual billing (1), then Upgrade to a higher plan (2)." }
+      ]
+    },
+    {
+      "name": "02-annual-pricing",
+      "actions": [
+        { "click": "button:has-text('Annual')" },
+        { "wait": 1200 }
+      ],
+      "waitMs": 2000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Annual')", "color": "plum" },
+        { "type": "label", "target": "button:has-text('Annual')", "text": "Annual billing lowers the monthly rate on every plan", "color": "plum" },
+        { "type": "caption", "text": "Switching to Annual updates the price shown on each plan card. Annual is billed once for twelve months." }
+      ]
+    },
+    {
+      "name": "03-upgrade-dialog",
+      "actions": [
+        { "click": "button:has-text('Upgrade')" },
+        { "wait": 1400 }
+      ],
+      "waitFor": "text=Proceed to Checkout",
+      "clipTo": "[role=alertdialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Proceed to Checkout')", "color": "plum" },
+        { "type": "label", "target": "p:has-text('prorated difference')", "text": "Existing plans are charged the prorated difference and unlock right away", "color": "plum" }
+      ]
+    }
+  ]
+}
