@@ -1,0 +1,21 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/members",
+  "account": "stamp",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "redemptions-06-history",
+      "goto": "/redemptions",
+      "actions": [
+        { "click": "[role=tab]:has-text('History')" },
+        { "wait": 2800 }
+      ],
+      "waitFor": "text=Redemption History",
+      "annotate": [
+        { "type": "box", "target": "[role=tab]:has-text('History')", "color": "plum" },
+        { "type": "caption", "text": "The History tab lists recent redemptions: the member, the reward, the branch, when it happened, and which staff member processed it." }
+      ]
+    }
+  ]
+}

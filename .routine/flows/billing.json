@@ -1,0 +1,51 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "settings",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "billing-overview",
+      "goto": "/settings/billing",
+      "waitFor": "text=Current Plan",
+      "waitMs": 6000,
+      "actions": [
+        { "click": "[role=tab]:has-text('Overview')" },
+        { "wait": 1500 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "[role=tablist]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "text=Current Plan", "number": 2, "color": "plum" },
+        { "type": "label", "target": "text=Campaigns", "text": "A bar turns red when you are over a limit", "color": "charcoal" },
+        { "type": "caption", "text": "The Overview tab shows your current plan, its status, and how much of each plan limit you have used this billing period." }
+      ]
+    },
+    {
+      "name": "billing-plans",
+      "actions": [
+        { "click": "[role=tab]:has-text('Plans')" },
+        { "wait": 2500 }
+      ],
+      "waitFor": "text=Choose Your Plan",
+      "waitMs": 1500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Annual (Save 17%)')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Current Plan')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "The Plans tab lists all four plans. Set the Monthly or Annual interval (1) before you pick a plan. Your current plan is outlined and marked (2)." }
+      ]
+    },
+    {
+      "name": "billing-addons",
+      "actions": [
+        { "click": "[role=tab]:has-text('Add-ons')" },
+        { "wait": 2500 }
+      ],
+      "waitFor": "text=Pay-Per-Feature Store",
+      "waitMs": 1500,
+      "annotate": [
+        { "type": "box", "target": "h4:has-text('NFC Tag')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "The Add-ons tab is a pay-per-feature store: buy extra locations, loyalty cards, NFC tags, or QR batches without changing your plan." }
+      ]
+    }
+  ]
+}

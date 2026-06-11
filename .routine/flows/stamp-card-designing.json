@@ -1,0 +1,57 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "stamp-cards",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 1500 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "01-card-design",
+      "goto": "/cards/new",
+      "waitFor": "h3:has-text('Front card')",
+      "waitMs": 4000,
+      "actions": [
+        { "fill": ["#name", "Coffee Lovers Card"] },
+        { "fill": ["#description", "Buy 9 coffees and your 10th is on us."] },
+        { "wait": 1200 }
+      ],
+      "clip": { "x": 160, "y": 140, "width": 1280, "height": 660 },
+      "annotate": [
+        { "type": "box", "target": "#name", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#stamps", "number": 2, "color": "plum" },
+        { "type": "label", "at": { "x": 1012, "y": 176 }, "text": "Live preview updates as you type", "color": "plum" }
+      ]
+    },
+    {
+      "name": "02-stamp-icon",
+      "actions": [
+        { "click": "button:has-text('Stamp icon (optional)')" },
+        { "wait": 1000 }
+      ],
+      "waitFor": "button[title='Coffee']",
+      "clip": { "x": 250, "y": 585, "width": 560, "height": 262 },
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Stamp icon (optional)')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button[title='Coffee']", "color": "plum" },
+        { "type": "label", "target": "button[title='Coffee']", "text": "Pick a built-in icon, or upload your own PNG or SVG", "color": "plum" }
+      ]
+    },
+    {
+      "name": "03-advanced-settings",
+      "goto": "/cards/new",
+      "waitFor": "h3:has-text('Front card')",
+      "waitMs": 4000,
+      "actions": [
+        { "click": "text=Advanced Settings" },
+        { "wait": 1000 }
+      ],
+      "clip": { "x": 270, "y": 712, "width": 772, "height": 778 },
+      "annotate": [
+        { "type": "box", "target": "text=Stamping Rules", "number": 1, "color": "plum" },
+        { "type": "box", "target": "text=Expiration", "number": 2, "color": "plum" },
+        { "type": "box", "target": "text=Bonus Stamps", "number": 3, "color": "plum" },
+        { "type": "box", "target": "text=Allow Partial Redemption", "number": 4, "color": "plum" }
+      ]
+    }
+  ]
+}
