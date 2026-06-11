@@ -1,0 +1,60 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/staff",
+  "account": "points",
+  "defaultWaitMs": 2800,
+  "steps": [
+    {
+      "name": "roles-permissions-01-staff-list",
+      "goto": "/staff",
+      "waitFor": "button:has-text('Invite Staff')",
+      "waitMs": 4000,
+      "annotate": [
+        { "type": "box", "target": "table tbody tr:first-child button[aria-haspopup=\"menu\"]", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Every teammate carries a role: Owner, Manager, or Staff. Open a teammate's menu (1) to change what they can do." }
+      ]
+    },
+    {
+      "name": "roles-permissions-02-row-menu",
+      "actions": [
+        { "click": "table tbody tr:first-child button[aria-haspopup=\"menu\"]" },
+        { "wait": 900 }
+      ],
+      "waitFor": "[role=menuitem]:has-text('Edit Permissions')",
+      "clipTo": "[role=menu]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('Edit Permissions')", "number": 1, "color": "plum" },
+        { "type": "label", "target": "[role=menuitem]:has-text('Edit Permissions')", "text": "Edit their permissions, or remove their access", "color": "plum" }
+      ]
+    },
+    {
+      "name": "roles-permissions-03-permissions",
+      "actions": [
+        { "click": "[role=menuitem]:has-text('Edit Permissions')" },
+        { "wait": 1800 }
+      ],
+      "waitFor": "text=Use Custom Permissions",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "text=Use Custom Permissions", "number": 1, "color": "plum" },
+        { "type": "label", "target": "text=Use Custom Permissions", "text": "Turn this on to override the role defaults", "color": "plum" }
+      ]
+    },
+    {
+      "name": "roles-permissions-04-locations",
+      "actions": [
+        { "click": "[role=tab]:has-text('Locations')" },
+        { "wait": 1400 }
+      ],
+      "waitFor": "text=Access to All Locations",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "text=Access to All Locations", "number": 1, "color": "plum" },
+        { "type": "label", "target": "text=Access to All Locations", "text": "Turn this off to limit a teammate to certain locations", "color": "plum" }
+      ]
+    }
+  ]
+}

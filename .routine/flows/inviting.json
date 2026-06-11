@@ -1,0 +1,47 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/staff",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "invite-01-staff-page",
+      "goto": "/staff",
+      "waitFor": "button:has-text('Invite Staff')",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Invite Staff')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Only the account owner sees Invite Staff. Your current team and their status are listed below." }
+      ]
+    },
+    {
+      "name": "invite-02-invite-form",
+      "actions": [
+        { "click": "button:has-text('Invite Staff')" },
+        { "fill": ["input[name=first_name]", "Sara"] },
+        { "fill": ["input[name=last_name]", "Hassan"] },
+        { "fill": ["input[name=email]", "sara.hassan@example.com"] },
+        { "wait": 700 }
+      ],
+      "waitFor": "text=Invite Team Member",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "input[name=email]", "color": "plum" },
+        { "type": "label", "target": "input[name=email]", "text": "They get an email to set up their account", "color": "plum" }
+      ]
+    },
+    {
+      "name": "invite-03-status",
+      "actions": [
+        { "press": "Escape" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "text=Team Member",
+      "annotate": [
+        { "type": "box", "target": "th:has-text('Status')", "color": "plum" },
+        { "type": "caption", "text": "A teammate shows as Pending until they accept the invite, then switches to Active." }
+      ]
+    }
+  ]
+}

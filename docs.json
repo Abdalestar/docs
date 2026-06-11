@@ -46,6 +46,8 @@
           "merchants/qr-codes/overview",
           "merchants/qr-codes/generating",
           "merchants/qr-codes/batch",
+          "merchants/qr-codes/troubleshooting",
+          "merchants/qr-codes/qr-code-detail",
           "merchants/nfc-tags"
         ]
       },
@@ -66,10 +68,12 @@
         "group": "Analytics",
         "pages": [
           "merchants/analytics/overview",
+          "merchants/analytics/reports-hub",
           "merchants/analytics/location-comparison",
           "merchants/analytics/points-activity",
           "merchants/analytics/revenue-impact",
-          "merchants/analytics/staff-performance"
+          "merchants/analytics/staff-performance",
+          "merchants/analytics/wrapped"
         ]
       },
       {
@@ -77,13 +81,15 @@
         "pages": [
           "merchants/members/overview",
           "merchants/members/profiles",
-          "merchants/members/redemptions"
+          "merchants/members/redemptions",
+          "merchants/redemptions"
         ]
       },
       {
         "group": "Staff",
         "pages": [
           "merchants/staff/overview",
+          "merchants/staff/inviting",
           "merchants/staff/roles-permissions",
           "merchants/staff/activity-logs"
         ]
@@ -91,6 +97,7 @@
       {
         "group": "Settings",
         "pages": [
+          "merchants/billing/plans",
           "merchants/settings/billing",
           "merchants/settings/locations",
           "merchants/settings/notifications",

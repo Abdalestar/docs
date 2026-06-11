@@ -1,0 +1,59 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "analytics",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "reports-hub",
+      "goto": "/analytics/reports",
+      "waitFor": "text=Detailed Reports",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "a:has-text('Points Activity Report')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "a:has-text('Revenue Impact Report')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "a:has-text('Staff Performance Report')", "number": 3, "color": "plum" },
+        { "type": "box", "target": "a:has-text('Location Comparison')", "number": 4, "color": "plum" },
+        { "type": "caption", "text": "The Detailed Reports hub at /analytics/reports. Each card opens one report: (1) Points Activity, (2) Revenue Impact, (3) Staff Performance, (4) Location Comparison." }
+      ]
+    },
+    {
+      "name": "reports-points-activity",
+      "goto": "/analytics/reports/points-activity",
+      "waitFor": "text=Points Activity Report",
+      "waitMs": 5000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('30 Days')", "color": "plum" },
+        { "type": "caption", "text": "Points Activity Report: every points transaction, filtered by branch and time period." }
+      ]
+    },
+    {
+      "name": "reports-revenue-impact",
+      "goto": "/analytics/reports/revenue-impact",
+      "waitFor": "text=Revenue Impact Report",
+      "waitMs": 5000,
+      "annotate": [
+        { "type": "caption", "text": "Revenue Impact Report: estimated revenue alongside loyalty activity over time." }
+      ]
+    },
+    {
+      "name": "reports-staff-performance",
+      "goto": "/analytics/reports/staff-performance",
+      "waitFor": "text=Staff Performance Report",
+      "waitMs": 5000,
+      "annotate": [
+        { "type": "caption", "text": "Staff Performance Report: stamps, points, rewards, and members served per staff member." }
+      ]
+    },
+    {
+      "name": "reports-location-comparison",
+      "goto": "/analytics/reports/location-comparison",
+      "waitFor": "text=Location Comparison",
+      "waitMs": 5000,
+      "annotate": [
+        { "type": "caption", "text": "Location Comparison: stamps, points, redemptions, members, and estimated revenue side by side per location." }
+      ]
+    }
+  ]
+}

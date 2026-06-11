@@ -1,0 +1,62 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/billing",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "steps": [
+    {
+      "name": "01-pricing-cards",
+      "goto": "/pricing",
+      "waitFor": "text=Simple, transparent pricing",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "text=Most Popular", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Annual')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "The four Qtap plans. Elite is flagged Most Popular (1); switch to annual billing to save about 17% (2)." }
+      ]
+    },
+    {
+      "name": "02-pricing-comparison",
+      "goto": "/pricing",
+      "waitFor": "text=Detailed Feature Comparison",
+      "waitMs": 3500,
+      "fullPage": true
+    },
+    {
+      "name": "03-billing-overview",
+      "goto": "/settings/billing",
+      "waitFor": "text=Current Plan",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "text=Current Plan", "color": "plum" },
+        { "type": "label", "target": "text=QR Codes (this month)", "text": "Each meter shows how much of your plan you have used this month", "color": "plum" },
+        { "type": "caption", "text": "The Overview tab in Settings > Billing shows your current plan and live usage against each limit." }
+      ]
+    },
+    {
+      "name": "04-billing-plans",
+      "actions": [
+        { "click": "[role=tab]:has-text('Plans')" },
+        { "wait": 2000 }
+      ],
+      "waitFor": "text=Choose Your Plan",
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Annual (Save 17%)')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "The Plans tab. Owners can upgrade or downgrade here, and toggle annual billing (1) to compare prices." }
+      ]
+    },
+    {
+      "name": "05-billing-addons",
+      "actions": [
+        { "click": "[role=tab]:has-text('Add-ons')" },
+        { "wait": 2000 }
+      ],
+      "waitFor": "text=Pay-Per-Feature Store",
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "caption", "text": "The Add-ons tab. Buy extra capacity (a location, a card, NFC tags, AI insights) without changing your plan." }
+      ]
+    }
+  ]
+}

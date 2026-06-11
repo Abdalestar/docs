@@ -1,0 +1,64 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/analytics",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "viewport": { "width": 1440, "height": 1280 },
+  "steps": [
+    {
+      "name": "wrapped-overview",
+      "goto": "/analytics/wrapped",
+      "waitFor": "text=Your Numbers",
+      "waitMs": 4000,
+      "fullPage": false,
+      "annotate": [
+        { "type": "box", "target": "[role=tablist]", "color": "plum" },
+        { "type": "label", "target": "[role=tablist]", "text": "Switch between Weekly, Monthly, and Yearly", "color": "plum" },
+        { "type": "redact", "target": "p:has-text('most active customer')" },
+        { "type": "redact", "target": "p:has-text('visited')" },
+        { "type": "caption", "text": "Your Wrapped opens on last week's summary: Your Numbers, Highlights, and a few standout cards." }
+      ]
+    },
+    {
+      "name": "wrapped-numbers",
+      "waitMs": 1500,
+      "clipTo": "xpath=//h3[contains(.,'Your Numbers')]/ancestor::div[contains(@class,'overflow-hidden')][1]",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "label", "target": "xpath=//h3[contains(.,'Your Numbers')]", "text": "Six headline metrics for the period", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "wrapped-monthly",
+      "actions": [
+        { "click": "[role=tab]:has-text('Monthly')" },
+        { "wait": 3500 }
+      ],
+      "waitMs": 2000,
+      "fullPage": false,
+      "annotate": [
+        { "type": "box", "target": "h2", "color": "plum" },
+        { "type": "label", "target": "h2", "text": "Last calendar month", "color": "plum" },
+        { "type": "redact", "target": "p:has-text('most active customer')" },
+        { "type": "redact", "target": "p:has-text('visited')" },
+        { "type": "caption", "text": "The Monthly tab rolls up the previous calendar month." }
+      ]
+    },
+    {
+      "name": "wrapped-yearly",
+      "actions": [
+        { "click": "[role=tab]:has-text('Yearly')" },
+        { "wait": 3500 }
+      ],
+      "waitMs": 2000,
+      "fullPage": false,
+      "annotate": [
+        { "type": "box", "target": "h2", "color": "plum" },
+        { "type": "label", "target": "h2", "text": "Previous calendar year", "color": "plum" },
+        { "type": "redact", "target": "p:has-text('most active customer')" },
+        { "type": "redact", "target": "p:has-text('visited')" },
+        { "type": "caption", "text": "The Yearly tab covers the full previous year, ready to share." }
+      ]
+    }
+  ]
+}
