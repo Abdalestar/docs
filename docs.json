@@ -52,6 +52,7 @@
         "group": "Campaigns",
         "pages": [
           "merchants/campaigns/overview",
+          "merchants/campaigns/wizard",
           "merchants/campaigns/stats",
           "merchants/campaigns/birthday",
           "merchants/campaigns/winback",
