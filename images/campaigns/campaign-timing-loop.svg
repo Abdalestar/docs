@@ -1,0 +1,64 @@
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+  <rect x="0" y="0" width="900" height="560" fill="#F8F5F2"/>
+  <text x="40" y="48" font-size="24" font-weight="700" fill="#423F4C">How Qtap decides who gets a campaign</text>
+  <text x="40" y="74" font-size="15" fill="#6B6770">The check runs on a fixed schedule. A member is sent a campaign only after every box below says yes.</text>
+
+  <!-- Step 1: clock -->
+  <rect x="40" y="110" width="250" height="78" rx="14" fill="#8E4A63"/>
+  <text x="165" y="146" font-size="17" font-weight="700" fill="#FFFFFF" text-anchor="middle">Every 15 minutes</text>
+  <text x="165" y="170" font-size="13" fill="#F0D793" text-anchor="middle">Qtap looks at all your campaigns</text>
+
+  <!-- arrow down -->
+  <line x1="165" y1="188" x2="165" y2="226" stroke="#423F4C" stroke-width="2.5"/>
+  <polygon points="165,234 159,222 171,222" fill="#423F4C"/>
+
+  <!-- Step 2: active? -->
+  <rect x="40" y="234" width="250" height="86" rx="14" fill="#FFFFFF" stroke="#E5D9DE" stroke-width="1.5"/>
+  <text x="165" y="266" font-size="16" font-weight="700" fill="#423F4C" text-anchor="middle">Is the campaign Active?</text>
+  <text x="165" y="290" font-size="13" fill="#6B6770" text-anchor="middle">Paused and Draft campaigns</text>
+  <text x="165" y="307" font-size="13" fill="#6B6770" text-anchor="middle">are skipped entirely.</text>
+
+  <line x1="165" y1="320" x2="165" y2="358" stroke="#423F4C" stroke-width="2.5"/>
+  <polygon points="165,366 159,354 171,354" fill="#423F4C"/>
+
+  <!-- Step 3: dates -->
+  <rect x="40" y="366" width="250" height="86" rx="14" fill="#FFFFFF" stroke="#E5D9DE" stroke-width="1.5"/>
+  <text x="165" y="398" font-size="16" font-weight="700" fill="#423F4C" text-anchor="middle">Within its start and end?</text>
+  <text x="165" y="422" font-size="13" fill="#6B6770" text-anchor="middle">A campaign that hasn't started,</text>
+  <text x="165" y="439" font-size="13" fill="#6B6770" text-anchor="middle">or has ended, sends nothing.</text>
+
+  <!-- arrow right to member column -->
+  <line x1="290" y1="409" x2="360" y2="409" stroke="#423F4C" stroke-width="2.5"/>
+  <polygon points="368,409 356,403 356,415" fill="#423F4C"/>
+
+  <!-- Right column: per member -->
+  <text x="610" y="100" font-size="15" font-weight="700" fill="#423F4C" text-anchor="middle">Then, for each of your members</text>
+
+  <!-- Step 4: trigger -->
+  <rect x="450" y="120" width="320" height="86" rx="14" fill="#FFFFFF" stroke="#E5D9DE" stroke-width="1.5"/>
+  <text x="610" y="152" font-size="16" font-weight="700" fill="#423F4C" text-anchor="middle">Do they match the trigger?</text>
+  <text x="610" y="176" font-size="13" fill="#6B6770" text-anchor="middle">Birthday near, inactive long enough, hit</text>
+  <text x="610" y="193" font-size="13" fill="#6B6770" text-anchor="middle">the milestone, inside the time window.</text>
+
+  <line x1="610" y1="206" x2="610" y2="244" stroke="#423F4C" stroke-width="2.5"/>
+  <polygon points="610,252 604,240 616,240" fill="#423F4C"/>
+
+  <!-- Step 5: already received -->
+  <rect x="450" y="252" width="320" height="100" rx="14" fill="#FFFFFF" stroke="#E5D9DE" stroke-width="1.5"/>
+  <text x="610" y="284" font-size="16" font-weight="700" fill="#423F4C" text-anchor="middle">Have they had it already?</text>
+  <text x="610" y="308" font-size="13" fill="#6B6770" text-anchor="middle">Each member gets a campaign once.</text>
+  <text x="610" y="325" font-size="13" fill="#6B6770" text-anchor="middle">Birthday campaigns are the exception:</text>
+  <text x="610" y="342" font-size="13" fill="#6B6770" text-anchor="middle">they come round again after a year.</text>
+
+  <line x1="610" y1="352" x2="610" y2="390" stroke="#423F4C" stroke-width="2.5"/>
+  <polygon points="610,398 604,386 616,386" fill="#423F4C"/>
+
+  <!-- Step 6: send -->
+  <rect x="450" y="398" width="320" height="86" rx="14" fill="#F0D793"/>
+  <text x="610" y="432" font-size="17" font-weight="700" fill="#423F4C" text-anchor="middle">Send the push, issue the reward</text>
+  <text x="610" y="456" font-size="13" fill="#423F4C" text-anchor="middle">Recorded so the same member isn't sent twice.</text>
+
+  <!-- skip note -->
+  <rect x="40" y="486" width="730" height="44" rx="10" fill="#FFFFFF" stroke="#E5D9DE" stroke-width="1.5"/>
+  <text x="58" y="513" font-size="13" fill="#6B6770">A no at any box means that member is skipped on this run. The next run checks again, so members qualify as soon as they meet the rules.</text>
+</svg>
