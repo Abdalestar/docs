@@ -20,6 +20,34 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-11 — The Staff Activity Log
+
+**Article:** `merchants/staff/activity-logs.mdx`
+**Branch:** `claude/eloquent-fermat-d8kndz`
+**PR:** https://github.com/Abdalestar/docs/pull/113
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK)
+
+### What was written
+New article for the P2 Notion row "The Staff Activity Log" (`/staff/activity`). The Notion-tracked path was `activity-log.mdx`, but a "Coming soon" stub already existed on `main` at `merchants/staff/activity-logs.mdx` and was already in `docs.json` nav, so the stub was turned into the real article (no nav change, no duplicate file).
+
+**Facts (all grounded in qtap source):**
+- Entry: Staff page → **Activity Log** button (`app/(dashboard)/staff/page.tsx`).
+- Table columns Date & Time / Staff / Action / Branch / Member / Details (`activity-table.tsx`); Staff falls back to **System** for non-person actions; Member shows a dash when none.
+- 11 `AnalyticsEventType` values (Stamp/Points Issued, Reward Redeemed, Member Joined/Visit, campaign + notification events) from `activity-filters.tsx` / `types/analytics.ts`.
+- Honest gotcha: team-management events (invite/remove/permission edits) are NOT logged here — they aren't `analytics_events`.
+- Reads the 200 most recent matching rows (`hooks/use-staff-activity.ts`, `.limit(200)`); filters by staff/action/date, and branch only when >1 location.
+- Export CSV via `lib/utils/staff-activity-export.ts` (report header; disabled when empty).
+- Access: owners + managers; Staff role can't open it by default (`/staff` gated by `perms.staff !== 'none'`, staff default `none`).
+
+### Screenshots
+SMOKE_OK. 3 real annotated PNGs from the live points demo (Najma Coffee) via `flow-capture.mjs` (`.routine/flows/staff-activity-log.json`): entry button on `/staff`; full log page (filters + Export CSV boxed, **Member column redacted** with an explicit rect); Action Type dropdown cropped to `[role=listbox]`. No destructive/outbound clicks.
+
+### Notes
+- Points demo has rich data (200 rows, all event types) and >1 location, so the Branch filter renders. Member column holds customer names → redacted; Staff column holds the merchant's own team (demo seed) → left visible since the article is about staff actions.
+- One task this run per the request.
+
+---
+
 ## 2026-06-11 — Upgrading Your Plan
 
 **Article:** `merchants/billing/upgrade.mdx`
