@@ -1,0 +1,66 @@
+---
+title: "QR code details and scans"
+sidebarTitle: "Code details & scans"
+description: "Open a single QR code to see its scan count, a 7-day activity chart, recent scans, and to rename, download, or delete it."
+---
+
+Every QR code you generate has its own detail page. It shows how many times the code has been scanned, a chart of recent activity, and the most recent scans. From the same page you can rename the code, change its location, download it again, or delete it.
+
+## Open a code's detail page
+
+Go to **QR Codes** in the left sidebar, then click any code in the table. You can also open the three-dot menu on a row and choose **View Details**.
+
+<Frame caption="From QR Codes, click any code in the table to open its detail page.">
+  <img src="/images/merchants/qr-codes/qr-code-detail-list.png" alt="The QR Codes table with one code row highlighted" />
+</Frame>
+
+## What the detail page shows
+
+The top of the page has four quick stats: **Total Scans**, **Type** (reusable, one-time, or batch), **Action** (what a scan does, such as points or stamp), and **Status** (active or inactive).
+
+If the code has been scanned at least once, a **Scan Activity** chart plots the daily scan count for the last 7 days. The **QR Code** panel on the right shows the code image, the link a scan opens, and buttons to download it again as a **PNG** or **SVG**.
+
+<Frame caption="The detail page: live scan stats, a 7-day activity chart, and download buttons.">
+  <img src="/images/merchants/qr-codes/qr-code-detail-overview.png" alt="QR code detail page showing scan stats, activity chart, and QR preview" />
+</Frame>
+
+Below the chart, the **Details** card lists when the code was created and which location it belongs to. For points codes it also shows the points value. If you set a scan limit or an expiry date when you generated the code, those appear here too.
+
+The **Recent Scans** card lists the latest scans with the date and time of each. This is the fastest way to confirm a printed code is working after you put it on a table or a flyer.
+
+## Rename or move a code
+
+Click **Edit** to change the code's details. You can update its **Name**, move it to a different **Location**, and turn it **Active** or inactive with the toggle. An inactive code stops working when scanned, which is the safe way to pause a code without deleting it. Click **Save Changes** when you are done.
+
+<Frame caption="Edit a code's name, location, and active status. The code value itself stays fixed.">
+  <img src="/images/merchants/qr-codes/qr-code-detail-edit.png" alt="The edit form with the name, location, and active toggle highlighted" />
+</Frame>
+
+<Note>
+The code value (the text under the name, like `NAJMA-PEARL-PTS`) is set by Qtap when the code is created and cannot be changed. This keeps any printed copies working. To get a different code value, generate a new code.
+</Note>
+
+## Delete a code
+
+Click the red trash button in the top right, then confirm in the dialog. Deleting a code also deletes its scan history, and the action cannot be undone.
+
+<Frame caption="Deleting a code removes its scan history as well.">
+  <img src="/images/merchants/qr-codes/qr-code-detail-delete.png" alt="The delete confirmation dialog for a QR code" />
+</Frame>
+
+<Warning>
+If customers have already printed or saved this code, scans will stop working the moment you delete it. To pause a code instead, open **Edit** and turn off **Active**. You can turn it back on later.
+</Warning>
+
+<Info>
+Owners and managers can open code detail pages. Staff members do not have access to the QR Codes section by default.
+</Info>
+
+<CardGroup cols={2}>
+  <Card title="QR Codes Overview" href="/merchants/qr-codes/overview">
+    How QR codes work and how to manage them from the list.
+  </Card>
+  <Card title="Generating a QR Code" href="/merchants/qr-codes/generating">
+    Create a new code for one of your locations.
+  </Card>
+</CardGroup>
