@@ -103,6 +103,7 @@
         "pages": [
           "merchants/billing/plans",
           "merchants/settings/billing",
+          "merchants/billing/usage-meters",
           "merchants/billing/upgrade",
           "merchants/settings/locations",
           "merchants/settings/notifications",
