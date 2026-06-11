@@ -20,6 +20,43 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-08 — Billing Screenshots (backfill)
+
+**Article:** `merchants/settings/billing.mdx`
+**Branch:** `claude/dreamy-newton-p4pu2`
+**PR:** https://github.com/Abdalestar/docs/pull/82
+**Status:** Done (real screenshots shipped)
+
+### What was done
+Screenshot backfill into the already-published Billing article (P1, no prior images,
+`Needs Screenshots = YES`, no prior PR). Prose unchanged. Added three `<Frame>` blocks:
+- `billing-overview.png` — Overview tab: current plan, status badge, six usage meters
+  (Campaigns shows the red over-limit bar at 8 of 5).
+- `billing-plans.png` — Plans tab: four plan cards + Monthly/Annual toggle, Elite outlined.
+- `billing-addons.png` — Add-ons tab: pay-per-feature store, NFC Tag card highlighted.
+
+Captured from the live points demo account (Najma Coffee, plan = Elite) via
+`.routine/flow-capture.mjs`; flow config at `.routine/flows/billing.json`. SMOKE_OK.
+`validate-images.mjs` 3/3 OK, 1440x900, pushed as binary via `git push`.
+
+### Notes / insights
+- Smoke test **passes from the cloud web environment** (Playwright + chromium install,
+  login as demo@najma.coffee). The historical "screenshots impossible" failures were a
+  Windows-sandbox / MCP-binary problem; this environment captures and `git push`es binary
+  PNGs cleanly. The many `Needs Screenshots = YES` Done rows are now backfillable.
+- Billing is `/settings/billing` (its own route), a Radix Tabs page: Overview / Plans /
+  Add-ons / History. Inactive tab content is unmounted until clicked.
+- The demo account has no Stripe subscription (status badge "Free Plan" though plan limits
+  are Elite), so Manage Subscription / Cancel Plan buttons do not render — no outbound
+  Stripe action is reachable during capture. History/payment-method sections are also empty
+  on this account, so only Overview/Plans/Add-ons were captured.
+- Live label drift left as-is per backfill rule: prose "Click Buy" vs live "Purchase";
+  Extra Location shows the current tier's price ($12/mo) not the "$15–$9" range.
+- Board scan: no `Status = "Not started"` rows remain; `milestone.mdx` is a "Coming soon"
+  stub (not a real backfill target). Did one task per the run request.
+
+---
+
 ## 2026-06-08 — Your Wrapped (Analytics)
 
 **Article:** `merchants/analytics/wrapped.mdx`
