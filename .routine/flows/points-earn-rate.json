@@ -1,0 +1,59 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/points",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "earn-rate-01-rate",
+      "goto": "/points/new",
+      "actions": [
+        { "fill": ["#name", "Coffee Rewards"] },
+        { "fill": ["#points_per_currency", "1"] },
+        { "fill": ["#description", "Earn 1 point for every QAR you spend."] },
+        { "wait": 700 }
+      ],
+      "waitFor": "text=Basic Information",
+      "waitMs": 1800,
+      "annotate": [
+        { "type": "box", "target": "#points_per_currency", "number": 1, "color": "plum" },
+        { "type": "label", "target": "#points_per_currency", "text": "Points earned per 1 unit of currency", "color": "plum" },
+        { "type": "caption", "text": "Set Points per to the points a member earns for each unit of currency they spend, and pick the Currency. A rate of 1 gives 1 point per QAR." }
+      ]
+    },
+    {
+      "name": "earn-rate-02-cap",
+      "goto": "/points/new",
+      "actions": [
+        { "fill": ["#name", "Coffee Rewards"] },
+        { "fill": ["#points_per_currency", "1"] },
+        { "hover": "#max_points_per_transaction" },
+        { "fill": ["#max_points_per_transaction", "200"] },
+        { "wait": 600 }
+      ],
+      "waitFor": "#max_points_per_transaction",
+      "clipTo": "div.rounded-lg:has(#max_points_per_transaction)",
+      "clipPadding": 16,
+      "annotate": [
+        { "type": "box", "target": "#max_points_per_transaction", "color": "plum" },
+        { "type": "label", "target": "#max_points_per_transaction", "text": "Leave empty for no cap", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "earn-rate-03-calc",
+      "goto": "/points-operations",
+      "actions": [
+        { "fill": ["#amount", "50"] },
+        { "wait": 800 }
+      ],
+      "waitFor": "#amount",
+      "waitMs": 4000,
+      "clipTo": "div.rounded-lg:has(#amount)",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "#amount", "number": 1, "color": "plum" },
+        { "type": "label", "target": "#amount", "text": "Enter the purchase amount", "color": "plum" }
+      ]
+    }
+  ]
+}
