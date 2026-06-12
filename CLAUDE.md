@@ -20,6 +20,32 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-12 — Completing a Member's Profile (Phone / Birthday)
+
+**Article:** `merchants/members/complete-profile.mdx` (new)
+**Branch:** `claude/eloquent-fermat-qnzh5u`
+**PR:** https://github.com/Abdalestar/docs/pull/127
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK). One task this run per the run request.
+
+### Task selection
+The board is nearly all `Done`. Location Comparison (the previously-flagged "good next task") is now done (PR #126, today). The one genuine `Status = Not started` row was the P3 gap-audit row "Completing a Member's Profile (Phone / Birthday)" (`merchants/members/complete-profile.mdx`, not on main) — took it as the task-1 new article.
+
+### What was written
+Deep-dive how-to for the **Complete Profile** flow on `/members/[id]`, distinct from the one paragraph in `members/profiles.mdx` (cross-linked). Facts grounded in `app/(dashboard)/members/[id]/page.tsx`:
+- The dashed **Complete Profile** button renders only when `isOwnerOrManager` (`role==='owner'||'manager'`) **and** `hasMissingInfo` (`!member.birthday || !member.phone`). Role-gated, NOT permission-gated: a `staff` role with full Members access still never sees it.
+- Dialog title **Update Member Information**; phone field shown only when `!member.phone`, birthday field only when `!member.birthday` (shows just the missing pieces). Save button **Save Information**.
+- `saveMemberInfo()` writes `phone` only when `dialogPhone && !member.phone`, `birthday` only when `dialogBirthday && !member.birthday` → dashboard can ADD a blank field but never overwrite a saved one; birthday stored `yyyy-MM-dd`. Calendar `captionLayout="dropdown"`, `fromYear={1930}`.
+- Birthday eligibility: `app/api/campaigns/member-eligible/route.ts` `isBirthdayWithinDays(member.birthday, …)` returns false when null → a saved birthday is what makes a member eligible for a birthday campaign. Cross-linked `campaigns/birthday`.
+- `/members` guard is `members !== 'none'` (staff default `view`), so staff can open a profile but the button is role-gated.
+
+### KEY GOTCHA for future runs (the view-column quirk)
+`member_org_view` exposes **`birth_date`, not `birthday`**, but `members/[id]/page.tsx` reads `member.birthday`. So `member.birthday` is `undefined` for EVERY member → the Birthday row always reads "Not provided" and the **Complete Profile** button renders on any member when viewed as owner/manager (dialog then offers only the Birthday field, since `member.phone` is populated). No accessible org has any member with a null phone or null `birth_date` (Najma 180 / Dana 122 / Tea Time 22 all fully populated), so the **phone** completion field can't be screenshotted from live data — documented it in prose instead. Captured the birthday path on a Najma member (`ca5eb000-…-ac`).
+
+### Screenshots
+`.routine/flows/complete-profile.json` (points demo, Najma): `complete-profile-button.png` (profile card, button boxed, Birthday "Not provided" labelled; name/Qtap ID/phone/email redacted), `complete-profile-dialog.png` (Update Member Information dialog, Select birthday + Save Information boxed), `complete-profile-calendar.png` (calendar open, **explicit `clip` {x:486,y:456,w:474,h:536}** to exclude the left profile card — a full-viewport shot leaked the name/phone/email behind the dialog scrim, the clip fixed it). Nothing filled, Save Information never clicked → no member record changed. Added to Members nav after `profiles`.
+
+---
+
 ## 2026-06-12 — Staff Performance Report
 
 **Article:** `merchants/analytics/staff-performance.mdx`
