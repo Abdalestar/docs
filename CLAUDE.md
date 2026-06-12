@@ -20,6 +20,38 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-12 — Staff Performance Report
+
+**Article:** `merchants/analytics/staff-performance.mdx`
+**Branch:** `claude/eloquent-fermat-64ql9z`
+**PR:** https://github.com/Abdalestar/docs/pull/124
+**Status:** Done. Stub replaced with a full article + 4 real annotated screenshots (validate-images 4/4 OK).
+
+### Task selection
+The whole Notion board is `Done` with **zero `Not started` rows**, so per routine §3 this run did one screenshot-grade task: the highest-value `Needs Screenshots = YES` row whose file is on `main`. Most such rows' PRs were never merged, so their files aren't on `main`; the ones that ARE on `main` are "Coming soon" stubs. Picked **Staff Performance Analytics** (P2, `Done`/"Already published" but a stub on main) — the richest screenshotable target, parallel to the just-shipped Revenue Impact (#117) and Points Activity (#119).
+
+Rejected **Campaign Analytics** (`merchants/campaigns/analytics.mdx`, also a stub, `Needs Screenshots=YES`): its only content not already covered by the published `merchants/campaigns/stats.mdx` (the four headline numbers) is the **Performance** card on `/campaigns/[id]` — the Sent-vs-Redeemed time series + per-branch redemption breakdown. That card is `(performance || perfLoading)`-gated and **does not render on the demo account** ("hidden in demo mode where the API has no data"), confirmed by live probe — so it can't be screenshotted there. Left for a run that can seed/find a campaign with reward-redemption data.
+
+### What was written
+The `/analytics/reports/staff-performance` report. Columns (`page.tsx`): Staff Member, Stamps Issued, Points Issued, Rewards Processed, Members Served, Avg Stamps/Day, Avg Points/Day, sorted most-active first. Filters: branch (hidden when <=1 branch; staff see only assigned branches) + time period (Today/Last 7/30/90 days/This year, default 30d). Per-staff drill-down (`[staffId]/page.tsx`): metric cards w/ change vs previous period, Activity Over Time, By Branch, Recent Activity. Access: owners+managers (`analytics !== 'none'`), staff none by default.
+
+Honest gotchas: ledger-sourced, only staff-tagged actions count (a customer self-scan has no staff behind it); stamp columns read 0 on a points-only program.
+
+### Research sources (qtap, read-only)
+- `app/(dashboard)/analytics/reports/staff-performance/page.tsx` + `[staffId]/page.tsx`
+- `hooks/use-reports.ts` `useStaffDetailedPerformance` — `stamp`→stamps, `points_earn`→points, `redeem`/`points_spend`→rewards, distinct `member_id`→members served, totals/periodDays for daily avg, sort by stamps+points
+- `components/dashboard/analytics/time-period-selector.tsx`, `components/dashboard/branch-filter.tsx`, `lib/utils/permissions.ts`, `lib/validations/staff.ts`
+
+### Screenshots
+4 real annotated PNGs from the live points demo (Najma Coffee, 5 staff, 3 branches) via `.routine/flows/staff-performance.json`: overview (filters boxed), table close-up (headers boxed + stamps-0 note), period dropdown (5 options), drill-down (metric cards + chart; Recent Activity cropped out). All staff names redacted. SMOKE_OK; `validate-images` 4/4. `docs.json` unchanged (already in Analytics nav).
+
+### Insights for future runs
+- **Board is fully `Done`; the real backlog is the on-main "Coming soon" stubs.** Find them with `git ls-tree -r origin/main | grep '\.mdx$'` then check line count <8. As of this run, still stubs on main: `merchants/analytics/location-comparison.mdx` (**good next task** — Notion row "Location Comparison", P2, no PR, a real per-branch card report that should screenshot fine), `merchants/campaigns/analytics.mdx` (blocked, see above), `merchants/campaigns/rewards.mdx`. `revenue-impact`, `points-activity`, `staff/activity-logs` have open PRs (#117/#119/#113) not yet merged, so they still read as stubs on main — don't double-do them.
+- The four analytics report pages all populate on `demo@najma.coffee`. Staff Performance shows real-person staff names (redact the first column). Points-only org → stamp columns are 0.
+- Period selector renders a Radix `[role=listbox]` with `[role=option]` items; `clipTo: "[role=listbox]"` crops it cleanly.
+
+---
+
 ## 2026-06-11 — Upgrading Your Plan
 
 **Article:** `merchants/billing/upgrade.mdx`
