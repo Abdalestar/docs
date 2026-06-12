@@ -20,6 +20,55 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-12 — Revenue Impact (stub replaced with real article)
+
+**Article:** `merchants/analytics/revenue-impact.mdx`
+**Branch:** `claude/eloquent-fermat-lff5kp`
+**Status:** Done. SMOKE_OK; 3 real annotated screenshots (validate-images 3/3 OK).
+
+### What was written
+The Notion board has zero `Status = "Not started"` rows (every row I read is Done),
+so per routine §3 this run did one task. The "Revenue Impact" row (P2) was marked
+`Done` + `Already published` + `Needs Screenshots = YES`, but `merchants/analytics/revenue-impact.mdx`
+on `main` was a one-line **"Coming soon" stub**. Replaced the stub with a full,
+source-grounded article + real live screenshots. The path is already in the Analytics
+nav (`docs.json` unchanged).
+
+Covers: the route (`/analytics/reports/revenue-impact`, no sidebar link, reached from
+the Reports hub); the three top figures (Total Revenue, Loyalty Transactions, Avg
+Revenue / Transaction); the dual-line "Revenue & Loyalty Activity Over Time" chart;
+the branch + time-period filters; the honest estimate caveat; and access control.
+Cross-links the Reports hub, Analytics Overview, and Roles and permissions.
+
+### Research sources (qtap repo, read-only)
+- `app/(dashboard)/analytics/reports/revenue-impact/page.tsx` — H1 "Revenue Impact Report",
+  subtitle "Loyalty activity correlated with revenue", 3 tiles, chart title, BranchFilter +
+  TimePeriodSelector.
+- `hooks/use-reports.ts` `useRevenueImpact` — revenue = sum of `points_transactions.transaction_amount`
+  where `type='earn'` and amount not null, in range; count = those rows. So points-only,
+  and the "estimate not a POS feed" caveat is literal.
+- `components/dashboard/analytics/time-period-selector.tsx` — Today / Last 7 / 30 / 90 days / This year.
+- `lib/utils/permissions.ts` — `/analytics` guard = `perms.analytics !== 'none'` (owners + managers; staff none).
+- Live page probe (points demo, Najma Coffee): Total Revenue $55,649.00, 868 transactions, $64.11 avg.
+
+### Screenshots
+`.routine/flows/revenue-impact.json` (points account): `revenue-impact-overview` (3 tiles
+numbered + caption), `revenue-impact-filters` (top region cropped, branch + time-period
+boxed), `revenue-impact-chart` (chart card cropped via `div.rounded-xl:has(.recharts-wrapper)`).
+Aggregate page, no PII; no destructive/outbound actions.
+
+### Notes for future runs
+- The board is fully `Done`. Several `Needs Screenshots = YES` rows are NOT backfillable:
+  `revenue-impact.mdx` / `points-activity.mdx` were "Coming soon" stubs (this run fixed
+  revenue-impact; **points-activity is still a stub** and a good next target); Dashboard Tour
+  (PR #3) and Adding Your First Customer (PR #5) are P1 but their PRs were never merged so the
+  articles are absent from `main`; Scanning & Earning is the mobile app (not Playwright-capturable);
+  Invoices & Payment needs a real Stripe subscription.
+- `merchants/analytics/{points-activity,staff-performance,location-comparison}` exist in the
+  Analytics nav; `points-activity.mdx` confirmed a stub on main. Worth checking the other two.
+
+---
+
 ## 2026-06-12 — Stamp Card Advanced Settings
 
 **Article:** `merchants/stamp-cards/advanced-settings.mdx` (new)
