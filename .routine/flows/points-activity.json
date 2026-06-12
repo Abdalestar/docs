@@ -1,0 +1,59 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "analytics",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "points-activity-overview",
+      "goto": "/analytics/reports/points-activity",
+      "waitFor": "text=Points Activity Report",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "box", "target": "[role=combobox]:has-text('All branches')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "[role=combobox]:has-text('Last 30 days')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "table thead tr", "color": "gold" },
+        { "type": "redact", "rect": { "x": 508, "y": 282, "width": 212, "height": 600 } },
+        { "type": "caption", "text": "The Points Activity Report lists every points transaction. Filter by branch (1) and time period (2); the table columns are boxed in gold. Member names are blurred here for privacy." }
+      ]
+    },
+    {
+      "name": "points-activity-period",
+      "goto": "/analytics/reports/points-activity",
+      "waitFor": "text=Points Activity Report",
+      "waitMs": 5000,
+      "actions": [
+        { "click": "[role=combobox]:has-text('Last 30 days')" },
+        { "wait": 900 }
+      ],
+      "clipTo": "[role=listbox]",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "label", "target": "text=This year", "text": "Five ranges", "color": "plum" }
+      ]
+    },
+    {
+      "name": "points-activity-branch",
+      "goto": "/analytics/reports/points-activity",
+      "waitFor": "text=Points Activity Report",
+      "waitMs": 5000,
+      "actions": [
+        { "click": "[role=combobox]:has-text('All branches')" },
+        { "wait": 900 }
+      ],
+      "clipTo": "[role=listbox]",
+      "clipPadding": 14
+    },
+    {
+      "name": "points-activity-detail",
+      "goto": "/analytics/reports/points-activity",
+      "waitFor": "text=Points Activity Report",
+      "waitMs": 6000,
+      "clip": { "x": 714, "y": 256, "width": 645, "height": 420 },
+      "annotate": [
+        { "type": "label", "target": "table tbody tr:nth-child(1) td:nth-child(4)", "text": "Earned = green +", "color": "plum" }
+      ]
+    }
+  ]
+}
