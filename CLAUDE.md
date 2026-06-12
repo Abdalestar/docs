@@ -20,6 +20,41 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-12 — Onboarding Wizard screenshots + prose fixes
+
+**Article:** `merchants/onboarding-wizard.mdx`
+**Branch:** `claude/eloquent-fermat-jnzjyg`
+**Notion row:** "Onboarding Wizard Walkthrough (8 Steps incl. Trial Setup)" (P0, was Not started, Needs Screenshots YES)
+**Status:** Done — 6 real annotated screenshots added; two factual corrections. SMOKE_OK.
+
+### What this run did
+The P0 row was marked "never shipped", but the article was in fact already on `main`
+(commit ecd2e16) at `merchants/onboarding-wizard.mdx` (the Notion path `merchants/getting-started/onboarding-wizard.mdx` was never used). Kept the existing path
+(already in the Getting Started nav in `docs.json`) rather than create a duplicate.
+This run added the missing real screenshots and corrected the prose against source.
+
+**Prose corrections (grounded in `app/(dashboard)/onboarding/page.tsx`):**
+- Welcome CTA is **Get Started** (line 1030: `currentStep === 0 ? "Get Started" : 'Continue'`), not "Let's Get Started".
+- Trial-includes list was missing **AI-powered business insights** (one of the four bullets in the Welcome card, lines 477-480). Added it.
+
+**Source map:** `app/(dashboard)/onboarding/page.tsx` (8-step array `steps`, business types, goal options, loyalty options, Stripe SetupIntent payment step, `handleFinish` → `/cards/new` or `/points/new`, the onboarded-redirect effect), `app/api/onboarding/route.ts` (trial = Growth/14 days, SetupIntent, sets `onboarding_completed`, creates first location), `stores/auth-store.ts` (org loaded via `/rest/v1/staff` select).
+
+### Screenshots (6 real, validate-images 7/7 OK incl. the pre-existing SVG)
+Captured from the live points demo (Najma Coffee): welcome, business type (Cafe boxed),
+goal (repeat customers boxed), business details (name filled), first location (manual
+entry), loyalty type (Stamp Cards boxed). Payment(7)/Done(8) intentionally NOT captured.
+
+### KEY GOTCHA for future runs (the onboarding redirect)
+`/onboarding` redirects to `/` ~1s after a full load once the auth store resolves the
+org and sees `organization.onboarding_completed === true` — true on BOTH demo accounts,
+so the wizard can't be browsed normally. Two facts make capture possible:
+- A full page load (`waitUntil: 'commit'`) resets the Zustand auth store (`isLoading:true`, `organization:null`), and the redirect only fires after the client `/rest/v1/staff` fetch repopulates the org (~1-1.5s). So there's a ~1s window per fresh load.
+- The reliable method is **fresh commit-load + rapid chained Playwright clicks with NO intermediate waits, screenshot the instant the step renders**. Adding `waitForTimeout`/`waitForSelector` between steps blows the window and you capture the redirected dashboard instead. Deep steps (details/location/loyalty) need a name+address fill but still land inside the window if fired back-to-back.
+- Delaying the `/rest/v1/staff` response via `context.route` helps a little but is NOT reliable on its own (the org still resolved by ~step 3-4 in testing); speed is the real lever.
+- Payment (step 7) can't be reached: it fetches a Stripe SetupIntent (loading state) during which the org resolves and redirects, and completing it would create a real trial subscription. Done (step 8) is only reachable by completing payment. Both stay covered by the prose + the existing 8-step SVG.
+
+---
+
 ## 2026-06-12 — Downgrading Your Plan (Pre-Flight Check)
 
 **Article:** `merchants/billing/downgrade.mdx` (new)
