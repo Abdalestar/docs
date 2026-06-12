@@ -1,0 +1,53 @@
+{
+  "section": "merchants/members",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "01-export-csv",
+      "goto": "/members",
+      "waitFor": "button:has-text(\"Export CSV\")",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "redact", "rect": { "x": 327, "y": 315, "width": 535, "height": 585 } },
+        { "type": "box", "target": "button:has-text(\"Export CSV\")", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Export CSV downloads every member as a spreadsheet. Member names and contact details are covered here for privacy." }
+      ]
+    },
+    {
+      "name": "02-export-selected",
+      "goto": "/members",
+      "waitFor": "button:has-text(\"Export CSV\")",
+      "waitMs": 4500,
+      "actions": [
+        { "click": "table tbody tr:nth-child(1) td:first-child button[role=checkbox]" },
+        { "wait": 400 },
+        { "click": "table tbody tr:nth-child(2) td:first-child button[role=checkbox]" },
+        { "wait": 1200 }
+      ],
+      "annotate": [
+        { "type": "redact", "rect": { "x": 327, "y": 395, "width": 535, "height": 505 } },
+        { "type": "box", "target": "button:has-text(\"Export Selected\")", "number": 2, "color": "plum" },
+        { "type": "box", "target": "div.flex button:has-text(\"Delete\")", "color": "red" },
+        { "type": "caption", "text": "Tick the checkboxes to act on a few members at once: Export Selected saves just those rows, Delete removes them." }
+      ]
+    },
+    {
+      "name": "03-delete-confirm",
+      "goto": "/members",
+      "waitFor": "button:has-text(\"Export CSV\")",
+      "waitMs": 4500,
+      "actions": [
+        { "click": "table tbody tr:first-child td:last-child button" },
+        { "wait": 900 },
+        { "click": "[role=menuitem]:has-text(\"Delete Member\")" },
+        { "wait": 900 }
+      ],
+      "clipTo": "[role=alertdialog]",
+      "clipPadding": 4,
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Permanently Delete\")", "color": "red" }
+      ]
+    }
+  ]
+}

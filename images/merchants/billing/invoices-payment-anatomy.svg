@@ -1,0 +1,71 @@
+<svg viewBox="0 0 860 560" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+  <rect width="860" height="560" fill="#F8F5F2"/>
+
+  <!-- ===== Top: invoice table anatomy ===== -->
+  <text x="40" y="48" font-size="20" font-weight="700" fill="#423F4C">A paid invoice in the History tab</text>
+  <text x="40" y="72" font-size="13" fill="#6B6770">Each charge becomes one row. Two icons on the right open the invoice.</text>
+
+  <!-- table card -->
+  <rect x="40" y="90" width="780" height="150" rx="14" fill="#FFFFFF" stroke="#E8C9D4" stroke-width="1.5"/>
+
+  <!-- header row -->
+  <text x="64" y="122" font-size="11" letter-spacing="0.5" font-weight="700" fill="#6B6770">DATE</text>
+  <text x="190" y="122" font-size="11" letter-spacing="0.5" font-weight="700" fill="#6B6770">DESCRIPTION</text>
+  <text x="470" y="122" font-size="11" letter-spacing="0.5" font-weight="700" fill="#6B6770">AMOUNT</text>
+  <text x="588" y="122" font-size="11" letter-spacing="0.5" font-weight="700" fill="#6B6770">STATUS</text>
+  <text x="690" y="122" font-size="11" letter-spacing="0.5" font-weight="700" fill="#6B6770">ACTIONS</text>
+  <line x1="56" y1="134" x2="804" y2="134" stroke="#F3F4F6" stroke-width="1"/>
+
+  <!-- data row -->
+  <text x="64" y="168" font-size="13" fill="#423F4C">11 Jun 2026</text>
+  <text x="190" y="168" font-size="13" fill="#423F4C">Elite plan, monthly</text>
+  <text x="470" y="168" font-size="13" font-weight="700" fill="#423F4C">$79.00 USD</text>
+  <!-- paid badge -->
+  <rect x="588" y="155" width="48" height="20" rx="6" fill="#E8F5E9"/>
+  <text x="598" y="169" font-size="11" font-weight="600" fill="#1B5E20">paid</text>
+  <!-- action icons -->
+  <rect x="690" y="152" width="26" height="26" rx="6" fill="#F8F5F2" stroke="#E5E7EB"/>
+  <path d="M703 158 v9 m-4 -4 l4 4 l4 -4 M698 171 h10" fill="none" stroke="#8E4A63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="724" y="152" width="26" height="26" rx="6" fill="#F8F5F2" stroke="#E5E7EB"/>
+  <path d="M733 158 h6 v6 M739 158 l-8 8 M731 160 v9 h9 v-4" fill="none" stroke="#8E4A63" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <line x1="56" y1="190" x2="804" y2="190" stroke="#F3F4F6" stroke-width="1"/>
+  <text x="64" y="222" font-size="13" fill="#9CA3AF">12 May 2026</text>
+  <text x="190" y="222" font-size="13" fill="#9CA3AF">Elite plan, monthly</text>
+  <text x="470" y="222" font-size="13" font-weight="700" fill="#9CA3AF">$79.00 USD</text>
+  <rect x="588" y="209" width="48" height="20" rx="6" fill="#E8F5E9"/>
+  <text x="598" y="223" font-size="11" font-weight="600" fill="#1B5E20">paid</text>
+
+  <!-- callouts under the two icons -->
+  <text x="690" y="262" font-size="11.5" font-weight="600" fill="#8E4A63">Download PDF</text>
+  <text x="690" y="278" font-size="11.5" font-weight="600" fill="#8E4A63">View online</text>
+  <line x1="703" y1="248" x2="703" y2="252" stroke="#8E4A63" stroke-width="1.4"/>
+
+  <!-- ===== Bottom: payment method + portal ===== -->
+  <text x="40" y="338" font-size="20" font-weight="700" fill="#423F4C">Your card, and how to change it</text>
+
+  <!-- payment method card mock -->
+  <rect x="40" y="356" width="300" height="150" rx="14" fill="#FFFFFF" stroke="#E8C9D4" stroke-width="1.5"/>
+  <text x="64" y="386" font-size="13" font-weight="700" fill="#423F4C">Payment Method</text>
+  <rect x="64" y="402" width="54" height="36" rx="6" fill="#423F4C"/>
+  <text x="73" y="425" font-size="12" font-weight="700" fill="#F0D793">VISA</text>
+  <text x="132" y="420" font-size="13" font-weight="600" fill="#423F4C">Visa ending in 4242</text>
+  <text x="132" y="438" font-size="12" fill="#6B6770">Expires 8/2027</text>
+  <text x="64" y="478" font-size="11.5" fill="#6B6770">Shows on the Overview tab</text>
+  <text x="64" y="494" font-size="11.5" fill="#6B6770">once a card is on file.</text>
+
+  <!-- arrow -->
+  <path d="M348 431 h84" fill="none" stroke="#8E4A63" stroke-width="2" stroke-linecap="round"/>
+  <path d="M426 425 l8 6 l-8 6" fill="none" stroke="#8E4A63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="356" y="402" width="70" height="22" rx="11" fill="#8E4A63"/>
+  <text x="368" y="417" font-size="11" font-weight="600" fill="#FFFFFF">Manage</text>
+
+  <!-- portal box -->
+  <rect x="444" y="356" width="376" height="150" rx="14" fill="#FFFFFF" stroke="#E8C9D4" stroke-width="1.5"/>
+  <text x="468" y="386" font-size="13" font-weight="700" fill="#8E4A63">Stripe billing portal</text>
+  <text x="468" y="410" font-size="12.5" fill="#423F4C">Update or replace your card</text>
+  <text x="468" y="432" font-size="12.5" fill="#423F4C">See your full billing history</text>
+  <text x="468" y="454" font-size="12.5" fill="#423F4C">Download any past invoice</text>
+  <text x="468" y="486" font-size="11.5" fill="#6B6770">Owner only. Opens in a secure Stripe window,</text>
+  <text x="468" y="502" font-size="11.5" fill="#6B6770">then returns you to the Billing page.</text>
+</svg>
