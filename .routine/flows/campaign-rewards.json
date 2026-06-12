@@ -1,0 +1,89 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "campaigns",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 1000 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "campaign-rewards-types",
+      "goto": "/campaigns/new",
+      "actions": [
+        { "wait": 4000 },
+        { "click": "label:has-text('Win-Back Campaign')" },
+        { "fill": ["#name", "Weekend Treat"] },
+        { "wait": 600 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1500 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1500 }
+      ],
+      "waitFor": "text=Choose Reward Type",
+      "waitMs": 1200,
+      "annotate": [
+        { "type": "box", "target": "label:has-text('Free Item')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label:has-text('Bonus Stamps')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "label:has-text('Bonus Points')", "number": 3, "color": "plum" },
+        { "type": "box", "target": "label:has-text('Discount')", "number": 4, "color": "plum" },
+        { "type": "box", "target": "label:has-text('Special Badge')", "number": 5, "color": "plum" },
+        { "type": "caption", "text": "The Reward step offers five reward types. Attaching a reward is optional." }
+      ]
+    },
+    {
+      "name": "campaign-rewards-config",
+      "goto": "/campaigns/new",
+      "actions": [
+        { "wait": 4000 },
+        { "click": "label:has-text('Win-Back Campaign')" },
+        { "fill": ["#name", "Weekend Treat"] },
+        { "wait": 600 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1500 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1500 },
+        { "click": "label:has-text('Discount')" },
+        { "wait": 900 }
+      ],
+      "waitFor": "text=Configure Reward",
+      "waitMs": 1000,
+      "annotate": [
+        { "type": "box", "target": "label:has-text('Discount')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "input[type=number]", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Pick a type to reveal its setting. A discount is honored at the counter, not applied automatically." }
+      ]
+    },
+    {
+      "name": "campaign-rewards-review",
+      "goto": "/campaigns/new",
+      "actions": [
+        { "wait": 4000 },
+        { "click": "label:has-text('Win-Back Campaign')" },
+        { "fill": ["#name", "Weekend Treat"] },
+        { "wait": 600 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1500 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1500 },
+        { "click": "label:has-text('Discount')" },
+        { "wait": 700 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 },
+        { "fill": ["#notification-title", "A treat for you"] },
+        { "fill": ["#notification-body", "Show this code at the counter for 20% off your next visit."] },
+        { "wait": 600 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1500 }
+      ],
+      "waitFor": "button:has-text('Activate Campaign')",
+      "waitMs": 1200,
+      "annotate": [
+        { "type": "box", "target": "span:has-text('20% discount')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "The Review step shows the reward summary before you activate. The reward is delivered when the campaign sends." }
+      ]
+    }
+  ]
+}
