@@ -20,6 +20,30 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-12 — Setting Your Points Earn Rate
+
+**Article:** `merchants/points/earn-rate.mdx` (new)
+**Branch:** `claude/eloquent-fermat-cdyv4w`
+**PR:** https://github.com/Abdalestar/docs/pull/123
+**Status:** Done (3 real annotated screenshots, validate-images 3/3 OK). One task this run per the run request.
+
+### What was written
+New how-to for the P2 row "Earn Rate: Points per Currency & Per-Visit Caps". Covers how members earn points: the **Points per** rate (`points_per_currency`, decimals via `step="0.01"`, validated 0.01–1000, default 1), the **Currency** dropdown, and the **Limits** card's **Max points per visit** cap (`max_points_per_transaction`, empty = no cap). Documents the award math from `points-operations/page.tsx` `calculatePoints()`: `Math.floor(amount * points_per_currency)` then `Math.min(points, max_points_per_transaction)`, the floor-rounding gotcha, the minimum-spend note shown on the calculator summary line, and the **Manual Points** override. Access: owners/managers edit programs (staff `points_programs: none`); staff can still award on Points Operations (`issue_points: true`). Distinct from `creating.mdx` (the create walkthrough); cross-linked. Added to Points Programs nav after `creating`.
+
+### Research sources (Abdalestar/qtap, read-only)
+- `components/dashboard/points-program-form.tsx` — Points per / Currency fields; the Limits card (Max points per visit, `min={1}`, placeholder "No limit"). Note: `min_transaction` is NOT in this form (unused-by-form DB column), so it was not documented as a settable field.
+- `app/(dashboard)/points-operations/page.tsx` — `calculatePoints()` math; By Amount / Manual Points; the rate summary line ("N points per SYM1 | Min: ... | Max: ... pts").
+- `lib/validations/loyalty.ts` — `points_per_currency` 0.01–1000.
+- `lib/utils/permissions.ts` + `lib/validations/staff.ts` — `/points` needs `points_programs !== 'none'`; `/points-operations` needs `issue_points`.
+
+### Screenshots
+3 real annotated PNGs via `flow-capture.mjs` (`.routine/flows/points-earn-rate.json`) from the live points demo (Najma Coffee): Points per/Currency fields on `/points/new`, the Limits cap field, and the live Points Operations calculator (QR50 → +3,750 on the demo's 75-points-per-QR1 program, Min QR5 / Max 5000). No program saved, no member selected, no Award clicked; no customer PII. `validate-images.mjs` 3/3 OK, pushed as binary via `git push`. SMOKE_OK.
+
+### Reality flag discovered (for a future run — do NOT document as working)
+The **Condition Builder** (campaign wizard Step 5, "Custom Campaigns & the Condition Builder" row) is collected but never applied for any campaign a merchant can actually create. The execution engine (`app/api/campaigns/execute/route.ts`) and the eligibility checker (`app/api/campaigns/member-eligible/route.ts`) only read `target_conditions` inside `case 'custom':`, and the wizard's `type-selection.tsx` exposes only seven types (no `custom`). So the conditions step is a no-op for birthday/win_back/milestone/time_based/welcome/points_multiplier/flash_sale. Same class of issue as the A/B-testing flag. Annotated that Notion row's Notes; left it Not started. The "Campaigns Overview & the 8 Campaign Types" P1 row is also a duplicate (`merchants/campaigns/overview.mdx` already on main, and the UI has 7 types not 8).
+
+---
+
 ## 2026-06-12 — Onboarding Wizard screenshots + prose fixes
 
 **Article:** `merchants/onboarding-wizard.mdx`
