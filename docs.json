@@ -37,7 +37,8 @@
         "pages": [
           "merchants/points/overview",
           "merchants/points/creating",
-          "merchants/points/operations"
+          "merchants/points/operations",
+          "merchants/points/expiry"
         ]
       },
       {

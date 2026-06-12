@@ -1,0 +1,79 @@
+---
+title: "Points expiry"
+sidebarTitle: "Points expiry"
+description: "Decide whether points expire and how the countdown is measured: from when they were earned, from last activity, or at year end."
+---
+
+The Points Expiry settings decide whether points last forever or run out after a while. By default they never expire, so a member keeps every point until they spend it. Turn expiry on when you want points to stay active only for a set window.
+
+You set this on the points program itself, in the **Points Expiry** card. It is there when you create a program and when you edit one later.
+
+<Frame caption="Points Expiry sits in the program form. The toggle is off by default, so points don't expire until you turn it on.">
+  <img src="/images/merchants/points/expiry-01-off.png" alt="The Points Expiry card with the Enable Points Expiry toggle switched off" />
+</Frame>
+
+## Turn on expiry
+
+<Steps>
+  <Step title="Open the program form">
+    Go to **Points** in the sidebar, then create a new program or open an existing one to edit. Scroll to the **Points Expiry** card.
+  </Step>
+  <Step title="Enable Points Expiry">
+    Switch on **Enable Points Expiry**. Two fields appear below it.
+  </Step>
+  <Step title="Set the expiry period">
+    In **Expiry Period (days)**, enter how many days points stay valid. The longest you can set is 365 days.
+  </Step>
+  <Step title="Choose an expiry type">
+    Pick how the countdown is measured. The line under the fields restates your choice in plain words.
+  </Step>
+  <Step title="Save the program">
+    Save or activate the program. Expiry applies from then on.
+  </Step>
+</Steps>
+
+<Frame caption="With expiry on, set the number of days (1) and the expiry type (2). The text below the fields confirms what your choice means.">
+  <img src="/images/merchants/points/expiry-02-on.png" alt="The expanded Points Expiry card showing the Expiry Period field and the Expiry Type dropdown" />
+</Frame>
+
+## The three expiry types
+
+<Frame caption="The Expiry Type dropdown: From date earned, From last activity, or End of calendar year.">
+  <img src="/images/merchants/points/expiry-03-types.png" alt="The Expiry Type dropdown open, listing the three options" />
+</Frame>
+
+| Expiry type | What expires | When it goes |
+|---|---|---|
+| From date earned | Each batch of points on its own clock | The set number of days after those points were earned |
+| From last activity | The member's whole balance | The set number of days after their last earn or redemption |
+| End of calendar year | Everything earned during the year | At the start of the next year |
+
+**From date earned** gives each earn its own expiry date. Points a member earned in March expire before points the same member earned in June.
+
+**From last activity** keeps points alive as long as the member keeps coming back. Every time they earn or redeem, the clock resets. Points run out only after a full quiet period with no activity.
+
+**End of calendar year** clears balances once a year. Points earned during a year expire at the start of the following year, whatever the day count says.
+
+## How and when points expire
+
+Expiry runs on its own. A background job checks your programs once a day and removes points that have reached their expiry date. You don't trigger it, and it looks only at active programs that have expiry switched on.
+
+When points expire for a member:
+
+- Their balance drops by the expired amount. It never goes below zero, and points they already spent are not counted again.
+- An **expired** entry is added to their points history, so you can see what came off and when.
+- The member gets a notification with the number of points that expired (a push message, or an email if push is off).
+
+<Note>
+**From date earned** stamps an expiry date on each point as it is earned, so it applies to points earned after you turn the setting on. Points a member earned beforehand have no expiry date and stay on their balance. The other two types work from the member's balance and activity, so they also cover older points.
+</Note>
+
+## Change or turn off expiry
+
+Edit the program at any time to change the period or the type, or switch **Enable Points Expiry** off to stop future expiry.
+
+## Related
+
+- [Creating a Points Program](/merchants/points/creating): where the expiry settings sit in the full setup
+- [Points Programs Overview](/merchants/points/overview): how earning and rewards work
+- [Points Programs: Operations](/merchants/points/operations): issuing and adjusting points at the counter

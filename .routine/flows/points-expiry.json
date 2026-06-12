@@ -1,0 +1,60 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/points",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "expiry-01-off",
+      "goto": "/points/new",
+      "actions": [
+        { "fill": ["#name", "Coffee Rewards"] },
+        { "fill": ["#points_per_currency", "1"] },
+        { "hover": "div.justify-between:has-text(\"Enable Points Expiry\") button[role=switch]" },
+        { "wait": 700 }
+      ],
+      "waitFor": "text=Points Expiry",
+      "waitMs": 4000,
+      "clipTo": "div.rounded-xl:has-text(\"Points Expiry\")",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "div.justify-between:has-text(\"Enable Points Expiry\") button[role=switch]", "color": "plum" }
+      ]
+    },
+    {
+      "name": "expiry-02-on",
+      "goto": "/points/new",
+      "actions": [
+        { "fill": ["#name", "Coffee Rewards"] },
+        { "fill": ["#points_per_currency", "1"] },
+        { "click": "div.justify-between:has-text(\"Enable Points Expiry\") button[role=switch]" },
+        { "wait": 900 }
+      ],
+      "waitFor": "#expiry_days",
+      "waitMs": 1200,
+      "clipTo": "div.rounded-xl:has-text(\"Points Expiry\")",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "#expiry_days", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has-text(\"Points Expiry\") button[role=combobox]", "number": 2, "color": "plum" },
+        { "type": "label", "target": "#expiry_days", "text": "Days until points expire (max 365)", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "expiry-03-types",
+      "goto": "/points/new",
+      "actions": [
+        { "fill": ["#name", "Coffee Rewards"] },
+        { "fill": ["#points_per_currency", "1"] },
+        { "click": "div.justify-between:has-text(\"Enable Points Expiry\") button[role=switch]" },
+        { "wait": 700 },
+        { "click": "div.rounded-xl:has-text(\"Points Expiry\") button[role=combobox]" },
+        { "wait": 600 }
+      ],
+      "waitFor": "[role=listbox]",
+      "waitMs": 600,
+      "clipTo": "[role=listbox]",
+      "clipPadding": 12
+    }
+  ]
+}
