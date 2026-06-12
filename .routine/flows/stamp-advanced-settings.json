@@ -1,0 +1,59 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/stamp-cards",
+  "account": "stamp",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "advanced-01-open",
+      "goto": "/cards/new",
+      "waitFor": "text=Advanced Settings",
+      "waitMs": 6000,
+      "actions": [
+        { "hover": "text=Advanced Settings" },
+        { "wait": 600 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "text=Advanced Settings", "color": "plum" },
+        { "type": "caption", "text": "Advanced Settings sits at the bottom of the Card Design step. Open it to set stamping rules." }
+      ]
+    },
+    {
+      "name": "advanced-02-stamping-rules",
+      "actions": [
+        { "click": "text=Advanced Settings" },
+        { "wait": 900 },
+        { "fill": ["input[max=\"1440\"]", "5"] },
+        { "fill": ["input[placeholder=\"No limit\"]", "3"] },
+        { "hover": "text=Allow Multiple Stamps" },
+        { "wait": 600 }
+      ],
+      "waitFor": "text=Stamping Rules",
+      "annotate": [
+        { "type": "box", "target": "input[max=\"1440\"]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "input[placeholder=\"No limit\"]", "number": 2, "color": "plum" },
+        { "type": "box", "target": "text=Allow Multiple Stamps", "number": 3, "color": "plum" },
+        { "type": "caption", "text": "Stamping Delay (1) spaces out stamps. Daily Stamp Cap (2) limits stamps per day. Allow Multiple Stamps (3) lets one visit earn several." }
+      ]
+    },
+    {
+      "name": "advanced-03-number-of-stamps",
+      "goto": "/stamp-operations",
+      "waitFor": "text=Stamp Operations",
+      "waitMs": 5000,
+      "actions": [
+        { "click": "[role=combobox]" },
+        { "wait": 900 },
+        { "click": "[role=option]" },
+        { "wait": 1500 },
+        { "hover": "#stamps-qty" },
+        { "wait": 500 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "#stamps-qty", "color": "plum" },
+        { "type": "label", "target": "#stamps-qty", "text": "Staff set how many stamps to add at once here", "color": "plum" },
+        { "type": "caption", "text": "On the Stamp Operations screen, staff choose how many stamps to add. Stamps added here skip the delay and daily cap." }
+      ]
+    }
+  ]
+}
