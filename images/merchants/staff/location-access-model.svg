@@ -1,0 +1,46 @@
+<svg viewBox="0 0 760 430" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif" role="img" aria-label="How each role sees branches and whether they can open NFC Tags">
+  <rect x="0" y="0" width="760" height="430" fill="#F8F5F2"/>
+
+  <text x="40" y="48" font-size="22" font-weight="700" fill="#423F4C">Branch access by role</text>
+  <text x="40" y="74" font-size="14" fill="#6B6770">Location assignment only narrows what the Staff role sees. NFC Tags are owner and manager only.</text>
+
+  <!-- Column headers -->
+  <text x="40"  y="120" font-size="13" font-weight="700" fill="#8E4A63">ROLE</text>
+  <text x="250" y="120" font-size="13" font-weight="700" fill="#8E4A63">BRANCHES THEY SEE</text>
+  <text x="600" y="120" font-size="13" font-weight="700" fill="#8E4A63">OPEN NFC TAGS</text>
+  <line x1="40" y1="132" x2="720" y2="132" stroke="#E0D7D2" stroke-width="1.5"/>
+
+  <!-- Owner -->
+  <text x="40"  y="172" font-size="16" font-weight="600" fill="#423F4C">Owner</text>
+  <text x="250" y="172" font-size="15" fill="#423F4C">Every branch</text>
+  <circle cx="612" cy="167" r="13" fill="#8E4A63"/>
+  <path d="M606 167 l4 4 l8 -8" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="40" y1="196" x2="720" y2="196" stroke="#EFE8E4" stroke-width="1"/>
+
+  <!-- Manager -->
+  <text x="40"  y="236" font-size="16" font-weight="600" fill="#423F4C">Manager</text>
+  <text x="250" y="236" font-size="15" fill="#423F4C">Every branch (always)</text>
+  <circle cx="612" cy="231" r="13" fill="#8E4A63"/>
+  <path d="M606 231 l4 4 l8 -8" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="40" y1="260" x2="720" y2="260" stroke="#EFE8E4" stroke-width="1"/>
+
+  <!-- Staff, all locations -->
+  <text x="40"  y="300" font-size="16" font-weight="600" fill="#423F4C">Staff</text>
+  <text x="40"  y="320" font-size="12" fill="#6B6770">All Locations on</text>
+  <text x="250" y="306" font-size="15" fill="#423F4C">Every branch</text>
+  <circle cx="612" cy="301" r="13" fill="none" stroke="#B9AEA8" stroke-width="2"/>
+  <line x1="607" y1="296" x2="617" y2="306" stroke="#B9AEA8" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="617" y1="296" x2="607" y2="306" stroke="#B9AEA8" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="40" y1="344" x2="720" y2="344" stroke="#EFE8E4" stroke-width="1"/>
+
+  <!-- Staff, assigned -->
+  <text x="40"  y="384" font-size="16" font-weight="600" fill="#423F4C">Staff</text>
+  <text x="40"  y="404" font-size="12" fill="#6B6770">Assigned to branches</text>
+  <text x="250" y="390" font-size="15" fill="#423F4C">Only their assigned branches</text>
+  <circle cx="612" cy="385" r="13" fill="none" stroke="#B9AEA8" stroke-width="2"/>
+  <line x1="607" y1="380" x2="617" y2="390" stroke="#B9AEA8" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="617" y1="380" x2="607" y2="390" stroke="#B9AEA8" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Right rail accent -->
+  <rect x="700" y="150" width="6" height="250" rx="3" fill="#F0D793"/>
+</svg>

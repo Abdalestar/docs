@@ -1,0 +1,35 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/notifications",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "push-vs-01-notification",
+      "goto": "/notifications/new",
+      "waitFor": "button:has-text('Send Now')",
+      "waitMs": 6000,
+      "actions": [
+        { "fill": ["#title", "Eid weekend is on us"] },
+        { "fill": ["#body", "Free baklava with any drink this Saturday. Show this notification at the counter."] },
+        { "wait": 800 }
+      ],
+      "clip": { "x": 280, "y": 84, "width": 1150, "height": 545 },
+      "annotate": [
+        { "type": "box", "target": "#title", "number": 1, "color": "plum" },
+        { "type": "label", "target": "#body", "text": "A one-off message you write, then send once or schedule once.", "color": "plum" }
+      ]
+    },
+    {
+      "name": "push-vs-02-campaigns",
+      "goto": "/campaigns",
+      "waitFor": "h3:has-text('Founders Club')",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(h3:has-text('Founders Club'))", "number": 1, "color": "plum" },
+        { "type": "label", "target": "div.rounded-xl:has(h3:has-text('Founders Club'))", "text": "Runs on its own. Each member is sent it once.", "color": "plum" },
+        { "type": "caption", "text": "A campaign: Qtap sends it automatically when a member matches the trigger, and each member receives it only once." }
+      ]
+    }
+  ]
+}

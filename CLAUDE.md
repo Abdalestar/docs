@@ -20,6 +20,341 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-12 — Downgrading Your Plan (Pre-Flight Check)
+
+**Article:** `merchants/billing/downgrade.mdx` (new)
+**Branch:** `claude/eloquent-fermat-1tt4oc`
+**PR:** https://github.com/Abdalestar/docs/pull/118
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK)
+
+### What was written
+New how-to for the P2 Notion row "Downgrading Your Plan (Pre-Flight Check)" (the sibling to the already-shipped `upgrade.mdx`). Covers the owner-only **Downgrade** button on the Billing Plans tab, the pre-flight usage check, the **Cannot downgrade yet** block, how to reduce each over-limit resource, and that an allowed downgrade is scheduled at period end. Added to the Settings nav after `billing/upgrade`. ~480 words of prose, 4 anti-slop passes (no em dashes / banned words).
+
+### Facts (all grounded in source)
+- Pre-flight check compares **four** active resource counts against the target plan: locations, staff, loyalty cards (`stamp_cards` + `points_programs` together), and campaigns (`lib/billing/downgrade-check.ts` `resourceChecks`; locations/staff/cards filter `is_active=true`, campaigns count all rows). QR codes/push are **not** part of the gate.
+- `POST /api/billing/check-downgrade` returns `canDowngrade` + `issues`; `false` opens the AlertDialog ("Cannot downgrade yet", yellow triangle, per-resource "You have N active but the new plan allows M. Please deactivate X."). `true` proceeds to `handleSubscribe`.
+- `changePlan` (`lib/stripe/helpers.ts`): existing paid sub downgrade -> `scheduled_downgrade` via a Stripe subscription schedule at current period end (features kept until then; a prior pending schedule is released first so the pending downgrade can be changed). Trial -> `trial_end: 'now'`, bills immediately at the new price.
+- `PLAN_TIERS` limits (`lib/stripe/config.ts`): Starter 1/2/1/1, Growth 2/5/3/3, Elite 5/15/10/5, Franchise 15/∞/∞/∞ (locations/staff/loyalty cards/campaigns).
+- Owner-only: non-owners see **Contact Owner** on each plan card (same gate as upgrade).
+
+### Screenshots
+SMOKE_OK. 3 real annotated PNGs via `flow-capture.mjs` (`.routine/flows/billing-downgrade.json`), points demo (Najma Coffee, Elite): Overview usage meters (Campaigns 8 of 5 red), Plans tab with **Downgrade** boxed, and the cropped **Cannot downgrade yet** dialog (Locations 3>1, Staff 5>2, Campaigns 8>1). The flow only clicks Downgrade toward Starter, which the account is guaranteed to exceed (8 campaigns vs 1), so the **read-only** check surfaces the block dialog and never schedules a real downgrade. `clipTo: "[role=alertdialog]"` crops the Radix AlertDialog.
+
+### Notes for future runs
+- Clicking **Downgrade** is safe to capture only when the account is known to exceed the target plan (then `handleSubscribe` is never called). If the account is within limits, the click would schedule a real downgrade (or open Checkout) — pick a target you know is over-limit, or stop at the Plans tab.
+- Remaining Not-started board row after this run: "Completing a Member's Profile (Phone / Birthday)" (P3, `merchants/members/complete-profile.mdx`).
+
+---
+
+## 2026-06-12 — Revenue Impact (stub replaced with real article)
+
+**Article:** `merchants/analytics/revenue-impact.mdx`
+**Branch:** `claude/eloquent-fermat-lff5kp`
+**Status:** Done. SMOKE_OK; 3 real annotated screenshots (validate-images 3/3 OK).
+
+### What was written
+The Notion board has zero `Status = "Not started"` rows (every row I read is Done),
+so per routine §3 this run did one task. The "Revenue Impact" row (P2) was marked
+`Done` + `Already published` + `Needs Screenshots = YES`, but `merchants/analytics/revenue-impact.mdx`
+on `main` was a one-line **"Coming soon" stub**. Replaced the stub with a full,
+source-grounded article + real live screenshots. The path is already in the Analytics
+nav (`docs.json` unchanged).
+
+Covers: the route (`/analytics/reports/revenue-impact`, no sidebar link, reached from
+the Reports hub); the three top figures (Total Revenue, Loyalty Transactions, Avg
+Revenue / Transaction); the dual-line "Revenue & Loyalty Activity Over Time" chart;
+the branch + time-period filters; the honest estimate caveat; and access control.
+Cross-links the Reports hub, Analytics Overview, and Roles and permissions.
+
+### Research sources (qtap repo, read-only)
+- `app/(dashboard)/analytics/reports/revenue-impact/page.tsx` — H1 "Revenue Impact Report",
+  subtitle "Loyalty activity correlated with revenue", 3 tiles, chart title, BranchFilter +
+  TimePeriodSelector.
+- `hooks/use-reports.ts` `useRevenueImpact` — revenue = sum of `points_transactions.transaction_amount`
+  where `type='earn'` and amount not null, in range; count = those rows. So points-only,
+  and the "estimate not a POS feed" caveat is literal.
+- `components/dashboard/analytics/time-period-selector.tsx` — Today / Last 7 / 30 / 90 days / This year.
+- `lib/utils/permissions.ts` — `/analytics` guard = `perms.analytics !== 'none'` (owners + managers; staff none).
+- Live page probe (points demo, Najma Coffee): Total Revenue $55,649.00, 868 transactions, $64.11 avg.
+
+### Screenshots
+`.routine/flows/revenue-impact.json` (points account): `revenue-impact-overview` (3 tiles
+numbered + caption), `revenue-impact-filters` (top region cropped, branch + time-period
+boxed), `revenue-impact-chart` (chart card cropped via `div.rounded-xl:has(.recharts-wrapper)`).
+Aggregate page, no PII; no destructive/outbound actions.
+
+### Notes for future runs
+- The board is fully `Done`. Several `Needs Screenshots = YES` rows are NOT backfillable:
+  `revenue-impact.mdx` / `points-activity.mdx` were "Coming soon" stubs (this run fixed
+  revenue-impact; **points-activity is still a stub** and a good next target); Dashboard Tour
+  (PR #3) and Adding Your First Customer (PR #5) are P1 but their PRs were never merged so the
+  articles are absent from `main`; Scanning & Earning is the mobile app (not Playwright-capturable);
+  Invoices & Payment needs a real Stripe subscription.
+- `merchants/analytics/{points-activity,staff-performance,location-comparison}` exist in the
+  Analytics nav; `points-activity.mdx` confirmed a stub on main. Worth checking the other two.
+
+---
+
+## 2026-06-12 — Stamp Card Advanced Settings
+
+**Article:** `merchants/stamp-cards/advanced-settings.mdx` (new)
+**Branch:** `claude/eloquent-fermat-b4ypws`
+**PR:** https://github.com/Abdalestar/docs/pull/116
+**Status:** Done (SMOKE_OK, 3 real annotated screenshots, validate-images 3/3 OK)
+
+### What was written
+New how-to for the P1-section gap row "Stamp Card Advanced Settings: Delay, Daily Cap, Multi-Stamp" (P2, was Not started). Documents the **Advanced Settings** collapsible on the Card Design step of the stamp card wizard. Placed under `merchants/stamp-cards/` (after `rewards`) for nav consistency, not the Notion-suggested `merchants/cards/` path. One task this run (per the run request).
+
+**Facts (all grounded in source):**
+- Panel renders on the Card Design step and saves with the card (`stamp-card-wizard.tsx`: `currentStep === 'design'` gate; fields persist on publish/save-draft at Review).
+- **Stamping Delay** (`stamping_delay_minutes`, 0–1440 min) and **Daily Stamp Cap** (`daily_stamp_cap`, 1–100, blank = no limit) are enforced in `lib/stamps/issue-stamp.ts` only when `skip_rules` is false. Messages: delay -> "Please wait N more minute(s)…"; cap -> "Daily stamp limit reached (N per day)."
+- These rules fire on customer earn paths (`app/api/scan/route.ts`, `app/api/nfc/tap/route.ts` call `issueStamp` without `skip_rules`).
+- **Honest gotcha (Warning in the article):** manual stamps from Stamp Operations BYPASS delay + cap — `app/api/stamps/issue/route.ts` calls `issueStamp({ skip_rules: true })`. The `Number of Stamps` (`#stamps-qty`) field on `/stamp-operations` is the staff multi-stamp control.
+- Brief tour of the rest of the panel: Stamp Expiry (Expiration), Welcome/Birthday bonus stamps (0–10), Allow Partial Redemption (cross-linked to rewards.mdx).
+
+### Screenshots
+3 real annotated PNGs from the live **stamp** demo (Dana) via `.routine/flows/stamp-advanced-settings.json`: collapsed panel on Card Design; expanded Stamping Rules (delay 5 / cap 3 / multi-stamp boxed + numbered); Stamp Operations Number of Stamps field. No card published/saved; no member selected (no PII). validate-images 3/3 OK; pushed as binary via git.
+
+### Insights for future runs
+- The live `/cards/new` is the **wizard** (`StampCardWizard`), steps Card Design / Rewards / Locations / Review. Advanced Settings is a `Collapsible` rendered below the step content on the Card Design step only. The stamp account's `/cards/new` renders fine (no plan-limit block).
+- Advanced Settings inputs have **no name/id**. Reliable selectors: Stamping Delay `input[max="1440"]`, Daily Stamp Cap `input[placeholder="No limit"]`, Stamp Expiry `input[placeholder="Never expire"]`. There are 4 `[role=switch]` on the page, so box the **label** `text=Allow Multiple Stamps` rather than the switch (avoids toggling the wrong one — partial-redemption is the other panel switch).
+- On `/stamp-operations`, selecting a card from the first `[role=combobox]` reveals `#stamps-qty` (Number of Stamps) without picking a member, so no PII. Stamp account has 3 cards (Glow Card, VIP Beauty Pass, Dana Card).
+- **Enforcement reality (verify before claiming):** `stamp_expiry_days` and `allow_multi_stamp` are stored and displayed but I found NO enforcement code — no stamp-expiry cron (only `/api/points/expire` exists for points), and the Stamp Operations quantity field works regardless of the toggle. The article describes both at face value without asserting a hard gate or automatic stamp removal.
+- The In-progress P1 row "Awarding Points: By Amount vs Manual Points" was locked by another run (skipped). The P1 "Stamp Card Rewards: Main, Sign-Up & Interim" row is a flagged duplicate of the published `stamp-cards/rewards.mdx` (skipped).
+
+---
+
+## 2026-06-11 — The Staff Activity Log
+
+**Article:** `merchants/staff/activity-logs.mdx`
+**Branch:** `claude/eloquent-fermat-d8kndz`
+**PR:** https://github.com/Abdalestar/docs/pull/113
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK)
+
+### What was written
+New article for the P2 Notion row "The Staff Activity Log" (`/staff/activity`). The Notion-tracked path was `activity-log.mdx`, but a "Coming soon" stub already existed on `main` at `merchants/staff/activity-logs.mdx` and was already in `docs.json` nav, so the stub was turned into the real article (no nav change, no duplicate file).
+
+**Facts (all grounded in qtap source):**
+- Entry: Staff page → **Activity Log** button (`app/(dashboard)/staff/page.tsx`).
+- Table columns Date & Time / Staff / Action / Branch / Member / Details (`activity-table.tsx`); Staff falls back to **System** for non-person actions; Member shows a dash when none.
+- 11 `AnalyticsEventType` values (Stamp/Points Issued, Reward Redeemed, Member Joined/Visit, campaign + notification events) from `activity-filters.tsx` / `types/analytics.ts`.
+- Honest gotcha: team-management events (invite/remove/permission edits) are NOT logged here — they aren't `analytics_events`.
+- Reads the 200 most recent matching rows (`hooks/use-staff-activity.ts`, `.limit(200)`); filters by staff/action/date, and branch only when >1 location.
+- Export CSV via `lib/utils/staff-activity-export.ts` (report header; disabled when empty).
+- Access: owners + managers; Staff role can't open it by default (`/staff` gated by `perms.staff !== 'none'`, staff default `none`).
+
+### Screenshots
+SMOKE_OK. 3 real annotated PNGs from the live points demo (Najma Coffee) via `flow-capture.mjs` (`.routine/flows/staff-activity-log.json`): entry button on `/staff`; full log page (filters + Export CSV boxed, **Member column redacted** with an explicit rect); Action Type dropdown cropped to `[role=listbox]`. No destructive/outbound clicks.
+
+### Notes
+- Points demo has rich data (200 rows, all event types) and >1 location, so the Branch filter renders. Member column holds customer names → redacted; Staff column holds the merchant's own team (demo seed) → left visible since the article is about staff actions.
+- One task this run per the request.
+
+---
+
+## 2026-06-11 — Understanding Your Usage Meters
+
+**Article:** `merchants/billing/usage-meters.mdx` (new)
+**Branch:** `claude/eloquent-fermat-0wnfgr`
+**PR:** https://github.com/Abdalestar/docs/pull/112
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK)
+
+### What was written
+New Billing how-to for the six usage meters on **Settings > Billing → Overview**.
+Notion row "Understanding Your Usage Meters" (P2, was the highest-priority
+genuinely-new, screenshot-able Not-started row). Added to the Settings nav after
+`settings/billing`.
+
+Facts (grounded in `app/(dashboard)/settings/billing/page.tsx` + `lib/stripe/config.ts`):
+- Six `UsageMeter`s: Locations, Staff Members, Loyalty Cards (active `stamp_cards` **+**
+  active `points_programs`), QR Codes (this month), Campaigns, Push Notifications (this month).
+- QR Codes and Push are monthly (query filters `created_at >= startOfMonth`); the other
+  four are running totals. Campaigns counts **every** campaign row (no status filter), so it
+  can read over the limit (demo shows `8 of 5`).
+- `UsageMeter`: `isAtLimit = used >= limit` turns the count + bar red (red at 100%, not 80%).
+  Unlimited (Infinity) shows the count + ∞ and no bar.
+- Add-ons raise the effective limit (`usePlanLimits`).
+
+### Screenshots
+3 real annotated PNGs via `flow-capture.mjs` (`.routine/flows/billing-usage-meters.json`)
+from the live points demo (Najma Coffee, Elite): full Overview; the real over-limit
+Campaigns meter (`8 of 5`, red, cropped); the two `(this month)` meters boxed. Read-only
+capture (Overview tab only); no billing change. `validate-images.mjs` 3/3 OK, pushed as binary.
+
+### Selection notes (for future runs)
+- The top P1 Not-started gap-audit rows were set aside this run as already-covered-on-main
+  or un-screenshotable, and should be reconciled/closed:
+  - **Audience Segments Explained** (`notifications/segments.mdx`) — already covered by
+    `campaigns/push-notifications.mdx` "Choosing an audience" (all 7 segments w/ criteria).
+  - **Redeeming a Reward: By Code vs Customer Lookup** (`redemptions/redeeming.mdx`) —
+    duplicate of on-main `members/redemptions.mdx` (Code + Lookup + History).
+  - **Redeeming a Campaign Reward Code (Staff Guide)** (`campaigns/redeem-code.mdx`) — the
+    `campaign_rewards` validate/redeem flow (`app/api/campaigns/rewards/*`) has **no merchant
+    dashboard UI** (API/mobile-only), so it can't be a screenshot how-to.
+- `billing/plans.mdx` and `billing/upgrade.mdx` are on real `main` now (local `origin/main`
+  was stale at clone time; the assigned branch and real main already carry PRs #98–#100+).
+  The PR diff was still clean (only the 6 new files).
+
+---
+
+## 2026-06-11 — Send a notification to specific members
+
+**Article:** `merchants/notifications/targeted.mdx` (new)
+**Branch:** `claude/eloquent-fermat-4rjmw8`
+**PR:** https://github.com/Abdalestar/docs/pull/105
+**Status:** Done (4 real annotated screenshots; validate-images 4/4 OK). One task this run.
+
+### What was written
+New how-to for the hand-picked-members push flow (Notion "Sending a Targeted Notification to Specific Members", Campaigns section). Two entry points, both landing on `/notifications/new`:
+- Members page bulk-select → the bulk bar's **Send Notification** → `?members=id1,id2,...`
+- A member's row menu or profile **Send Notification** → `?member_id=...&member_name=...`
+Both inject `target_member_ids` + `segment_type='custom'`, so the compose page hides the segment chooser and shows **Sending to N selected members**. Covers title ≤100 / body ≤500, Use Template, live preview, Send Now / Schedule / Save as Draft, the push-disabled skip + zero-recipients case, and access (owners + managers; staff `campaigns:'none'`). Added to the Campaigns nav after `push-notifications`; cross-links it rather than duplicating the segment-broadcast article.
+
+### Research sources (Abdalestar/qtap, read-only)
+- `app/(dashboard)/notifications/new/page.tsx` — `member_id`/`members=` params → `target_member_ids` + `segment_type='custom'`; header subtitle
+- `components/dashboard/notifications/notification-form.tsx` — `targetMemberCount>0` swaps the SegmentSelector for the "Sending to N" box; field limits; schedule toggle; Save as Draft / Send Now
+- `app/(dashboard)/members/page.tsx` (bulk bar + row-menu links, gated `role!=='staff'`), `members/[id]/page.tsx` (profile button disabled + tooltip when `push_enabled` false)
+- `app/api/notifications/send/route.ts` + `lib/notifications/segments.ts` — base `push_enabled` filter, `.in('id', target_member_ids)`, "No recipients with push enabled"
+- `lib/validations/notification.ts`, `lib/utils/permissions.ts` (`/notifications` needs `campaigns!=='none'`), `lib/validations/staff.ts`
+
+### Insights for future runs
+- **Task selection.** The highest-priority Not-started row was P1 "Campaigns Overview & the 8 Campaign Types" → `merchants/campaigns/overview.mdx`, but that file already exists on `main` (covers 7 types well; the "8th" is the non-UI `custom` schema type). It's a rewrite, not a new article, so per routine task-1 ("write a **new** article") I took the highest-priority Not-started row whose file doesn't exist. The 2026-06-10 gap audit added a batch of Campaigns/Notifications rows; several P2 new-file ones remain (push-vs-campaign, messages, scheduling-templates, and the overview rewrite).
+- **flow-capture is flaky on the members table.** A re-run had the row-checkbox clicks not register (downstream steps then failed); on FAILED the engine doesn't overwrite a prior good PNG, so earlier good shots survived. If re-capturing one step, expect to re-run and keep the good ones.
+- **Row-menu single-member shot:** pick a row whose Push cell is the green bell. Row 1 on the points demo had push **off**, so its menu showed the disabled "Push not enabled" item instead of "Send Notification"; row 2 had push on.
+- Members PII: redact `td:nth-child(2)` (Member) + `td:nth-child(3)` (Contact) per row (`tbody tr:nth-child(N) ...`); one big block over rows 1-9 covers the viewport. Compose page + row menu have no PII.
+- Did not click Send Now / Schedule / Save as Draft, so no notification was sent during capture.
+
+---
+
+## 2026-06-11 — Campaign Rewards (types & code issuance)
+
+**Article:** `merchants/campaigns/rewards.mdx`
+**Branch:** `claude/eloquent-fermat-lmvv0s`
+**PR:** https://github.com/Abdalestar/docs/pull/104
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK)
+
+### What was written
+Filled the P1 Not-started row "Campaign Rewards: Types & How Codes Are Issued". The
+article on `main` (`merchants/campaigns/rewards.mdx`) was a "Coming soon" stub and the
+path was already in `docs.json` nav, so this run only replaced the stub body (no nav
+change). One new-article task this run, per the user request.
+
+**Facts (all grounded in qtap source):**
+- Five reward types from `components/dashboard/campaigns/steps/reward-config.tsx`:
+  Free Item (item name), Bonus Stamps (1–20), Bonus Points (1–1000), Discount (1–100%),
+  Special Badge (name + icon star/crown/trophy/medal/gem). Reward is optional.
+- Code issuance from `app/api/campaigns/execute/route.ts`: when a campaign with
+  `reward_type` + `reward_config` runs, one `campaign_rewards` row per processed member;
+  code `CAMP-` + 8 chars (A–Z0–9); 30-day default expiry; status issued→redeemed/expired.
+- Honoring: `app/api/campaigns/rewards/[code]/redeem/route.ts` only updates the member
+  balance for `bonus_stamps`/`bonus_points`. **free_item/discount/badge are honored
+  manually at the till** (no auto-discount, no POS integration). Documented as a Warning.
+
+### Screenshots
+3 real annotated PNGs (1440×1000) from the stamp demo account (Dana Salon & Spa, under
+its campaign limit so `/campaigns/new` renders) via `.routine/flow-capture.mjs`
+(`.routine/flows/campaign-rewards.json`): the five reward types (numbered), the Discount
+config field, and the Review summary. Wizard filled but never submitted (Activate /
+Save as Draft never clicked). No PII on these wizard screens. `validate-images.mjs` 3/3 OK.
+
+### Insights for future runs
+- SMOKE_OK first try. The campaign reward CODE redemption endpoints
+  (`/api/campaigns/rewards/validate/[code]`, `/[code]/redeem`) exist but are **not wired
+  into any dashboard UI** (no frontend usage; grep found none). So the sibling P1 row
+  "Redeeming a Campaign Reward Code (Staff Guide)" has no real dashboard screen to
+  screenshot — likely a staff-scanner/mobile feature. Picked the reward-types article
+  instead, whose surface (the wizard Reward + Review steps) is fully real.
+- The points demo account (Najma) is at its campaign limit; use the **stamp** account for
+  any `/campaigns/new` capture, as prior runs found.
+
+---
+
+## 2026-06-11 — Exporting and Deleting Members
+
+**Article:** `merchants/members/export-delete.mdx` (new)
+**Branch:** `claude/eloquent-fermat-2tdmbm`
+**PR:** https://github.com/Abdalestar/docs/pull/103
+**Status:** Done (3 real annotated screenshots, validate-images 3/3 OK)
+
+### What was written
+New how-to for the P2 gap-audit row "Exporting & Deleting Members". Goes deeper than the brief Export/Delete mentions in `members/overview.mdx` (cross-linked, not duplicated). Covers full CSV export, the selected-subset export, and the member-deletion flow.
+
+**Facts (all grounded in `app/(dashboard)/members/page.tsx`):**
+- `exportMembers()` pulls every member of the org from `member_org_view` (all pages), file `members-<date>.csv`. 10 columns: First/Last Name, Email, Phone, Birthday, Join Date, Total Stamps, Total Points, Visit Count, Last Visit. Visit Count / Last Visit derived from `transactions`.
+- Export buttons gate on **role**, not the `members` permission: `staff?.role !== 'staff'` (owners + managers see Export CSV / Export Selected; Staff role never does).
+- `exportSelectedMembers()` → `selected-members-<date>.csv` from the ticked rows.
+- Delete = `deleteSelectedMembers()` deletes the `organization_members` row (org membership + loyalty data), NOT the global member identity. Two entry points: row menu "Delete Member" (single) and bulk toolbar "Delete" (multi). `canDeleteMembers` = owner OR effective `members === 'full'` (so owner always; manager by default since DEFAULT_PERMISSIONS.manager.members='full'; staff only with custom full access).
+- AlertDialog: title "Permanently Remove Members", action "Permanently Delete" (reads "Deleting..." in flight) / "Cancel".
+
+### Screenshots
+`.routine/flows/export-delete.json` (points demo, Najma Coffee, 180 members): Export CSV boxed (badge 1, PII redacted); bulk toolbar with Export Selected (badge 2) + Delete (red), 2 rows selected, PII redacted; cropped "Permanently Remove Members" dialog, Permanently Delete boxed red. **Permanently Delete never clicked** — no member removed. Export buttons boxed but never clicked (no CSV downloaded). 1440×900 + cropped dialog, all real binary.
+
+### Insights for future runs
+- The Export button gate is purely `role !== 'staff'`, independent of the `members` enum (full/view_export/view/none). The `view_export` permission value exists in the schema but the Members page UI never reads it for the export button — only the role. Document export access as "owners and managers", not by permission value.
+- Delete-confirm crop: `clipTo: "[role=alertdialog]"` with `clipPadding: 14` leaked a faint phone number from the row behind the scrim at the bottom edge; dropping to `clipPadding: 4` (and removing the below-button label that needed the extra room) kept the crop inside the white card with no PII leak.
+- Row checkboxes are `table tbody tr:nth-child(N) td:first-child button[role=checkbox]`; selecting any row (not just select-all) inserts the bulk toolbar and shifts the table down ~80px, so reuse the bulk redact rect (y≈395) from members-overview.
+- Single-branch environment again (`claude/eloquent-fermat-2tdmbm`): shipped the one new-article task this run rather than mixing a screenshot backfill into the same branch/PR (same call as the wcagj2 run).
+
+---
+
+## 2026-06-11 — Showing and scanning a QR code (customer scan flow)
+
+**Article:** `merchants/qr-codes/customer-scan-flow.mdx` (new)
+**Branch:** `claude/eloquent-fermat-8b1hya`
+**PR:** https://github.com/Abdalestar/docs/pull/102
+**Status:** Done. One task this run (highest-priority Not-started row, P0). 3 real screenshots + 1 SVG; validate-images 4/4 OK.
+
+### What was written
+New P0 how-to for the gap-audit row "Showing a QR Code to a Customer & How They Scan/Redeem". Covers displaying a code (PNG for print, SVG for posters/decals, the `dashboard.qtap.qa/scan/<code>` scan address), what the customer sees on success/failure, and the crediting rule. Redeeming is flagged as a separate staff step. Added to the QR Codes & NFC nav after Actions.
+
+**The P0 fact (grounded in source):** a scan credits stamps/points only when Qtap can identify who scanned. `app/api/scan/route.ts` gates step 7 (award) entirely on `member_id`; the public `app/scan/[code]/page.tsx` posts only `{ code }`, so a phone-camera scan logs `qr_code_scans` + increments `scan_count` but adds nothing to anyone. Crediting happens via the Qtap app (sends the member) or staff scanning the member code. `qr-codes/[id]/page.tsx` confirms the QR encodes `${origin}/scan/${code}`.
+
+### Screenshots
+- `customer-scan-show-code.png` — merchant QR preview card (scan URL + PNG/SVG), cropped, read-only.
+- `customer-scan-success.png` / `customer-scan-failed.png` — live `/scan/[code]` at phone width (430px viewport).
+- `customer-scan-paths.svg` — app-vs-camera crediting diagram (the app isn't capturable from the sandbox).
+- Flows: `.routine/flows/customer-scan-merchant.json` (1440px) and `customer-scan-result.json` (430px).
+
+### Insights / gotchas for future runs
+- **Najma points QR codes have `points_value = 0`**, so an anonymous points scan renders "You earned 0 points!" and an anonymous stamp scan renders "Stamp added! (undefined/undefined)" — both poor/misleading shots. The clean, honest success capture is the **reusable check-in** code `NAJMA-PEARL-TABLE` ("Check-in recorded! Thanks for visiting."), which awards nothing to anyone by design. One anonymous scan-count blip, no member, no notification.
+- `/scan/<nonexistent>` returns the 404 "QR code not found. It may have been deleted." failure card with **no write** — safe for the failure shot. A non-matching code (`NAJMA-DEMO-NOTFOUND`) was verified via Supabase first.
+- The customer scan page is public; the flow engine logs in (dashboard) then `goto`s `/scan/...` fine. Use a phone-width viewport (430px) for the customer shots, but keep the merchant dashboard shot at 1440px (the dashboard shows a "larger screen" notice below 768px).
+- SMOKE_OK first try; pipeline unchanged (npm i sharp playwright, chromium preinstalled at /opt/pw-browsers).
+
+---
+
+## 2026-06-11 — Adjusting and Deducting Points
+
+**Article:** `merchants/points/adjusting.mdx` (new)
+**Branch:** `claude/eloquent-fermat-5p1qr1`
+**PR:** https://github.com/Abdalestar/docs/pull/101
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK)
+
+### What was written
+New P1 how-to for the highest-priority `Not started` board row, "Adjusting & Deducting Points (Owner/Manager Only)". The board was otherwise all Done, so this was the single new-article task. Added to the Points Programs nav after `operations`.
+
+Scoped as a deep-dive that complements `points/operations.mdx` (which already covers the basic award + Adjust/Deduct steps), the same overview-vs-deepdive split the staff articles use. It documents the four facts the overview omits, all grounded in source:
+- **Owner/manager only.** Staff have `issue_points=true` by default, so they reach `/points-operations` and SEE the Adjust/Deduct tab, but `app/api/points/adjust/route.ts` 403s a staff role on submit. Documented honestly (UI does not hide the tab).
+- **Reason required** (400 if empty), saved as `Staff adjustment: <reason>` attributed to the staff account.
+- **Cannot go below zero** (400, balance untouched).
+- **Deductions notify the member** (push, email fallback); positive adjustments do not (`if (pointsValue < 0)` block; `notification_sent: pointsValue < 0`).
+
+### Research sources (Abdalestar/qtap, read-only)
+- `app/api/points/adjust/route.ts` — owner/manager gate, reason 400, below-zero 400, deduction-only notification, points_transactions + transactions ledger + analytics logging.
+- `app/(dashboard)/points-operations/page.tsx` — tabs (Award Points / Adjust/Deduct / Recent Activity), Add/Deduct toggle, `#adjust_points`, `#adjust_reason` (Reason (required)), OperationBranchSelect, balance preview, Confirm Points Deduction dialog (final button "Confirm Deduction").
+- `lib/utils/permissions.ts` + `lib/validations/staff.ts` — `/points-operations` needs `issue_points` (true for owner/manager/staff defaults), so staff reach the page but the API still blocks the adjust.
+
+### Screenshots
+SMOKE_OK. 3 real annotated PNGs via `flow-capture.mjs` (`.routine/flows/points-adjusting.json`) from the points demo account (Najma Coffee): `points-adjust-tab.png` (tab + Add/Deduct toggle + Reason boxed), `points-adjust-preview.png` (Deduct 150, current→new balance + notify notice, cropped to the form card so no PII), `points-adjust-confirm.png` (Confirm Points Deduction dialog, member name redacted). The flow opens the confirm dialog and never clicks **Confirm Deduction**, so no real balance changed. `validate-images.mjs` 3/3 OK; pushed as binary via git.
+
+### Notes / gotchas
+- Adjust member-search result row is `.divide-y button` (a `<button>`, not a div); search needs ≥2 chars.
+- The points account is multi-branch, so the confirm button stays disabled until a Branch is picked (OperationBranchSelect / `branchRequired`); the flow selects the first branch option.
+- Crop selector `div.bg-card:has-text('Adjust Points Balance')` isolates the right-hand form card and keeps the selected member's email (left card) out of the shot.
+- The gap-audit row proposed a fresh `points/adjusting.mdx`; `points/operations.mdx` already had an Adjust/Deduct section, so this article cross-links rather than re-teaching the basics.
+
+---
+
 ## 2026-06-11 — Upgrading Your Plan
 
 **Article:** `merchants/billing/upgrade.mdx`
