@@ -112,6 +112,7 @@
           "merchants/billing/plans",
           "merchants/settings/billing",
           "merchants/billing/upgrade",
+          "merchants/billing/invoices-payment",
           "merchants/settings/locations",
           "merchants/settings/notifications",
           "merchants/settings/merchant-page",
