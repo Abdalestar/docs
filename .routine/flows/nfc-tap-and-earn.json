@@ -1,0 +1,56 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/nfc-tags",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "viewport": { "width": 1440, "height": 1200 },
+  "steps": [
+    {
+      "name": "nfc-tap-list",
+      "goto": "/nfc-tags",
+      "waitFor": "text=Total Tags",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "th:has-text('Action')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "th:has-text('Taps'):not(:has-text('Last'))", "number": 2, "color": "charcoal" },
+        { "type": "caption", "text": "Each tag runs one action when a customer taps it. The Taps column counts how many times it has been used." }
+      ]
+    },
+    {
+      "name": "nfc-tap-actions",
+      "goto": "/nfc-tags",
+      "actions": [
+        { "wait": 4000 },
+        { "click": "tr:has-text('West Bay') button" },
+        { "wait": 800 },
+        { "click": "text=View Details" },
+        { "wait": 4000 },
+        { "click": "button:has-text('Edit')" },
+        { "wait": 1200 },
+        { "click": "button[role='combobox']:has-text('Award Points')" },
+        { "wait": 1000 }
+      ],
+      "waitFor": "[role='listbox']",
+      "waitMs": 800,
+      "clipTo": "[role='listbox']",
+      "clipPadding": 10
+    },
+    {
+      "name": "nfc-tap-detail",
+      "goto": "/nfc-tags",
+      "actions": [
+        { "wait": 4000 },
+        { "click": "tr:has-text('West Bay') button" },
+        { "wait": 800 },
+        { "click": "text=View Details" },
+        { "wait": 4500 }
+      ],
+      "waitFor": "text=Total Taps",
+      "waitMs": 4000,
+      "annotate": [
+        { "type": "label", "target": "[class*='grid-cols-4']", "text": "The running tap count and the action this tag runs", "color": "plum" },
+        { "type": "caption", "text": "A tag's detail page: the total taps, the action it runs, its location and status, and the tag's serial number and dates." }
+      ]
+    }
+  ]
+}

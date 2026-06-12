@@ -1,66 +1,66 @@
 {
   "deployUrl": "https://dashboard.qtap.qa",
-  "section": "merchants/redemptions",
+  "section": "merchants/points",
   "account": "points",
-  "defaultWaitMs": 3000,
+  "defaultWaitMs": 2500,
   "steps": [
     {
-      "name": "points-rewards-01-lookup",
-      "goto": "/redemptions",
-      "waitFor": "text=Enter Redemption Code",
-      "waitMs": 4500,
+      "name": "rewards-01-programs",
+      "goto": "/points",
+      "waitFor": "button:has-text('Create Program')",
+      "waitMs": 3500,
       "annotate": [
-        { "type": "box", "target": "button:text-is('Look Up Customer')", "number": 1, "color": "plum" },
-        { "type": "caption", "text": "To redeem a points reward, open Redemptions and choose Look Up Customer. No code is needed." }
+        { "type": "box", "target": "button:has-text('Create Program')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Rewards live inside a points program. Create a new program, or open an existing one with Edit to manage its rewards." }
       ]
     },
     {
-      "name": "points-rewards-02-search",
+      "name": "rewards-02-list",
+      "goto": "/points/ca5e0004-0000-4000-a000-000000000001",
+      "waitFor": "text=What can customers redeem points for?",
       "actions": [
-        { "click": "button:text-is('Look Up Customer')" },
-        { "wait": 900 },
-        { "fill": ["input[placeholder*='Search by name']", "mo"] },
-        { "wait": 2400 }
-      ],
-      "clipTo": "input[placeholder*='Search by name']",
-      "clipPadding": 150,
-      "annotate": [
-        { "type": "box", "target": "input[placeholder*='Search by name']", "color": "plum" },
-        { "type": "redact", "target": ".divide-y button p.font-medium", "color": "charcoal" },
-        { "type": "redact", "target": ".divide-y button p.text-muted-foreground", "color": "charcoal" }
-      ]
-    },
-    {
-      "name": "points-rewards-03-balance",
-      "actions": [
-        { "click": ".divide-y button" },
         { "wait": 3000 },
-        { "hover": ":nth-match(button:has-text('Redeem'), 2)" },
+        { "press": "PageDown" },
+        { "wait": 900 }
+      ],
+      "waitMs": 600,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Add Reward')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.cursor-pointer:has(p:has-text('Free Cookie or Date'))", "color": "plum" },
+        { "type": "caption", "text": "The Rewards card lists every reward and its points cost. Click Add Reward to add one, click a reward to edit it, or the X to remove it." }
+      ]
+    },
+    {
+      "name": "rewards-03-add",
+      "goto": "/points/ca5e0004-0000-4000-a000-000000000001",
+      "actions": [
+        { "click": "button:has-text('Add Reward')" },
+        { "fill": ["#pointsRewardName", "Free Latte"] },
+        { "fill": ["#pointsRequired", "300"] },
         { "wait": 700 }
       ],
-      "clipTo": ".mt-4.space-y-3",
-      "clipPadding": 16,
-      "annotate": [
-        { "type": "box", "target": ":nth-match(button:has-text('Redeem'), 2)", "color": "plum" }
-      ]
-    },
-    {
-      "name": "points-rewards-04-confirm",
-      "actions": [
-        { "click": ":nth-match(button:has-text('Redeem'), 2)" },
-        { "wait": 1500 },
-        { "click": "#op-branch" },
-        { "wait": 700 },
-        { "click": "[role=option]" },
-        { "wait": 800 }
-      ],
-      "waitFor": "[role=dialog] button:has-text('Confirm Redemption')",
+      "waitFor": "text=Add a points reward",
       "clipTo": "[role=dialog]",
       "clipPadding": 12,
       "annotate": [
-        { "type": "box", "target": "[role=dialog] .bg-blue-50", "color": "plum" },
-        { "type": "box", "target": "[role=dialog] button:has-text('Confirm Redemption')", "color": "plum" },
-        { "type": "redact", "target": "[role=dialog] p.font-medium", "color": "charcoal" }
+        { "type": "box", "target": "#pointsRewardName", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#pointsRequired", "number": 2, "color": "plum" },
+        { "type": "label", "target": "#pointsRequired", "text": "Points the customer spends to redeem this reward", "color": "plum" }
+      ]
+    },
+    {
+      "name": "rewards-04-edit",
+      "goto": "/points/ca5e0004-0000-4000-a000-000000000001",
+      "actions": [
+        { "click": "div.cursor-pointer:has(p:has-text('Free Cookie or Date'))" },
+        { "wait": 700 }
+      ],
+      "waitFor": "text=Edit reward",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "#pointsRequired", "color": "plum" },
+        { "type": "label", "target": "#pointsRequired", "text": "Change the points cost, name, image, or staff note of a reward you already added", "color": "plum" }
       ]
     }
   ]

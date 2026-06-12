@@ -1,0 +1,62 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "points",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 1300 },
+  "steps": [
+    {
+      "name": "points-adjust-tab",
+      "goto": "/points-operations",
+      "waitFor": "text=Award Points",
+      "waitMs": 5500,
+      "actions": [
+        { "click": "[role=tab]:has-text('Adjust')" },
+        { "wait": 1200 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "[role=tab]:has-text('Adjust')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Deduct Points')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "#adjust_reason", "number": 3, "color": "plum" },
+        { "type": "caption", "text": "Open the Adjust/Deduct tab on the Points Operations page (1). Choose Add Points or Deduct Points (2) and write a reason (3). Only owners and managers can finish an adjustment." }
+      ]
+    },
+    {
+      "name": "points-adjust-preview",
+      "actions": [
+        { "fill": ["input[placeholder='Search members...']", "moh"] },
+        { "wait": 4000 },
+        { "click": ".divide-y button" },
+        { "wait": 1200 },
+        { "click": "button:has-text('Deduct Points')" },
+        { "fill": ["#adjust_points", "150"] },
+        { "fill": ["#adjust_reason", "Correction for a duplicate scan"] },
+        { "wait": 800 },
+        { "click": "[role=combobox]:has-text('Select the branch')" },
+        { "wait": 900 },
+        { "click": "[role=option]" },
+        { "wait": 800 }
+      ],
+      "clipTo": "div.bg-card:has-text('Adjust Points Balance')",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "text=New Balance", "color": "plum" },
+        { "type": "label", "target": "text=Member will be notified", "text": "A deduction lowers the balance and notifies the member", "color": "plum" }
+      ]
+    },
+    {
+      "name": "points-adjust-confirm",
+      "actions": [
+        { "click": "button:has-text('Deduct 150 Points')" },
+        { "wait": 1400 }
+      ],
+      "waitFor": "text=Confirm Points Deduction",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "redact", "target": "[role=dialog] p.font-medium", "color": "charcoal" },
+        { "type": "label", "target": "text=The member will receive a notification", "text": "Deductions notify the member; positive adjustments do not", "color": "plum" }
+      ]
+    }
+  ]
+}

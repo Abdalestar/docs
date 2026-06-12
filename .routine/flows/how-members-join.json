@@ -1,0 +1,41 @@
+{
+  "section": "merchants/members",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "join-01-members-list",
+      "goto": "/members",
+      "waitFor": "button:has-text(\"Export CSV\")",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "redact", "rect": { "x": 327, "y": 315, "width": 535, "height": 585 } },
+        { "type": "box", "target": "text=/total member/", "color": "plum" },
+        { "type": "box", "target": "button:has-text(\"Export CSV\")", "color": "plum" },
+        { "type": "caption", "text": "Members appear here on their own once a customer scans your code. The only action along the top is Export CSV: there is no Add Member button." }
+      ]
+    },
+    {
+      "name": "join-02-row-menu",
+      "actions": [
+        { "click": "table tbody tr:first-child td:last-child button" },
+        { "wait": 1000 }
+      ],
+      "clipTo": "[role=menu]",
+      "clipPadding": 8,
+      "annotate": [
+        { "type": "redact", "rect": { "x": 327, "y": 315, "width": 535, "height": 585 } }
+      ]
+    },
+    {
+      "name": "join-03-entry-point",
+      "goto": "/qr-codes",
+      "waitFor": "button:has-text(\"Generate\")",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Generate\")", "color": "plum" },
+        { "type": "caption", "text": "The QR codes you print and the NFC tags you place are how customers join. Each scan or tap with the Qtap app enrolls the customer automatically." }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,54 @@
 ---
 title: "Revenue Impact"
-description: "Understanding how your loyalty program affects sales and repeat visits"
+sidebarTitle: "Revenue impact"
+description: "Read estimated revenue against your loyalty activity, and see the two move together over time."
 ---
 
-Coming soon
+The Revenue Impact Report puts a money figure next to your loyalty activity, so you can see whether the points your members earn line up with money coming in. It is one of the four reports in the [Detailed Reports hub](/merchants/analytics/reports-hub), and you reach it at `dashboard.qtap.qa/analytics/reports/revenue-impact`. There is no sidebar link.
+
+<Frame caption="The Revenue Impact Report: three summary figures and a chart of revenue against loyalty activity over time.">
+  <img src="/images/analytics/revenue-impact-overview.png" alt="Revenue Impact Report showing total revenue, loyalty transactions, average revenue per transaction, and a dual-line chart" />
+</Frame>
+
+## The three figures
+
+Across the top sit three numbers for the period you have selected:
+
+- **Total Revenue** adds up the purchase amounts recorded each time a member earned points in the period.
+- **Loyalty Transactions** counts how many of those point-earning visits happened.
+- **Avg Revenue / Transaction** divides the first by the second, so you see the typical spend behind one visit.
+
+In the screenshot above, 868 visits sit behind 55,649 in revenue, which works out to about 64 per visit.
+
+## The chart
+
+Below the figures, one chart plots two lines on the same dates: revenue on the left axis and the number of loyalty transactions on the right. When the two lines rise and fall together, your loyalty activity is tracking your takings. Hover any day to read the exact revenue and visit count for that date.
+
+<Frame caption="Revenue and loyalty transactions plotted together. Hover a day to read both values.">
+  <img src="/images/analytics/revenue-impact-chart.png" alt="Dual-line chart titled Revenue and Loyalty Activity Over Time, with a revenue line and a transactions line and a hover tooltip" />
+</Frame>
+
+## Choosing the period and branch
+
+Two controls at the top right shape what you see. The branch filter narrows the report to one location, and the time period switches between Today, the last 7, 30, or 90 days, and this year. Change either and the report reloads with the new range.
+
+<Frame caption="Use the branch filter and the time period selector to focus the report.">
+  <img src="/images/analytics/revenue-impact-filters.png" alt="The branch filter set to All branches and the time period selector set to Last 30 days at the top of the report" />
+</Frame>
+
+## The revenue figure is an estimate
+
+The revenue here is an estimate Qtap builds from the purchase amounts your staff enter when they award points. It is not a feed from your point-of-sale system. Use it to watch the shape of the trend and keep your till for the exact books.
+
+A few things follow from how the number is built:
+
+- A stamp-only program records no purchase amounts, so its Revenue Impact Report stays empty. This report is for points programs.
+- If a member earns points without a purchase amount entered, that visit adds a transaction but no revenue, which can pull the average down.
+
+<Note>
+For the headline numbers and charts that sit above these reports, start on the [Analytics Overview](/merchants/analytics/overview). For the full set of detailed reports, see the [Reports hub](/merchants/analytics/reports-hub).
+</Note>
+
+## Who can open it
+
+Owners and managers can open the report. Staff cannot by default. To let a staff member in, give them analytics access in their permissions (see [Roles and permissions](/merchants/staff/roles-permissions)).
