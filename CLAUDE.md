@@ -20,6 +20,34 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-11 — Exporting and Deleting Members
+
+**Article:** `merchants/members/export-delete.mdx` (new)
+**Branch:** `claude/eloquent-fermat-2tdmbm`
+**PR:** https://github.com/Abdalestar/docs/pull/103
+**Status:** Done (3 real annotated screenshots, validate-images 3/3 OK)
+
+### What was written
+New how-to for the P2 gap-audit row "Exporting & Deleting Members". Goes deeper than the brief Export/Delete mentions in `members/overview.mdx` (cross-linked, not duplicated). Covers full CSV export, the selected-subset export, and the member-deletion flow.
+
+**Facts (all grounded in `app/(dashboard)/members/page.tsx`):**
+- `exportMembers()` pulls every member of the org from `member_org_view` (all pages), file `members-<date>.csv`. 10 columns: First/Last Name, Email, Phone, Birthday, Join Date, Total Stamps, Total Points, Visit Count, Last Visit. Visit Count / Last Visit derived from `transactions`.
+- Export buttons gate on **role**, not the `members` permission: `staff?.role !== 'staff'` (owners + managers see Export CSV / Export Selected; Staff role never does).
+- `exportSelectedMembers()` → `selected-members-<date>.csv` from the ticked rows.
+- Delete = `deleteSelectedMembers()` deletes the `organization_members` row (org membership + loyalty data), NOT the global member identity. Two entry points: row menu "Delete Member" (single) and bulk toolbar "Delete" (multi). `canDeleteMembers` = owner OR effective `members === 'full'` (so owner always; manager by default since DEFAULT_PERMISSIONS.manager.members='full'; staff only with custom full access).
+- AlertDialog: title "Permanently Remove Members", action "Permanently Delete" (reads "Deleting..." in flight) / "Cancel".
+
+### Screenshots
+`.routine/flows/export-delete.json` (points demo, Najma Coffee, 180 members): Export CSV boxed (badge 1, PII redacted); bulk toolbar with Export Selected (badge 2) + Delete (red), 2 rows selected, PII redacted; cropped "Permanently Remove Members" dialog, Permanently Delete boxed red. **Permanently Delete never clicked** — no member removed. Export buttons boxed but never clicked (no CSV downloaded). 1440×900 + cropped dialog, all real binary.
+
+### Insights for future runs
+- The Export button gate is purely `role !== 'staff'`, independent of the `members` enum (full/view_export/view/none). The `view_export` permission value exists in the schema but the Members page UI never reads it for the export button — only the role. Document export access as "owners and managers", not by permission value.
+- Delete-confirm crop: `clipTo: "[role=alertdialog]"` with `clipPadding: 14` leaked a faint phone number from the row behind the scrim at the bottom edge; dropping to `clipPadding: 4` (and removing the below-button label that needed the extra room) kept the crop inside the white card with no PII leak.
+- Row checkboxes are `table tbody tr:nth-child(N) td:first-child button[role=checkbox]`; selecting any row (not just select-all) inserts the bulk toolbar and shifts the table down ~80px, so reuse the bulk redact rect (y≈395) from members-overview.
+- Single-branch environment again (`claude/eloquent-fermat-2tdmbm`): shipped the one new-article task this run rather than mixing a screenshot backfill into the same branch/PR (same call as the wcagj2 run).
+
+---
+
 ## 2026-06-11 — Showing and scanning a QR code (customer scan flow)
 
 **Article:** `merchants/qr-codes/customer-scan-flow.mdx` (new)
