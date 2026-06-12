@@ -1,0 +1,30 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/billing",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "viewport": { "width": 1440, "height": 1100 },
+  "steps": [
+    {
+      "name": "trial-pricing",
+      "goto": "/pricing",
+      "waitFor": "text=Simple, transparent pricing",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "div.relative:has(h3:text-is('Growth'))", "color": "plum" },
+        { "type": "label", "target": "h3:text-is('Growth')", "text": "Your 14-day trial runs on the Growth plan", "color": "plum" },
+        { "type": "caption", "text": "Your free trial gives you the Growth plan for 14 days. The pricing page shows what every plan includes." }
+      ]
+    },
+    {
+      "name": "trial-billing",
+      "goto": "/settings/billing",
+      "waitFor": "text=Current Plan",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "text=Current Plan", "color": "plum" },
+        { "type": "caption", "text": "Open Settings then Billing to subscribe or add a payment method before the trial ends, so your plan keeps running." }
+      ]
+    }
+  ]
+}

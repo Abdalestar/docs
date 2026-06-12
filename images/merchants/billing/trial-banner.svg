@@ -1,0 +1,37 @@
+<svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+  <title>The Qtap trial banner</title>
+  <!-- Banner card -->
+  <rect x="10" y="10" width="740" height="200" rx="14" fill="#FFFFFF" stroke="#E5E0DA" stroke-width="1.5"/>
+  <rect x="10" y="10" width="6" height="200" rx="3" fill="#F0D793"/>
+
+  <!-- Clock icon -->
+  <circle cx="52" cy="56" r="14" fill="none" stroke="#8E4A63" stroke-width="2.5"/>
+  <line x1="52" y1="56" x2="52" y2="47" stroke="#8E4A63" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="52" y1="56" x2="59" y2="60" stroke="#8E4A63" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Headline -->
+  <text x="80" y="50" font-size="20" font-weight="700" fill="#423F4C">5 days left in your Growth plan trial</text>
+  <text x="80" y="76" font-size="14" fill="#6B6770">Add a payment method before it ends to keep your features.</text>
+
+  <!-- Progress bar -->
+  <rect x="80" y="100" width="420" height="8" rx="4" fill="#EDE7E0"/>
+  <rect x="80" y="100" width="270" height="8" rx="4" fill="#8E4A63"/>
+  <text x="80" y="130" font-size="12" fill="#6B6770">Day 9 of 14</text>
+
+  <!-- Buttons -->
+  <rect x="80" y="156" width="180" height="40" rx="10" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
+  <text x="170" y="181" font-size="14" font-weight="600" fill="#8E4A63" text-anchor="middle">Earn 3 More Days</text>
+
+  <rect x="276" y="156" width="150" height="40" rx="10" fill="#8E4A63"/>
+  <text x="351" y="181" font-size="14" font-weight="600" fill="#FFFFFF" text-anchor="middle">Subscribe Now</text>
+
+  <!-- Annotations -->
+  <g font-size="12.5" fill="#8E4A63" font-weight="600">
+    <text x="600" y="105">Time left and progress</text>
+    <line x1="512" y1="104" x2="590" y2="104" stroke="#8E4A63" stroke-width="1.5"/>
+    <text x="470" y="215" text-anchor="middle">Earn extra days</text>
+    <text x="650" y="215" text-anchor="middle">Add a card to continue</text>
+  </g>
+  <line x1="170" y1="200" x2="280" y2="208" stroke="#8E4A63" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="351" y1="200" x2="600" y2="208" stroke="#8E4A63" stroke-width="1" stroke-dasharray="3 3"/>
+</svg>
