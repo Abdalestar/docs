@@ -1,0 +1,48 @@
+<svg viewBox="0 0 760 470" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+  <rect x="0" y="0" width="760" height="470" fill="#F8F5F2"/>
+
+  <!-- Column headers -->
+  <rect x="250" y="20" width="240" height="56" rx="12" fill="#8E4A63"/>
+  <text x="370" y="46" text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">NFC tag</text>
+  <text x="370" y="66" text-anchor="middle" font-size="13" fill="#F0D793">the customer taps</text>
+
+  <rect x="500" y="20" width="240" height="56" rx="12" fill="#423F4C"/>
+  <text x="620" y="46" text-anchor="middle" font-size="18" font-weight="700" fill="#ffffff">QR code</text>
+  <text x="620" y="66" text-anchor="middle" font-size="13" fill="#F0D793">the customer scans</text>
+
+  <!-- Rows -->
+  <!-- row 1 -->
+  <text x="24" y="118" font-size="14" font-weight="600" fill="#423F4C">How it is used</text>
+  <text x="250" y="118" font-size="13" fill="#6B6770">Hold the phone to the tag</text>
+  <text x="500" y="118" font-size="13" fill="#6B6770">Point the camera at the code</text>
+  <line x1="24" y1="138" x2="736" y2="138" stroke="#E5DCD6" stroke-width="1"/>
+
+  <!-- row 2 -->
+  <text x="24" y="178" font-size="14" font-weight="600" fill="#423F4C">Needs the Qtap app</text>
+  <text x="250" y="178" font-size="13" fill="#8E4A63" font-weight="600">Yes, every time</text>
+  <text x="500" y="178" font-size="13" fill="#6B6770">No, any phone camera works</text>
+  <line x1="24" y1="198" x2="736" y2="198" stroke="#E5DCD6" stroke-width="1"/>
+
+  <!-- row 3 -->
+  <text x="24" y="238" font-size="14" font-weight="600" fill="#423F4C">Anonymous use</text>
+  <text x="250" y="238" font-size="13" fill="#6B6770">Not possible</text>
+  <text x="500" y="238" font-size="13" fill="#6B6770">Logs the scan, credits no member</text>
+  <line x1="24" y1="258" x2="736" y2="258" stroke="#E5DCD6" stroke-width="1"/>
+
+  <!-- row 4 -->
+  <text x="24" y="298" font-size="14" font-weight="600" fill="#423F4C">Points multiplier</text>
+  <text x="250" y="298" font-size="13" fill="#6B6770">Awards the flat value</text>
+  <text x="500" y="298" font-size="13" fill="#6B6770">Multiplier campaigns apply</text>
+  <line x1="24" y1="318" x2="736" y2="318" stroke="#E5DCD6" stroke-width="1"/>
+
+  <!-- row 5 -->
+  <text x="24" y="358" font-size="14" font-weight="600" fill="#423F4C">Cost</text>
+  <text x="250" y="358" font-size="13" fill="#6B6770">$19 per physical tag</text>
+  <text x="500" y="358" font-size="13" fill="#6B6770">Included in your plan</text>
+  <line x1="24" y1="378" x2="736" y2="378" stroke="#E5DCD6" stroke-width="1"/>
+
+  <!-- row 6 -->
+  <text x="24" y="418" font-size="14" font-weight="600" fill="#423F4C">Best for</text>
+  <text x="250" y="418" font-size="13" fill="#6B6770">Regulars at the counter</text>
+  <text x="500" y="418" font-size="13" fill="#6B6770">Posters, receipts, new faces</text>
+</svg>

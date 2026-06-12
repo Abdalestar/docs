@@ -1,0 +1,67 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/redemptions",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "points-rewards-01-lookup",
+      "goto": "/redemptions",
+      "waitFor": "text=Enter Redemption Code",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "button:text-is('Look Up Customer')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "To redeem a points reward, open Redemptions and choose Look Up Customer. No code is needed." }
+      ]
+    },
+    {
+      "name": "points-rewards-02-search",
+      "actions": [
+        { "click": "button:text-is('Look Up Customer')" },
+        { "wait": 900 },
+        { "fill": ["input[placeholder*='Search by name']", "mo"] },
+        { "wait": 2400 }
+      ],
+      "clipTo": "input[placeholder*='Search by name']",
+      "clipPadding": 150,
+      "annotate": [
+        { "type": "box", "target": "input[placeholder*='Search by name']", "color": "plum" },
+        { "type": "redact", "target": ".divide-y button p.font-medium", "color": "charcoal" },
+        { "type": "redact", "target": ".divide-y button p.text-muted-foreground", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "points-rewards-03-balance",
+      "actions": [
+        { "click": ".divide-y button" },
+        { "wait": 3000 },
+        { "hover": ":nth-match(button:has-text('Redeem'), 2)" },
+        { "wait": 700 }
+      ],
+      "clipTo": ".mt-4.space-y-3",
+      "clipPadding": 16,
+      "annotate": [
+        { "type": "box", "target": ":nth-match(button:has-text('Redeem'), 2)", "color": "plum" }
+      ]
+    },
+    {
+      "name": "points-rewards-04-confirm",
+      "actions": [
+        { "click": ":nth-match(button:has-text('Redeem'), 2)" },
+        { "wait": 1500 },
+        { "click": "#op-branch" },
+        { "wait": 700 },
+        { "click": "[role=option]" },
+        { "wait": 800 }
+      ],
+      "waitFor": "[role=dialog] button:has-text('Confirm Redemption')",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "[role=dialog] .bg-blue-50", "color": "plum" },
+        { "type": "box", "target": "[role=dialog] button:has-text('Confirm Redemption')", "color": "plum" },
+        { "type": "redact", "target": "[role=dialog] p.font-medium", "color": "charcoal" }
+      ]
+    }
+  ]
+}
