@@ -116,6 +116,7 @@
           "merchants/settings/billing",
           "merchants/billing/usage-meters",
           "merchants/billing/upgrade",
+          "merchants/billing/downgrade",
           "merchants/billing/invoices-payment",
           "merchants/settings/locations",
           "merchants/settings/notifications",

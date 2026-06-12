@@ -20,6 +20,32 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-12 — Downgrading Your Plan (Pre-Flight Check)
+
+**Article:** `merchants/billing/downgrade.mdx` (new)
+**Branch:** `claude/eloquent-fermat-1tt4oc`
+**PR:** https://github.com/Abdalestar/docs/pull/118
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK)
+
+### What was written
+New how-to for the P2 Notion row "Downgrading Your Plan (Pre-Flight Check)" (the sibling to the already-shipped `upgrade.mdx`). Covers the owner-only **Downgrade** button on the Billing Plans tab, the pre-flight usage check, the **Cannot downgrade yet** block, how to reduce each over-limit resource, and that an allowed downgrade is scheduled at period end. Added to the Settings nav after `billing/upgrade`. ~480 words of prose, 4 anti-slop passes (no em dashes / banned words).
+
+### Facts (all grounded in source)
+- Pre-flight check compares **four** active resource counts against the target plan: locations, staff, loyalty cards (`stamp_cards` + `points_programs` together), and campaigns (`lib/billing/downgrade-check.ts` `resourceChecks`; locations/staff/cards filter `is_active=true`, campaigns count all rows). QR codes/push are **not** part of the gate.
+- `POST /api/billing/check-downgrade` returns `canDowngrade` + `issues`; `false` opens the AlertDialog ("Cannot downgrade yet", yellow triangle, per-resource "You have N active but the new plan allows M. Please deactivate X."). `true` proceeds to `handleSubscribe`.
+- `changePlan` (`lib/stripe/helpers.ts`): existing paid sub downgrade -> `scheduled_downgrade` via a Stripe subscription schedule at current period end (features kept until then; a prior pending schedule is released first so the pending downgrade can be changed). Trial -> `trial_end: 'now'`, bills immediately at the new price.
+- `PLAN_TIERS` limits (`lib/stripe/config.ts`): Starter 1/2/1/1, Growth 2/5/3/3, Elite 5/15/10/5, Franchise 15/∞/∞/∞ (locations/staff/loyalty cards/campaigns).
+- Owner-only: non-owners see **Contact Owner** on each plan card (same gate as upgrade).
+
+### Screenshots
+SMOKE_OK. 3 real annotated PNGs via `flow-capture.mjs` (`.routine/flows/billing-downgrade.json`), points demo (Najma Coffee, Elite): Overview usage meters (Campaigns 8 of 5 red), Plans tab with **Downgrade** boxed, and the cropped **Cannot downgrade yet** dialog (Locations 3>1, Staff 5>2, Campaigns 8>1). The flow only clicks Downgrade toward Starter, which the account is guaranteed to exceed (8 campaigns vs 1), so the **read-only** check surfaces the block dialog and never schedules a real downgrade. `clipTo: "[role=alertdialog]"` crops the Radix AlertDialog.
+
+### Notes for future runs
+- Clicking **Downgrade** is safe to capture only when the account is known to exceed the target plan (then `handleSubscribe` is never called). If the account is within limits, the click would schedule a real downgrade (or open Checkout) — pick a target you know is over-limit, or stop at the Plans tab.
+- Remaining Not-started board row after this run: "Completing a Member's Profile (Phone / Birthday)" (P3, `merchants/members/complete-profile.mdx`).
+
+---
+
 ## 2026-06-12 — Revenue Impact (stub replaced with real article)
 
 **Article:** `merchants/analytics/revenue-impact.mdx`
