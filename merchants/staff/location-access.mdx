@@ -1,0 +1,60 @@
+---
+title: "Location-based staff access"
+sidebarTitle: "Location access"
+description: "Tie staff to the branches they work at, and see what changes for them when they issue stamps or points."
+---
+
+If your business runs more than one branch, you can tie each staff member to the branches they actually work at. They see stats for those branches and can issue stamps or points there, and nowhere else.
+
+This setting applies to the **staff** role only. Owners and managers always see every branch, so there is nothing to set for them.
+
+<Frame caption="How each role sees branches, and who can open the NFC Tags page.">
+  <img src="/images/merchants/staff/location-access-model.svg" alt="A table showing owners and managers see every branch and can open NFC Tags, while staff see only their assigned branches and cannot open NFC Tags" />
+</Frame>
+
+## Assign branches when you invite someone
+
+Branch assignment is part of the invite. On the **Staff** page, choose **Invite Staff**, fill in the teammate's details, and find the **Assigned Locations** section.
+
+**All Locations** is on by default, which lets the new teammate see and work at every branch. Turn it off to show your branch list, then tick the branches they should have.
+
+<Frame caption="Turn off All Locations in the invite form, then pick the branches this teammate works at.">
+  <img src="/images/merchants/staff/location-access-01-assign-invite.png" alt="The Invite Team Member dialog with All Locations turned off and one branch ticked" />
+</Frame>
+
+Once you turn off All Locations you need to pick at least one branch before you can send the invite.
+
+## Change a teammate's branches later
+
+You can adjust this any time. On the **Staff** page, open the menu on the teammate's row and choose **Edit Permissions**, then open the **Locations** tab. Turn off **Access to All Locations**, tick the branches they work at, and choose **Save Changes**.
+
+<Frame caption="The Locations tab in Edit Permissions. Turn off Access to All Locations to assign specific branches.">
+  <img src="/images/merchants/staff/location-access-02-edit-locations.png" alt="The Locations tab of the Edit Permissions dialog showing the Access to All Locations toggle and a list of branches" />
+</Frame>
+
+A manager sees a note on this tab explaining that location assignment only restricts the Staff role. You cannot narrow a manager's branch access.
+
+## What multi-branch staff see when they issue
+
+When a staff member is tied to two or more branches, Qtap asks them to pick where they are before they can issue anything. On the Stamp Operations or Points Operations screen a **Branch** field appears, prompting them to select the branch they are working at. Until they choose, the issue button stays greyed out and a line reads "Choose the branch you're working at to continue."
+
+<Frame caption="On a multi-branch account, staff pick their branch before issuing. The button stays greyed out until they do.">
+  <img src="/images/merchants/staff/location-access-03-branch-select.png" alt="The Points Operations screen with the Branch selector and a greyed-out Award Points button" />
+</Frame>
+
+The branch they pick is what the stamp, point, or redemption is recorded against, so your per-branch and per-staff reports stay accurate. A teammate tied to a single branch skips this step, because Qtap picks it for them.
+
+## Staff cannot open NFC Tags
+
+<Warning>
+The NFC Tags page is open to owners and managers only. A staff member cannot open it even if you give them QR code access through custom permissions. If a teammate needs to register or manage NFC tags, make them a manager.
+</Warning>
+
+<CardGroup cols={2}>
+  <Card title="Roles and Permissions" icon="shield-halved" href="/merchants/staff/roles-permissions">
+    What each role can do, and how to set custom permissions
+  </Card>
+  <Card title="Inviting a Team Member" icon="user-plus" href="/merchants/staff/inviting">
+    The full invite journey from sending it to the teammate joining
+  </Card>
+</CardGroup>

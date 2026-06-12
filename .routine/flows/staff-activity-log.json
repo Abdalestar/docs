@@ -1,0 +1,47 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/staff",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "activity-log-01-entry",
+      "goto": "/staff",
+      "waitFor": "button:has-text('Activity Log')",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Activity Log')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Open the Staff page, then click Activity Log to see what your team has been doing." }
+      ]
+    },
+    {
+      "name": "activity-log-02-page",
+      "goto": "/staff/activity",
+      "waitFor": "h1:has-text('Staff Activity Log')",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "redact", "rect": { "x": 945, "y": 345, "width": 150, "height": 470 }, "color": "#423F4C" },
+        { "type": "box", "target": "button:has-text('All Actions')", "number": 1, "color": "plum" },
+        { "type": "label", "target": "button:has-text('All Actions')", "text": "Filter by staff, action, branch, or date", "color": "plum" },
+        { "type": "box", "target": "button:has-text('Export CSV')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Every stamp, point, redemption, and member join, newest first. Narrow the list with the filters (1), then download it with Export CSV (2)." }
+      ]
+    },
+    {
+      "name": "activity-log-03-filter",
+      "goto": "/staff/activity",
+      "waitFor": "h1:has-text('Staff Activity Log')",
+      "waitMs": 6000,
+      "actions": [
+        { "click": "button:has-text('All Actions')" },
+        { "wait": 900 }
+      ],
+      "waitFor": "[role=listbox]",
+      "clipTo": "[role=listbox]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "label", "target": "[role=option]:has-text('Reward Redeemed')", "text": "Pick one action to see only those entries", "color": "plum" }
+      ]
+    }
+  ]
+}
