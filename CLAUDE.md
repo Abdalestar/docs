@@ -20,6 +20,51 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-11 — Understanding Your Usage Meters
+
+**Article:** `merchants/billing/usage-meters.mdx` (new)
+**Branch:** `claude/eloquent-fermat-0wnfgr`
+**PR:** https://github.com/Abdalestar/docs/pull/112
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK)
+
+### What was written
+New Billing how-to for the six usage meters on **Settings > Billing → Overview**.
+Notion row "Understanding Your Usage Meters" (P2, was the highest-priority
+genuinely-new, screenshot-able Not-started row). Added to the Settings nav after
+`settings/billing`.
+
+Facts (grounded in `app/(dashboard)/settings/billing/page.tsx` + `lib/stripe/config.ts`):
+- Six `UsageMeter`s: Locations, Staff Members, Loyalty Cards (active `stamp_cards` **+**
+  active `points_programs`), QR Codes (this month), Campaigns, Push Notifications (this month).
+- QR Codes and Push are monthly (query filters `created_at >= startOfMonth`); the other
+  four are running totals. Campaigns counts **every** campaign row (no status filter), so it
+  can read over the limit (demo shows `8 of 5`).
+- `UsageMeter`: `isAtLimit = used >= limit` turns the count + bar red (red at 100%, not 80%).
+  Unlimited (Infinity) shows the count + ∞ and no bar.
+- Add-ons raise the effective limit (`usePlanLimits`).
+
+### Screenshots
+3 real annotated PNGs via `flow-capture.mjs` (`.routine/flows/billing-usage-meters.json`)
+from the live points demo (Najma Coffee, Elite): full Overview; the real over-limit
+Campaigns meter (`8 of 5`, red, cropped); the two `(this month)` meters boxed. Read-only
+capture (Overview tab only); no billing change. `validate-images.mjs` 3/3 OK, pushed as binary.
+
+### Selection notes (for future runs)
+- The top P1 Not-started gap-audit rows were set aside this run as already-covered-on-main
+  or un-screenshotable, and should be reconciled/closed:
+  - **Audience Segments Explained** (`notifications/segments.mdx`) — already covered by
+    `campaigns/push-notifications.mdx` "Choosing an audience" (all 7 segments w/ criteria).
+  - **Redeeming a Reward: By Code vs Customer Lookup** (`redemptions/redeeming.mdx`) —
+    duplicate of on-main `members/redemptions.mdx` (Code + Lookup + History).
+  - **Redeeming a Campaign Reward Code (Staff Guide)** (`campaigns/redeem-code.mdx`) — the
+    `campaign_rewards` validate/redeem flow (`app/api/campaigns/rewards/*`) has **no merchant
+    dashboard UI** (API/mobile-only), so it can't be a screenshot how-to.
+- `billing/plans.mdx` and `billing/upgrade.mdx` are on real `main` now (local `origin/main`
+  was stale at clone time; the assigned branch and real main already carry PRs #98–#100+).
+  The PR diff was still clean (only the 6 new files).
+
+---
+
 ## 2026-06-11 — Send a notification to specific members
 
 **Article:** `merchants/notifications/targeted.mdx` (new)
