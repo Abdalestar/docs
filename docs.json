@@ -37,7 +37,8 @@
         "pages": [
           "merchants/points/overview",
           "merchants/points/creating",
-          "merchants/points/operations"
+          "merchants/points/operations",
+          "merchants/points/adjusting"
         ]
       },
       {
@@ -46,6 +47,7 @@
           "merchants/qr-codes/overview",
           "merchants/qr-codes/generating",
           "merchants/qr-codes/actions",
+          "merchants/qr-codes/customer-scan-flow",
           "merchants/qr-codes/batch",
           "merchants/qr-codes/troubleshooting",
           "merchants/qr-codes/qr-code-detail",
@@ -84,6 +86,7 @@
         "pages": [
           "merchants/members/overview",
           "merchants/members/profiles",
+          "merchants/members/export-delete",
           "merchants/members/redemptions",
           "merchants/redemptions"
         ]
