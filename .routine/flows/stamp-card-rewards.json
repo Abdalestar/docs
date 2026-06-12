@@ -1,0 +1,65 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/stamp-cards",
+  "account": "stamp",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "rewards-edit-card-menu",
+      "goto": "/cards",
+      "actions": [
+        { "wait": 1500 },
+        { "click": "button:has(svg.lucide-ellipsis)" },
+        { "wait": 900 }
+      ],
+      "waitFor": "[role=menuitem]:has-text('Edit')",
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('Edit')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "To change a card's rewards later, open its menu on the Cards page and choose Edit." }
+      ]
+    },
+    {
+      "name": "rewards-step",
+      "goto": "/cards/da1a0006-0000-4000-a000-000000000006",
+      "actions": [
+        { "wait": 2000 },
+        { "click": "button:has-text('Rewards')" },
+        { "wait": 1500 }
+      ],
+      "waitFor": "text=Loyalty rewards",
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Add reward')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "On the Rewards step, each reward shows its type. Add reward opens the reward editor." }
+      ]
+    },
+    {
+      "name": "rewards-add-dialog",
+      "actions": [
+        { "click": "button:has-text('Add reward')" },
+        { "fill": ["#rewardName", "Free coffee"] },
+        { "wait": 800 }
+      ],
+      "waitFor": "text=Add a reward",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "text=Reward type", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#rewardName", "number": 2, "color": "plum" },
+        { "type": "label", "target": "#rewardName", "text": "The name customers see", "color": "plum" }
+      ]
+    },
+    {
+      "name": "rewards-interim",
+      "actions": [
+        { "click": "[role=dialog] button:has-text('Interim')" },
+        { "wait": 700 }
+      ],
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "#triggerValue", "number": 1, "color": "plum" },
+        { "type": "label", "target": "#triggerValue", "text": "Interim rewards trigger at this stamp number", "color": "plum" }
+      ]
+    }
+  ]
+}
