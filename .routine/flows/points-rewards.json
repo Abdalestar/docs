@@ -1,0 +1,67 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/points",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "rewards-01-programs",
+      "goto": "/points",
+      "waitFor": "button:has-text('Create Program')",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Create Program')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Rewards live inside a points program. Create a new program, or open an existing one with Edit to manage its rewards." }
+      ]
+    },
+    {
+      "name": "rewards-02-list",
+      "goto": "/points/ca5e0004-0000-4000-a000-000000000001",
+      "waitFor": "text=What can customers redeem points for?",
+      "actions": [
+        { "wait": 3000 },
+        { "press": "PageDown" },
+        { "wait": 900 }
+      ],
+      "waitMs": 600,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Add Reward')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.cursor-pointer:has(p:has-text('Free Cookie or Date'))", "color": "plum" },
+        { "type": "caption", "text": "The Rewards card lists every reward and its points cost. Click Add Reward to add one, click a reward to edit it, or the X to remove it." }
+      ]
+    },
+    {
+      "name": "rewards-03-add",
+      "goto": "/points/ca5e0004-0000-4000-a000-000000000001",
+      "actions": [
+        { "click": "button:has-text('Add Reward')" },
+        { "fill": ["#pointsRewardName", "Free Latte"] },
+        { "fill": ["#pointsRequired", "300"] },
+        { "wait": 700 }
+      ],
+      "waitFor": "text=Add a points reward",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "#pointsRewardName", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#pointsRequired", "number": 2, "color": "plum" },
+        { "type": "label", "target": "#pointsRequired", "text": "Points the customer spends to redeem this reward", "color": "plum" }
+      ]
+    },
+    {
+      "name": "rewards-04-edit",
+      "goto": "/points/ca5e0004-0000-4000-a000-000000000001",
+      "actions": [
+        { "click": "div.cursor-pointer:has(p:has-text('Free Cookie or Date'))" },
+        { "wait": 700 }
+      ],
+      "waitFor": "text=Edit reward",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "#pointsRequired", "color": "plum" },
+        { "type": "label", "target": "#pointsRequired", "text": "Change the points cost, name, image, or staff note of a reward you already added", "color": "plum" }
+      ]
+    }
+  ]
+}
