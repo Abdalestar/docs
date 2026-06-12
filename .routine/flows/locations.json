@@ -1,0 +1,53 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/settings",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "locations-01-list",
+      "goto": "/settings/locations",
+      "waitFor": "button:has-text('Add Location')",
+      "waitMs": 5000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Add Location')", "number": 1, "color": "plum" },
+        { "type": "box", "target": ".grid .border-green-200", "color": "gold" },
+        { "type": "caption", "text": "Settings then Locations lists every branch. Each card shows its address, a GPS Set badge, and an Active or Inactive status." }
+      ]
+    },
+    {
+      "name": "locations-02-add-dialog",
+      "actions": [
+        { "click": "button:has-text('Add Location')" },
+        { "wait": 1000 },
+        { "fill": ["#name", "West Bay Tower"] },
+        { "fill": ["#address", "Al Corniche Street"] },
+        { "fill": ["#city", "Doha"] },
+        { "wait": 600 }
+      ],
+      "waitFor": "text=Add a new store location",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "#name", "color": "plum" },
+        { "type": "label", "target": "#name", "text": "The name staff and members see", "color": "plum" }
+      ]
+    },
+    {
+      "name": "locations-03-card-menu",
+      "actions": [
+        { "press": "Escape" },
+        { "wait": 800 },
+        { "click": ".grid button[aria-haspopup='menu']" },
+        { "wait": 700 }
+      ],
+      "waitFor": "[role=menu]",
+      "clipTo": "[role=menu]",
+      "clipPadding": 22,
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('Edit')", "color": "plum" },
+        { "type": "box", "target": "[role=menuitem]:has-text('Delete')", "color": "red" }
+      ]
+    }
+  ]
+}
