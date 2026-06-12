@@ -20,6 +20,66 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-12 — Points Expiry
+
+**Article:** `merchants/points/expiry.mdx` (new)
+**Branch:** `claude/eloquent-fermat-b21kdm`
+**Status:** Done. 3 real annotated screenshots (validate-images 3/3 OK). Pushed; no PR opened this run per environment policy.
+
+### Task choice
+One task this run. The two highest-priority Not-started rows were both duplicates of
+existing articles, so I skipped them and flagged them on their Notion rows:
+- **"Redeeming a Reward: By Code vs Customer Lookup"** (P1, `redemptions/redeeming.mdx`) is
+  already fully covered by `merchants/redemptions.mdx` (on this branch via PR #86): both
+  methods, the points path, reward status, history.
+- **"Stamp Card Rewards: Main/Sign-Up/Interim"** (P1, `cards/rewards.mdx`) carries its own
+  DUPLICATE FLAG (covered by `stamp-cards/rewards.mdx`, PR #74).
+
+Picked the highest-priority genuinely-uncovered row: **Points Expiry** (P2). Expiry is only
+mentioned in passing in `points/overview.mdx` and `points/creating.mdx`; this article goes
+deep on the three modes and the background sweep, and cross-links the two.
+
+### What was written
+New `merchants/points/expiry.mdx` (added to Points Programs nav after `operations`). Covers
+the **Points Expiry** card (off by default), the **Expiry Period (days)** field (max 365),
+the three **Expiry Type** modes with their exact live labels, the once-a-day background
+sweep, what a member sees on expiry (balance drop, an `expired` history entry, a push/email
+notification), and the honest from-date-earned nuance.
+
+### Research sources (qtap, read-only)
+- `components/dashboard/points-program-form.tsx` — Points Expiry card: `Enable Points Expiry`
+  switch (default off), `Expiry Period (days)` (default 365), `Expiry Type` select options
+  **From date earned** / **From last activity** / **End of calendar year**, and the dynamic
+  helper line.
+- `app/api/points/expire/route.ts` — daily cron sweep; only `is_active` + `points_expire`
+  programs; `from_earn` expires per-batch via `expires_at`, `from_last_activity` by
+  `last_activity_at` inactivity, `calendar_year` on Jan 1–3; deducts only down to current
+  balance, writes an `expire` transaction, notifies member (push, email fallback).
+- `vercel.json` — cron `0 2 * * *` calls `/api/points/expire`.
+- `lib/validations/loyalty.ts` — `expiry_days` 0–365.
+- `app/api/scan/route.ts` + `app/api/points/adjust/route.ts` — `expires_at = earned + expiry_days`
+  is stamped on each earn/positive-adjust at the time it happens (basis for the from_earn nuance).
+
+### Screenshots
+Flow `.routine/flows/points-expiry.json`, points demo (Najma), 3 cropped annotated PNGs of the
+program form's Points Expiry card: toggle off, expanded fields (Expiry Period + Expiry Type
+boxed), and the open Expiry Type dropdown. Captured on `/points/new` by toggling the switch and
+opening the select only — no program was created or saved. `validate-images.mjs` 3/3 OK.
+
+### Insights for future runs
+- The points form (`/points/new`) renders the **Points Expiry** card with no plan-limit guard
+  on this account, so it captures cleanly. Reliable selectors: card `div.rounded-xl:has-text("Points Expiry")`;
+  switch `div.justify-between:has-text("Enable Points Expiry") button[role=switch]`; after toggle
+  `#expiry_days` (value 365) and the shadcn `button[role=combobox]` inside the card; options live in `[role=listbox]`.
+- Live labels are **From date earned / From last activity / End of calendar year** (overview.mdx/creating.mdx
+  use slightly different wording like "From earn date" / "Calendar year"). New article uses the live labels.
+- This branch (`claude/eloquent-fermat-b21kdm`) is ~77 commits ahead of `origin/main` and already
+  carries `merchants/redemptions.mdx` (PR #86), so the redemption gap rows are duplicates here.
+  PRs #101/#106 (points adjusting/rewards) are NOT on this branch, so `merchants/points/` had only
+  overview/creating/operations.
+
+---
+
 ## 2026-06-11 — Upgrading Your Plan
 
 **Article:** `merchants/billing/upgrade.mdx`
