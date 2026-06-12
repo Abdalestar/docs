@@ -37,7 +37,9 @@
         "pages": [
           "merchants/points/overview",
           "merchants/points/creating",
-          "merchants/points/operations"
+          "merchants/points/rewards",
+          "merchants/points/operations",
+          "merchants/points/adjusting"
         ]
       },
       {
@@ -46,10 +48,12 @@
           "merchants/qr-codes/overview",
           "merchants/qr-codes/generating",
           "merchants/qr-codes/actions",
+          "merchants/qr-codes/customer-scan-flow",
           "merchants/qr-codes/batch",
           "merchants/qr-codes/troubleshooting",
           "merchants/qr-codes/qr-code-detail",
-          "merchants/nfc-tags"
+          "merchants/nfc-tags",
+          "merchants/nfc-tags/tap-and-earn"
         ]
       },
       {
@@ -65,7 +69,8 @@
           "merchants/campaigns/rewards",
           "merchants/campaigns/analytics",
           "merchants/campaigns/push-notifications",
-          "merchants/notifications/push-vs-campaign"
+          "merchants/notifications/push-vs-campaign",
+          "merchants/notifications/targeted"
         ]
       },
       {
@@ -85,6 +90,7 @@
         "pages": [
           "merchants/members/overview",
           "merchants/members/profiles",
+          "merchants/members/export-delete",
           "merchants/members/redemptions",
           "merchants/redemptions"
         ]
