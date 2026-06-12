@@ -20,6 +20,52 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-12 — Points Programs Overview screenshots (backfill)
+
+**Article:** `merchants/points/overview.mdx`
+**Branch:** `claude/eloquent-fermat-bkvvk8`
+**PR:** https://github.com/Abdalestar/docs/pull/130
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK). One task this run.
+
+### Task selection
+Board is fully `Done` with zero `Not started` rows, so per routine §3 this run did one
+screenshot backfill. Reconciled the "0-image on main" candidates against the 4 open PRs
+(#126 location-comparison, #127 complete-profile, #128 profiles backfill, #129
+notification-templates) to avoid double-doing — several imageless-on-main articles only
+read that way because their screenshot PRs aren't merged yet. Picked **Points Programs
+Overview** (P1, `Needs Screenshots = YES`, no PR, on main with prose + zero images, no
+competing PR) — the highest-priority clean target.
+
+### Screenshots
+3 real annotated PNGs from the live points demo (Najma Coffee, program "Najma Stars")
+via `.routine/flows/points-overview.json`, prose unchanged:
+- `points-overview-list` — `/points` page; status filter tabs boxed (1), Create Program
+  boxed (2), the program card's green **Active** badge visible → *Program statuses*.
+- `points-overview-settings` — `/points/new` form; Program Name (1) / Points per (2) /
+  Description (3) boxed; Currency, Card Color, phone preview visible → *Program details*.
+- `points-overview-expiry` — Expiry Type dropdown open (From date earned / From last
+  activity / End of calendar year), cropped to the listbox → *Expiry rules*.
+No program saved; Enable Points Expiry toggled only to reveal options (UI state, never
+saved); no destructive/outbound clicks. No customer PII (program is the merchant's own).
+
+### Insights / gotchas for future runs
+- The points account has 1 active program; `/points` H1 "Points Programs", "Create
+  Program", status filter as a `[role=tablist]` (All/Active/Drafts/Inactive), badges
+  from `STATUS_CONFIG` in `app/(dashboard)/points/page.tsx`.
+- **Selector gotcha:** in `points-program-form.tsx` the `htmlFor="currency"` Label is NOT
+  wired to a real `#currency` trigger — `#currency` resolves to Radix's visually-hidden
+  native `<select>` at (0,0), so a `box`/`number` on it lands a stray badge in the
+  top-left. Skip it or box the trigger another way. The Expiry Type select is reliably
+  opened with `[role=combobox]:has-text('From date earned')` (its default value), then
+  `clipTo: "[role=listbox]"` crops the three options cleanly. Enable Points Expiry is the
+  first `[role=switch]` on the form.
+- Remaining imageless-on-main backfill targets with no competing PR (verified this run):
+  `qr-codes/overview.mdx`, `qr-codes/batch.mdx`, `settings/notifications.mdx`,
+  `settings/merchant-page.mdx`, `campaigns/birthday.mdx`. (`campaigns/analytics.mdx` stays
+  blocked — performance endpoint 404s live.)
+
+---
+
 ## 2026-06-12 — Staff Performance Report
 
 **Article:** `merchants/analytics/staff-performance.mdx`
