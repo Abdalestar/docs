@@ -41,7 +41,8 @@
           "merchants/points/creating",
           "merchants/points/rewards",
           "merchants/points/operations",
-          "merchants/points/adjusting"
+          "merchants/points/adjusting",
+          "merchants/redemptions/points-rewards"
         ]
       },
       {
