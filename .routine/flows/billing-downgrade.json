@@ -1,0 +1,41 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/billing",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 1300 },
+  "steps": [
+    {
+      "name": "downgrade-01-usage",
+      "goto": "/settings/billing",
+      "waitFor": "text=Overview",
+      "waitMs": 5000,
+      "annotate": [
+        { "type": "caption", "text": "On Settings then Billing, the Overview tab shows your current usage against your plan limits. Check these counts before you move to a lower plan." }
+      ]
+    },
+    {
+      "name": "downgrade-02-plans",
+      "goto": "/settings/billing?subscribe=true",
+      "waitFor": "text=Choose Your Plan",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Downgrade')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "On the Plans tab, plans below your current one show a Downgrade button. Click it to start the pre-flight check." }
+      ]
+    },
+    {
+      "name": "downgrade-03-blocked",
+      "actions": [
+        { "click": "button:has-text('Downgrade')" },
+        { "wait": 1600 }
+      ],
+      "waitFor": "text=Cannot downgrade yet",
+      "clipTo": "[role=alertdialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "[role=alertdialog] p:has-text('Campaigns')", "color": "plum" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+---
+title: "What is an NFC tag versus a QR code?"
+sidebarTitle: "NFC tags vs QR codes"
+description: "How tapping an NFC tag differs from scanning a QR code, and when to use each one in your store."
+---
+
+NFC tags and QR codes do the same job in Qtap. A customer brings their phone to your loyalty program and earns a stamp, earns points, or records a check-in. What changes is how the phone connects, and that affects who can use each one and what it costs you.
+
+<Frame caption="The same three actions, two ways to trigger them. The practical differences are who needs the app, who can use it anonymously, and the price.">
+  <img src="/images/merchants/nfc-tags/nfc-vs-qr-comparison.svg" alt="Comparison of NFC tags and QR codes across how they are used, app requirement, anonymous use, points multipliers, cost, and best fit" />
+</Frame>
+
+## How each one works
+
+An NFC tag is a small physical tag you stick on a counter or a table. A customer opens the Qtap app and holds their phone close to it. The app reads the tag and runs the action you set for that tag.
+
+A QR code is an image you generate in the dashboard and then print or show on a screen. A customer points their phone camera at it, and a link opens that runs the same kind of action.
+
+Both can add a stamp, award points, or record a check-in. You choose the action per tag or per code.
+
+## Who can use them
+
+A tap only works from inside the Qtap app. The tap has to carry the customer's account with it, so a phone without the app gets nothing from an NFC tag.
+
+A QR code is more forgiving, because any phone camera can open it. One thing to know: a scan from a plain camera or browser still records the scan and adds to the code's scan count, but it credits no one, since it has no way to tell who scanned. To actually add a stamp or points to a customer, the scan has to come from the Qtap app, the same as a tap.
+
+<Frame caption="On the NFC Tags page, each tag lists the action a tap runs and how many times it has been tapped.">
+  <img src="/images/merchants/nfc-tags/what-is-nfc-tags-page.png" alt="NFC Tags page with the Action and Taps columns highlighted" />
+</Frame>
+
+<Frame caption="On the QR Codes page, the Type column sets reusable, one-time, or batch codes, and the Scans column counts every scan.">
+  <img src="/images/merchants/nfc-tags/what-is-nfc-qr-codes-page.png" alt="QR Codes page with the Type and Scans columns highlighted" />
+</Frame>
+
+## What they cost
+
+NFC tags are physical items you buy. Order them under **Settings → Billing** at $19 per tag, then register each one by entering its serial number.
+
+QR codes are free to generate in the dashboard and count against your plan's monthly allowance. You can make a code reusable, make it one-time so it stops working after a single scan, or generate a batch at once. You can also set an expiry date or a scan limit on a code.
+
+<Note>
+If you run a points-multiplier campaign, like double points on Tuesdays, it applies to points earned by QR scan. A tap on an NFC tag always awards the flat points value you set on the tag, with no multiplier. Keep that in mind if a promotion needs to reach your tap customers too.
+</Note>
+
+## Which one to choose
+
+Reach for an NFC tag when your regulars already have the app and you want the quickest action at the counter. One tap and the stamp is in, and a physical tag feels premium next to the till.
+
+Reach for a QR code when you want to reach anyone with a phone, print on a poster, a receipt, a table tent, or a shop window, or run a one-time or time-limited promotion. Plenty of merchants use both: a counter tag for regulars, and a printed code that first-time visitors can scan before they have the app.
+
+<CardGroup cols={2}>
+  <Card title="NFC Tags" href="/merchants/nfc-tags">
+    Buy, register, and manage the tags in your locations.
+  </Card>
+  <Card title="QR Codes Overview" href="/merchants/qr-codes/overview">
+    How QR codes work, the types available, and how to manage them.
+  </Card>
+  <Card title="QR Code Actions" href="/merchants/qr-codes/actions">
+    What a scan does: add a stamp, award points, or check in.
+  </Card>
+  <Card title="Stamp Cards" href="/merchants/stamp-cards/overview">
+    Set up the stamp cards your tags and codes can link to.
+  </Card>
+</CardGroup>

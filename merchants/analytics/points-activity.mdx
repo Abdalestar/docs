@@ -1,6 +1,53 @@
 ---
-title: "Points Activity"
-description: "Tracking how points are being earned and spent across your program"
+title: "Points Activity Report"
+sidebarTitle: "Points activity"
+description: "Read every points transaction in your program, filtered by branch and time period."
 ---
 
-Coming soon
+The Points Activity Report is the full ledger of your points program. Every time a member earns, redeems, has points adjusted, or has points expire, a row lands here. It's the place to answer questions like "what happened on the till last Thursday" or "who earned the most this month".
+
+There's no sidebar link for it. Open the [Detailed Reports hub](/merchants/analytics/reports-hub) and choose **Points Activity Report**, or go straight to `dashboard.qtap.qa/analytics/reports/points-activity`. This report is for points programs. If you run stamp cards only, it stays empty.
+
+<Frame caption="The Points Activity Report. Filter by branch (1) and time period (2); the table columns are boxed in gold.">
+  <img src="/images/analytics/points-activity-overview.png" alt="Points Activity Report showing branch and time-period filters and a table of points transactions" />
+</Frame>
+
+## Filtering the ledger
+
+Two controls sit at the top right.
+
+The **time period** selector covers Today, Last 7 days, Last 30 days, Last 90 days, and This year. It opens on Last 30 days.
+
+<Frame caption="The time period selector: five ranges, opening on Last 30 days.">
+  <img src="/images/analytics/points-activity-period.png" alt="Time period dropdown listing Today, Last 7 days, Last 30 days, Last 90 days, and This year" />
+</Frame>
+
+The **branch** filter narrows the ledger to one location. It only appears when your account has more than one branch, and "All branches" shows everything together.
+
+<Frame caption="The branch filter, with an All branches option and one entry per location.">
+  <img src="/images/analytics/points-activity-branch.png" alt="Branch filter dropdown listing All branches and each location" />
+</Frame>
+
+Change either filter and the table reloads. The count above the table updates to match, for example "1,165 transactions found".
+
+## Reading a row
+
+Each row has six columns: the date and time, the member's name, the type, the points, the amount, and a description.
+
+The **type** is one of Earned, Redeemed, Adjusted, or Expired. Earned rows show the points in green with a plus sign. Redeemed, Adjusted, and Expired rows show them in red with a minus sign, so a glance down the Points column tells you what was added and what was taken away.
+
+<Frame caption="Points earned show in green with a plus; the amount is the purchase total tied to that sale.">
+  <img src="/images/analytics/points-activity-detail.png" alt="Close-up of the type, points, amount, and description columns showing green earned points" />
+</Frame>
+
+The **amount** is the purchase total linked to a transaction, shown when points were earned on a sale. Rows with no linked sale, such as a manual adjustment or an expiry, show a dash. The **description** is the short note saved with the transaction, like "Points earned on purchase".
+
+Long histories load 50 rows at a time. When there's more than one page, Previous and Next buttons and a page count sit below the table.
+
+## Who can see it
+
+Owners and managers can open this report. Staff can't by default, because analytics access is off for the staff role. To let a staff member in, turn on their analytics access in [Roles and permissions](/merchants/staff/roles-permissions).
+
+<Note>
+For the headline numbers and charts that sit above this ledger, start on the [Analytics Overview](/merchants/analytics/overview).
+</Note>

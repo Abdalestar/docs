@@ -1,0 +1,31 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/nfc-tags",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "what-is-nfc-tags-page",
+      "goto": "/nfc-tags",
+      "waitFor": "text=Total Tags",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "th:has-text('Action')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "th:has-text('Taps')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "A tap on an NFC tag runs the action you set (1): add a stamp, award points, or check in. The Taps column (2) counts every tap. A tap only registers from inside the Qtap app." }
+      ]
+    },
+    {
+      "name": "what-is-nfc-qr-codes-page",
+      "goto": "/qr-codes",
+      "waitFor": "th:has-text('Status')",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "th:has-text('Type')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "th:has-text('Scans')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "A QR code is scanned with any phone camera. The Type column (1) sets reusable, one-time, or batch codes; the Scans column (2) counts every scan, including anonymous ones that credit no member." }
+      ]
+    }
+  ]
+}
