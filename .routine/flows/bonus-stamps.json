@@ -1,0 +1,72 @@
+{
+  "section": "stamp-cards",
+  "account": "stamp",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "bonus-stamps-01-advanced",
+      "goto": "/cards/new",
+      "waitFor": "#name",
+      "waitMs": 5000,
+      "actions": [
+        { "fill": ["#name", "Coffee Lovers Card"] },
+        { "wait": 500 },
+        { "hover": "text=Advanced Settings" },
+        { "wait": 700 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "text=Advanced Settings", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "On Step 1, Card Design, scroll down and open Advanced Settings." }
+      ]
+    },
+    {
+      "name": "bonus-stamps-02-bonus",
+      "goto": "/cards/new",
+      "waitFor": "#name",
+      "waitMs": 5000,
+      "actions": [
+        { "fill": ["#name", "Coffee Lovers Card"] },
+        { "wait": 400 },
+        { "click": "text=Advanced Settings" },
+        { "wait": 900 },
+        { "click": ":nth-match([role=slider], 1)" },
+        { "press": "ArrowRight" },
+        { "press": "ArrowRight" },
+        { "wait": 400 },
+        { "hover": "text=Birthday Bonus" },
+        { "wait": 700 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "text=Welcome Bonus", "number": 1, "color": "plum" },
+        { "type": "label", "target": "text=Welcome Bonus", "text": "A head start on the first visit", "color": "plum" },
+        { "type": "box", "target": "text=Birthday Bonus", "number": 2, "color": "charcoal" },
+        { "type": "caption", "text": "The Bonus Stamps section: a Welcome Bonus for new joins and a Birthday Bonus, each set with a 0 to 10 slider." }
+      ]
+    },
+    {
+      "name": "bonus-stamps-03-review",
+      "goto": "/cards/new",
+      "waitFor": "#name",
+      "waitMs": 5000,
+      "actions": [
+        { "fill": ["#name", "Coffee Lovers Card"] },
+        { "wait": 400 },
+        { "click": "text=Advanced Settings" },
+        { "wait": 800 },
+        { "click": ":nth-match([role=slider], 1)" },
+        { "press": "ArrowRight" },
+        { "press": "ArrowRight" },
+        { "wait": 400 },
+        { "click": "button:has-text(\"Review\")" },
+        { "wait": 1500 },
+        { "hover": "text=Welcome Bonus" },
+        { "wait": 600 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "text=Welcome Bonus", "number": 1, "color": "plum" },
+        { "type": "box", "target": "text=Birthday Bonus", "number": 2, "color": "charcoal" },
+        { "type": "caption", "text": "The Review step confirms your bonus settings before you publish the card." }
+      ]
+    }
+  ]
+}
