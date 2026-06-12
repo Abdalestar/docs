@@ -20,6 +20,35 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-11 — Send a notification to specific members
+
+**Article:** `merchants/notifications/targeted.mdx` (new)
+**Branch:** `claude/eloquent-fermat-4rjmw8`
+**PR:** https://github.com/Abdalestar/docs/pull/105
+**Status:** Done (4 real annotated screenshots; validate-images 4/4 OK). One task this run.
+
+### What was written
+New how-to for the hand-picked-members push flow (Notion "Sending a Targeted Notification to Specific Members", Campaigns section). Two entry points, both landing on `/notifications/new`:
+- Members page bulk-select → the bulk bar's **Send Notification** → `?members=id1,id2,...`
+- A member's row menu or profile **Send Notification** → `?member_id=...&member_name=...`
+Both inject `target_member_ids` + `segment_type='custom'`, so the compose page hides the segment chooser and shows **Sending to N selected members**. Covers title ≤100 / body ≤500, Use Template, live preview, Send Now / Schedule / Save as Draft, the push-disabled skip + zero-recipients case, and access (owners + managers; staff `campaigns:'none'`). Added to the Campaigns nav after `push-notifications`; cross-links it rather than duplicating the segment-broadcast article.
+
+### Research sources (Abdalestar/qtap, read-only)
+- `app/(dashboard)/notifications/new/page.tsx` — `member_id`/`members=` params → `target_member_ids` + `segment_type='custom'`; header subtitle
+- `components/dashboard/notifications/notification-form.tsx` — `targetMemberCount>0` swaps the SegmentSelector for the "Sending to N" box; field limits; schedule toggle; Save as Draft / Send Now
+- `app/(dashboard)/members/page.tsx` (bulk bar + row-menu links, gated `role!=='staff'`), `members/[id]/page.tsx` (profile button disabled + tooltip when `push_enabled` false)
+- `app/api/notifications/send/route.ts` + `lib/notifications/segments.ts` — base `push_enabled` filter, `.in('id', target_member_ids)`, "No recipients with push enabled"
+- `lib/validations/notification.ts`, `lib/utils/permissions.ts` (`/notifications` needs `campaigns!=='none'`), `lib/validations/staff.ts`
+
+### Insights for future runs
+- **Task selection.** The highest-priority Not-started row was P1 "Campaigns Overview & the 8 Campaign Types" → `merchants/campaigns/overview.mdx`, but that file already exists on `main` (covers 7 types well; the "8th" is the non-UI `custom` schema type). It's a rewrite, not a new article, so per routine task-1 ("write a **new** article") I took the highest-priority Not-started row whose file doesn't exist. The 2026-06-10 gap audit added a batch of Campaigns/Notifications rows; several P2 new-file ones remain (push-vs-campaign, messages, scheduling-templates, and the overview rewrite).
+- **flow-capture is flaky on the members table.** A re-run had the row-checkbox clicks not register (downstream steps then failed); on FAILED the engine doesn't overwrite a prior good PNG, so earlier good shots survived. If re-capturing one step, expect to re-run and keep the good ones.
+- **Row-menu single-member shot:** pick a row whose Push cell is the green bell. Row 1 on the points demo had push **off**, so its menu showed the disabled "Push not enabled" item instead of "Send Notification"; row 2 had push on.
+- Members PII: redact `td:nth-child(2)` (Member) + `td:nth-child(3)` (Contact) per row (`tbody tr:nth-child(N) ...`); one big block over rows 1-9 covers the viewport. Compose page + row menu have no PII.
+- Did not click Send Now / Schedule / Save as Draft, so no notification was sent during capture.
+
+---
+
 ## 2026-06-11 — Campaign Rewards (types & code issuance)
 
 **Article:** `merchants/campaigns/rewards.mdx`
