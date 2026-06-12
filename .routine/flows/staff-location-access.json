@@ -1,0 +1,67 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/staff",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "location-access-01-assign-invite",
+      "goto": "/staff",
+      "waitFor": "button:has-text('Invite Staff')",
+      "waitMs": 3500,
+      "actions": [
+        { "click": "button:has-text('Invite Staff')" },
+        { "fill": ["input[name=first_name]", "Layla"] },
+        { "fill": ["input[name=last_name]", "Ahmed"] },
+        { "fill": ["input[name=email]", "layla.ahmed@example.com"] },
+        { "wait": 500 },
+        { "click": "#all_locations" },
+        { "wait": 500 },
+        { "click": "label:has-text('West Bay')" },
+        { "wait": 600 }
+      ],
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "label:has-text('All Locations')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label:has-text('West Bay')", "number": 2, "color": "plum" },
+        { "type": "label", "target": "label:has-text('All Locations')", "text": "Turn off All Locations to pick specific branches", "color": "plum" }
+      ]
+    },
+    {
+      "name": "location-access-02-edit-locations",
+      "actions": [
+        { "press": "Escape" },
+        { "wait": 1200 },
+        { "click": ":nth-match(button[aria-haspopup=\"menu\"], 4)" },
+        { "wait": 800 },
+        { "click": "[role=menuitem]:has-text('Edit Permissions')" },
+        { "wait": 1600 },
+        { "click": "[role=tab]:has-text('Locations')" },
+        { "wait": 900 }
+      ],
+      "waitFor": "text=Access to All Locations",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "text=Access to All Locations", "color": "plum" },
+        { "type": "label", "target": "text=Access to All Locations", "text": "Change a teammate's branches later on the Locations tab", "color": "plum" }
+      ]
+    },
+    {
+      "name": "location-access-03-branch-select",
+      "goto": "/points-operations",
+      "waitFor": "label:has-text('Branch')",
+      "waitMs": 4500,
+      "actions": [
+        { "hover": "text=Choose the branch you're working at to continue." },
+        { "wait": 800 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "label:has-text('Branch')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "text=Choose the branch you're working at to continue.", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Staff assigned to more than one branch choose where they are before issuing. This keeps each branch's stats accurate." }
+      ]
+    }
+  ]
+}
