@@ -20,6 +20,35 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-12 — Stamp Card Advanced Settings
+
+**Article:** `merchants/stamp-cards/advanced-settings.mdx` (new)
+**Branch:** `claude/eloquent-fermat-b4ypws`
+**PR:** https://github.com/Abdalestar/docs/pull/116
+**Status:** Done (SMOKE_OK, 3 real annotated screenshots, validate-images 3/3 OK)
+
+### What was written
+New how-to for the P1-section gap row "Stamp Card Advanced Settings: Delay, Daily Cap, Multi-Stamp" (P2, was Not started). Documents the **Advanced Settings** collapsible on the Card Design step of the stamp card wizard. Placed under `merchants/stamp-cards/` (after `rewards`) for nav consistency, not the Notion-suggested `merchants/cards/` path. One task this run (per the run request).
+
+**Facts (all grounded in source):**
+- Panel renders on the Card Design step and saves with the card (`stamp-card-wizard.tsx`: `currentStep === 'design'` gate; fields persist on publish/save-draft at Review).
+- **Stamping Delay** (`stamping_delay_minutes`, 0–1440 min) and **Daily Stamp Cap** (`daily_stamp_cap`, 1–100, blank = no limit) are enforced in `lib/stamps/issue-stamp.ts` only when `skip_rules` is false. Messages: delay -> "Please wait N more minute(s)…"; cap -> "Daily stamp limit reached (N per day)."
+- These rules fire on customer earn paths (`app/api/scan/route.ts`, `app/api/nfc/tap/route.ts` call `issueStamp` without `skip_rules`).
+- **Honest gotcha (Warning in the article):** manual stamps from Stamp Operations BYPASS delay + cap — `app/api/stamps/issue/route.ts` calls `issueStamp({ skip_rules: true })`. The `Number of Stamps` (`#stamps-qty`) field on `/stamp-operations` is the staff multi-stamp control.
+- Brief tour of the rest of the panel: Stamp Expiry (Expiration), Welcome/Birthday bonus stamps (0–10), Allow Partial Redemption (cross-linked to rewards.mdx).
+
+### Screenshots
+3 real annotated PNGs from the live **stamp** demo (Dana) via `.routine/flows/stamp-advanced-settings.json`: collapsed panel on Card Design; expanded Stamping Rules (delay 5 / cap 3 / multi-stamp boxed + numbered); Stamp Operations Number of Stamps field. No card published/saved; no member selected (no PII). validate-images 3/3 OK; pushed as binary via git.
+
+### Insights for future runs
+- The live `/cards/new` is the **wizard** (`StampCardWizard`), steps Card Design / Rewards / Locations / Review. Advanced Settings is a `Collapsible` rendered below the step content on the Card Design step only. The stamp account's `/cards/new` renders fine (no plan-limit block).
+- Advanced Settings inputs have **no name/id**. Reliable selectors: Stamping Delay `input[max="1440"]`, Daily Stamp Cap `input[placeholder="No limit"]`, Stamp Expiry `input[placeholder="Never expire"]`. There are 4 `[role=switch]` on the page, so box the **label** `text=Allow Multiple Stamps` rather than the switch (avoids toggling the wrong one — partial-redemption is the other panel switch).
+- On `/stamp-operations`, selecting a card from the first `[role=combobox]` reveals `#stamps-qty` (Number of Stamps) without picking a member, so no PII. Stamp account has 3 cards (Glow Card, VIP Beauty Pass, Dana Card).
+- **Enforcement reality (verify before claiming):** `stamp_expiry_days` and `allow_multi_stamp` are stored and displayed but I found NO enforcement code — no stamp-expiry cron (only `/api/points/expire` exists for points), and the Stamp Operations quantity field works regardless of the toggle. The article describes both at face value without asserting a hard gate or automatic stamp removal.
+- The In-progress P1 row "Awarding Points: By Amount vs Manual Points" was locked by another run (skipped). The P1 "Stamp Card Rewards: Main, Sign-Up & Interim" row is a flagged duplicate of the published `stamp-cards/rewards.mdx` (skipped).
+
+---
+
 ## 2026-06-11 — Upgrading Your Plan
 
 **Article:** `merchants/billing/upgrade.mdx`
