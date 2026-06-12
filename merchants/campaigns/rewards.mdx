@@ -1,6 +1,59 @@
 ---
 title: "Campaign Rewards"
-description: "Attaching rewards and offers to your automated campaigns"
+description: "The five reward types you can attach to a campaign, and how reward codes are issued."
 ---
 
-Coming soon
+A campaign reward is an offer Qtap attaches to the push notification a campaign sends. The member gets a code, and your staff honor it on their next visit. Rewards are optional: you can run a campaign that sends a message and nothing else.
+
+You choose the reward on the Reward step of the campaign wizard, after the trigger and before the message.
+
+## The five reward types
+
+<Frame caption="The Reward step of the campaign wizard, with the five reward types.">
+  <img src="/images/campaigns/campaign-rewards-types.png" alt="Choose Reward Type step showing Free Item, Bonus Stamps, Bonus Points, Discount, and Special Badge" />
+</Frame>
+
+- **Free Item**: a free product or service. You type the item name, for example "Free coffee".
+- **Bonus Stamps**: extra stamps added to the member's card. You set the number, from 1 to 20.
+- **Bonus Points**: extra points added to the member's balance. You set the number, from 1 to 1000.
+- **Discount**: a percentage off a purchase. You set the percentage, from 1 to 100.
+- **Special Badge**: a status badge on the member's profile, such as "Gold Member". You name the badge and pick an icon.
+
+Pick a type and its setting appears below the list. Each campaign carries one reward type.
+
+<Frame caption="Picking a type reveals its setting. A discount asks for the percentage off.">
+  <img src="/images/campaigns/campaign-rewards-config.png" alt="Discount selected, showing the discount percentage field set to 20 percent off" />
+</Frame>
+
+## How reward codes are issued
+
+When a campaign that has a reward runs, Qtap creates one reward code for every member it sends to. The code looks like `CAMP-7K2P9XAB`. It is valid for 30 days from the day it is issued, and it can be used once. After that it shows as expired and cannot be redeemed.
+
+The code goes to the member in the Qtap app along with the campaign notification. They show it to your staff to claim the reward.
+
+<Frame caption="The Review step lists the reward before you activate the campaign.">
+  <img src="/images/campaigns/campaign-rewards-review.png" alt="Review step summary card showing a 20% discount reward" />
+</Frame>
+
+## How each reward is honored
+
+Bonus Stamps and Bonus Points are added to the member's balance when the code is redeemed.
+
+A Free Item or a Discount is honored at the counter by your staff. Qtap does not apply the discount to a bill or ring up the free item for you, so brief your team on what to give and what the code looks like. A Special Badge is a status marker on the member's profile and does not change their balance.
+
+<Warning>
+A discount reward is not an automatic price reduction. Your staff apply it at the till when the member shows the code. If you use a separate point-of-sale system, Qtap does not talk to it.
+</Warning>
+
+<Note>
+A reward is attached at the campaign level, so every member the campaign reaches gets the same reward. To offer different rewards, run separate campaigns.
+</Note>
+
+<CardGroup cols={2}>
+  <Card title="Campaigns Overview" href="/merchants/campaigns/overview">
+    How campaigns work and what types are available.
+  </Card>
+  <Card title="Win-Back Campaigns" href="/merchants/campaigns/winback">
+    Re-engage members who haven't visited in a while, with a reward to bring them back.
+  </Card>
+</CardGroup>

@@ -1,0 +1,84 @@
+{
+  "section": "merchants/notifications",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "targeted-01-select",
+      "goto": "/members",
+      "waitFor": "text=total member",
+      "waitMs": 5500,
+      "actions": [
+        { "click": "tbody tr:nth-child(1) [role=checkbox]" },
+        { "click": "tbody tr:nth-child(2) [role=checkbox]" },
+        { "click": "tbody tr:nth-child(3) [role=checkbox]" },
+        { "wait": 600 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "a[href*=\"/notifications/new?members=\"]", "number": 1, "color": "plum" },
+        { "type": "redact", "target": "tbody tr:nth-child(1) td:nth-child(2)" },
+        { "type": "redact", "target": "tbody tr:nth-child(1) td:nth-child(3)" },
+        { "type": "redact", "target": "tbody tr:nth-child(2) td:nth-child(2)" },
+        { "type": "redact", "target": "tbody tr:nth-child(2) td:nth-child(3)" },
+        { "type": "redact", "target": "tbody tr:nth-child(3) td:nth-child(2)" },
+        { "type": "redact", "target": "tbody tr:nth-child(3) td:nth-child(3)" },
+        { "type": "redact", "target": "tbody tr:nth-child(4) td:nth-child(2)" },
+        { "type": "redact", "target": "tbody tr:nth-child(4) td:nth-child(3)" },
+        { "type": "redact", "target": "tbody tr:nth-child(5) td:nth-child(2)" },
+        { "type": "redact", "target": "tbody tr:nth-child(5) td:nth-child(3)" },
+        { "type": "redact", "target": "tbody tr:nth-child(6) td:nth-child(2)" },
+        { "type": "redact", "target": "tbody tr:nth-child(6) td:nth-child(3)" },
+        { "type": "redact", "target": "tbody tr:nth-child(7) td:nth-child(2)" },
+        { "type": "redact", "target": "tbody tr:nth-child(7) td:nth-child(3)" },
+        { "type": "redact", "target": "tbody tr:nth-child(8) td:nth-child(2)" },
+        { "type": "redact", "target": "tbody tr:nth-child(8) td:nth-child(3)" },
+        { "type": "redact", "target": "tbody tr:nth-child(9) td:nth-child(2)" },
+        { "type": "redact", "target": "tbody tr:nth-child(9) td:nth-child(3)" },
+        { "type": "caption", "text": "Tick members on the Members page, then choose Send Notification in the bar that appears." }
+      ]
+    },
+    {
+      "name": "targeted-02-compose",
+      "actions": [
+        { "click": "a[href*=\"/notifications/new?members=\"]" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "text=Sending to",
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "box", "target": "[class*=\"border-primary\"]", "color": "plum" },
+        { "type": "label", "target": "[class*=\"border-primary\"]", "text": "Recipients are fixed to the members you picked", "color": "plum" },
+        { "type": "caption", "text": "The compose page locks the audience to your selection instead of showing the segment chooser." }
+      ]
+    },
+    {
+      "name": "targeted-03-message",
+      "actions": [
+        { "fill": ["#title", "A little thank you, on us"] },
+        { "fill": ["#body", "Thanks for being a regular. Show this at the counter for a free drink this week."] },
+        { "wait": 600 }
+      ],
+      "waitMs": 1500,
+      "annotate": [
+        { "type": "caption", "text": "Write the title and message. The phone preview on the right shows how it lands." }
+      ]
+    },
+    {
+      "name": "targeted-04-row-menu",
+      "goto": "/members",
+      "waitFor": "text=total member",
+      "waitMs": 5500,
+      "actions": [
+        { "click": "tbody tr:nth-child(2) button[aria-haspopup=\"menu\"]" },
+        { "wait": 600 }
+      ],
+      "clipTo": "[role=menu]",
+      "clipPadding": 18,
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text(\"Send Notification\")", "color": "plum" },
+        { "type": "label", "target": "[role=menuitem]:has-text(\"Send Notification\")", "text": "One member: use the row menu", "color": "plum" }
+      ]
+    }
+  ]
+}

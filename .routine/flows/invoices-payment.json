@@ -1,0 +1,38 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/billing",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 1000 },
+  "steps": [
+    {
+      "name": "invoices-tabs",
+      "goto": "/settings/billing",
+      "waitFor": "text=Current Plan",
+      "waitMs": 6000,
+      "actions": [
+        { "click": "[role=tab]:has-text('Overview')" },
+        { "wait": 1500 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "[role=tablist]", "number": 1, "color": "plum" },
+        { "type": "label", "target": "[role=tab]:has-text('History')", "text": "Invoices live under History", "color": "plum" },
+        { "type": "caption", "text": "Open Settings then Billing. Invoices sit in the History tab; your saved card shows on the Overview tab once you have one on file." }
+      ]
+    },
+    {
+      "name": "invoices-empty",
+      "actions": [
+        { "click": "[role=tab]:has-text('History')" },
+        { "wait": 2500 }
+      ],
+      "waitFor": "text=Payment History",
+      "waitMs": 1500,
+      "annotate": [
+        { "type": "box", "target": "[role=tab]:has-text('History')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "text=No payment history yet", "number": 2, "color": "charcoal" },
+        { "type": "caption", "text": "The History tab lists every invoice once you subscribe. Before your first paid charge it shows this message." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/billing",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 960 },
+  "steps": [
+    {
+      "name": "usage-meters-overview",
+      "goto": "/settings/billing",
+      "waitFor": "text=Current Plan",
+      "waitMs": 7000,
+      "actions": [
+        { "click": "[role=tab]:has-text('Overview')" },
+        { "wait": 2000 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "text=Current Plan", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "The Overview tab shows your plan and a meter for each plan limit: how much you have used out of what your plan includes." }
+      ]
+    },
+    {
+      "name": "usage-meters-over-limit",
+      "clipTo": "div.space-y-2:has(span:text-is('Campaigns'))",
+      "clipPadding": 44,
+      "waitMs": 1200,
+      "annotate": [
+        { "type": "box", "target": "div.space-y-2:has(span:text-is('Campaigns'))", "color": "red" },
+        { "type": "label", "target": "span:text-is('Campaigns')", "text": "The count and bar turn red once you reach a limit", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "usage-meters-monthly",
+      "clipTo": "div.space-y-4:has(> div.space-y-2 > div > span:text-is('Locations'))",
+      "clipPadding": 18,
+      "waitMs": 1200,
+      "annotate": [
+        { "type": "box", "target": "div.space-y-2:has(span:text-is('QR Codes (this month)'))", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.space-y-2:has(span:text-is('Push Notifications (this month)'))", "number": 2, "color": "plum" },
+        { "type": "label", "target": "span:text-is('QR Codes (this month)')", "text": "Meters marked (this month) reset on the 1st", "color": "charcoal" }
+      ]
+    }
+  ]
+}
