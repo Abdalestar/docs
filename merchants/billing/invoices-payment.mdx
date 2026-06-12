@@ -1,0 +1,67 @@
+---
+title: "Invoices and payment method"
+sidebarTitle: "Invoices and payment"
+description: "Find your Qtap invoices, download or print them, and update the card you pay with."
+---
+
+Every time Qtap charges your card, it saves a receipt you can download. The card you pay with and the list of past charges both live on the Billing page. Only the account owner can change the card or open the billing portal.
+
+## Where to look
+
+Go to **Settings**, then **Billing**. The page has four tabs. Your invoices sit under **History**; the card on file shows on **Overview**.
+
+<Frame caption="The Billing page tabs. Invoices live under History; your saved card shows on Overview.">
+  <img src="/images/merchants/billing/invoices-tabs.png" alt="Billing page with the four tabs boxed and the History tab labelled" />
+</Frame>
+
+## Your payment history
+
+Open the **History** tab to see **Payment History**: one row for each charge, newest first. Every row shows the date, what it was for, the amount, and whether it was paid.
+
+<Frame caption="The History tab on a new account, before any paid charge has been made.">
+  <img src="/images/merchants/billing/invoices-empty.png" alt="History tab showing the empty payment history message" />
+</Frame>
+
+Once you're on a paid plan, each charge fills in a row like this:
+
+<Frame caption="A paid invoice row, and where to change the card you pay with.">
+  <img src="/images/merchants/billing/invoices-payment-anatomy.svg" alt="Diagram of a paid invoice row and the Stripe billing portal" />
+</Frame>
+
+Two icons sit at the end of each row:
+
+- **Download** saves the invoice as a PDF, ready to keep or send to your accountant.
+- **View online** opens the same invoice as a web page you can read or print.
+
+Both open in a new tab, so the Billing page stays where it was. If you have more than ten invoices, a **Load More** button at the bottom brings in the next ten.
+
+<Note>
+A free trial doesn't create an invoice, so the History tab stays empty until your first paid charge. That's normal, not a missing receipt.
+</Note>
+
+## The card you pay with
+
+Once you have a card on file, the **Overview** tab shows a **Payment Method** card with the brand and the last four digits, plus the expiry date. This is the card Qtap charges each billing period.
+
+To change it, click **Manage Subscription** on the Overview tab. That opens the secure Stripe billing portal, where you can replace the card, read your full billing history, and download any past invoice. When you finish, the portal returns you to the Billing page.
+
+<Info>
+If you have a card saved but no active plan, the same button reads **Manage Payment Method** instead. Either one opens the same portal.
+</Info>
+
+<Warning>
+Managing billing is owner only. Managers and staff don't see the Manage button, and the portal won't open for them. Ask the account owner to update the card.
+</Warning>
+
+## If a payment fails
+
+When a charge doesn't go through, your plan shows a **Past Due** status and a red banner appears at the top of the Billing page with an **Update Payment** button. Click it to open the same Stripe portal and fix or replace the card before your access is affected.
+
+<CardGroup cols={2}>
+  <Card title="Billing" href="/merchants/settings/billing">
+    View your plan, usage, and add-ons
+  </Card>
+  <Card title="Upgrading your plan" href="/merchants/billing/upgrade">
+    Move to a higher plan and see what you're charged
+  </Card>
+</CardGroup>
