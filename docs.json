@@ -54,6 +54,7 @@
           "merchants/qr-codes/batch",
           "merchants/qr-codes/troubleshooting",
           "merchants/qr-codes/qr-code-detail",
+          "merchants/nfc-tags/what-is-nfc",
           "merchants/nfc-tags",
           "merchants/nfc-tags/tap-and-earn"
         ]
