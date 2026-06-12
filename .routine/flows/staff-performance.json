@@ -1,0 +1,74 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "analytics",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "staff-performance-overview",
+      "goto": "/analytics/reports/staff-performance",
+      "waitFor": "h1:has-text(\"Staff Performance Report\")",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"All branches\")", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text(\"Last 30 days\")", "number": 2, "color": "plum" },
+        { "type": "redact", "target": "tbody tr:nth-child(1) td:first-child" },
+        { "type": "redact", "target": "tbody tr:nth-child(2) td:first-child" },
+        { "type": "redact", "target": "tbody tr:nth-child(3) td:first-child" },
+        { "type": "redact", "target": "tbody tr:nth-child(4) td:first-child" },
+        { "type": "redact", "target": "tbody tr:nth-child(5) td:first-child" },
+        { "type": "redact", "target": "tbody tr:nth-child(6) td:first-child" },
+        { "type": "redact", "target": "tbody tr:nth-child(7) td:first-child" },
+        { "type": "redact", "target": "tbody tr:nth-child(8) td:first-child" },
+        { "type": "redact", "target": "tbody tr:nth-child(9) td:first-child" },
+        { "type": "caption", "text": "The Staff Performance Report. Filter by branch (1) and time period (2); each row is one staff member's activity for the chosen window." }
+      ]
+    },
+    {
+      "name": "staff-performance-table",
+      "clipTo": "div.rounded-xl:has(th:has-text(\"Staff Member\"))",
+      "clipPadding": 14,
+      "waitMs": 1500,
+      "annotate": [
+        { "type": "box", "target": "thead tr", "color": "plum" },
+        { "type": "redact", "target": "tbody tr:nth-child(1) td:first-child" },
+        { "type": "redact", "target": "tbody tr:nth-child(2) td:first-child" },
+        { "type": "redact", "target": "tbody tr:nth-child(3) td:first-child" },
+        { "type": "redact", "target": "tbody tr:nth-child(4) td:first-child" },
+        { "type": "redact", "target": "tbody tr:nth-child(5) td:first-child" },
+        { "type": "redact", "target": "tbody tr:nth-child(6) td:first-child" },
+        { "type": "redact", "target": "tbody tr:nth-child(7) td:first-child" },
+        { "type": "label", "target": "th:has-text(\"Stamps Issued\")", "text": "Stamps read 0 on a points-only program", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "staff-performance-period",
+      "actions": [
+        { "click": "button:has-text(\"Last 30 days\")" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "[role=option]:has-text(\"This year\")",
+      "clipTo": "[role=listbox]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "[role=option]:has-text(\"Last 30 days\")", "color": "plum" }
+      ]
+    },
+    {
+      "name": "staff-performance-detail",
+      "goto": "/analytics/reports/staff-performance",
+      "actions": [
+        { "wait": 6000 },
+        { "click": "tbody tr:first-child" },
+        { "wait": 5000 }
+      ],
+      "waitFor": "text=Activity Over Time",
+      "waitMs": 1500,
+      "clip": { "x": 0, "y": 0, "width": 1440, "height": 540 },
+      "annotate": [
+        { "type": "redact", "target": "h1" },
+        { "type": "caption", "text": "Click any staff member to open their drill-down: headline metrics with the change versus the previous period, plus an activity-over-time chart." }
+      ]
+    }
+  ]
+}
