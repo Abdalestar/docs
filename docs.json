@@ -107,6 +107,7 @@
           "merchants/settings/locations",
           "merchants/settings/notifications",
           "merchants/settings/merchant-page",
+          "merchants/merchant-page/building",
           "merchants/settings/security"
         ]
       },

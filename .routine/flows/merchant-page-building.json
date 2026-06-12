@@ -1,0 +1,61 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/merchant-page",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 1300 },
+  "steps": [
+    {
+      "name": "building-01-overview",
+      "goto": "/merchant-page",
+      "waitFor": "text=Merchant Profile",
+      "waitMs": 6500,
+      "annotate": [
+        { "type": "box", "target": "text=Merchant Profile", "number": 1, "color": "plum" },
+        { "type": "box", "target": "text=Merchant Page Preview", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "The Merchant Page editor. Fill in the details on the left (1); the panel on the right (2) previews your public page in real time." }
+      ]
+    },
+    {
+      "name": "building-02-cover-photos",
+      "goto": "/merchant-page",
+      "waitFor": "text=Cover Photos",
+      "waitMs": 6500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Add photo')", "number": 1, "color": "plum" },
+        { "type": "label", "target": "text=Cover Photos", "text": "Up to 5 photos. The first is your main cover.", "color": "plum" },
+        { "type": "caption", "text": "Add up to five cover photos. The first one is your main banner; drag the others to reorder them." }
+      ]
+    },
+    {
+      "name": "building-03-loyalty-cards",
+      "goto": "/merchant-page",
+      "actions": [
+        { "hover": "a:has-text('Create a loyalty card')" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "text=Loyalty Cards",
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('per QAR')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "a:has-text('Create a loyalty card')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Feature your real loyalty programs (1). Customers who open your page can join them and start collecting straight away. Add a new card with Create a loyalty card (2)." }
+      ]
+    },
+    {
+      "name": "building-04-publish",
+      "goto": "/merchant-page",
+      "actions": [
+        { "hover": "button:has-text('Create Merchant')" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "button:has-text('Create Merchant')",
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Create Merchant')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Preview')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Preview opens your page in a new tab (2). Create Merchant publishes it (1); after that the button reads Update Merchant for future edits." }
+      ]
+    }
+  ]
+}
