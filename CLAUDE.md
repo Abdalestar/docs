@@ -46,6 +46,38 @@ New P0 how-to for the gap-audit row "Showing a QR Code to a Customer & How They 
 
 ---
 
+## 2026-06-11 — Adjusting and Deducting Points
+
+**Article:** `merchants/points/adjusting.mdx` (new)
+**Branch:** `claude/eloquent-fermat-5p1qr1`
+**PR:** https://github.com/Abdalestar/docs/pull/101
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK)
+
+### What was written
+New P1 how-to for the highest-priority `Not started` board row, "Adjusting & Deducting Points (Owner/Manager Only)". The board was otherwise all Done, so this was the single new-article task. Added to the Points Programs nav after `operations`.
+
+Scoped as a deep-dive that complements `points/operations.mdx` (which already covers the basic award + Adjust/Deduct steps), the same overview-vs-deepdive split the staff articles use. It documents the four facts the overview omits, all grounded in source:
+- **Owner/manager only.** Staff have `issue_points=true` by default, so they reach `/points-operations` and SEE the Adjust/Deduct tab, but `app/api/points/adjust/route.ts` 403s a staff role on submit. Documented honestly (UI does not hide the tab).
+- **Reason required** (400 if empty), saved as `Staff adjustment: <reason>` attributed to the staff account.
+- **Cannot go below zero** (400, balance untouched).
+- **Deductions notify the member** (push, email fallback); positive adjustments do not (`if (pointsValue < 0)` block; `notification_sent: pointsValue < 0`).
+
+### Research sources (Abdalestar/qtap, read-only)
+- `app/api/points/adjust/route.ts` — owner/manager gate, reason 400, below-zero 400, deduction-only notification, points_transactions + transactions ledger + analytics logging.
+- `app/(dashboard)/points-operations/page.tsx` — tabs (Award Points / Adjust/Deduct / Recent Activity), Add/Deduct toggle, `#adjust_points`, `#adjust_reason` (Reason (required)), OperationBranchSelect, balance preview, Confirm Points Deduction dialog (final button "Confirm Deduction").
+- `lib/utils/permissions.ts` + `lib/validations/staff.ts` — `/points-operations` needs `issue_points` (true for owner/manager/staff defaults), so staff reach the page but the API still blocks the adjust.
+
+### Screenshots
+SMOKE_OK. 3 real annotated PNGs via `flow-capture.mjs` (`.routine/flows/points-adjusting.json`) from the points demo account (Najma Coffee): `points-adjust-tab.png` (tab + Add/Deduct toggle + Reason boxed), `points-adjust-preview.png` (Deduct 150, current→new balance + notify notice, cropped to the form card so no PII), `points-adjust-confirm.png` (Confirm Points Deduction dialog, member name redacted). The flow opens the confirm dialog and never clicks **Confirm Deduction**, so no real balance changed. `validate-images.mjs` 3/3 OK; pushed as binary via git.
+
+### Notes / gotchas
+- Adjust member-search result row is `.divide-y button` (a `<button>`, not a div); search needs ≥2 chars.
+- The points account is multi-branch, so the confirm button stays disabled until a Branch is picked (OperationBranchSelect / `branchRequired`); the flow selects the first branch option.
+- Crop selector `div.bg-card:has-text('Adjust Points Balance')` isolates the right-hand form card and keeps the selected member's email (left card) out of the shot.
+- The gap-audit row proposed a fresh `points/adjusting.mdx`; `points/operations.mdx` already had an Adjust/Deduct section, so this article cross-links rather than re-teaching the basics.
+
+---
+
 ## 2026-06-11 — Upgrading Your Plan
 
 **Article:** `merchants/billing/upgrade.mdx`
