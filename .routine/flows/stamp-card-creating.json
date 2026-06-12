@@ -1,0 +1,82 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/stamp-cards",
+  "account": "stamp",
+  "defaultWaitMs": 2800,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "creating-01-cards-page",
+      "goto": "/cards",
+      "waitFor": "button:has-text('Create Card')",
+      "waitMs": 3800,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Create Card')", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "On the Cards page, click Create Card to open the setup wizard." }
+      ]
+    },
+    {
+      "name": "creating-02-card-design",
+      "goto": "/cards/new",
+      "actions": [
+        { "fill": ["#name", "Loyalty Brew Card"] },
+        { "fill": ["#stamps", "8"] },
+        { "fill": ["#description", "Buy 8 coffees, get the 9th free."] },
+        { "fill": ["#businessName", "Dana Salon & Spa"] },
+        { "fill": ["#websiteUrl", "https://danasalon.qa"] },
+        { "wait": 1000 }
+      ],
+      "waitFor": "#name",
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "box", "target": "#name", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#stamps", "number": 2, "color": "plum" },
+        { "type": "label", "target": "#stamps", "text": "How many stamps earn the reward", "color": "plum" },
+        { "type": "caption", "text": "Step 1, Card Design: name the card and set the stamp goal. A live preview updates on the right." }
+      ]
+    },
+    {
+      "name": "creating-03-rewards",
+      "actions": [
+        { "click": "button.group:has-text('Rewards')" },
+        { "wait": 1400 },
+        { "click": "button:has-text('Add reward')" },
+        { "wait": 1100 },
+        { "fill": ["#rewardName", "Free coffee"] },
+        { "wait": 600 }
+      ],
+      "waitFor": "text=Add a reward",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "[role=dialog] button:has-text('Main')", "color": "plum" },
+        { "type": "label", "target": "[role=dialog] button:has-text('Main')", "text": "Main rewards issue when the card is completed", "color": "plum" },
+        { "type": "box", "target": "#rewardName", "color": "gold" }
+      ]
+    },
+    {
+      "name": "creating-04-locations",
+      "actions": [
+        { "press": "Escape" },
+        { "wait": 1200 },
+        { "click": "button.group:has-text('Locations')" },
+        { "wait": 1600 }
+      ],
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "caption", "text": "Step 3, Locations: choose where this card can be stamped. Unselected locations cannot stamp it." }
+      ]
+    },
+    {
+      "name": "creating-05-review",
+      "actions": [
+        { "click": "button.group:has-text('Review')" },
+        { "wait": 1800 }
+      ],
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "caption", "text": "Step 4, Review: check the summary, then publish the card live or save it as a draft." }
+      ]
+    }
+  ]
+}
