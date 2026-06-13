@@ -39,6 +39,7 @@
         "pages": [
           "merchants/points/overview",
           "merchants/points/creating",
+          "merchants/points/editing",
           "merchants/points/earn-rate",
           "merchants/points/rewards",
           "merchants/points/operations",
