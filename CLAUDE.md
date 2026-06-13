@@ -20,6 +20,39 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-13 — Push Notifications screenshots (backfill)
+
+**Article:** `merchants/campaigns/push-notifications.mdx`
+**Branch:** `claude/eloquent-fermat-d5ugbw`
+**PR:** https://github.com/Abdalestar/docs/pull/143
+**Status:** Done — 4 real annotated screenshots added; prose unchanged. SMOKE_OK; validate-images 4/4 OK.
+
+### Task selection
+The board has no clean `Not started` row (Location Comparison is taken via the open PR #126; Campaign Analytics is screenshot-blocked). Per routine §3 this run did one screenshot backfill. Picked the highest-value on-main `Needs Screenshots = YES` row whose article actually lives on `main`: **"Sending Push Notifications to Customers"** (P2) → `merchants/campaigns/push-notifications.mdx`, a 139-line article on `main` carrying only two placeholder SVGs.
+
+**Reality check that shaped the pick:** `main` is frozen at the PR #74 era, so most recent articles (and most "screenshot backfill" PRs like #131/#133/#134) are NOT on `main` — their PRs were never merged. A backfill needs the article to be on `main`, so I scanned on-main `.mdx` for zero-PNG files and matched against `Needs Screenshots = YES` Notion rows. push-notifications was the highest-value match (the compose flow is fully screenshotable on the points demo).
+
+### What this run added
+4 real annotated PNGs via `.routine/flows/push-notifications.json` (points demo, Najma Coffee), replacing the two SVG frames with real PNGs and adding two new frames; prose untouched:
+- `notifications-list` — Push Notifications page, 5 tabs boxed + New Notification badged (demo has no notifications, so the real empty state shows).
+- `notification-compose` — `#title` (1) / `#body` (2) boxed + live phone preview rendering `{{first_name}}`.
+- `notification-segments` — cropped to the 7 real segment cards with criteria.
+- `notification-send-options` — When/Schedule-for-later toggle + Save as Draft (1) / Send Now (2) boxed.
+Read-only: Send Now / Save as Draft / Schedule never clicked; no notification created/sent; no PII.
+
+### Research sources (qtap, read-only)
+- `app/(dashboard)/notifications/page.tsx` — H1 "Push Notifications", 5 tabs (All/Drafts/Scheduled/Sent/Templates), New Notification link.
+- `app/(dashboard)/notifications/new/page.tsx` + `components/dashboard/notifications/notification-form.tsx` — `#title`/`#body`, live `NotificationPreview`, Message/Send To/When cards, Save as Draft + Send Now (or Schedule) buttons.
+- `components/dashboard/notifications/segment-selector.tsx` — the 7 segments + criteria.
+
+### Insights / gotchas for future runs
+- **Live segment counts are broken on the deployment.** `useSegmentCounts` errors ("Couldn't load audience sizes", Retry doesn't fix it), so the segment badges render `—` instead of live counts. The selector + criteria still capture cleanly; the prose's "live count" line was left unchanged. Don't expect populated counts on this demo.
+- **Live label drift (left as-is per the no-prose-edit rule):** the UI labels two segments **Regulars** and **Near Complete** where the prose says "Regular Customers" and "Near Reward".
+- **`/notifications/new` layout for crops:** the form is taller than the viewport. `Send To` card holds the 7-segment `[role=radiogroup]`; hover `label[for="near_complete"]` to scroll it in, then `clipTo [role=radiogroup]`. The action buttons sit at y≈840 after `hover button:has-text("Save as Draft")`; an explicit `clip {x:268,y:666,width:584,height:224}` captures the When card + both buttons. `[role=switch]` is the Schedule toggle.
+- Board reality: the real backlog is on-main zero-image articles (find with the no-PNG scan), since the Notion `Needs Screenshots` flags were cleared by backfill PRs that never merged. Other on-main zero-PNG candidates remain (e.g. `merchants/points/overview.mdx`, `merchants/qr-codes/overview.mdx`, `merchants/settings/{merchant-page,notifications}.mdx`).
+
+---
+
 ## 2026-06-12 — Staff Performance Report
 
 **Article:** `merchants/analytics/staff-performance.mdx`
