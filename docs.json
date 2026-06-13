@@ -125,6 +125,7 @@
           "merchants/settings/locations",
           "merchants/settings/notifications",
           "merchants/settings/merchant-page",
+          "merchants/settings/merchant-page-editor",
           "merchants/settings/security"
         ]
       },
