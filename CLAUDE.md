@@ -20,6 +20,68 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-13 — Editing a Stamp Card
+
+**Article:** `merchants/stamp-cards/editing.mdx` (new)
+**Branch:** `claude/eloquent-fermat-0hhuo9`
+**PR:** https://github.com/Abdalestar/docs/pull/137
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK). One task this run.
+
+### Task selection
+The Notion board is fully `Done`. The only two "Coming soon" stubs on `main` are
+both unavailable: `analytics/location-comparison.mdx` already has an unmerged PR
+(#126), and `campaigns/analytics.mdx` is blocked (the campaign detail Performance
+card is `(performance || perfLoading)`-gated and does not render on the demo, and
+`campaigns/stats.mdx` already documents the rest of `/campaigns/[id]`). So this run
+did one genuine gap-discovery new article: **Editing a Stamp Card** (`/cards/[id]`),
+which was undocumented (only Duplicate was mentioned, in `stamp-cards/overview.mdx`).
+
+### What was written
+New how-to for the edit screen. Reached from `/cards` by clicking a card or its
+three-dot menu → **Edit**. H1 "Edit Stamp Card" + status badge; it reopens the same
+four-step wizard (Card Design / Rewards / Locations / Review) pre-filled, with the
+live MobilePreview. Save on Review with **Publish Card** (keeps it live) or **Save as
+Draft**. Cross-links designing/rewards/advanced-settings rather than re-teaching fields.
+
+Honest gotchas (all grounded in source):
+- Editing a currently **Active** card and clicking **Save as Draft** sets it to draft
+  and hides it from the member app until republished (`saveCard('draft')` sets
+  `status='draft'`, `is_active=false`). Use **Publish Card** to keep a live card live.
+- Saving rewrites the reward list: edit-mode `saveCard` does
+  `rewards.delete().eq('stamp_card_id', cardId)` then re-inserts the current editor
+  rewards. Remove a reward there only if you want it gone.
+- Editing updates the `stamp_cards` row only; it does not touch `member_stamps`, so
+  members keep their collected stamps (lowering the goal lets them reach it sooner).
+
+### Research sources (qtap, read-only)
+- `app/(dashboard)/cards/[id]/page.tsx` — H1 "Edit Stamp Card", status badge,
+  `StampCardWizard mode="edit" initialData={card}` + `MobilePreview` sidebar.
+- `components/dashboard/stamp-card/stamp-card-wizard.tsx` — `saveCard()` update vs
+  insert by `mode`; rewards delete+reinsert; Review buttons "Save as Draft" /
+  "Publish Card" (no separate "Save Changes" label in edit mode).
+- `app/(dashboard)/cards/page.tsx` — row menu Edit → `/cards/[id]`, Duplicate,
+  Publish/Deactivate/Activate/Convert to Draft, Delete; card preview also links to edit.
+- `lib/utils/permissions.ts` + `lib/validations/staff.ts` — `/cards` needs
+  `stamp_cards !== 'none'`; owner full, manager edit, staff none by default.
+
+### Screenshots
+3 real annotated PNGs (1440×900) from the live **stamp** demo (Dana) via
+`.routine/flows/stamp-card-editing.json`: Cards page entry (a card boxed), the
+pre-filled Edit Stamp Card screen (Glow Card, Active, live preview), and the Review
+step (Save as Draft + Publish Card boxed). No card saved/published during capture; no
+customer PII (all merchant card config). SMOKE_OK; `validate-images` 3/3 OK; pushed as
+binary via git. Card ids on the stamp demo are seeded `da1a000N-...`.
+
+### Gap discovery (2 added)
+- **Editing a Points Program** → `/points/[id]` (`merchants/points/editing.mdx`, P2) —
+  the points-program analog of this article (`PointsProgramForm` + preview); check the
+  form save path for the same replace-on-save / unpublish-on-draft behavior.
+- **The Card Designer** → `/cards/design` (`merchants/stamp-cards/card-designer.mdx`,
+  P3) — a standalone CardDesigner that saves a design to sessionStorage and routes to
+  `/cards/new`; may be reachable only by URL (verify a live link before writing).
+
+---
+
 ## 2026-06-12 — Staff Performance Report
 
 **Article:** `merchants/analytics/staff-performance.mdx`

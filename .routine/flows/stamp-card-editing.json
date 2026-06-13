@@ -1,0 +1,44 @@
+{
+  "section": "merchants/stamp-cards",
+  "account": "stamp",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "editing-01-open",
+      "goto": "/cards",
+      "waitFor": "a[href^=\"/cards/da1a\"]",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "box", "target": "a[href^=\"/cards/da1a\"]", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Open a card from the Cards page: click the card itself, or its three-dot menu and then Edit." }
+      ]
+    },
+    {
+      "name": "editing-02-edit-screen",
+      "goto": "/cards/da1a0005-0000-4000-a000-000000000005",
+      "waitFor": "h1:has-text(\"Edit Stamp Card\")",
+      "waitMs": 5000,
+      "annotate": [
+        { "type": "box", "target": "h1:has-text(\"Edit Stamp Card\")", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "The edit screen is the same four-step wizard, pre-filled with the card's current settings and a live preview." }
+      ]
+    },
+    {
+      "name": "editing-03-save",
+      "actions": [
+        { "click": "button:has-text(\"Review\")" },
+        { "wait": 2500 },
+        { "hover": "button:has-text(\"Publish Card\")" },
+        { "wait": 800 }
+      ],
+      "waitFor": "button:has-text(\"Publish Card\")",
+      "waitMs": 1500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Save as Draft\")", "color": "charcoal" },
+        { "type": "box", "target": "button:has-text(\"Publish Card\")", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "On Review, Publish Card saves your changes and keeps the card live. Save as Draft turns a live card back into a draft." }
+      ]
+    }
+  ]
+}
