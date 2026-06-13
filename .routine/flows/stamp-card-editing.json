@@ -1,0 +1,51 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/stamp-cards",
+  "account": "stamp",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "editing-01-menu",
+      "goto": "/cards",
+      "waitFor": "text=Stamp Cards",
+      "waitMs": 6000,
+      "actions": [
+        { "click": "button[aria-haspopup=\"menu\"] >> nth=3" },
+        { "wait": 900 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text(\"Edit\")", "color": "plum" },
+        { "type": "caption", "text": "On the Cards page, open a card's menu and choose Edit. Clicking the card itself opens the same editor." }
+      ]
+    },
+    {
+      "name": "editing-02-edit-page",
+      "goto": "/cards/e7dc0af5-f42b-4bb0-84d6-b2afd188acf3",
+      "waitFor": "text=Edit Stamp Card",
+      "waitMs": 6000,
+      "actions": [
+        { "hover": "h1:has-text(\"Edit Stamp Card\")" },
+        { "wait": 500 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "h1:has-text(\"Edit Stamp Card\")", "color": "plum" },
+        { "type": "caption", "text": "The editor loads the card's current settings in the same four-step wizard. The status badge next to the title shows whether the card is Active, Inactive, or a Draft, and the preview on the right updates as you change things." }
+      ]
+    },
+    {
+      "name": "editing-03-review",
+      "actions": [
+        { "click": "button:has-text(\"Review\")" },
+        { "wait": 1200 },
+        { "hover": "button:has-text(\"Publish Card\")" },
+        { "wait": 700 }
+      ],
+      "waitFor": "text=Publish Card",
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Save as Draft\")", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text(\"Publish Card\")", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Publish Card (2) saves your changes and keeps the card live. Save as Draft (1) saves your changes but takes the card offline until you publish it again." }
+      ]
+    }
+  ]
+}
