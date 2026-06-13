@@ -20,6 +20,34 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-13 — Editing a Points Program
+
+**Article:** `merchants/points/editing.mdx` (new)
+**Branch:** `claude/eloquent-fermat-vs5cii`
+**PR:** https://github.com/Abdalestar/docs/pull/138
+**Status:** Done (4 real annotated screenshots, validate-images 4/4 OK). One task this run per the run request.
+
+### Task selection
+Board is otherwise all `Done`; two `Not started` rows were auto-discovered 2026-06-13 — "Editing a Points Program" (P2) and "The Card Designer (Design-First Entry)" (P3). Took the higher-priority P2. (P3 `card-designer.mdx` for the `/cards/design` route is still Not started for a future run; the note says verify the live dashboard links to it before writing.)
+
+### What was written
+New how-to for the `/points/[id]` edit page (H1 "Edit Points Program", subtitle "Update your points program settings", live `PointsMobilePreview` sidebar on wide screens). Entry: `/points` program `⋯` menu → **Edit**, or click the card. Complements `creating.mdx` (cross-linked, doesn't re-teach field setup).
+
+### Facts (grounded in qtap, read-only)
+- `app/(dashboard)/points/[id]/page.tsx` — loads `points_programs` + `rewards(*)`, mounts `PointsProgramForm mode="edit"` with the preview sidebar.
+- `components/dashboard/points-program-form.tsx` — `onSubmit` edit branch: updates the program, then **`rewards.delete().eq('points_program_id', id)` followed by re-inserting the form's reward list** (replace-on-save). `Save & Activate` → `status='active'`, `is_active=true`, `published_at=now`; `Save as Draft` → `status='draft'`, `is_active=false`, `published_at=null` (**unpublishes a live program** — documented as a Warning). Buttons: Cancel / Save as Draft / Save & Activate (edit-mode primary label is "Save & Activate", create is "Activate").
+- `app/(dashboard)/points/page.tsx` — `⋯` menu items Edit / Duplicate / Publish|Deactivate|Activate|Convert to Draft / Delete; clicking the card preview also routes to `/points/[id]`.
+- `lib/utils/permissions.ts` — `/points` needs `points_programs !== 'none'` (owner `full`, manager default `edit`, staff default `none`).
+- Changing `points_per_currency` doesn't retouch past `points_transactions` (rate change is forward-only) — documented as a Note.
+
+### Screenshots
+4 real annotated PNGs from the live points demo (Najma Coffee, "Najma Stars" program, id `ca5e0004-…0001`) via `.routine/flows/points-editing.json`: list with the `⋯` menu open + Edit boxed; edit form + live preview boxed; Rewards card cropped (existing rewards); Save as Draft / Save & Activate row cropped. No program saved/deactivated/duplicated/deleted during capture (only opened the menu and navigated via Edit). `validate-images` 4/4 OK; SMOKE_OK. Added to Points Programs nav after `creating`.
+
+### Reality flag for a future run (do NOT document as working)
+In **edit** mode the reward re-insert maps only `name, description, reward_type, trigger_value, expiry_days` — it omits `image_url` (the **create** path spreads the full reward incl. image). So a reward's image is dropped when you save an edit. Looks like an app bug, not intended behavior, so the article keeps reward-image guidance generic (cross-links `rewards.mdx`) and does not claim images persist on edit.
+
+---
+
 ## 2026-06-12 — Staff Performance Report
 
 **Article:** `merchants/analytics/staff-performance.mdx`
