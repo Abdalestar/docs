@@ -20,6 +20,39 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-13 — Awarding Points (By Amount vs Manual Points)
+
+**Article:** `merchants/points/awarding.mdx` (new)
+**Branch:** `claude/eloquent-fermat-dn9cxl`
+**PR:** https://github.com/Abdalestar/docs/pull/140
+**Status:** Done (4 real annotated screenshots; validate-images 4/4 OK). One task this run per the run request.
+
+### Task selection
+The board is fully `Done`/`Needs Screenshots = NO`, except the P1 row **"Awarding Points: By Amount vs Manual Points"** which read `Status = In progress` but with **no PR Link** and created 2026-06-10 (a prior run flagged it as "locked by another run" on 2026-06-11). Per routine §4 a stale In-progress row with no PR Link and untouched > 2h is reclaimable, so I took it. It was the highest-priority open row, a genuine new article (`merchants/points/awarding.mdx` was not on `main`), and screenshotable. The remaining `Needs Screenshots = YES` rows are all blocked: Campaign Analytics (performance endpoint 404 on live), Campaign Audience Conditions (PR #51 never merged, off `main`), Merchant Business Profile (empty state, off `main`).
+
+### What was written
+The award-side deep-dive complementing `points/operations.mdx` (page overview) and `points/adjusting.mdx` (deduct side). The Award Points tab's two amount modes:
+- **By Amount**: purchase total × earn rate (`Math.floor(amount * points_per_currency)`), respects the program minimum (below it earns 0, orange note) and the per-visit cap; `transaction_amount` is stored, so these awards feed the Revenue Impact report.
+- **Manual Points**: exact number typed; rate/min/cap do NOT apply; `transaction_amount` is null, so manual awards don't count in revenue.
+Plus the optional Note, branch selection (required when >1 branch), before/after preview, and the **Confirm Points Award** dialog. Access: owners/managers/staff can all award (`issue_points` default true for every role); Adjust/Deduct stays owner/manager only.
+
+### Research sources (Abdalestar/qtap, read-only)
+- `app/(dashboard)/points-operations/page.tsx` — Award tab, By Amount / Manual Points buttons, `calculatePoints()`, `transaction_amount: useManualPoints ? null : parseFloat(...)`, rate summary line, New Balance preview, "Confirm Points Award" dialog.
+- `lib/utils/permissions.ts` — `/points-operations` needs `issue_points === true`.
+- `lib/validations/staff.ts` — `issue_points` defaults true for manager and staff (owner always).
+
+### Screenshots
+4 real annotated PNGs from the live points demo (Najma Coffee, "Najma Stars", 75 pts/QR1) via `.routine/flows/points-awarding.json`: modes (By Amount/Manual boxed, no member = no PII); By Amount (QR50 → 3,750, cropped to the Calculate Points card); Confirm dialog (member name redacted); Manual Points (200, cropped). No member PII; **Confirm never clicked** (no real award). `validate-images` 4/4 OK; pushed as binary via git. Added to Points Programs nav after `operations`.
+
+### Gap discovery (1 added)
+- **The Card Designer (`/cards/design`)** → `merchants/stamp-cards/card-designer.mdx` (P2, Needs Screenshots YES). The standalone `CardDesigner` page (`app/(dashboard)/cards/design/page.tsx`, `applyTemplate`, live preview, saves to sessionStorage then routes to `/cards/new`) is not documented; `designing.mdx` only covers the Card Design step inside the wizard.
+
+### Notes for future runs
+- The Award tab reuses the same selectors as the Adjust tab: member search `input[placeholder='Search members...']` + `.divide-y button`; branch `[role=combobox]:has-text('Select the branch')` → `[role=option]`. The award CTA is `button.w-full:has-text('Award')` (the tab "Award Points" is a `[role=tab]`, so scope to `.w-full`). Crop the right card with `div.bg-card:has-text('Calculate Points')` to keep member PII out without redaction.
+- Najma is multi-branch, so the award button stays disabled until a branch is picked.
+
+---
+
 ## 2026-06-12 — Staff Performance Report
 
 **Article:** `merchants/analytics/staff-performance.mdx`
