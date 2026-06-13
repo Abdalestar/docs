@@ -20,6 +20,35 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-13 — Editing a Stamp Card (gap discovery)
+
+**Article:** `merchants/stamp-cards/editing.mdx` (new)
+**Branch:** `claude/eloquent-fermat-xq8cl5`
+**PR:** https://github.com/Abdalestar/docs/pull/145
+**Status:** Done (3 real annotated screenshots, validate-images 3/3 OK). One task this run.
+
+### Task selection
+The Notion board is fully `Done` again. The only `Not started` row is "The Member Profile: Activity, Notes & Tags" (`member-profile.mdx`), which its own notes flag as a duplicate of the published `profiles.mdx` (the "manual tags" net-new item doesn't exist as an editable feature) — skipped. The two on-main stubs are both blocked/duplicate: `location-comparison.mdx` (done in unmerged PR #126) and `campaigns/analytics.mdx` (the Performance card 404s live). `merchant-profile.mdx` (`/merchants`) was rechecked and parked *today* (both demo orgs show only the empty state). So this run did **gap discovery**: `/cards/[id]` (Edit Stamp Card) is a sidebar-reachable route with **no article** — every other stamp-card surface is covered (overview/creating/designing/rewards/advanced/manual), but editing a published card was undocumented. Created the Notion row and shipped it.
+
+### What was written
+Entry (Cards row menu → **Edit**, link to `/cards/${id}`, or click the card; title **Edit Stamp Card** + Active/Inactive/Draft badge), the pre-filled four-step wizard with live preview, and two honest gotchas grounded in source:
+- **Rewards are replaced on every save.** `saveCard()` (`components/dashboard/stamp-card/stamp-card-wizard.tsx`) `delete`s all `rewards` for the card then re-inserts the editor list. Remove a reward and save → it's gone.
+- **Save as Draft unpublishes a live card.** Draft sets `status='draft'`/`is_active=false`; Publish sets active/`is_active=true`/`published_at=now`.
+Plus: row-menu Deactivate/Activate to toggle a card without editing; access (owners+managers, `stamp_cards` default `edit`; staff `none`). Added to Stamp Cards nav after `creating`.
+
+### Research sources (qtap, read-only)
+- `app/(dashboard)/cards/[id]/page.tsx` (mode="edit" wizard + status badge + MobilePreview), `app/(dashboard)/cards/page.tsx` (row menu Edit/Duplicate/Deactivate/Delete + card-title link), `components/dashboard/stamp-card/stamp-card-wizard.tsx` (`saveCard` update + reward delete/insert; Save Draft/Publish buttons), `lib/utils/permissions.ts` + `lib/validations/staff.ts`.
+
+### Screenshots
+3 real annotated PNGs from the live **stamp** demo (Dana Salon & Spa, 3 cards) via `.routine/flows/stamp-card-editing.json`: cards list with a card menu open (Edit boxed); the Edit Stamp Card page (title+badge boxed, pre-filled wizard + live preview); Review step (Save as Draft(1)/Publish Card(2) boxed). No card saved/published/deactivated/deleted; no PII. SMOKE_OK; validate-images 3/3.
+
+### Notes for future runs
+- Card row menus on `/cards` start at `button[aria-haspopup="menu"] >> nth=3` (0=location filter, 1=theme, 2=account menu). Stamp account card ids: Dana Card `e7dc0af5-f42b-4bb0-84d6-b2afd188acf3`, VIP Beauty Pass `da1a0006-…6`, Glow Card `da1a0005-…5`.
+- The Review step's Save as Draft / Publish Card buttons sit at the page bottom; `hover` "Publish Card" to scroll the action row into view before boxing.
+- `/cards/design` (CardDesigner playground) is an **unlinked, half-built** route (saves to sessionStorage, comment says "in a real implementation…") — not a doc target. `/points/[id]` (Edit Points Program) is the same parallel gap for points, a clean next task.
+
+---
+
 ## 2026-06-12 — Staff Performance Report
 
 **Article:** `merchants/analytics/staff-performance.mdx`
