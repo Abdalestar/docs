@@ -1,0 +1,54 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/nfc-tags",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "steps": [
+    {
+      "name": "nfc-detail-list",
+      "goto": "/nfc-tags",
+      "waitFor": "th:has-text('Taps')",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "th:has-text('Taps')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "th:has-text('Status')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "tbody tr:first-child button[aria-haspopup='menu']", "number": 3, "color": "gold" },
+        { "type": "caption", "text": "Every NFC tag is listed with its Taps (1) and Status (2). Open a tag's menu (3) and choose View Details to open the page below." }
+      ]
+    },
+    {
+      "name": "nfc-detail-overview",
+      "goto": "/nfc-tags/ca5e0007-0000-4000-a000-000000000001",
+      "waitFor": "p:text-is('Total Taps')",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "div.pt-6:has(p:text-is('Total Taps'))", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.pt-6:has(p:text-is('Action'))", "number": 2, "color": "plum" },
+        { "type": "box", "target": "div.pt-6:has(p:text-is('Location'))", "number": 3, "color": "plum" },
+        { "type": "box", "target": "div.pt-6:has(p:text-is('Status'))", "number": 4, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Edit')", "color": "gold" },
+        { "type": "caption", "text": "A tag's detail page leads with four stats: Total Taps (1), Action (2), Location (3), and Status (4). The Details card below lists its serial number and dates." }
+      ]
+    },
+    {
+      "name": "nfc-detail-edit",
+      "goto": "/nfc-tags/ca5e0007-0000-4000-a000-000000000001",
+      "waitFor": "p:text-is('Total Taps')",
+      "waitMs": 4000,
+      "actions": [
+        { "click": "button:has-text('Edit')" },
+        { "wait": 800 },
+        { "hover": "div.rounded-xl:has-text('Edit NFC Tag')" },
+        { "wait": 500 }
+      ],
+      "clipTo": "div.rounded-xl:has-text('Edit NFC Tag')",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "label:text-is('Action')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label:text-is('Points Value')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "label:text-is('Active')", "number": 3, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Save Changes')", "number": 4, "color": "plum" }
+      ]
+    }
+  ]
+}
