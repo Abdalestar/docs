@@ -1,0 +1,62 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/stamp-cards",
+  "account": "stamp",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "editing-01-card-menu",
+      "goto": "/cards",
+      "waitFor": "text=Create Card",
+      "waitMs": 7000,
+      "actions": [
+        { "click": "button:has(svg.lucide-ellipsis)" },
+        { "wait": 900 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text(\"Edit\")", "color": "plum" },
+        { "type": "caption", "text": "On the Cards page, open a card's three-dot menu and choose Edit." }
+      ]
+    },
+    {
+      "name": "editing-02-edit-page",
+      "goto": "/cards/e7dc0af5-f42b-4bb0-84d6-b2afd188acf3",
+      "waitFor": "text=Edit Stamp Card",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "box", "target": "h1:has-text(\"Edit Stamp Card\")", "color": "plum" },
+        { "type": "caption", "text": "The Edit Stamp Card page opens with your current name, stamp goal, and design already filled in." }
+      ]
+    },
+    {
+      "name": "editing-03-rewards",
+      "goto": "/cards/e7dc0af5-f42b-4bb0-84d6-b2afd188acf3",
+      "waitFor": "text=Edit Stamp Card",
+      "waitMs": 5000,
+      "actions": [
+        { "click": "button:has-text(\"Rewards\")" },
+        { "wait": 1500 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Add Reward\")", "color": "plum" },
+        { "type": "caption", "text": "Whatever rewards are in this list when you save are what the card keeps. Saving rewrites the card's rewards." }
+      ]
+    },
+    {
+      "name": "editing-04-review",
+      "goto": "/cards/e7dc0af5-f42b-4bb0-84d6-b2afd188acf3",
+      "waitFor": "text=Edit Stamp Card",
+      "waitMs": 5000,
+      "actions": [
+        { "click": "button:has-text(\"Review\")" },
+        { "wait": 1500 },
+        { "hover": "button:has-text(\"Publish Card\")" },
+        { "wait": 700 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Publish Card\")", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text(\"Save as Draft\")", "number": 2, "color": "gold" }
+      ]
+    }
+  ]
+}
