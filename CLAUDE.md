@@ -20,6 +20,36 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-14 — Resetting a Forgotten Password
+
+**Article:** `merchants/settings/password-reset.mdx` (new)
+**Branch:** `claude/upbeat-mccarthy-ze6odl`
+**PR:** https://github.com/Abdalestar/docs/pull/152
+**Status:** Done (2 real annotated screenshots + 1 SVG; validate-images 3/3 OK). One task this run per the run request.
+
+### Task selection
+Board is effectively exhausted of legitimate Not-started rows: the only `Status = "Not started"` row is "The Member Profile: Activity, Notes & Tags", already flagged (verified) as a duplicate of the published `members/profiles.mdx`, so writing it would be a near-duplicate. The on-main stubs (`location-comparison.mdx`, `campaigns/analytics.mdx`) are covered by open PRs or blocked. So this run did one **gap-discovery new article** instead. Checked and rejected: `/cards/design` (orphan/half-built Card Designer — `/cards/new` does not read its `sessionStorage.cardDesign`, `card_templates` referenced only by its own hook, "in a real implementation" comment; documenting it would misrepresent a non-functional feature); `/merchants` overview (already documented in unmerged PR #54); both "Editing a Stamp Card" rows (Done, PR #137/#148).
+
+### What was written
+The locked-out account-recovery flow, which had no article. Distinct from `settings/security.mdx` (the in-app **Change password** form, which needs you signed in + your current password); cross-linked both ways (security.mdx already pointed at "the forgot password link on the login page").
+
+**Facts (all grounded in `Abdalestar/qtap`, read-only):**
+- Entry: **Forgot password?** on `/login` → `/forgot-password` (CardTitle "Forgot Password", `#email` placeholder "you@business.com", button **Send Reset Link**, **Back to Login**).
+- `app/api/auth/forgot-password/route.ts`: admin `generateLink` type `recovery` + `sendAuthEmail` ("Reset your Qtap password"); **always returns `{success:true}` and never reveals whether the email exists** (anti-enumeration). Documented in a `<Note>`.
+- `/reset-password` (CardTitle "Reset Password", `#password` + `#confirmPassword`, button **Reset Password**): `resetPasswordSchema` in `lib/validations/auth.ts` = 8+ chars, uppercase, lowercase, number (stricter than the 8-char in-app change rule); confirm must match → "Passwords do not match". Submit calls `supabase.auth.updateUser({password})`; success screen "Password Updated" → **Continue to Dashboard**.
+- `lib/supabase/middleware.ts`: `AUTH_PATHS = ['/login','/signup']` only, so `/forgot-password` + `/reset-password` render even while authenticated (this is why the flow engine, which logs in, can still capture them).
+- Honest gotcha (`<Warning>`): reset links are single-use and expire.
+
+### Screenshots
+2 real annotated PNGs via `.routine/flows/password-reset.json` (points demo), cropped to the auth card (`clipTo: ".shadow-lg"`): `password-reset-forgot.png` (email + Send Reset Link boxed) and `password-reset-new.png` (both password fields + Reset Password boxed). + brand SVG `password-reset-flow.svg` of the 5-step journey (covers the `/login` entry + the email/success screens, which aren't safely capturable). **SAFETY:** the flow fills but NEVER submits either form, so no reset email was sent and the demo account password was unchanged. `/login` itself can't be shot while logged in (it IS an AUTH_PATH → redirects to `/`), so the login entry lives in the SVG + prose.
+
+### Insights for future runs
+- The flow engine always logs in; auth pages outside `AUTH_PATHS` (`/forgot-password`, `/reset-password`) still render and capture cleanly. `/login` and `/signup` redirect away when authenticated, so they need a logged-out capture path (not currently supported) — cover them via SVG/prose.
+- Submitting `/reset-password` while logged in as the demo account WOULD change that account's password (uses the live session). Capture filled-not-submitted only.
+- Remaining genuine gaps to consider: a logged-out `/login` / `/signup` ("Creating your account" / "Signing in") article would round out account access, but needs a logged-out capture (the flow engine can't skip login).
+
+---
+
 ## 2026-06-12 — Staff Performance Report
 
 **Article:** `merchants/analytics/staff-performance.mdx`
