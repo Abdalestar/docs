@@ -51,6 +51,7 @@
         "pages": [
           "merchants/qr-codes/overview",
           "merchants/qr-codes/generating",
+          "merchants/qr-codes/expiry-and-limits",
           "merchants/qr-codes/actions",
           "merchants/qr-codes/customer-scan-flow",
           "merchants/qr-codes/batch",
