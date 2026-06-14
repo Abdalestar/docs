@@ -42,6 +42,7 @@
           "merchants/points/earn-rate",
           "merchants/points/rewards",
           "merchants/points/operations",
+          "merchants/points/expiry",
           "merchants/points/adjusting",
           "merchants/redemptions/points-rewards"
         ]

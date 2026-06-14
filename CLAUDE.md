@@ -20,6 +20,62 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-14 — How and when points expire
+
+**Article:** `merchants/points/expiry.mdx` (new)
+**Branch:** `claude/upbeat-mccarthy-0dj36n`
+**Notion row:** "Points Expiry: From-Earn, From-Last-Activity & Calendar-Year" (P2)
+**Status:** Done. SMOKE_OK; 3 real annotated cropped screenshots (validate-images 3/3 OK).
+
+### Task selection
+The Notion board has no clean `Not started` new-article row left: the remaining
+Not-started rows are all blocked or duplicates (Custom Campaigns / Campaign Messages
+= product no-ops, Campaigns Overview / Campaign Analytics / Member Profile = already on
+main as real articles). The "Points Expiry" row was marked **Done** but its run "pushed;
+no PR opened", so `merchants/points/expiry.mdx` was **never on main** and absent from the
+branch. Shipped it for real this run (same pattern as the Revenue Impact / Location
+Comparison stub-replacements). One task this run per the request.
+
+### What was written
+A Points Programs deep-dive on the **Points Expiry** card inside a points program. Goes
+deeper than `creating.mdx`/`overview.mdx` (which mention expiry in passing); cross-links
+`creating.mdx` for the full setup. Covers: the **Enable Points Expiry** switch (off by
+default), **Expiry Period (days)** (default 365, max 365), and the three **Expiry Type**
+options with exact live labels and precise behavior:
+- **From date earned** (`from_earn`) — each earn batch expires on its own clock from when
+  it was earned (relies on `expires_at` set at earn time, so it schedules points earned
+  after expiry is enabled).
+- **From last activity** (`from_last_activity`) — a member's whole balance expires after
+  N days of inactivity; earning resets the clock.
+- **End of calendar year** (`calendar_year`) — all outstanding points expire at year start
+  (cron only runs Jan 1-3; the days field is ignored).
+What happens on expiry: daily cron, deducts only down to current balance (never negative,
+no double-count of spent points), writes an `expire` history entry, sends the member a
+"Points Expired" notification. Access: owners/managers edit programs; staff award/redeem.
+
+### Research sources (qtap, read-only)
+- `app/api/points/expire/route.ts` — daily cron (`vercel.json` `0 2 * * *`), active+`points_expire` programs only; the three `processExpiry` paths; `expireMemberPoints` (Math.min to current balance, writes `expire` txn + `points_expired` analytics); `sendExpiryNotification` ("Points Expired" OneSignal push).
+- `components/dashboard/points-program-form.tsx` — Points Expiry card: switch (default off), `#expiry_days` (default 365), Expiry Type select with live labels "From date earned" / "From last activity" / "End of calendar year".
+- `lib/validations/loyalty.ts` — `expiry_days` 0-365.
+- `app/api/scan/route.ts` + `app/api/points/adjust/route.ts` — set `expires_at` on earn (the from_earn nuance).
+
+### Screenshots
+3 real annotated cropped PNGs from the live points demo (Najma Coffee) via
+`.routine/flows/points-expiry.json`: card with the switch off (boxed); expanded fields
+(Expiry Period + Expiry Type boxed/numbered); the Expiry Type dropdown (all three options).
+No program created/saved (fill name + toggle/open-select only); no PII. `validate-images`
+3/3 OK. Added to Points Programs nav after `operations`.
+
+### Notes for future runs
+- The board is exhausted of clean new-article tasks. Remaining Not-started rows need a
+  product fix first (Custom Campaigns condition builder no-op; Campaign Messages single-vs-
+  double-brace token bug) or duplicate on-main articles. Real backlog is now stub/never-
+  merged rows like this one was.
+- `origin/main` was stale at clone (168 behind); `git fetch origin main` brought it level
+  with the assigned branch, so the PR diff is a clean single-task change.
+
+---
+
 ## 2026-06-12 — Staff Performance Report
 
 **Article:** `merchants/analytics/staff-performance.mdx`

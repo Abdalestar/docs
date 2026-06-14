@@ -1,0 +1,57 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/points",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "expiry-01-card",
+      "goto": "/points/new",
+      "actions": [
+        { "fill": ["#name", "Coffee Rewards"] },
+        { "hover": "div.flex.items-center.justify-between:has-text(\"Enable Points Expiry\") [role=switch]" },
+        { "wait": 700 }
+      ],
+      "waitFor": "text=Points Expiry",
+      "waitMs": 1800,
+      "clipTo": "div.rounded-xl:has-text(\"Points Expiry\")",
+      "clipPadding": 16,
+      "annotate": [
+        { "type": "box", "target": "div.flex.items-center.justify-between:has-text(\"Enable Points Expiry\") [role=switch]", "color": "plum" }
+      ]
+    },
+    {
+      "name": "expiry-02-fields",
+      "goto": "/points/new",
+      "actions": [
+        { "fill": ["#name", "Coffee Rewards"] },
+        { "click": "div.flex.items-center.justify-between:has-text(\"Enable Points Expiry\") [role=switch]" },
+        { "wait": 900 }
+      ],
+      "waitFor": "#expiry_days",
+      "waitMs": 1200,
+      "clipTo": "div.rounded-xl:has-text(\"Points Expiry\")",
+      "clipPadding": 16,
+      "annotate": [
+        { "type": "box", "target": "#expiry_days", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button[role=combobox]:has-text(\"From date earned\")", "number": 2, "color": "plum" },
+        { "type": "label", "target": "#expiry_days", "text": "Days in the countdown", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "expiry-03-type",
+      "goto": "/points/new",
+      "actions": [
+        { "fill": ["#name", "Coffee Rewards"] },
+        { "click": "div.flex.items-center.justify-between:has-text(\"Enable Points Expiry\") [role=switch]" },
+        { "wait": 700 },
+        { "click": "button[role=combobox]:has-text(\"From date earned\")" },
+        { "wait": 700 }
+      ],
+      "waitFor": "[role=listbox]",
+      "waitMs": 800,
+      "clipTo": "[role=listbox]",
+      "clipPadding": 10
+    }
+  ]
+}
