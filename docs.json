@@ -125,7 +125,8 @@
           "merchants/settings/locations",
           "merchants/settings/notifications",
           "merchants/settings/merchant-page",
-          "merchants/settings/security"
+          "merchants/settings/security",
+          "merchants/settings/password-reset"
         ]
       },
       {
