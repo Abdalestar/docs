@@ -1,0 +1,40 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "analytics",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "location-comparison-overview",
+      "goto": "/analytics/reports/location-comparison",
+      "waitFor": "h1:has-text(\"Location Comparison\")",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Last 30 days\")", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "The Location Comparison report. One card per active branch, with the time period selector (1) at the top right." }
+      ]
+    },
+    {
+      "name": "location-comparison-card",
+      "clipTo": "div.rounded-xl:has-text(\"The Pearl\")",
+      "clipPadding": 12,
+      "waitMs": 1500,
+      "annotate": [
+        { "type": "box", "target": "div.grid-cols-2", "color": "plum" }
+      ]
+    },
+    {
+      "name": "location-comparison-period",
+      "actions": [
+        { "click": "button:has-text(\"Last 30 days\")" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "[role=option]:has-text(\"This year\")",
+      "clipTo": "[role=listbox]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "[role=option]:has-text(\"Last 30 days\")", "color": "plum" }
+      ]
+    }
+  ]
+}

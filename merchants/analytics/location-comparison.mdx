@@ -1,6 +1,56 @@
 ---
 title: "Location Comparison"
-description: "Comparing loyalty program performance across your different locations"
+sidebarTitle: "Location comparison"
+description: "See how each of your branches is performing side by side, on stamps, points, redemptions, members, and estimated revenue."
 ---
 
-Coming soon
+If you run more than one location, the Location Comparison report lays your branches next to each other so you can tell which ones are busy and which are quiet. It is one of the reports in the [Detailed Reports hub](/merchants/analytics/reports-hub), and you reach it at `dashboard.qtap.qa/analytics/reports/location-comparison`. There is no sidebar link.
+
+<Frame caption="The Location Comparison report: one card per active branch, with the time period selector at the top right.">
+  <img src="/images/analytics/location-comparison-overview.png" alt="Location Comparison report showing three branch cards, each with stamps, points, redemptions, members served, and estimated revenue" />
+</Frame>
+
+## One card per branch
+
+Each active location gets its own card. Every card shows five numbers for the time period you have chosen:
+
+- **Stamps** is the total stamps issued at that branch during the period.
+- **Points** is the total points members earned there.
+- **Redemptions** is how many rewards members redeemed at that branch.
+- **Members Served** is the number of different members who earned or redeemed there.
+- **Estimated Revenue** adds up the purchase amounts your staff recorded when awarding points at that branch.
+
+<Frame caption="A single branch card. The five numbers cover the period you selected.">
+  <img src="/images/analytics/location-comparison-card.png" alt="A branch card showing stamps 0, points 230,770, redemptions 33, members served 139, and estimated revenue $22,437.00" />
+</Frame>
+
+## Reading the comparison
+
+Put the cards side by side and the gaps stand out. In the screenshot above, one branch served 139 members against another's 104, and brought in about 22,400 in estimated revenue against 11,500. That tells you where your members are most active, and where a campaign or a staffing change might help.
+
+## Choosing the period
+
+The selector at the top right sets the window every card is measured over. Switch between Today, the last 7, 30, or 90 days, and this year. It opens at the last 30 days. Change it and all the cards reload together, so you are always comparing the same dates.
+
+<Frame caption="The time period selector. Every branch card uses the same window.">
+  <img src="/images/analytics/location-comparison-period.png" alt="Time period dropdown with Today, Last 7 days, Last 30 days selected, Last 90 days, and This year" />
+</Frame>
+
+## What the numbers leave out
+
+A few things follow from how Qtap builds this report:
+
+- The revenue figure is an estimate from the purchase amounts entered when members earn points. It is not a feed from your till. A stamp-only program records no amounts, so its revenue reads 0.
+- On a points-only program the Stamps column reads 0, and on a stamp-only program the Points column reads 0. That is expected, not a fault.
+- Only active locations appear. If you deactivate a branch in Settings, it drops off this report.
+- Activity that was not tagged to a branch is left out of the totals.
+
+If you only have one location, you will see a single card here. The report comes into its own once you add a second branch.
+
+<Note>
+For the headline numbers across your whole program, start on the [Analytics Overview](/merchants/analytics/overview). For the other detailed reports, see the [Reports hub](/merchants/analytics/reports-hub).
+</Note>
+
+## Who can open it
+
+Owners and managers can open this report. Staff cannot by default. To let a staff member in, give them analytics access in their permissions (see [Roles and permissions](/merchants/staff/roles-permissions)).
