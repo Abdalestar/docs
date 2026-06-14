@@ -1,0 +1,17 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/what-is-qtap",
+  "account": "stamp",
+  "defaultWaitMs": 6500,
+  "steps": [
+    {
+      "name": "wiq-stamp-cards",
+      "goto": "/cards",
+      "waitFor": "button:has-text('Create Card')",
+      "waitMs": 6500,
+      "annotate": [
+        { "type": "box", "rect": { "x": 278, "y": 240, "width": 270, "height": 200 }, "number": 1, "color": "plum" }
+      ]
+    }
+  ]
+}
