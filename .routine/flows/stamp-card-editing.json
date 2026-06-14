@@ -1,0 +1,45 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/stamp-cards",
+  "account": "stamp",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "editing-01-cards",
+      "goto": "/cards",
+      "waitFor": "text=Glow Card",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "box", "target": "text=Glow Card", "color": "plum" },
+        { "type": "caption", "text": "On the Cards page, click a card (or its three-dot menu and Edit) to open the editor." }
+      ]
+    },
+    {
+      "name": "editing-02-design",
+      "goto": "/cards/da1a0005-0000-4000-a000-000000000005",
+      "waitFor": "text=Edit Stamp Card",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "box", "target": "h1:has-text(\"Edit Stamp Card\")", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Editing reopens the same four-step wizard, pre-filled with the card's current settings. The badge next to the title shows the card's status." }
+      ]
+    },
+    {
+      "name": "editing-03-review",
+      "goto": "/cards/da1a0005-0000-4000-a000-000000000005",
+      "waitFor": "text=Edit Stamp Card",
+      "waitMs": 6000,
+      "actions": [
+        { "click": "button:has-text(\"Review\")" },
+        { "wait": 1500 },
+        { "hover": "text=Save as Draft" },
+        { "wait": 700 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "text=make the card live", "number": 1, "color": "plum" },
+        { "type": "box", "target": "text=continue editing later", "number": 2, "color": "gold" },
+        { "type": "caption", "text": "On Review, Publish (1) saves your changes to the live card so customers keep collecting. Save as Draft (2) saves them but switches the card to Draft, hiding it from new members until you publish again." }
+      ]
+    }
+  ]
+}
