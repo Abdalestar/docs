@@ -20,6 +20,39 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-14 — Setting QR Expiry Dates & Scan Limits
+
+**Article:** `merchants/qr-codes/expiry-and-limits.mdx` (new)
+**Branch:** `claude/upbeat-mccarthy-cdxbzq`
+**PR:** https://github.com/Abdalestar/docs/pull/151
+**Status:** Done. SMOKE_OK; 3 real annotated screenshots (validate-images 3/3 OK). One task this run.
+
+### Task selection (board is saturated — read this before hunting)
+The board is effectively fully `Done`. There are **25 open, unmerged PRs (#126–#150)** that already backfill every imageless on-main article (profiles #128, points/overview #130, qr-codes/overview #132, batch #131, birthday #133, security #134, settings/notifications #135, settings/merchant-page #136, welcome #139, push-notifications #143) and write most new topics (editing stamp card / points program, card designer, awarding points, audience segments, welcome campaigns, public merchant page, QR placement, reusable-vs-onetime). **Don't re-do any of those — you'll create a duplicate PR.** The only on-main stubs left are `analytics/location-comparison` (already PR #126) and `campaigns/analytics` (BLOCKED: the performance endpoint 404s live). The lone `Not started` row that is NOT a real task is "The Member Profile: Activity, Notes & Tags" — flagged duplicate of published `profiles.mdx`, and its net-new feature (editable tags) doesn't exist.
+
+The one genuine, unworked, non-duplicate `Not started` row with no PR was **"Setting QR Expiry Dates & Scan Limits"** (P2, `merchants/qr-codes/expiry-and-limits.mdx`). Took it.
+
+### What was written
+How-to for the two **Advanced Settings** controls on `/qr-codes/generate`:
+- **Maximum Scans** (`#max_scans`, min 1, placeholder "Unlimited", empty = unlimited). Hidden when `type === 'one_time'` (a one-time code auto-deactivates after one scan), so it shows for Reusable + Batch only.
+- **Expiry Date** Switch (`hasExpiry`) + a `datetime-local` picker; applies to every type. A code with both stops at whichever it reaches first.
+- Customer-facing 410 messages from `app/api/scan/route.ts` (checked before the scan is counted): "This QR code has expired." / "This QR code has reached its maximum number of scans."
+- Honest gotcha (Warning): expiry + max_scans are set at generation and **can't be edited later** — the `/qr-codes/[id]` Edit form only updates name/location/active. To change a limit, deactivate + regenerate.
+- Access: owners + managers (`qr_batches !== 'none'`; staff default `none`). Cross-links troubleshooting + roles-permissions (distinct from troubleshooting, which is the recovery/"won't scan" side).
+
+### Research sources (qtap, read-only)
+`app/(dashboard)/qr-codes/generate/page.tsx` (Advanced Settings card, the `type !== 'one_time'` gate, save payload), `app/api/scan/route.ts` (410 branches), `app/(dashboard)/qr-codes/[id]/page.tsx` (`handleSave` updates name/location/is_active only), `lib/utils/permissions.ts` + `lib/validations/staff.ts`.
+
+### Screenshots
+`.routine/flows/qr-expiry-limits.json` (points demo, Najma), all cropped to the Advanced Settings card via `clipTo: div.rounded-xl:has(div.font-semibold:has-text("Advanced Settings"))`: advanced (Max Scans 1 + Expiry switch 2), max-scans (50 typed), expiry (switch on + datetime picker boxed). Form filled, **never saved** (no code created). Added to QR nav after `generating`.
+
+### Gotchas for future runs
+- On `/qr-codes/generate` the Advanced Settings card is **below the fold**; a no-action step can't crop it ("Clipped area is empty/outside"). Add a `hover`/`fill`/`click` action so Playwright scrolls it into view before the shot.
+- There are **two** `button[role=switch]` on the generate page (Expiry, and a Customization switch). The Expiry one is `:nth-match(button[role="switch"], 1)`.
+- flow-capture action schema: `fill` is an **array** `["#sel","val"]`; supported keys are `click`/`fill`/`select`/`hover`/`press`/`wait`. There is no `waitForAfter` — `step.waitFor` runs after the actions loop.
+
+---
+
 ## 2026-06-12 — Staff Performance Report
 
 **Article:** `merchants/analytics/staff-performance.mdx`
