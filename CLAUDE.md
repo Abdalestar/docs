@@ -20,6 +20,57 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-14 — What is Qtap (screenshot backfill)
+
+**Article:** `merchants/what-is-qtap.mdx`
+**Branch:** `claude/upbeat-mccarthy-b83bly`
+**PR:** https://github.com/Abdalestar/docs/pull/157
+**Status:** Done. 4 real annotated screenshots; validate-images 4/4 OK. One task this run.
+
+### Task selection
+The board is effectively all `Done`; two tasks had already run today (Resetting a
+Forgotten Password #152, Location Comparison #154). The only `Status = Not started`
+row left is "The Member Profile: Activity, Notes & Tags" (P2), already flagged a
+**duplicate** of the published `profiles.mdx` built on a wrong assumption (member
+tags are read-only, no add/remove UI) — correctly skipped, no new article written.
+So per §3 this run did one backfill: the highest-priority `Needs Screenshots = YES`
+row that is on `main` and capturable → **What is Qtap (P0)**.
+
+The article was on `main` but its 4 images were **generic reused dashboard heroes**
+from `images/getting-started/` embedded as plain markdown. The long-blocked draft
+PR #55 never shipped because the old `GITHUB_TOKEN` stored PNGs as base64 text — a
+non-issue now (binary `git push` works). Replaced the 4 refs with purpose-shot,
+annotated `<Frame>` screenshots; **prose unchanged** (image refs are not prose).
+
+### Screenshots (`images/merchants/what-is-qtap/`)
+- `wiq-dashboard.png` — merchant home (points demo). KPI tiles (1) + Quick Actions (2)
+  boxed. **Clipped to height 650 to crop out the Recent Activity feed**, which shows
+  customer names (PII) at the bottom. Tiles need ~11-12s settle or they stay skeletons.
+- `wiq-stamp-cards.png` — `/cards` on the **stamp** demo (Dana); one active card boxed
+  showing its stamp grid (points account's `/cards` is empty).
+- `wiq-members.png` — `/members` (points demo). Stamps/Points columns boxed (1); the
+  Member + Contact columns **redacted** with an explicit rect `{x:329,y:319,w:529,h:581}`
+  (Member col x329-571, Contact x571-858; tbody starts y319; viewport 900).
+- `wiq-qr-codes.png` — `/qr-codes` (points demo); Generate QR Code button boxed. No PII
+  on this page (QR names/codes are merchant-defined).
+
+Flows committed: `.routine/flows/what-is-qtap.json` + `what-is-qtap-stamp.json`. SMOKE_OK.
+Read-only capture, no destructive/outbound actions.
+
+### Notes for future runs
+- The board is fully `Done`; remaining `Needs Screenshots = YES` rows are NOT
+  backfillable: **Campaign Analytics** (Performance card's `/api/analytics/campaigns/[id]/performance`
+  returns 404 live, card never renders), **Scanning & Earning** (mobile app, not
+  Playwright-capturable), **Dashboard Tour** (PR #3 never merged, not on main),
+  **Campaign Audience Conditions** (PR #51 base64-corrupted AND the condition builder
+  is a no-op for non-custom campaign types — reality problem). "The Member Profile" is
+  a Not-started duplicate. After this run there is no clean screenshot backfill left.
+- `flow-capture.mjs` accepts an explicit `"rect"` on any annotate spec (box/redact),
+  so coordinate-based redaction/boxing works without a selector — useful when the live
+  DOM selector is unstable or for cropping PII out of feeds.
+
+---
+
 ## 2026-06-12 — Staff Performance Report
 
 **Article:** `merchants/analytics/staff-performance.mdx`
