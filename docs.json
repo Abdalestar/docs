@@ -137,7 +137,8 @@
           "merchants/settings/merchant-page",
           "merchants/settings/merchant-page-editor",
           "merchants/merchant-page/public-view",
-          "merchants/settings/security"
+          "merchants/settings/security",
+          "merchants/settings/password-reset"
         ]
       },
       {
