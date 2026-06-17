@@ -1,0 +1,31 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "welcome-sidebar",
+      "goto": "/",
+      "waitFor": "[data-tour=\"metrics\"] .data-mono",
+      "waitMs": 5000,
+      "annotate": [
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] .space-y-2" },
+        { "type": "box", "target": "aside[data-tour=\"sidebar\"]", "color": "plum" },
+        { "type": "caption", "text": "The left sidebar reaches every part of Qtap: your loyalty program, QR Codes, Members, Campaigns, Analytics, Staff, and Settings." }
+      ]
+    },
+    {
+      "name": "welcome-points-sidebar",
+      "goto": "/",
+      "waitFor": "aside[data-tour=\"sidebar\"] a[data-tour=\"nav-points\"]",
+      "waitMs": 4000,
+      "clipTo": "aside[data-tour=\"sidebar\"]",
+      "clipPadding": 0,
+      "annotate": [
+        { "type": "box", "target": "a[data-tour=\"nav-points\"]", "color": "plum" },
+        { "type": "label", "target": "a[data-tour=\"nav-points\"]", "text": "A points program shows Points here", "color": "plum" }
+      ]
+    }
+  ]
+}

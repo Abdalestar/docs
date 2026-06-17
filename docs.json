@@ -39,6 +39,7 @@
         "pages": [
           "merchants/points/overview",
           "merchants/points/creating",
+          "merchants/points/editing",
           "merchants/points/earn-rate",
           "merchants/points/rewards",
           "merchants/points/operations",
@@ -75,6 +76,7 @@
           "merchants/campaigns/rewards",
           "merchants/campaigns/analytics",
           "merchants/campaigns/push-notifications",
+          "merchants/campaigns/notification-templates",
           "merchants/notifications/push-vs-campaign",
           "merchants/notifications/targeted"
         ]
@@ -97,6 +99,7 @@
           "merchants/members/overview",
           "merchants/members/how-members-join",
           "merchants/members/profiles",
+          "merchants/members/complete-profile",
           "merchants/members/export-delete",
           "merchants/members/redemptions",
           "merchants/redemptions"
