@@ -20,6 +20,26 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-12 — Notification Templates (new article)
+
+**Article:** `merchants/campaigns/notification-templates.mdx` (new)
+**Branch:** `claude/eloquent-fermat-1sddx4`
+**PR:** https://github.com/Abdalestar/docs/pull/129
+**Status:** Done (3 real annotated screenshots, validate-images 3/3 OK). One task this run.
+
+### Task selection
+Board is fully `Done`; the only `Not started` row ("The Member Profile: Activity, Notes & Tags") is verified duplicate-flagged (already covered by `members/profiles.mdx`), so per routine §3 this was one stub/never-shipped task. The two "Coming soon" stubs on `main` were both ruled out (see below), so I took the **never-shipped** "Notification Templates" row (P3, Done but PR was blocked in April, so `merchants/campaigns/notification-templates.mdx` was never on main) and wrote it for real.
+
+### What was written
+Scoped tightly to the **Templates tab** management on `/notifications` (the one notification surface `campaigns/push-notifications.mdx` only mentions in passing): where templates live (Templates tab among All/Drafts/Scheduled/Sent), the **New Template** dialog (Template Name = internal label; Notification Title; Message; Image URL optional w/ live preview; Save disabled until name+title+message filled), edit (pencil)/delete (trash + "Delete Template?" confirm; editing doesn't touch already-sent/scheduled), and **Use Template** when composing. Access: owners+managers (`/notifications` needs `campaigns!=='none'`; staff none). Grounded in `notifications/page.tsx`, `template-manager.tsx`, `template-picker.tsx`, `notification-card.tsx`, `lib/utils/permissions.ts`. Added to Campaigns nav after `push-notifications`.
+
+### Two stubs-on-main both ruled out this run (for future runs)
+- **`merchants/analytics/location-comparison.mdx`** — already has an open PR (#126); it's a stub on main only because #126 isn't merged. Don't double-do.
+- **`merchants/campaigns/analytics.mdx`** — **BLOCKED, confirmed deeper than the prior note.** The only surface it adds over the published `campaigns/stats.mdx` is the `/campaigns/[id]` **Performance** card (over-time Sent/Redeemed chart + per-branch breakdown). `GET /api/analytics/campaigns/[id]/performance` returns **HTTP 404 "Campaign not found" for every period on the live deployment**, even when the campaign exists and the logged-in user is the active **owner** of the campaign's org (org ids match in Supabase) — verified by in-session `fetch` on the Dana account, whose campaigns DO have `campaign_rewards` data (e.g. Mother's Day Glam Flash 108 issued / 43 redeemed across both branches). Card renders a skeleton then unmounts. The route's user-scoped `staff` RLS check or admin/service-role campaign fetch is failing on this deployment. So the card never renders live for ANY account; not screenshotable until the endpoint is fixed. (Najma points org additionally has zero `campaign_rewards` rows.)
+
+### Gotchas discovered (save future runs time)
+- **`flow-capture.mjs` `fill` action is array-form:** `{ "fill": ["selector", "value"] }`, NOT `{ "fill": "sel", "value": "..." }`. The wrong form makes `act.fill[0]` = the first character of the selector ("[", "i", ...) and fails with a confusing CSS-parse error. `click`/`hover` take a plain string; `select`/`fill` take `[sel, val]`. The engine auto-applies `.first()`, so Playwright `>> nth=` chaining is NOT supported — use a uniquely-matching selector (placeholders work, apostrophes inside `[placeholder="..."]` are fine).
+- **`/notifications` shows NO history on the live demo orgs.** Both Najma (18 notifs / 15 sent in DB) and Dana (25 / 21) render an empty All/Drafts/Scheduled/Sent with `(0)` counts live. RLS policy "Staff can view their org push notifications" gates on `organization_id IN (SELECT user_organization_ids())`, and that function evidently doesn't return the demo user's org for the seeded rows — so the seeded `push_notifications` are invisible to the demo login. This is why `push-notifications.mdx` uses an SVG, not a real screenshot, and why this article documents templates (which I can populate myself via the create dialog) rather than the populated tabs. `notification_templates` is empty for both orgs, so the Templates list shows its honest empty state; the `Use Template` picker (`template-picker.tsx`) returns `null` at 0 templates, so it can't be captured live either.
 ## 2026-06-12 — Member Profiles screenshots (backfill)
 
 **Article:** `merchants/members/profiles.mdx`
