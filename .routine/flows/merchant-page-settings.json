@@ -1,0 +1,62 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/settings",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 960 },
+  "steps": [
+    {
+      "name": "merchant-page-overview",
+      "goto": "/settings",
+      "waitFor": "text=Business Information",
+      "waitMs": 5500,
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(:text(\"Business Logo\"))", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has(:text(\"Business Information\"))", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Open Settings from the sidebar to edit your business profile. The Business Logo card (1) sets your logo; the Business Information card (2) holds your name, email, phone, and website." }
+      ]
+    },
+    {
+      "name": "merchant-page-details",
+      "waitMs": 1500,
+      "actions": [
+        { "hover": "div.rounded-xl:has(:text-is(\"Business Details\"))" },
+        { "wait": 1200 }
+      ],
+      "clipTo": "div.rounded-xl:has(:text-is(\"Business Details\"))",
+      "clipPadding": 18,
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Save Details\")", "color": "plum" },
+        { "type": "label", "target": "label:has-text(\"Currency\")", "text": "Currency, timezone, tax and industry. Save Details keeps these.", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "merchant-page-hours",
+      "waitMs": 1500,
+      "actions": [
+        { "hover": "div.rounded-xl:has(:text(\"Business Hours\"))" },
+        { "wait": 1200 }
+      ],
+      "clipTo": "div.rounded-xl:has(:text(\"Business Hours\"))",
+      "clipPadding": 18,
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Save Hours\")", "color": "plum" },
+        { "type": "label", "target": "div.rounded-xl:has(:text(\"Business Hours\")) >> text=Open", "text": "Toggle a day off to mark it closed. Save Hours keeps your opening times.", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "merchant-page-social",
+      "waitMs": 1500,
+      "actions": [
+        { "hover": "div.rounded-xl:has(:text(\"Social Links\"))" },
+        { "wait": 1200 }
+      ],
+      "clipTo": "div.rounded-xl:has(:text(\"Social Links\"))",
+      "clipPadding": 18,
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Save Social Links\")", "color": "plum" },
+        { "type": "label", "target": "label:has-text(\"Instagram\")", "text": "Add your handles. These show on your public Qtap page.", "color": "charcoal" }
+      ]
+    }
+  ]
+}

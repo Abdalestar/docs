@@ -1,0 +1,51 @@
+{
+  "section": "stamp-cards",
+  "account": "stamp",
+  "defaultWaitMs": 2500,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "card-designer-overview",
+      "goto": "/cards/design",
+      "waitFor": "text=Card Designer",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "[role=tablist]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Save & Continue')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "The Card Designer: pick a starting template, restyle it, and watch the live preview on the right." }
+      ]
+    },
+    {
+      "name": "card-designer-colors",
+      "goto": "/cards/design",
+      "waitFor": "text=Card Designer",
+      "actions": [
+        { "click": "[role=tab]:has-text('Colors')" },
+        { "wait": 1200 }
+      ],
+      "waitMs": 1200,
+      "clipTo": "div.bg-card:has-text('Background Color')",
+      "clipPadding": 16
+    },
+    {
+      "name": "card-designer-layout",
+      "goto": "/cards/design",
+      "waitFor": "text=Card Designer",
+      "actions": [
+        { "click": "[role=tab]:has-text('Layout')" },
+        { "wait": 1200 }
+      ],
+      "waitMs": 1200,
+      "clipTo": "div.bg-card:has-text('Stamps to Collect')",
+      "clipPadding": 16
+    },
+    {
+      "name": "card-designer-preview",
+      "goto": "/cards/design",
+      "waitFor": "text=Card Designer",
+      "waitMs": 4500,
+      "clipTo": "div.bg-card:has-text('This is how your card')",
+      "clipPadding": 16
+    }
+  ]
+}

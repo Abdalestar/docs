@@ -1,0 +1,56 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/merchant-page",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "viewport": { "width": 1440, "height": 2000 },
+  "steps": [
+    {
+      "name": "merchant-page-overview",
+      "goto": "/merchant-page",
+      "actions": [ { "wait": 9000 } ],
+      "waitFor": "text=Merchant Profile",
+      "waitMs": 3000,
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(div.font-semibold:text-is('Merchant Profile'))", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has(div.font-semibold:text-is('Location Details'))", "number": 2, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has(div.font-semibold:text-is('Loyalty Cards'))", "number": 3, "color": "plum" },
+        { "type": "label", "target": "text=Merchant Page Preview", "text": "Edits appear here in real time", "color": "charcoal" },
+        { "type": "caption", "text": "The Merchant Page editor: your business profile (1), location details (2), and the loyalty cards you feature (3). The phone on the right previews what customers see." }
+      ]
+    },
+    {
+      "name": "merchant-page-profile",
+      "clipTo": "div.rounded-xl:has(div.font-semibold:text-is('Merchant Profile'))",
+      "clipPadding": 14,
+      "waitMs": 1000,
+      "annotate": [
+        { "type": "box", "target": "label:text-is('Cover Photos')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label:text-is('Google Rating')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "label:text-is('Category')", "number": 3, "color": "plum" }
+      ]
+    },
+    {
+      "name": "merchant-page-loyalty",
+      "clipTo": "div.rounded-xl:has(div.font-semibold:text-is('Loyalty Cards'))",
+      "clipPadding": 16,
+      "waitMs": 1000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Najma Stars')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "a:has-text('Create a loyalty card')", "number": 2, "color": "plum" },
+        { "type": "label", "target": "button:has-text('Najma Stars')", "text": "Tap a card to feature it on your page", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "merchant-page-actions",
+      "clipTo": "div.flex:has(> button:has-text('Create Merchant'))",
+      "clipPadding": 70,
+      "waitMs": 1000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Create Merchant')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:text-is('Preview')", "number": 2, "color": "plum" },
+        { "type": "label", "target": "button:has-text('Create Merchant')", "text": "First save creates the page; later it reads Update Merchant. Preview opens it in a new tab.", "color": "charcoal" }
+      ]
+    }
+  ]
+}
