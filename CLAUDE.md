@@ -20,6 +20,30 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-12 — Security settings screenshots (backfill)
+
+**Article:** `merchants/settings/security.mdx`
+**Branch:** `claude/eloquent-fermat-81guoz`
+**PR:** https://github.com/Abdalestar/docs/pull/134
+**Status:** Done (4 real annotated screenshots; validate-images 5/5 OK)
+
+### Task selection
+The board is otherwise fully `Done`; the only genuine `Status = "Not started"` row that is not a flagged duplicate was **"Account Security: Password, 2FA & Active Sessions"** (P1 High, `Needs Screenshots = YES`, gap-audit 2026-06-10), whose file `merchants/settings/security.mdx` was already on `main` with accurate source-grounded prose (PR #10, 2026-04-14) but **zero real screenshots** — the original write could not capture from the old Windows/Chrome-MCP pipeline. So this run did one task: add the real annotated flow. Prose unchanged; existing 2FA enrollment SVG kept. Also cleared `Needs Screenshots` on the older duplicate P2 "Security Settings" row (same MDX path).
+
+### Rejected this run
+- **The Member Profile: Activity, Notes & Tags** (the only other Not-started row) is a flagged duplicate of the published `members/profiles.mdx` (its proposed net-new "editable tags" feature doesn't exist; tags render read-only). Left as-is.
+- **Card Designer (`/cards/design`)** looked like an undocumented route, but it's a non-functional prototype: its "Save & Continue" only writes the design to `sessionStorage`, and `/cards/new` never reads it back (the page's own comment says "In a real implementation, this would save the design to the database"). Documenting it would mislead. Not documented.
+- **Campaign Analytics** stub stays blocked (performance endpoint 404s live, verified by a prior run).
+
+### Screenshots
+4 real annotated PNGs via `.routine/flows/security.json` (points demo, Najma Coffee) at `/settings/security`: `security-overview` (3 cards numbered 1/2/3, login email redacted, caption); `security-change-password` (3 fields + Update Password boxed, cropped); `security-2fa` (Authenticator App row, **Not Enabled** badge + **Enable** boxed, cropped); `security-sessions` (Current Session + **Sign Out All Sessions** boxed, login email redacted, cropped). `validate-images` 5/5 OK (4 PNG + the pre-existing SVG); pushed as binary via git. SMOKE_OK.
+
+### Safety / gotchas
+- Read-only capture: **Update Password / Enable / Sign Out All Sessions** never clicked.
+- The **2FA enrollment dialog was intentionally NOT opened** — `handleMfaEnroll` calls `supabase.auth.mfa.enroll()`, which writes a real (unverified) TOTP factor to the demo account and renders a live secret + QR. That flow stays covered by the existing `2fa-enrollment-flow.svg`.
+- Login email (`demo@najma.coffee`) redacted on both shots where the Active Sessions card appears.
+- Card wrapper class is `rounded-xl border bg-card text-card-foreground shadow`; `div.rounded-xl:has-text('<title>')` crops each card cleanly. Cards are tall, so the overview used a 1300px-high viewport to fit all three in one shot. Labels: `text=Not Enabled` (badge), `#currentPassword` (field), `button:has-text('Sign Out All Sessions')`.
+- Grounded in `app/(dashboard)/settings/security/page.tsx` (labels verified live).
 ## 2026-06-12 — Batch QR Codes screenshots (backfill)
 
 **Article:** `merchants/qr-codes/batch.mdx`
