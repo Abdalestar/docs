@@ -44,6 +44,185 @@ The board is otherwise fully `Done`; the only genuine `Status = "Not started"` r
 - Login email (`demo@najma.coffee`) redacted on both shots where the Active Sessions card appears.
 - Card wrapper class is `rounded-xl border bg-card text-card-foreground shadow`; `div.rounded-xl:has-text('<title>')` crops each card cleanly. Cards are tall, so the overview used a 1300px-high viewport to fit all three in one shot. Labels: `text=Not Enabled` (badge), `#currentPassword` (field), `button:has-text('Sign Out All Sessions')`.
 - Grounded in `app/(dashboard)/settings/security/page.tsx` (labels verified live).
+## 2026-06-12 — Batch QR Codes screenshots (backfill)
+
+**Article:** `merchants/qr-codes/batch.mdx`
+**Branch:** `claude/eloquent-fermat-tfdqte`
+**PR:** https://github.com/Abdalestar/docs/pull/131
+**Status:** Done — 3 real annotated screenshots added; prose unchanged. SMOKE_OK, validate-images 3/3 OK.
+
+### Task selection
+The board has no cleanly-workable `Not started` new-article row: the only two `Not started` rows are both blocked. **"The Member Profile: Activity, Notes & Tags"** is a flagged near-duplicate of the published `members/profiles.mdx` (and its proposed net-new feature, editable VIP/Regular/Inactive tags, does not exist — tags render read-only), already resolved by PR #128's profiles.mdx backfill. **"Campaign Messages & Personalization Variables"** is a documented product bug (wizard chips insert single-brace `{token}` but the send engine only substitutes double-brace `{{token}}`, so chip/template tokens send literally) — left Not started per prior runs. The two on-main "Coming soon" stubs are also accounted for: `analytics/location-comparison.mdx` (open PR #126) and `campaigns/analytics.mdx` (blocked — its only net-new surface vs `campaigns/stats.mdx` is the Performance card, whose `/api/analytics/campaigns/[id]/performance` returns 404 live, so it never renders).
+
+So this run did one screenshot-backfill task: the highest-priority properly-flagged `Needs Screenshots = YES` row whose article is on `main` — **Batch QR Codes** (P2, no prior PR). The article had full accurate prose and zero images.
+
+### Screenshots
+Captured via `.routine/flow-capture.mjs` (`.routine/flows/batch-qr.json`) from the live points demo (Najma Coffee, Elite):
+- `batch-qr-form.png` — Batch Settings form, Batch Name (1) / Quantity 250 (2) / Generate N QR Codes (3).
+- `batch-qr-action.png` — Action dropdown cropped: Issue Stamp / Award Points / Check-in / Redeem Reward (numbered).
+- `batch-qr-points.png` — Award Points selected → Points Value Per Scan field boxed.
+
+Grounded in `components/dashboard/qr-codes/batch-generator.tsx` (H1 "Batch Generate QR Codes", "Batch Settings" card, name / quantity max 1,000 / type / action / conditional `points_value`, "Generate N QR Codes"). Generate never clicked (no batch created); no PII on this page.
+
+### Notes for future runs
+- Both demo accounts include batch access (Najma = Elite, Dana = Franchise, both via `subscription_plan`), so neither shows the **purchase paywall** (the four credit-pack tiers in the article's "Access requirements" section). To screenshot that paywall you'd need a Starter/Growth account with `batch_qr_credits = 0`. The section stays prose + a pricing table.
+- `/qr-codes/batch` Action/Type selectors are Radix `[role=combobox]` (Type is the 1st on the page, Action the 2nd); options are `[role=option]`, croppable via `clipTo: "[role=listbox]"`.
+- The board is effectively complete; the real backlog is the two blocked Not-started rows above (close Member Profile as a duplicate; hold Campaign Messages until the single/double-brace bug is fixed) plus the blocked `campaigns/analytics` stub.
+## 2026-06-12 — Points Programs Overview screenshots (backfill)
+
+**Article:** `merchants/points/overview.mdx`
+**Branch:** `claude/eloquent-fermat-bkvvk8`
+**PR:** https://github.com/Abdalestar/docs/pull/130
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK). One task this run.
+
+### Task selection
+Board is fully `Done` with zero `Not started` rows, so per routine §3 this run did one
+screenshot backfill. Reconciled the "0-image on main" candidates against the 4 open PRs
+(#126 location-comparison, #127 complete-profile, #128 profiles backfill, #129
+notification-templates) to avoid double-doing — several imageless-on-main articles only
+read that way because their screenshot PRs aren't merged yet. Picked **Points Programs
+Overview** (P1, `Needs Screenshots = YES`, no PR, on main with prose + zero images, no
+competing PR) — the highest-priority clean target.
+
+### Screenshots
+3 real annotated PNGs from the live points demo (Najma Coffee, program "Najma Stars")
+via `.routine/flows/points-overview.json`, prose unchanged:
+- `points-overview-list` — `/points` page; status filter tabs boxed (1), Create Program
+  boxed (2), the program card's green **Active** badge visible → *Program statuses*.
+- `points-overview-settings` — `/points/new` form; Program Name (1) / Points per (2) /
+  Description (3) boxed; Currency, Card Color, phone preview visible → *Program details*.
+- `points-overview-expiry` — Expiry Type dropdown open (From date earned / From last
+  activity / End of calendar year), cropped to the listbox → *Expiry rules*.
+No program saved; Enable Points Expiry toggled only to reveal options (UI state, never
+saved); no destructive/outbound clicks. No customer PII (program is the merchant's own).
+
+### Insights / gotchas for future runs
+- The points account has 1 active program; `/points` H1 "Points Programs", "Create
+  Program", status filter as a `[role=tablist]` (All/Active/Drafts/Inactive), badges
+  from `STATUS_CONFIG` in `app/(dashboard)/points/page.tsx`.
+- **Selector gotcha:** in `points-program-form.tsx` the `htmlFor="currency"` Label is NOT
+  wired to a real `#currency` trigger — `#currency` resolves to Radix's visually-hidden
+  native `<select>` at (0,0), so a `box`/`number` on it lands a stray badge in the
+  top-left. Skip it or box the trigger another way. The Expiry Type select is reliably
+  opened with `[role=combobox]:has-text('From date earned')` (its default value), then
+  `clipTo: "[role=listbox]"` crops the three options cleanly. Enable Points Expiry is the
+  first `[role=switch]` on the form.
+- Remaining imageless-on-main backfill targets with no competing PR (verified this run):
+  `qr-codes/overview.mdx`, `qr-codes/batch.mdx`, `settings/notifications.mdx`,
+  `settings/merchant-page.mdx`, `campaigns/birthday.mdx`. (`campaigns/analytics.mdx` stays
+  blocked — performance endpoint 404s live.)
+## 2026-06-12 — Notification Templates (new article)
+
+**Article:** `merchants/campaigns/notification-templates.mdx` (new)
+**Branch:** `claude/eloquent-fermat-1sddx4`
+**PR:** https://github.com/Abdalestar/docs/pull/129
+**Status:** Done (3 real annotated screenshots, validate-images 3/3 OK). One task this run.
+
+### Task selection
+Board is fully `Done`; the only `Not started` row ("The Member Profile: Activity, Notes & Tags") is verified duplicate-flagged (already covered by `members/profiles.mdx`), so per routine §3 this was one stub/never-shipped task. The two "Coming soon" stubs on `main` were both ruled out (see below), so I took the **never-shipped** "Notification Templates" row (P3, Done but PR was blocked in April, so `merchants/campaigns/notification-templates.mdx` was never on main) and wrote it for real.
+
+### What was written
+Scoped tightly to the **Templates tab** management on `/notifications` (the one notification surface `campaigns/push-notifications.mdx` only mentions in passing): where templates live (Templates tab among All/Drafts/Scheduled/Sent), the **New Template** dialog (Template Name = internal label; Notification Title; Message; Image URL optional w/ live preview; Save disabled until name+title+message filled), edit (pencil)/delete (trash + "Delete Template?" confirm; editing doesn't touch already-sent/scheduled), and **Use Template** when composing. Access: owners+managers (`/notifications` needs `campaigns!=='none'`; staff none). Grounded in `notifications/page.tsx`, `template-manager.tsx`, `template-picker.tsx`, `notification-card.tsx`, `lib/utils/permissions.ts`. Added to Campaigns nav after `push-notifications`.
+
+### Two stubs-on-main both ruled out this run (for future runs)
+- **`merchants/analytics/location-comparison.mdx`** — already has an open PR (#126); it's a stub on main only because #126 isn't merged. Don't double-do.
+- **`merchants/campaigns/analytics.mdx`** — **BLOCKED, confirmed deeper than the prior note.** The only surface it adds over the published `campaigns/stats.mdx` is the `/campaigns/[id]` **Performance** card (over-time Sent/Redeemed chart + per-branch breakdown). `GET /api/analytics/campaigns/[id]/performance` returns **HTTP 404 "Campaign not found" for every period on the live deployment**, even when the campaign exists and the logged-in user is the active **owner** of the campaign's org (org ids match in Supabase) — verified by in-session `fetch` on the Dana account, whose campaigns DO have `campaign_rewards` data (e.g. Mother's Day Glam Flash 108 issued / 43 redeemed across both branches). Card renders a skeleton then unmounts. The route's user-scoped `staff` RLS check or admin/service-role campaign fetch is failing on this deployment. So the card never renders live for ANY account; not screenshotable until the endpoint is fixed. (Najma points org additionally has zero `campaign_rewards` rows.)
+
+### Gotchas discovered (save future runs time)
+- **`flow-capture.mjs` `fill` action is array-form:** `{ "fill": ["selector", "value"] }`, NOT `{ "fill": "sel", "value": "..." }`. The wrong form makes `act.fill[0]` = the first character of the selector ("[", "i", ...) and fails with a confusing CSS-parse error. `click`/`hover` take a plain string; `select`/`fill` take `[sel, val]`. The engine auto-applies `.first()`, so Playwright `>> nth=` chaining is NOT supported — use a uniquely-matching selector (placeholders work, apostrophes inside `[placeholder="..."]` are fine).
+- **`/notifications` shows NO history on the live demo orgs.** Both Najma (18 notifs / 15 sent in DB) and Dana (25 / 21) render an empty All/Drafts/Scheduled/Sent with `(0)` counts live. RLS policy "Staff can view their org push notifications" gates on `organization_id IN (SELECT user_organization_ids())`, and that function evidently doesn't return the demo user's org for the seeded rows — so the seeded `push_notifications` are invisible to the demo login. This is why `push-notifications.mdx` uses an SVG, not a real screenshot, and why this article documents templates (which I can populate myself via the create dialog) rather than the populated tabs. `notification_templates` is empty for both orgs, so the Templates list shows its honest empty state; the `Use Template` picker (`template-picker.tsx`) returns `null` at 0 templates, so it can't be captured live either.
+## 2026-06-12 — Member Profiles screenshots (backfill)
+
+**Article:** `merchants/members/profiles.mdx`
+**Branch:** `claude/eloquent-fermat-pc12fk`
+**PR:** https://github.com/Abdalestar/docs/pull/128
+**Status:** Done. SMOKE_OK; 4 real annotated screenshots (validate-images 4/4 OK). One task this run.
+
+### Task selection
+Both remaining `Not started` rows were non-viable as new articles, so per routine §3 this run did the highest-priority `Needs Screenshots = YES` row on `main`: **Member Profiles** (P1), which had accurate prose but zero images. Prose left unchanged; 4 `<Frame>` blocks added.
+
+### Two Not-started rows flagged instead of written (reality findings)
+- **Campaign Messages & Personalization Variables** (`merchants/campaigns/messages.mdx`, P2) — **broken feature, do NOT write as a how-to yet.** The campaign wizard's "Personalization Variables" chips and built-in templates insert **single-brace** tokens (`{customer_name}`, `{first_name}`, `{stamps_count}`, `{reward_name}`), but the send engine `lib/utils/personalize-message.ts` only substitutes **double-brace** `{{...}}` (7 tokens: customer_name, first_name, stamps_count, points_count, reward_name, merchant_name, stamps_remaining). Both `app/api/campaigns/execute/route.ts` and `app/api/notifications/send/route.ts` (the latter gates on `body.includes('{{')`) confirm it. So wizard-inserted tokens are sent to customers literally (e.g. "Happy Birthday, {customer_name}!"). The wizard preview is also wrong (it replaces single-brace with "John"). Verified in source AND a live wizard probe on the stamp account. Same class as the Condition Builder no-op. Set back to Not started with a note for engineering. The only working path is typing `{{token}}` manually, which the UI never surfaces.
+- **The Member Profile: Activity, Notes & Tags** (`merchants/members/member-profile.mdx`, P2) — **duplicate.** This is the same `/members/[id]` page already documented by the published `profiles.mdx` (this run's target) + `complete-profile.mdx` + `campaigns/targeted.mdx`. Its proposed net-new item "manual tags (VIP/Regular/Inactive)" does NOT exist as an editable feature: `member.tags` render read-only as Badges; there is no add/remove-tag UI on the profile page (the list-page row menu does have an "Add Tag" item, though). Flagged as a duplicate on that row.
+
+### Screenshots
+`.routine/flows/member-profiles.json` (points demo, member id `ca5eb000-...-077`, Faisal — has a missing birthday so Complete Profile shows): `profile-01-open` (members row menu, View Profile boxed, cropped to `[role=menu]` so no PII), `profile-02-overview` (full profile, name/email/phone redacted, Activity/Notes tabs + Complete Profile boxed), `profile-03-notes` (Notes tab, Save Notes boxed, explicit right-column crop), `profile-04-complete` (Update Member Information dialog, Save Information boxed, cropped to `[role=dialog]`). No destructive/outbound clicks. validate-images 4/4 OK; pushed as binary.
+
+### Gotchas for future runs
+- **Live members list differs from the repo prose.** A profile opens via the row's three-dot menu → **View Profile** (`<Link href="/members/[id]">` inside the dropdown). The member-name cell is NOT a link, so "click any row" / clicking the name does nothing. `profiles.mdx` prose still says "click any row" and "Edit button"; the live edit button is **Complete Profile** and its dialog is **Update Member Information** / **Save Information**. Left prose unchanged per the backfill rule.
+- Profile-page PII is confined to the sidebar (name heading, email, phone) — redact those three by exact-text selector. The Activity list shows the merchant's own staff + branch names (demo seed), not customer PII. Member ID (e.g. `Q19D976`) and tags (platinum/new/vip) are not sensitive.
+- Cropping to `[role=menu]` / `[role=dialog]` sidesteps PII entirely for the menu and dialog shots. Keep annotation **labels** off cropped shots whose target sits at the crop edge (the label spills outside the crop); use the numbered box + the MDX `<Frame caption>` instead.
+## 2026-06-12 — Completing a Member's Profile (Phone / Birthday)
+
+**Article:** `merchants/members/complete-profile.mdx` (new)
+**Branch:** `claude/eloquent-fermat-qnzh5u`
+**PR:** https://github.com/Abdalestar/docs/pull/127
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK). One task this run per the run request.
+
+### Task selection
+The board is nearly all `Done`. Location Comparison (the previously-flagged "good next task") is now done (PR #126, today). The one genuine `Status = Not started` row was the P3 gap-audit row "Completing a Member's Profile (Phone / Birthday)" (`merchants/members/complete-profile.mdx`, not on main) — took it as the task-1 new article.
+
+### What was written
+Deep-dive how-to for the **Complete Profile** flow on `/members/[id]`, distinct from the one paragraph in `members/profiles.mdx` (cross-linked). Facts grounded in `app/(dashboard)/members/[id]/page.tsx`:
+- The dashed **Complete Profile** button renders only when `isOwnerOrManager` (`role==='owner'||'manager'`) **and** `hasMissingInfo` (`!member.birthday || !member.phone`). Role-gated, NOT permission-gated: a `staff` role with full Members access still never sees it.
+- Dialog title **Update Member Information**; phone field shown only when `!member.phone`, birthday field only when `!member.birthday` (shows just the missing pieces). Save button **Save Information**.
+- `saveMemberInfo()` writes `phone` only when `dialogPhone && !member.phone`, `birthday` only when `dialogBirthday && !member.birthday` → dashboard can ADD a blank field but never overwrite a saved one; birthday stored `yyyy-MM-dd`. Calendar `captionLayout="dropdown"`, `fromYear={1930}`.
+- Birthday eligibility: `app/api/campaigns/member-eligible/route.ts` `isBirthdayWithinDays(member.birthday, …)` returns false when null → a saved birthday is what makes a member eligible for a birthday campaign. Cross-linked `campaigns/birthday`.
+- `/members` guard is `members !== 'none'` (staff default `view`), so staff can open a profile but the button is role-gated.
+
+### KEY GOTCHA for future runs (the view-column quirk)
+`member_org_view` exposes **`birth_date`, not `birthday`**, but `members/[id]/page.tsx` reads `member.birthday`. So `member.birthday` is `undefined` for EVERY member → the Birthday row always reads "Not provided" and the **Complete Profile** button renders on any member when viewed as owner/manager (dialog then offers only the Birthday field, since `member.phone` is populated). No accessible org has any member with a null phone or null `birth_date` (Najma 180 / Dana 122 / Tea Time 22 all fully populated), so the **phone** completion field can't be screenshotted from live data — documented it in prose instead. Captured the birthday path on a Najma member (`ca5eb000-…-ac`).
+
+### Screenshots
+`.routine/flows/complete-profile.json` (points demo, Najma): `complete-profile-button.png` (profile card, button boxed, Birthday "Not provided" labelled; name/Qtap ID/phone/email redacted), `complete-profile-dialog.png` (Update Member Information dialog, Select birthday + Save Information boxed), `complete-profile-calendar.png` (calendar open, **explicit `clip` {x:486,y:456,w:474,h:536}** to exclude the left profile card — a full-viewport shot leaked the name/phone/email behind the dialog scrim, the clip fixed it). Nothing filled, Save Information never clicked → no member record changed. Added to Members nav after `profiles`.
+## 2026-06-12 — Location Comparison (stub replaced with real article)
+
+**Article:** `merchants/analytics/location-comparison.mdx`
+**Branch:** `claude/eloquent-fermat-wm0gsm`
+**PR:** https://github.com/Abdalestar/docs/pull/126
+**Status:** Done. SMOKE_OK; 3 real annotated screenshots (validate-images 3/3 OK). One task this run.
+
+### Task selection
+Board is fully `Done` with zero `Not started` rows, so per routine §3 this run did one
+screenshot-grade task: the highest-value `Needs Screenshots = YES` stub on `main`. Only
+two stubs remained (`git ls-tree -r origin/main | grep mdx`, <8 lines):
+`location-comparison.mdx` and `campaigns/analytics.mdx`. Picked **Location Comparison**
+(P2, `Done`/"Already published" but a 6-line "Coming soon" stub on main, flagged a "good
+next task" by the staff-performance run). `campaigns/analytics.mdx` stays blocked (its
+only uncovered surface, the `/campaigns/[id]` Performance card, doesn't render on the demo).
+
+### What was written
+The `/analytics/reports/location-comparison` report (no sidebar link; reached from the
+Reports hub or direct URL). One card per **active** location, each with five figures
+counted over the chosen period. Source: `useLocationComparison` (`hooks/use-reports.ts`):
+- **Stamps** = sum `amount` of `transactions.type='stamp'` at that `location_id`.
+- **Points** = sum `amount` of `type='points_earn'`.
+- **Redemptions** = count of `type='redeem'` or `points_spend`.
+- **Members Served** = distinct `member_id` with any tagged transaction there (field is
+  `new_members` in code but the label is "Members Served"; it's distinct members, not new).
+- **Estimated Revenue** = sum `points_transactions.transaction_amount` for `type='earn'`
+  earns at that branch (points-derived estimate, same caveat as Revenue Impact).
+Only transactions with a `location_id` count (untagged rows are skipped → totals can read
+lower than org-wide). Points-only org → Stamps 0; stamp-only org → Points/Revenue 0. Empty
+state: "No location data available for this period". Filters: time period only (no branch
+filter — it compares all branches). Access: owners+managers (`analytics !== 'none'`).
+
+### Screenshots
+3 real annotated PNGs from the live points demo (Najma Coffee, 3 branches: The Pearl —
+Qanat Quartier, West Bay — City Center, Msheireb Downtown) via
+`.routine/flows/location-comparison.json`: overview (period boxed, all 3 cards), one card
+close-up (5 figures numbered; Estimated Revenue gold), period dropdown (5 options). No PII
+on this aggregate page; read-only capture. `docs.json` unchanged (path already in Analytics nav).
+
+### Insights for future runs
+- Card crop selector `div.grid.gap-4 > div:nth-child(1)` cleanly isolates the first branch
+  card; metric labels are `div.text-xs:has-text("<Stamps|Points|Redemptions|Members Served|Estimated Revenue>")`
+  and `.first()` lands inside that first card. Period selector is the shared Radix Select
+  (`button:has-text("Last 30 days")` → `[role=listbox]`/`[role=option]`), same as the other reports.
+- Remaining on-main stub after this run: `merchants/campaigns/analytics.mdx` (blocked, see
+  the staff-performance/earn-rate notes). The four other analytics report pages are now all
+  real articles on this branch's history (revenue-impact #117, points-activity #119,
+  staff-performance #124, location-comparison #126).
 
 ---
 

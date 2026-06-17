@@ -1,0 +1,53 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "members",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 1200 },
+  "steps": [
+    {
+      "name": "complete-profile-button",
+      "goto": "/members/ca5eb000-0000-4000-a000-0000000000ac",
+      "waitFor": "button:has-text('Complete Profile')",
+      "waitMs": 5500,
+      "clipTo": "div.shadow-lg",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Complete Profile')", "number": 1, "color": "plum" },
+        { "type": "label", "target": "text=Not provided", "text": "Birthday is missing here", "color": "plum" },
+        { "type": "redact", "target": "h2.font-bold", "color": "charcoal" },
+        { "type": "redact", "target": "p.font-mono", "color": "charcoal" },
+        { "type": "redact", "target": "span.font-medium.truncate", "color": "charcoal" },
+        { "type": "redact", "target": "span.font-medium.truncate.block", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "complete-profile-dialog",
+      "actions": [
+        { "click": "button:has-text('Complete Profile')" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "text=Update Member Information",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Select birthday')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Save Information')", "number": 2, "color": "plum" },
+        { "type": "label", "target": "text=birthday promotions", "text": "A saved birthday powers birthday campaigns", "color": "plum" }
+      ]
+    },
+    {
+      "name": "complete-profile-calendar",
+      "actions": [
+        { "click": "button:has-text('Select birthday')" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "[role=grid]",
+      "clip": { "x": 486, "y": 456, "width": 474, "height": 536 },
+      "annotate": [
+        { "type": "box", "target": "[role=grid]", "color": "plum" },
+        { "type": "label", "target": "text=2000", "text": "Use the year dropdown to jump to the birth year", "color": "plum" }
+      ]
+    }
+  ]
+}
