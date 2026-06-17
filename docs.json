@@ -64,7 +64,8 @@
           "merchants/qr-codes/qr-code-detail",
           "merchants/nfc-tags/what-is-nfc",
           "merchants/nfc-tags",
-          "merchants/nfc-tags/tap-and-earn"
+          "merchants/nfc-tags/tap-and-earn",
+          "merchants/nfc-tags/detail"
         ]
       },
       {
