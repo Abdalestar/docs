@@ -1,96 +1,30 @@
 {
   "deployUrl": "https://dashboard.qtap.qa",
-  "section": "campaigns",
-  "account": "stamp",
-  "viewport": { "width": 1440, "height": 1000 },
-  "defaultWaitMs": 2500,
+  "section": "merchants",
+  "account": "points",
+  "defaultWaitMs": 3000,
   "steps": [
     {
-      "name": "welcome-01-list",
-      "goto": "/campaigns",
-      "waitFor": "text=New Campaign",
+      "name": "welcome-sidebar",
+      "goto": "/",
+      "waitFor": "[data-tour=\"metrics\"] .data-mono",
       "waitMs": 5000,
       "annotate": [
-        { "type": "box", "target": "a:has-text('New Campaign')", "number": 1, "color": "plum" },
-        { "type": "caption", "text": "Open Campaigns in the sidebar, then click New Campaign (1) to start the wizard." }
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] .space-y-2" },
+        { "type": "box", "target": "aside[data-tour=\"sidebar\"]", "color": "plum" },
+        { "type": "caption", "text": "The left sidebar reaches every part of Qtap: your loyalty program, QR Codes, Members, Campaigns, Analytics, Staff, and Settings." }
       ]
     },
     {
-      "name": "welcome-02-type",
-      "goto": "/campaigns/new",
-      "actions": [
-        { "wait": 4000 },
-        { "click": "label:has-text('Welcome Campaign')" },
-        { "fill": ["#name", "Welcome Treat"] },
-        { "wait": 600 }
-      ],
-      "waitFor": "text=Choose Campaign Type",
-      "waitMs": 1500,
+      "name": "welcome-points-sidebar",
+      "goto": "/",
+      "waitFor": "aside[data-tour=\"sidebar\"] a[data-tour=\"nav-points\"]",
+      "waitMs": 4000,
+      "clipTo": "aside[data-tour=\"sidebar\"]",
+      "clipPadding": 0,
       "annotate": [
-        { "type": "box", "target": "label:has-text('Welcome Campaign')", "number": 1, "color": "plum" },
-        { "type": "box", "target": "#name", "number": 2, "color": "plum" },
-        { "type": "caption", "text": "Step 1 Type: choose Welcome Campaign (1) and give it a name (2), then click Next." }
-      ]
-    },
-    {
-      "name": "welcome-03-trigger",
-      "actions": [
-        { "click": "button:has-text('Next')" },
-        { "wait": 1500 }
-      ],
-      "waitFor": "text=after signup",
-      "waitMs": 1200,
-      "annotate": [
-        { "type": "box", "target": ":nth-match(button[role=combobox], 1)", "number": 1, "color": "plum" },
-        { "type": "caption", "text": "Step 2 Trigger: choose how long after signup the greeting is sent. Options are Immediately, 1 hour, 24 hours, or 48 hours." }
-      ]
-    },
-    {
-      "name": "welcome-04-reward",
-      "actions": [
-        { "click": "button:has-text('Next')" },
-        { "wait": 1500 }
-      ],
-      "waitFor": "text=Choose Reward Type",
-      "waitMs": 1200,
-      "annotate": [
-        { "type": "box", "target": "label:has-text('Bonus Stamps')", "color": "plum" },
-        { "type": "caption", "text": "Step 3 Reward (optional): attach a welcome gift such as Bonus Stamps, or leave it empty to send only a message." }
-      ]
-    },
-    {
-      "name": "welcome-05-message",
-      "actions": [
-        { "click": "button:has-text('Next')" },
-        { "wait": 1500 },
-        { "fill": ["#notification-title", "Welcome to the family!"] },
-        { "fill": ["#notification-body", "Thanks for joining. Here are 2 bonus stamps to get you started on your next reward."] },
-        { "wait": 600 }
-      ],
-      "waitFor": "text=Notification Title",
-      "waitMs": 1200,
-      "annotate": [
-        { "type": "box", "target": "#notification-title", "number": 1, "color": "plum" },
-        { "type": "box", "target": "#notification-body", "number": 2, "color": "plum" },
-        { "type": "caption", "text": "Step 4 Message: write the push title (1) and body (2). Use Template fills a ready-made welcome message you can edit." }
-      ]
-    },
-    {
-      "name": "welcome-06-review",
-      "actions": [
-        { "click": "button:has-text('Next')" },
-        { "wait": 1200 },
-        { "click": "button:has-text('Next')" },
-        { "wait": 1200 },
-        { "click": "button:has-text('Next')" },
-        { "wait": 1500 }
-      ],
-      "waitFor": "button:has-text('Activate Campaign')",
-      "waitMs": 1200,
-      "annotate": [
-        { "type": "box", "target": "button:has-text('Activate Campaign')", "number": 1, "color": "plum" },
-        { "type": "box", "target": "button:has-text('Save as Draft')", "number": 2, "color": "charcoal" },
-        { "type": "caption", "text": "Step 7 Review: check the summary, then Activate Campaign (1) to start it now or Save as Draft (2) to publish later." }
+        { "type": "box", "target": "a[data-tour=\"nav-points\"]", "color": "plum" },
+        { "type": "label", "target": "a[data-tour=\"nav-points\"]", "text": "A points program shows Points here", "color": "plum" }
       ]
     }
   ]

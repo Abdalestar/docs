@@ -1,0 +1,37 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/notifications",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1500 },
+  "defaultWaitMs": 4000,
+  "steps": [
+    {
+      "name": "segments-selector",
+      "goto": "/notifications/new",
+      "waitFor": "button:has-text('Send Now')",
+      "waitMs": 9000,
+      "clipTo": "[role=radiogroup]",
+      "clipPadding": 8,
+      "annotate": [
+        { "type": "box", "target": "label[for='vip']", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label[for='at_risk']", "number": 2, "color": "plum" },
+        { "type": "box", "target": "label[for='near_complete']", "number": 3, "color": "plum" }
+      ]
+    },
+    {
+      "name": "segments-selected",
+      "goto": "/notifications/new",
+      "waitFor": "button:has-text('Send Now')",
+      "waitMs": 9000,
+      "actions": [
+        { "click": "label[for='vip']" },
+        { "wait": 600 }
+      ],
+      "clipTo": "[role=radiogroup]",
+      "clipPadding": 8,
+      "annotate": [
+        { "type": "label", "target": "label[for='vip']", "text": "The segment you pick is highlighted. Only this group gets the push.", "color": "plum" }
+      ]
+    }
+  ]
+}
