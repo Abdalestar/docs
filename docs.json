@@ -27,6 +27,7 @@
         "pages": [
           "merchants/stamp-cards/overview",
           "merchants/stamp-cards/creating",
+          "merchants/stamp-cards/editing",
           "merchants/stamp-cards/designing",
           "merchants/stamp-cards/card-designer",
           "merchants/stamp-cards/bonus-stamps",
