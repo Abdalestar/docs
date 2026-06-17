@@ -1,0 +1,61 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "steps": [
+    {
+      "name": "batch-qr-form",
+      "goto": "/qr-codes/batch",
+      "waitFor": "#name",
+      "waitMs": 4500,
+      "actions": [
+        { "fill": ["#name", "Summer Promo Batch"] },
+        { "fill": ["#quantity", "250"] },
+        { "wait": 500 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "#name", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#quantity", "number": 2, "color": "plum" },
+        { "type": "box", "target": "button[type=submit]:has-text('Generate')", "number": 3, "color": "gold" },
+        { "type": "caption", "text": "The Batch Settings form: name the batch (1), set how many codes to create up to 1,000 (2), then generate them (3). Every code in the batch shares one Type and one Action." }
+      ]
+    },
+    {
+      "name": "batch-qr-action",
+      "goto": "/qr-codes/batch",
+      "waitFor": "#name",
+      "waitMs": 4000,
+      "actions": [
+        { "click": ":nth-match([role=combobox], 2)" },
+        { "wait": 900 }
+      ],
+      "waitFor": "[role=option]:has-text('Award Points')",
+      "clipTo": "[role=listbox]",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "[role=option]:has-text('Issue Stamp')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "[role=option]:has-text('Award Points')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "[role=option]:has-text('Check-in')", "number": 3, "color": "plum" },
+        { "type": "box", "target": "[role=option]:has-text('Redeem Reward')", "number": 4, "color": "plum" }
+      ]
+    },
+    {
+      "name": "batch-qr-points",
+      "goto": "/qr-codes/batch",
+      "waitFor": "#name",
+      "waitMs": 4000,
+      "actions": [
+        { "click": ":nth-match([role=combobox], 2)" },
+        { "wait": 700 },
+        { "click": "[role=option]:has-text('Award Points')" },
+        { "wait": 900 }
+      ],
+      "waitFor": "#points_value",
+      "annotate": [
+        { "type": "box", "target": "#points_value", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Choosing Award Points adds a Points Value Per Scan field. Each scan of every code in this batch awards that many points." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "points",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 1300 },
+  "steps": [
+    {
+      "name": "points-award-modes",
+      "goto": "/points-operations",
+      "waitFor": "text=Award Points",
+      "waitMs": 5500,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('By Amount')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Manual Points')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "On the Award Points tab, choose how to set the amount: By Amount (1) works the points out from the purchase total, or Manual Points (2) lets you type the exact number." }
+      ]
+    },
+    {
+      "name": "points-award-by-amount",
+      "actions": [
+        { "fill": ["input[placeholder='Search members...']", "moh"] },
+        { "wait": 4000 },
+        { "click": ".divide-y button" },
+        { "wait": 1200 },
+        { "click": "button:has-text('By Amount')" },
+        { "fill": ["#amount", "50"] },
+        { "fill": ["#description", "Lunch order"] },
+        { "wait": 800 },
+        { "click": "[role=combobox]:has-text('Select the branch')" },
+        { "wait": 900 },
+        { "click": "[role=option]" },
+        { "wait": 800 }
+      ],
+      "clipTo": "div.bg-card:has-text('Calculate Points')",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "text=points per", "color": "plum" },
+        { "type": "label", "target": "text=Points to Award", "text": "The earn rate turns the purchase total into points", "color": "plum" }
+      ]
+    },
+    {
+      "name": "points-award-confirm",
+      "actions": [
+        { "click": "button.w-full:has-text('Award')" },
+        { "wait": 1400 }
+      ],
+      "waitFor": "text=Confirm Points Award",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "redact", "target": "[role=dialog] p.font-medium", "color": "charcoal" },
+        { "type": "label", "target": "text=After", "text": "Check the before and after balance, then Confirm", "color": "plum" }
+      ]
+    },
+    {
+      "name": "points-award-manual",
+      "actions": [
+        { "click": "button:has-text('Cancel')" },
+        { "wait": 800 },
+        { "click": "button:has-text('Manual Points')" },
+        { "wait": 600 },
+        { "fill": ["#manual_points", "200"] },
+        { "wait": 800 }
+      ],
+      "clipTo": "div.bg-card:has-text('Calculate Points')",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "#manual_points", "color": "plum" },
+        { "type": "label", "target": "text=Points to Award", "text": "Manual Points awards the exact number you type, ignoring the earn rate and caps", "color": "plum" }
+      ]
+    }
+  ]
+}

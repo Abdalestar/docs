@@ -1,0 +1,59 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "points",
+  "defaultWaitMs": 4000,
+  "steps": [
+    {
+      "name": "expiry-limits-advanced",
+      "goto": "/qr-codes/generate",
+      "actions": [
+        { "wait": 4000 },
+        { "hover": "#max_scans" },
+        { "wait": 500 }
+      ],
+      "waitFor": "#max_scans",
+      "waitMs": 1500,
+      "clipTo": "div.rounded-xl:has(div.font-semibold:has-text(\"Advanced Settings\"))",
+      "clipPadding": 16,
+      "annotate": [
+        { "type": "box", "target": "#max_scans", "number": 1, "color": "plum" },
+        { "type": "box", "target": ":text-is(\"Expiry Date\")", "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "expiry-limits-max-scans",
+      "goto": "/qr-codes/generate",
+      "actions": [
+        { "wait": 4000 },
+        { "fill": ["#max_scans", "50"] },
+        { "hover": "div.font-semibold:has-text(\"Advanced Settings\")" },
+        { "wait": 500 }
+      ],
+      "waitFor": "#max_scans",
+      "waitMs": 1500,
+      "clipTo": "div.rounded-xl:has(div.font-semibold:has-text(\"Advanced Settings\"))",
+      "clipPadding": 16,
+      "annotate": [
+        { "type": "box", "target": "#max_scans", "number": 1, "color": "plum" }
+      ]
+    },
+    {
+      "name": "expiry-limits-expiry",
+      "goto": "/qr-codes/generate",
+      "actions": [
+        { "wait": 4000 },
+        { "click": ":nth-match(button[role=\"switch\"], 1)" },
+        { "wait": 900 }
+      ],
+      "waitFor": "input[type=\"datetime-local\"]",
+      "waitMs": 1500,
+      "clipTo": "div.rounded-xl:has(div.font-semibold:has-text(\"Advanced Settings\"))",
+      "clipPadding": 16,
+      "annotate": [
+        { "type": "box", "target": ":text-is(\"Expiry Date\")", "number": 1, "color": "plum" },
+        { "type": "box", "target": "input[type=\"datetime-local\"]", "number": 2, "color": "plum" }
+      ]
+    }
+  ]
+}

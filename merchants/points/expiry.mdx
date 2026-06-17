@@ -1,0 +1,63 @@
+---
+title: "How and when points expire"
+sidebarTitle: "Points expiry"
+description: "Set points to expire after a period, and see how each expiry type removes points and notifies members."
+---
+
+By default, points in a Qtap program never expire. You can switch expiry on so points come off a member's balance after a set period, which gives customers a reason to come back and spend them before they lose them. You set this up inside the points program itself, on the **Points Expiry** card. For the full setup walkthrough, see [Creating a Points Program](/merchants/points/creating).
+
+<Frame caption="The Points Expiry card. Expiry stays off until you turn on the switch.">
+  <img src="/images/merchants/points/expiry-01-card.png" alt="Points Expiry card with the Enable Points Expiry switch turned off" />
+</Frame>
+
+## Turn on expiry
+
+Open your program under **Points**, then find the **Points Expiry** card. Turn on **Enable Points Expiry** and two fields appear:
+
+- **Expiry Period (days).** The number of days in the countdown. The form starts at 365 and accepts up to 365.
+- **Expiry Type.** When the countdown starts. The three choices are described below.
+
+A line under the fields restates the rule in plain words as you change it, so you can read back exactly what members will get.
+
+<Frame caption="With expiry on, set the period in days and choose an expiry type.">
+  <img src="/images/merchants/points/expiry-02-fields.png" alt="Expiry Period and Expiry Type fields shown after enabling points expiry" />
+</Frame>
+
+## The three expiry types
+
+<Frame caption="The Expiry Type menu: From date earned, From last activity, or End of calendar year.">
+  <img src="/images/merchants/points/expiry-03-type.png" alt="Expiry Type dropdown open showing the three options" />
+</Frame>
+
+**From date earned.** Each batch of points expires on its own clock. Points a member earns today expire the set number of days from today; points they earn next week run a separate countdown from next week. This fits a rolling "use them within a year" policy.
+
+**From last activity.** A member's whole balance stays alive as long as they keep coming back. Every time they earn points, the clock resets. If a member goes quiet for longer than the period you set, their entire balance expires at once.
+
+**End of calendar year.** Everything earned during the year expires together at the start of the next year. Qtap runs this sweep in the first days of January. The days field does not drive this type; the calendar does.
+
+## What happens when points expire
+
+Qtap checks for expired points once a day. When it finds some, it does three things for each affected member:
+
+1. Removes the expired points from the balance. It only takes the balance down to what the member holds now, so a balance never goes below zero and points a member already spent are not counted twice.
+2. Writes an **expired** entry to the points history, so the deduction sits on the record next to earns and redemptions.
+3. Sends the member a **Points Expired** notification with the number of points that came off.
+
+<Note>
+The **From date earned** clock is set the moment a member earns points. Turning expiry on today schedules expiry for points earned from now on, not for points already in the bank. **From last activity** and **End of calendar year** both look at a member's current balance, so they cover older points too.
+</Note>
+
+<Warning>
+Members get a notification when their points expire. Choose a period that matches how often your customers visit. A 30-day window suits a daily coffee run; the same window on a service people use twice a year will wipe balances before anyone earns a reward.
+</Warning>
+
+Only owners and managers can edit a points program and its expiry rules. Staff can still award and redeem points on the operations pages.
+
+<CardGroup cols={2}>
+  <Card title="Creating a Points Program" href="/merchants/points/creating">
+    Set up the program, points rate, rewards, and expiry from scratch.
+  </Card>
+  <Card title="Points Operations" href="/merchants/points/operations">
+    How staff award and redeem points for customers.
+  </Card>
+</CardGroup>

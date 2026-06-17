@@ -1,0 +1,52 @@
+---
+title: "Setting QR code expiry dates and scan limits"
+sidebarTitle: "Expiry & scan limits"
+description: "Make a QR code stop working after a date or after a set number of scans, for limited-time or limited-quantity promotions."
+---
+
+Most QR codes you generate are meant to last. A code taped to the counter should keep adding stamps for as long as it hangs there. Sometimes you want the opposite: a weekend promotion that stops on Monday, or a giveaway that closes once the first 50 customers have scanned. Two settings on the Generate QR Code page cover both.
+
+Go to **QR Codes** in the left sidebar and choose **Generate QR Code**. Fill in the name and action as usual, then open the **Advanced Settings** card.
+
+<Frame caption="The Advanced Settings card holds the scan limit (1) and the expiry switch (2).">
+  <img src="/images/merchants/qr-codes/expiry-limits-advanced.png" alt="Advanced Settings card with the Maximum Scans field and Expiry Date switch" />
+</Frame>
+
+## Limit how many times a code can be scanned
+
+**Maximum Scans** caps the total scans a code will accept. Leave it empty and the code stays unlimited. Type a number, say 50, and the code stops working once 50 scans have gone through.
+
+<Frame caption="Set Maximum Scans to cap a code, for example the first 50 scans of a giveaway.">
+  <img src="/images/merchants/qr-codes/expiry-limits-max-scans.png" alt="The Maximum Scans field set to 50" />
+</Frame>
+
+This field shows for **Reusable** and **Batch** codes. A **One-Time Use** code already switches itself off after a single scan, so it has no scan-limit field. Batch codes behave the same way per code, with each one good for a single scan.
+
+## Make a code expire on a date
+
+Turn on the **Expiry Date** switch and pick a day and time. After that moment the code stops working, whatever its scan count. Leave the switch off and the code never expires.
+
+<Frame caption="Turn on Expiry Date to pick the day and time a code should stop working.">
+  <img src="/images/merchants/qr-codes/expiry-limits-expiry.png" alt="The Expiry Date switch turned on with a date and time picker" />
+</Frame>
+
+Expiry works for every code type, so you can pair it with a scan limit. A code that has both stops at whichever one it reaches first.
+
+## What a customer sees when a code is used up
+
+A scan against a finished code fails before any stamp or points are awarded, and the customer's phone shows the reason.
+
+| Why it stopped | Message on the phone |
+|---|---|
+| Past its expiry date | "This QR code has expired." |
+| Hit its scan limit | "This QR code has reached its maximum number of scans." |
+
+An expired or maxed-out code can't be brought back. Generate a fresh one for the same location and reprint it. The [troubleshooting guide](/merchants/qr-codes/troubleshooting) covers how to read a code's status when a scan fails.
+
+<Warning>
+  You set the expiry date and scan limit when you generate a code, and you can't change them afterward. A code's detail page lets you edit its name, location, and on/off switch, but not its limit. To change a limit, switch the old code off and generate a new one. To stop a code early, use **Deactivate** on its row.
+</Warning>
+
+## Who can set these
+
+Generating codes is open to owners and managers by default. Staff don't see the QR Codes page unless you grant them access on their [role and permissions](/merchants/staff/roles-permissions).

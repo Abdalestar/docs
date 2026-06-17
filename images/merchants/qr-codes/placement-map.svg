@@ -1,0 +1,57 @@
+<svg viewBox="0 0 760 440" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+  <rect width="760" height="440" fill="#F8F5F2"/>
+  <text x="32" y="44" font-size="22" font-weight="700" fill="#423F4C">Match the placement to the settings</text>
+  <text x="32" y="68" font-size="14" fill="#6B6770">Pick where the code lives, then set its type, action, and any limit.</text>
+
+  <!-- header row -->
+  <g font-size="13" font-weight="700" fill="#8E4A63">
+    <text x="40" y="108">Where it lives</text>
+    <text x="250" y="108">Type</text>
+    <text x="410" y="108">Action</text>
+    <text x="560" y="108">Limit or format</text>
+  </g>
+  <line x1="32" y1="120" x2="728" y2="120" stroke="#E2D6DC" stroke-width="2"/>
+
+  <!-- rows -->
+  <g font-size="13.5" fill="#423F4C">
+    <text x="40" y="156">At the counter</text>
+    <text x="250" y="156" fill="#6B6770">Reusable</text>
+    <text x="410" y="156" fill="#6B6770">Add Stamp / Award Points</text>
+    <text x="560" y="156" fill="#6B6770">Set the Location</text>
+
+    <text x="40" y="200">Cups, receipts, packaging</text>
+    <text x="250" y="200" fill="#6B6770">One-Time Use</text>
+    <text x="410" y="200" fill="#6B6770">Add Stamp / Award Points</text>
+    <text x="560" y="200" fill="#6B6770">Retires after one scan</text>
+
+    <text x="40" y="244">Window decals, posters</text>
+    <text x="250" y="244" fill="#6B6770">Reusable</text>
+    <text x="410" y="244" fill="#6B6770">Add Stamp / Award Points</text>
+    <text x="560" y="244" fill="#6B6770">Download the SVG</text>
+
+    <text x="40" y="288">Seasonal promo</text>
+    <text x="250" y="288" fill="#6B6770">Reusable</text>
+    <text x="410" y="288" fill="#6B6770">Award Points</text>
+    <text x="560" y="288" fill="#6B6770">Set an Expiry Date</text>
+
+    <text x="40" y="332">First-50 giveaway</text>
+    <text x="250" y="332" fill="#6B6770">Reusable</text>
+    <text x="410" y="332" fill="#6B6770">Award Points</text>
+    <text x="560" y="332" fill="#6B6770">Set Maximum Scans</text>
+
+    <text x="40" y="376">Event check-in</text>
+    <text x="250" y="376" fill="#6B6770">Reusable / Batch</text>
+    <text x="410" y="376" fill="#6B6770">Check-In</text>
+    <text x="560" y="376" fill="#6B6770">No stamps or points</text>
+  </g>
+  <g stroke="#E2D6DC" stroke-width="1">
+    <line x1="32" y1="174" x2="728" y2="174"/>
+    <line x1="32" y1="218" x2="728" y2="218"/>
+    <line x1="32" y1="262" x2="728" y2="262"/>
+    <line x1="32" y1="306" x2="728" y2="306"/>
+    <line x1="32" y1="350" x2="728" y2="350"/>
+  </g>
+
+  <rect x="32" y="398" width="696" height="30" rx="8" fill="#F0D793"/>
+  <text x="48" y="418" font-size="12.5" fill="#423F4C">A code credits a customer only when they scan in the Qtap app. A plain camera scan records the visit but adds nothing.</text>
+</svg>

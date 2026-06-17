@@ -1,0 +1,56 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 900 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "reusable-vs-onetime-types",
+      "goto": "/qr-codes/generate",
+      "waitFor": "text=QR Code Type",
+      "waitMs": 3500,
+      "actions": [
+        { "hover": "label:has-text('Batch Generate')" },
+        { "wait": 1200 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "label:has-text('Reusable')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label:has-text('One-Time Use')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "label:has-text('Batch Generate')", "number": 3, "color": "plum" },
+        { "type": "caption", "text": "QR Code Type sets how many times a code can be scanned: Reusable (1), One-Time Use (2), or Batch Generate (3)." }
+      ]
+    },
+    {
+      "name": "reusable-vs-onetime-reusable",
+      "actions": [
+        { "hover": "text=Maximum Scans" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "#max_scans",
+      "waitMs": 1500,
+      "annotate": [
+        { "type": "box", "target": "#max_scans", "number": 1, "color": "plum" },
+        { "type": "label", "target": "#max_scans", "text": "Leave empty for unlimited scans", "color": "plum" },
+        { "type": "caption", "text": "A reusable code runs with no limit by default. Enter a number in Maximum Scans (1) to cap how many times it can be scanned." }
+      ]
+    },
+    {
+      "name": "reusable-vs-onetime-batch",
+      "goto": "/qr-codes/generate",
+      "waitFor": "text=QR Code Type",
+      "waitMs": 3500,
+      "actions": [
+        { "click": "label:has-text('Batch Generate')" },
+        { "wait": 1500 },
+        { "hover": "#quantity" },
+        { "wait": 800 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "#quantity", "number": 1, "color": "plum" },
+        { "type": "box", "target": "text=Each batch code is single-use", "number": 2, "color": "gold" },
+        { "type": "caption", "text": "Batch Generate makes a set of unique codes at once (1). Each one is single-use and turns off after a single scan (2)." }
+      ]
+    }
+  ]
+}

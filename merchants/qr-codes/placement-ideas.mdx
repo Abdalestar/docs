@@ -1,0 +1,72 @@
+---
+title: "QR code placement and use-case ideas"
+sidebarTitle: "Placement ideas"
+description: "Where to put your Qtap QR codes, and which settings fit each spot."
+---
+
+Every Qtap QR code is a printed link to a scan page. Where you put a code decides which settings fit it. Pick the spot first, then match three things on the **Generate QR Code** page: the type, the action, and any limit.
+
+## Start with the type
+
+The type sets how often a code can be scanned, so it follows the placement.
+
+<Frame caption="Reusable for a code that stays put, One-Time Use for a code that prints once, Batch Generate for a print run of single-use codes.">
+  <img src="/images/merchants/qr-codes/placement-type.png" alt="QR Code Type options on the Generate QR Code page" />
+</Frame>
+
+- **At the counter or on a table tent**, use **Reusable**. The same code works for every customer, every day.
+- **On cups, receipts, or packaging** a customer takes home, use **One-Time Use**. The code scans once, then goes inactive, so it can't be reused or shared.
+- **For a print run**, use **Batch Generate**. It creates up to 100 unique single-use codes in one go, each one good for a single scan.
+
+## Pick the action
+
+The action decides what a scan does. It works the same wherever the code is placed.
+
+<Frame caption="Add Stamp adds to a card, Award Points gives a fixed number of points, and Check-In records a visit only.">
+  <img src="/images/merchants/qr-codes/placement-action.png" alt="QR code action options: Add Stamp, Award Points, Check-In" />
+</Frame>
+
+Use **Check-In** for an event door or a walk-in counter where you want to count visits without giving stamps or points. Use **Add Stamp** or **Award Points** for everyday earning codes.
+
+Set the **Location** in Basic Information when a code belongs to one branch. The scan is then recorded against that branch, which keeps your per-location reports honest.
+
+## Limits for promotions
+
+Two settings under **Advanced Settings** turn a normal code into a time-bound or quantity-bound promo.
+
+<Frame caption="Maximum Scans retires a code after a set number of scans; Expiry Date ends it on a date you choose.">
+  <img src="/images/merchants/qr-codes/placement-limits.png" alt="Maximum Scans and Expiry Date fields in Advanced Settings" />
+</Frame>
+
+- **First-50-customers giveaway**: set **Maximum Scans** to 50. After the 50th scan the code stops working.
+- **Seasonal offer**: turn on **Expiry Date** and pick the end date. After it passes, a scan shows "This QR code has expired."
+
+A code that has hit its scan cap or expiry date can't be revived. Generate a fresh one for the next run.
+
+## Window decals and posters
+
+For anything printed large, download the **SVG** from the preview, not the PNG. An SVG stays sharp at any size, so a window decal or A2 poster won't look blocky. Use the PNG for small prints like table tents and receipts.
+
+## Print a batch for handing out
+
+When you need many codes on paper, create them, then select and download them together from the QR Codes list.
+
+<Frame caption="Tick the codes you want, then export them as a print-ready PDF sheet or a ZIP of individual PNG images.">
+  <img src="/images/merchants/qr-codes/placement-export.png" alt="Selected QR codes with PDF and ZIP export buttons" />
+</Frame>
+
+**PDF** lays the codes out on a sheet for printing. **ZIP** gives you one PNG image per code to drop into your own design.
+
+<Note>
+A code only credits a customer when they scan it inside the Qtap app, which tells Qtap who they are. A scan from a plain phone camera opens the scan page and records the visit, but adds nothing to anyone. See [How customers scan and earn](/merchants/qr-codes/customer-scan-flow) for what the customer sees.
+</Note>
+
+<Frame caption="A quick map from each placement to the settings that fit it.">
+  <img src="/images/merchants/qr-codes/placement-map.svg" alt="Table mapping QR code placements to recommended type, action, and limit" />
+</Frame>
+
+<Info>
+Your plan sets how many QR codes you can create each month: 50 on Starter, 300 on Growth, 1,500 on Elite, and unlimited on Franchise. The count resets on the 1st. A batch counts each code it creates against that month. Only owners and managers can create and manage QR codes.
+</Info>
+
+Ready to make one? See [Generating a QR code](/merchants/qr-codes/generating) for the full walkthrough, or [Batch generation](/merchants/qr-codes/batch) for large print runs.
