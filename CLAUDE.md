@@ -20,6 +20,57 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-12 — Location Comparison (stub replaced with real article)
+
+**Article:** `merchants/analytics/location-comparison.mdx`
+**Branch:** `claude/eloquent-fermat-wm0gsm`
+**PR:** https://github.com/Abdalestar/docs/pull/126
+**Status:** Done. SMOKE_OK; 3 real annotated screenshots (validate-images 3/3 OK). One task this run.
+
+### Task selection
+Board is fully `Done` with zero `Not started` rows, so per routine §3 this run did one
+screenshot-grade task: the highest-value `Needs Screenshots = YES` stub on `main`. Only
+two stubs remained (`git ls-tree -r origin/main | grep mdx`, <8 lines):
+`location-comparison.mdx` and `campaigns/analytics.mdx`. Picked **Location Comparison**
+(P2, `Done`/"Already published" but a 6-line "Coming soon" stub on main, flagged a "good
+next task" by the staff-performance run). `campaigns/analytics.mdx` stays blocked (its
+only uncovered surface, the `/campaigns/[id]` Performance card, doesn't render on the demo).
+
+### What was written
+The `/analytics/reports/location-comparison` report (no sidebar link; reached from the
+Reports hub or direct URL). One card per **active** location, each with five figures
+counted over the chosen period. Source: `useLocationComparison` (`hooks/use-reports.ts`):
+- **Stamps** = sum `amount` of `transactions.type='stamp'` at that `location_id`.
+- **Points** = sum `amount` of `type='points_earn'`.
+- **Redemptions** = count of `type='redeem'` or `points_spend`.
+- **Members Served** = distinct `member_id` with any tagged transaction there (field is
+  `new_members` in code but the label is "Members Served"; it's distinct members, not new).
+- **Estimated Revenue** = sum `points_transactions.transaction_amount` for `type='earn'`
+  earns at that branch (points-derived estimate, same caveat as Revenue Impact).
+Only transactions with a `location_id` count (untagged rows are skipped → totals can read
+lower than org-wide). Points-only org → Stamps 0; stamp-only org → Points/Revenue 0. Empty
+state: "No location data available for this period". Filters: time period only (no branch
+filter — it compares all branches). Access: owners+managers (`analytics !== 'none'`).
+
+### Screenshots
+3 real annotated PNGs from the live points demo (Najma Coffee, 3 branches: The Pearl —
+Qanat Quartier, West Bay — City Center, Msheireb Downtown) via
+`.routine/flows/location-comparison.json`: overview (period boxed, all 3 cards), one card
+close-up (5 figures numbered; Estimated Revenue gold), period dropdown (5 options). No PII
+on this aggregate page; read-only capture. `docs.json` unchanged (path already in Analytics nav).
+
+### Insights for future runs
+- Card crop selector `div.grid.gap-4 > div:nth-child(1)` cleanly isolates the first branch
+  card; metric labels are `div.text-xs:has-text("<Stamps|Points|Redemptions|Members Served|Estimated Revenue>")`
+  and `.first()` lands inside that first card. Period selector is the shared Radix Select
+  (`button:has-text("Last 30 days")` → `[role=listbox]`/`[role=option]`), same as the other reports.
+- Remaining on-main stub after this run: `merchants/campaigns/analytics.mdx` (blocked, see
+  the staff-performance/earn-rate notes). The four other analytics report pages are now all
+  real articles on this branch's history (revenue-impact #117, points-activity #119,
+  staff-performance #124, location-comparison #126).
+
+---
+
 ## 2026-06-12 — Staff Performance Report
 
 **Article:** `merchants/analytics/staff-performance.mdx`
