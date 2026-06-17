@@ -1,0 +1,85 @@
+---
+title: "The Card Designer"
+sidebarTitle: "Card designer"
+description: "Style a loyalty card with templates, colors, and icons before you build it in the create-card wizard."
+---
+
+The Card Designer is a sandbox for the look of a loyalty card. You pick a starting
+template, change the colors, icon, and layout, and a phone preview updates as you go.
+It lives at the `/cards/design` URL. There is no sidebar or Cards-page link to it yet,
+so you reach it by typing the address.
+
+<Frame caption="The Card Designer. The four panels (1) change the card; the Save & Continue button (2) takes you to the create-card wizard.">
+  <img src="/images/stamp-cards/card-designer-overview.png" alt="The Card Designer page with the panel tabs and the Save & Continue button highlighted" />
+</Frame>
+
+The page splits in two: the design panels on the left, and a live preview of the
+member's card on the right. Four tabs sit above the panels.
+
+## Templates
+
+The **Templates** tab opens with a gallery of starter designs: Coffee Shop, Pizza
+Place, Salon & Spa, Retail Store, Gaming Cafe, and Blank. Click one and its colors,
+icon, stamp count, and layout fill in at once. A template is a starting point, so you
+can keep editing after you pick one.
+
+## Colors
+
+The **Colors** tab sets three colors: **Background**, **Text**, and **Accent** (the
+fill on a collected stamp). Each one opens a color picker with eight presets, or you
+can type a hex value into the field next to the swatch.
+
+<Frame caption="The Colors panel: background, text, and accent color, each with a picker and a hex field.">
+  <img src="/images/stamp-cards/card-designer-colors.png" alt="The Colors panel showing background, text, and accent color pickers with hex values" />
+</Frame>
+
+## Icons
+
+The **Icons** tab is the stamp icon: the shape that fills in each time a member earns
+a stamp. Icons are grouped into Food & Drinks, Services, Shopping, Entertainment, and
+Symbols. The selected icon shows a maroon outline.
+
+## Layout
+
+The **Layout** tab holds the card's settings:
+
+- **Card Type**: Stamp Card or Points Card.
+- **Stamp Layout**: Grid, Horizontal, or Vertical.
+- **Stamps to Collect**: 6, 8, 10, 12, 15, or 20.
+- **Font**: Inter, Poppins, Roboto, Open Sans, Montserrat, or Playfair Display.
+- **Reward Text**: the line a member reads under the stamps, such as *Get a FREE reward!*
+
+<Frame caption="The Layout panel: card type, stamp layout, stamp count, font, and reward text.">
+  <img src="/images/stamp-cards/card-designer-layout.png" alt="The Layout and Settings panel with card type, layout, stamp count, font, and reward text fields" />
+</Frame>
+
+## The live preview
+
+The right side shows a phone with your card on it, using your business name and an
+example of 7 collected stamps. Every change you make on the left updates here, so you
+can read the card the way a member will before you commit to it.
+
+<Frame caption="The live preview shows the card with your business name and example stamps filled in.">
+  <img src="/images/stamp-cards/card-designer-preview.png" alt="A phone preview of the loyalty card with the business name, stamp grid, and reward text" />
+</Frame>
+
+## Saving your design
+
+The **Save & Continue** button takes you to the create-card wizard at `/cards/new`,
+where you finish building the card and publish it.
+
+<Note>
+  The design you make here does not carry into the wizard. Save & Continue opens the
+  new-card wizard, but the wizard starts fresh, so you set the card's colors, icon,
+  and stamp count again on its **Card Design** step. For now the Card Designer is a
+  place to try looks and settle on a direction before you build the real card.
+</Note>
+
+For the fields you set when you actually create a card, see [Creating a stamp
+card](/merchants/stamp-cards/creating) and [Designing your stamp
+card](/merchants/stamp-cards/designing).
+
+## Who can open it
+
+Owners and managers can open the Card Designer. Staff have no access to the Cards area
+by default, so they do not see it unless you give them stamp card access.

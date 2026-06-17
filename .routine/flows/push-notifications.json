@@ -1,0 +1,63 @@
+{
+  "section": "campaigns",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "notifications-list",
+      "goto": "/notifications",
+      "waitFor": "text=New Notification",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "[role=tablist]", "color": "plum" },
+        { "type": "box", "target": "a[href=\"/notifications/new\"]", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "The Notifications page: All, Drafts, Scheduled, Sent, and Templates tabs. New Notification (1) starts a message." }
+      ]
+    },
+    {
+      "name": "notification-compose",
+      "goto": "/notifications/new",
+      "waitFor": "#title",
+      "waitMs": 2000,
+      "actions": [
+        { "fill": ["#title", "A free coffee, on us this weekend"] },
+        { "fill": ["#body", "Hi {{first_name}}, show this at the counter for a free coffee. This weekend only."] },
+        { "wait": 800 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "#title", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#body", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Write the title and message. The phone preview on the right updates as you type; {{first_name}} is swapped for each member's name when you send." }
+      ]
+    },
+    {
+      "name": "notification-segments",
+      "goto": "/notifications/new",
+      "waitFor": "text=Send To",
+      "waitMs": 4500,
+      "actions": [
+        { "hover": "label[for=\"near_complete\"]" },
+        { "wait": 600 }
+      ],
+      "clipTo": "[role=radiogroup]",
+      "clipPadding": 18
+    },
+    {
+      "name": "notification-send-options",
+      "goto": "/notifications/new",
+      "waitFor": "text=Send Now",
+      "waitMs": 2500,
+      "actions": [
+        { "hover": "button:has-text(\"Save as Draft\")" },
+        { "wait": 700 }
+      ],
+      "clip": { "x": 268, "y": 666, "width": 584, "height": 224 },
+      "annotate": [
+        { "type": "box", "target": "[role=switch]", "color": "plum" },
+        { "type": "box", "target": "button:has-text(\"Save as Draft\")", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text(\"Send Now\")", "number": 2, "color": "plum" }
+      ]
+    }
+  ]
+}

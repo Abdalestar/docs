@@ -1,0 +1,59 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "settings",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "viewport": { "width": 1440, "height": 1300 },
+  "steps": [
+    {
+      "name": "security-overview",
+      "goto": "/settings/security",
+      "waitFor": "text=Change Password",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "redact", "target": "p.text-muted-foreground:has-text('Expires')" },
+        { "type": "box", "target": "div.rounded-xl:has-text('Change Password')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has-text('Two-Factor Authentication')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has-text('Active Sessions')", "number": 3, "color": "plum" },
+        { "type": "caption", "text": "Settings then Security has three sections: 1 change your password, 2 turn on two-factor authentication, 3 manage active sessions." }
+      ]
+    },
+    {
+      "name": "security-change-password",
+      "goto": "/settings/security",
+      "waitFor": "text=Change Password",
+      "waitMs": 4000,
+      "clipTo": "div.rounded-xl:has-text('Change Password')",
+      "clipPadding": 24,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Update Password')", "color": "plum" },
+        { "type": "label", "target": "#currentPassword", "text": "Qtap checks your current password before saving a new one", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "security-2fa",
+      "goto": "/settings/security",
+      "waitFor": "text=Two-Factor Authentication",
+      "waitMs": 4000,
+      "clipTo": "div.rounded-xl:has-text('Two-Factor Authentication')",
+      "clipPadding": 28,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Enable')", "number": 1, "color": "plum" },
+        { "type": "label", "target": "text=Not Enabled", "text": "Status reads Not Enabled until setup is finished", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "security-sessions",
+      "goto": "/settings/security",
+      "waitFor": "text=Active Sessions",
+      "waitMs": 4000,
+      "clipTo": "div.rounded-xl:has-text('Active Sessions')",
+      "clipPadding": 28,
+      "annotate": [
+        { "type": "redact", "target": "p.text-muted-foreground:has-text('Expires')" },
+        { "type": "box", "target": "button:has-text('Sign Out All Sessions')", "color": "plum" },
+        { "type": "label", "target": "button:has-text('Sign Out All Sessions')", "text": "Ends every session on all devices at once", "color": "charcoal" }
+      ]
+    }
+  ]
+}
