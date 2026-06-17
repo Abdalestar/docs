@@ -28,6 +28,7 @@
           "merchants/stamp-cards/overview",
           "merchants/stamp-cards/creating",
           "merchants/stamp-cards/designing",
+          "merchants/stamp-cards/card-designer",
           "merchants/stamp-cards/bonus-stamps",
           "merchants/stamp-cards/rewards",
           "merchants/stamp-cards/advanced-settings",
@@ -39,9 +40,11 @@
         "pages": [
           "merchants/points/overview",
           "merchants/points/creating",
+          "merchants/points/editing",
           "merchants/points/earn-rate",
           "merchants/points/rewards",
           "merchants/points/operations",
+          "merchants/points/awarding",
           "merchants/points/adjusting",
           "merchants/redemptions/points-rewards"
         ]
@@ -74,6 +77,7 @@
           "merchants/campaigns/rewards",
           "merchants/campaigns/analytics",
           "merchants/campaigns/push-notifications",
+          "merchants/campaigns/notification-templates",
           "merchants/notifications/push-vs-campaign",
           "merchants/notifications/targeted"
         ]
@@ -96,6 +100,7 @@
           "merchants/members/overview",
           "merchants/members/how-members-join",
           "merchants/members/profiles",
+          "merchants/members/complete-profile",
           "merchants/members/export-delete",
           "merchants/members/redemptions",
           "merchants/redemptions"

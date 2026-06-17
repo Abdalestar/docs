@@ -1,0 +1,20 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants",
+  "account": "stamp",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "welcome-stamps-sidebar",
+      "goto": "/",
+      "waitFor": "aside[data-tour=\"sidebar\"] a[data-tour=\"nav-cards\"]",
+      "waitMs": 4000,
+      "clipTo": "aside[data-tour=\"sidebar\"]",
+      "clipPadding": 0,
+      "annotate": [
+        { "type": "box", "target": "a[data-tour=\"nav-cards\"]", "color": "plum" },
+        { "type": "label", "target": "a[data-tour=\"nav-cards\"]", "text": "A stamp program shows Cards here", "color": "plum" }
+      ]
+    }
+  ]
+}
