@@ -20,6 +20,60 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-13 — What customers see on your public page (new article)
+
+**Article:** `merchants/merchant-page/public-view.mdx` (new)
+**Branch:** `claude/eloquent-fermat-ubeael`
+**PR:** https://github.com/Abdalestar/docs/pull/142
+**Status:** Done. SMOKE_OK; 1 real annotated screenshot + 1 brand SVG (validate-images 2/2 OK). One task this run.
+
+### Task selection (the board is genuinely exhausted)
+Did a full board scan. Every on-main article that lacked images already has a fresh
+(2026-06-12/13) **unmerged** backfill PR: welcome #139, members/profiles #128,
+points/overview #130, qr-codes/overview #132, qr-codes/batch #131, birthday #133,
+settings/notifications #135, settings/merchant-page #136. Both on-main stubs are taken
+too: location-comparison #126 (full article, unmerged) and campaigns/analytics (blocked —
+`/api/analytics/campaigns/[id]/performance` 404s live, so the only net-new surface vs the
+published stats.mdx can't render). The one Not-started row "The Member Profile: Activity,
+Notes & Tags" is a verified duplicate of profiles.mdx (manual tags don't exist as an
+editable feature). So re-doing any backfill would just duplicate a 1-day-old PR.
+
+The genuinely net-new, no-existing-PR task was the Not-started P2 row **"What Customers
+See on Your Public Page"** (`merchants/merchant-page/public-view.mdx`) — the customer-facing
+`/m/[slug]` storefront, distinct from settings/merchant-page.mdx (business settings) and
+the unmerged editor article (building.mdx). Wrote it.
+
+### What was written
+The public page at `dashboard.qtap.qa/m/<slug>`: cover gallery (up to 5, falls back to the
+org cover/logo), logo, name/description/category, the **live member count** (real, rounded
+down to nearest 10 above 10), the **Current card** carousel of active featured cards, Tap
+for full terms, Add a card / Join Now (adds to the customer's wallet), contacts (hours +
+phone), Directions/Call, footer. Honest notes: stats + progress are always real (zero
+progress until joined); only active featured cards show; the page is public to anyone with
+the link. Cross-links settings/merchant-page + stamp-cards/overview. Added to Settings nav.
+
+### Research sources (qtap, read-only)
+- `app/m/[slug]/page.tsx` — admin client by `slug`; `notFound()` if no org; aggregate stats from `organization_members`; featured cards resolved from `settings.merchant_page.featuredCardIds` (active + status='active' only).
+- `app/m/[slug]/merchant-public-page.tsx` + `components/dashboard/merchant-page/merchant-page-content.tsx` — full anatomy, `membersLabel` rounding, live (not-joined) state, `?preview=true` reads sessionStorage.
+- Supabase (read-only): confirmed Najma `najma-coffee` / Dana `dana-salon-spa-ae` both have slug + org logo/cover/phone but EMPTY `settings.merchant_page`.
+
+### Screenshots
+1 real annotated PNG of the live `/m/najma-coffee` (cover+logo 1, real "180+ members" 2,
+Call 3) via `.routine/flows/public-merchant-page.json`; read-only, no PII. + brand SVG
+`public-page-anatomy.svg` of the fully-configured page. validate-images 2/2 OK; PNG binary
+via git.
+
+### CAPTURE NOTE / gotcha for future runs
+- No accessible demo org has a configured `settings.merchant_page` (empty on both Najma and
+  Dana), so the live page shows org-level fallbacks (real cover/logo/member-count/phone) but
+  NOT the featured-card carousel / description / category. The configured-state sections are
+  shown via the SVG (no seeding/fabrication). If a demo org ever gets a real merchant page,
+  recapture the Current-card carousel + Join card live.
+- **Dana's** `cover_image_url` + `logo_url` 404 (broken images on the public page), so the
+  Dana storefront can't be cleanly captured — use Najma.
+- The standalone **Card Designer** at `/cards/design` is a dead-end: its saved design goes to
+  sessionStorage and routes to `/cards/new`, but the wizard never reads `cardDesign`. Do NOT
+  document it as a working way to design a card (same class as the Condition Builder no-op).
 ## 2026-06-13 — Awarding Points (By Amount vs Manual Points)
 
 **Article:** `merchants/points/awarding.mdx` (new)
