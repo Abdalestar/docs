@@ -20,6 +20,27 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-12 — Member Profiles screenshots (backfill)
+
+**Article:** `merchants/members/profiles.mdx`
+**Branch:** `claude/eloquent-fermat-pc12fk`
+**PR:** https://github.com/Abdalestar/docs/pull/128
+**Status:** Done. SMOKE_OK; 4 real annotated screenshots (validate-images 4/4 OK). One task this run.
+
+### Task selection
+Both remaining `Not started` rows were non-viable as new articles, so per routine §3 this run did the highest-priority `Needs Screenshots = YES` row on `main`: **Member Profiles** (P1), which had accurate prose but zero images. Prose left unchanged; 4 `<Frame>` blocks added.
+
+### Two Not-started rows flagged instead of written (reality findings)
+- **Campaign Messages & Personalization Variables** (`merchants/campaigns/messages.mdx`, P2) — **broken feature, do NOT write as a how-to yet.** The campaign wizard's "Personalization Variables" chips and built-in templates insert **single-brace** tokens (`{customer_name}`, `{first_name}`, `{stamps_count}`, `{reward_name}`), but the send engine `lib/utils/personalize-message.ts` only substitutes **double-brace** `{{...}}` (7 tokens: customer_name, first_name, stamps_count, points_count, reward_name, merchant_name, stamps_remaining). Both `app/api/campaigns/execute/route.ts` and `app/api/notifications/send/route.ts` (the latter gates on `body.includes('{{')`) confirm it. So wizard-inserted tokens are sent to customers literally (e.g. "Happy Birthday, {customer_name}!"). The wizard preview is also wrong (it replaces single-brace with "John"). Verified in source AND a live wizard probe on the stamp account. Same class as the Condition Builder no-op. Set back to Not started with a note for engineering. The only working path is typing `{{token}}` manually, which the UI never surfaces.
+- **The Member Profile: Activity, Notes & Tags** (`merchants/members/member-profile.mdx`, P2) — **duplicate.** This is the same `/members/[id]` page already documented by the published `profiles.mdx` (this run's target) + `complete-profile.mdx` + `campaigns/targeted.mdx`. Its proposed net-new item "manual tags (VIP/Regular/Inactive)" does NOT exist as an editable feature: `member.tags` render read-only as Badges; there is no add/remove-tag UI on the profile page (the list-page row menu does have an "Add Tag" item, though). Flagged as a duplicate on that row.
+
+### Screenshots
+`.routine/flows/member-profiles.json` (points demo, member id `ca5eb000-...-077`, Faisal — has a missing birthday so Complete Profile shows): `profile-01-open` (members row menu, View Profile boxed, cropped to `[role=menu]` so no PII), `profile-02-overview` (full profile, name/email/phone redacted, Activity/Notes tabs + Complete Profile boxed), `profile-03-notes` (Notes tab, Save Notes boxed, explicit right-column crop), `profile-04-complete` (Update Member Information dialog, Save Information boxed, cropped to `[role=dialog]`). No destructive/outbound clicks. validate-images 4/4 OK; pushed as binary.
+
+### Gotchas for future runs
+- **Live members list differs from the repo prose.** A profile opens via the row's three-dot menu → **View Profile** (`<Link href="/members/[id]">` inside the dropdown). The member-name cell is NOT a link, so "click any row" / clicking the name does nothing. `profiles.mdx` prose still says "click any row" and "Edit button"; the live edit button is **Complete Profile** and its dialog is **Update Member Information** / **Save Information**. Left prose unchanged per the backfill rule.
+- Profile-page PII is confined to the sidebar (name heading, email, phone) — redact those three by exact-text selector. The Activity list shows the merchant's own staff + branch names (demo seed), not customer PII. Member ID (e.g. `Q19D976`) and tags (platinum/new/vip) are not sensitive.
+- Cropping to `[role=menu]` / `[role=dialog]` sidesteps PII entirely for the menu and dialog shots. Keep annotation **labels** off cropped shots whose target sits at the crop edge (the label spills outside the crop); use the numbered box + the MDX `<Frame caption>` instead.
 ## 2026-06-12 — Completing a Member's Profile (Phone / Birthday)
 
 **Article:** `merchants/members/complete-profile.mdx` (new)
