@@ -20,6 +20,30 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-12 — Batch QR Codes screenshots (backfill)
+
+**Article:** `merchants/qr-codes/batch.mdx`
+**Branch:** `claude/eloquent-fermat-tfdqte`
+**PR:** https://github.com/Abdalestar/docs/pull/131
+**Status:** Done — 3 real annotated screenshots added; prose unchanged. SMOKE_OK, validate-images 3/3 OK.
+
+### Task selection
+The board has no cleanly-workable `Not started` new-article row: the only two `Not started` rows are both blocked. **"The Member Profile: Activity, Notes & Tags"** is a flagged near-duplicate of the published `members/profiles.mdx` (and its proposed net-new feature, editable VIP/Regular/Inactive tags, does not exist — tags render read-only), already resolved by PR #128's profiles.mdx backfill. **"Campaign Messages & Personalization Variables"** is a documented product bug (wizard chips insert single-brace `{token}` but the send engine only substitutes double-brace `{{token}}`, so chip/template tokens send literally) — left Not started per prior runs. The two on-main "Coming soon" stubs are also accounted for: `analytics/location-comparison.mdx` (open PR #126) and `campaigns/analytics.mdx` (blocked — its only net-new surface vs `campaigns/stats.mdx` is the Performance card, whose `/api/analytics/campaigns/[id]/performance` returns 404 live, so it never renders).
+
+So this run did one screenshot-backfill task: the highest-priority properly-flagged `Needs Screenshots = YES` row whose article is on `main` — **Batch QR Codes** (P2, no prior PR). The article had full accurate prose and zero images.
+
+### Screenshots
+Captured via `.routine/flow-capture.mjs` (`.routine/flows/batch-qr.json`) from the live points demo (Najma Coffee, Elite):
+- `batch-qr-form.png` — Batch Settings form, Batch Name (1) / Quantity 250 (2) / Generate N QR Codes (3).
+- `batch-qr-action.png` — Action dropdown cropped: Issue Stamp / Award Points / Check-in / Redeem Reward (numbered).
+- `batch-qr-points.png` — Award Points selected → Points Value Per Scan field boxed.
+
+Grounded in `components/dashboard/qr-codes/batch-generator.tsx` (H1 "Batch Generate QR Codes", "Batch Settings" card, name / quantity max 1,000 / type / action / conditional `points_value`, "Generate N QR Codes"). Generate never clicked (no batch created); no PII on this page.
+
+### Notes for future runs
+- Both demo accounts include batch access (Najma = Elite, Dana = Franchise, both via `subscription_plan`), so neither shows the **purchase paywall** (the four credit-pack tiers in the article's "Access requirements" section). To screenshot that paywall you'd need a Starter/Growth account with `batch_qr_credits = 0`. The section stays prose + a pricing table.
+- `/qr-codes/batch` Action/Type selectors are Radix `[role=combobox]` (Type is the 1st on the page, Action the 2nd); options are `[role=option]`, croppable via `clipTo: "[role=listbox]"`.
+- The board is effectively complete; the real backlog is the two blocked Not-started rows above (close Member Profile as a duplicate; hold Campaign Messages until the single/double-brace bug is fixed) plus the blocked `campaigns/analytics` stub.
 ## 2026-06-12 — Points Programs Overview screenshots (backfill)
 
 **Article:** `merchants/points/overview.mdx`
