@@ -20,6 +20,29 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-13 — Welcome Campaigns (new article on main)
+
+**Article:** `merchants/campaigns/welcome.mdx` (new)
+**Branch:** `claude/upbeat-mccarthy-ac1dgm`
+**PR:** https://github.com/Abdalestar/docs/pull/147
+**Status:** Done. New article + 6 real annotated screenshots (validate-images 6/6 OK). SMOKE_OK. One task this run.
+
+### Task selection (the board is saturated)
+The board has zero genuinely-actionable `Not started` rows (the only one, "The Member Profile: Activity, Notes & Tags", is a flagged duplicate of `profiles.mdx`). Every on-main article that lacks images and is screenshotable has ALREADY been backfilled in an unmerged PR within the last day or two: `settings/notifications` #135, `members/profiles` #128, `points/overview` #130, `qr-codes/overview` #132, `settings/merchant-page` #136, `birthday` #133, `batch` #131, `nfc-tags` #87, `points/editing` #138, etc. The Notion `Needs Screenshots=NO` flags are unreliable because those PRs never merged, so main still carries the stub/no-image versions. Don't re-derive the whole board: scan with `git ls-tree -r origin/main | grep mdx` + image-ref count, then cross-check each candidate's Notion row for an existing PR before working it.
+
+Instead of producing a redundant duplicate backfill, I found a genuine on-main gap: the **Welcome Campaign** type ships in the dashboard (one of 7 wizard types) but `merchants/campaigns/welcome.mdx` is absent from main. Its row was "Done" via PR #47 (2026-05-13) but that PR never merged and ran with SCREENSHOTS_DISABLED. Wrote it fresh with real screenshots so a merge actually publishes it.
+
+### What was written
+The welcome campaign greets a new member a set delay after they join. Grounded facts:
+- Trigger `delay_hours`, four options: Immediately / 1 hour / 24 hours / 48 hours after signup (`trigger-config.tsx`).
+- Eligibility `isRecentJoin(joined_at, delay_hours)` in `app/api/campaigns/execute/route.ts` (member joined between delay and 2x delay ago); cron `*/15` (`vercel.json`). So greeting goes out on the next 15-min check after the delay.
+- One send per member ever: `hasAlreadyReceived` returns true for non-birthday types once a `sent` interaction exists. Only members who join while the campaign is active are greeted (activating it does not message existing members).
+- Push reaches only members with the app + `push_enabled` (OneSignal), so Sent < new-member count.
+- 7-step wizard (Type/Trigger/Reward/Message/Conditions/A-B/Review); reward optional; message Use Template welcome copy + `{customer_name}` tags; Activate Campaign / Save as Draft.
+- Welcome template: "Welcome to the family! 🎉".
+
+### Screenshots
+6 PNGs (1440x1000) via `.routine/flows/welcome.json` on the **stamp** demo (Dana Salon & Spa, under campaign limit so `/campaigns/new` renders; the points/Najma account is at its limit). Wizard filled but NEVER submitted; no PII. The Type and Trigger shots are the welcome-specific ones; verified visually (Welcome Campaign selected, "Send notification 24 hours after signup", review summary coherent). Added to Campaigns nav after `winback`.
 ## 2026-06-13 — Audience Segments Explained
 
 **Article:** `merchants/notifications/segments.mdx` (new)

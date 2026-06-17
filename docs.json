@@ -73,6 +73,7 @@
           "merchants/campaigns/stats",
           "merchants/campaigns/birthday",
           "merchants/campaigns/winback",
+          "merchants/campaigns/welcome",
           "merchants/campaigns/milestone",
           "merchants/campaigns/rewards",
           "merchants/campaigns/analytics",
