@@ -1,0 +1,71 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "steps": [
+    {
+      "name": "qr-overview-list",
+      "goto": "/qr-codes",
+      "waitFor": "th:has-text('Status')",
+      "waitMs": 4800,
+      "annotate": [
+        { "type": "box", "target": "input[placeholder=\"Search by name or code...\"]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div:has(> button.rounded-r-none)", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "The QR Codes page lists every code with its type, action, scans, and status. Search by name or code (1), or switch between table and gallery view (2)." }
+      ]
+    },
+    {
+      "name": "qr-overview-filters",
+      "goto": "/qr-codes",
+      "waitFor": "button[role=combobox]:has-text('All Status')",
+      "waitMs": 4800,
+      "clipTo": "div.rounded-xl:has(button[role=combobox])",
+      "clipPadding": 16,
+      "annotate": [
+        { "type": "box", "target": "button[role=combobox]:has-text('All Status')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button[role=combobox]:has-text('All Types')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "button[role=combobox]:has-text('All Actions')", "number": 3, "color": "plum" },
+        { "type": "box", "target": "input[placeholder=\"Search by name or code...\"]", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "qr-overview-menu",
+      "goto": "/qr-codes",
+      "actions": [
+        { "wait": 4800 },
+        { "click": ":nth-match(tbody tr button[aria-haspopup=\"menu\"], 1)" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "[role=menuitem]:has-text('View Details')",
+      "waitMs": 600,
+      "clipTo": "[role=menu]",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('View Details')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "[role=menuitem]:has-text('Copy Code')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "[role=menuitem]:has-text('Download')", "number": 3, "color": "plum" },
+        { "type": "box", "target": "[role=menuitem]:has-text('Delete')", "color": "red" }
+      ]
+    },
+    {
+      "name": "qr-overview-bulk",
+      "goto": "/qr-codes",
+      "actions": [
+        { "wait": 4800 },
+        { "click": "tbody tr:nth-child(1) td:first-child button[role=checkbox]" },
+        { "wait": 500 },
+        { "click": "tbody tr:nth-child(2) td:first-child button[role=checkbox]" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "button:has-text('PDF')",
+      "waitMs": 800,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('PDF')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('ZIP')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "button.text-red-600:has-text('Delete')", "color": "red" },
+        { "type": "caption", "text": "Tick the checkboxes to select codes, then export the chosen ones as a print-ready PDF (1) or a ZIP of image files (2). The red Delete removes them." }
+      ]
+    }
+  ]
+}

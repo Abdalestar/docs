@@ -75,6 +75,7 @@
           "merchants/campaigns/rewards",
           "merchants/campaigns/analytics",
           "merchants/campaigns/push-notifications",
+          "merchants/campaigns/notification-templates",
           "merchants/notifications/push-vs-campaign",
           "merchants/notifications/targeted"
         ]
@@ -97,6 +98,7 @@
           "merchants/members/overview",
           "merchants/members/how-members-join",
           "merchants/members/profiles",
+          "merchants/members/complete-profile",
           "merchants/members/export-delete",
           "merchants/members/redemptions",
           "merchants/redemptions"
