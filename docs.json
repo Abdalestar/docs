@@ -131,6 +131,7 @@
           "merchants/settings/locations",
           "merchants/settings/notifications",
           "merchants/settings/merchant-page",
+          "merchants/settings/merchant-page-editor",
           "merchants/merchant-page/public-view",
           "merchants/settings/security"
         ]
