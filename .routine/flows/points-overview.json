@@ -1,0 +1,44 @@
+{
+  "section": "merchants/points",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "points-overview-list",
+      "goto": "/points",
+      "waitFor": "h1:has-text('Points Programs')",
+      "waitMs": 5000,
+      "annotate": [
+        { "type": "box", "target": "[role=tablist]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Create Program')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "The Points Programs page. Filter by status, and create a new program." }
+      ]
+    },
+    {
+      "name": "points-overview-settings",
+      "goto": "/points/new",
+      "waitFor": "#name",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "#name", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#points_per_currency", "number": 2, "color": "plum" },
+        { "type": "box", "target": "#description", "number": 3, "color": "plum" },
+        { "type": "caption", "text": "Program details: name, points per currency, currency, and a short description." }
+      ]
+    },
+    {
+      "name": "points-overview-expiry",
+      "goto": "/points/new",
+      "waitFor": "#name",
+      "waitMs": 3500,
+      "actions": [
+        { "click": "[role=switch] >> nth=0" },
+        { "wait": 700 },
+        { "click": "[role=combobox]:has-text('From date earned')" },
+        { "wait": 600 }
+      ],
+      "clipTo": "[role=listbox]",
+      "clipPadding": 10
+    }
+  ]
+}

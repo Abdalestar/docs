@@ -28,6 +28,7 @@
           "merchants/stamp-cards/overview",
           "merchants/stamp-cards/creating",
           "merchants/stamp-cards/designing",
+          "merchants/stamp-cards/card-designer",
           "merchants/stamp-cards/bonus-stamps",
           "merchants/stamp-cards/rewards",
           "merchants/stamp-cards/advanced-settings",
@@ -39,9 +40,11 @@
         "pages": [
           "merchants/points/overview",
           "merchants/points/creating",
+          "merchants/points/editing",
           "merchants/points/earn-rate",
           "merchants/points/rewards",
           "merchants/points/operations",
+          "merchants/points/awarding",
           "merchants/points/adjusting",
           "merchants/redemptions/points-rewards"
         ]
@@ -51,9 +54,12 @@
         "pages": [
           "merchants/qr-codes/overview",
           "merchants/qr-codes/generating",
+          "merchants/qr-codes/expiry-and-limits",
+          "merchants/qr-codes/reusable-vs-one-time",
           "merchants/qr-codes/actions",
           "merchants/qr-codes/customer-scan-flow",
           "merchants/qr-codes/batch",
+          "merchants/qr-codes/placement-ideas",
           "merchants/qr-codes/troubleshooting",
           "merchants/qr-codes/qr-code-detail",
           "merchants/nfc-tags/what-is-nfc",
@@ -70,10 +76,13 @@
           "merchants/campaigns/stats",
           "merchants/campaigns/birthday",
           "merchants/campaigns/winback",
+          "merchants/campaigns/welcome",
           "merchants/campaigns/milestone",
           "merchants/campaigns/rewards",
           "merchants/campaigns/analytics",
           "merchants/campaigns/push-notifications",
+          "merchants/notifications/segments",
+          "merchants/campaigns/notification-templates",
           "merchants/notifications/push-vs-campaign",
           "merchants/notifications/targeted"
         ]
@@ -96,6 +105,7 @@
           "merchants/members/overview",
           "merchants/members/how-members-join",
           "merchants/members/profiles",
+          "merchants/members/complete-profile",
           "merchants/members/export-delete",
           "merchants/members/redemptions",
           "merchants/redemptions"
@@ -125,6 +135,8 @@
           "merchants/settings/locations",
           "merchants/settings/notifications",
           "merchants/settings/merchant-page",
+          "merchants/settings/merchant-page-editor",
+          "merchants/merchant-page/public-view",
           "merchants/settings/security",
           "merchants/settings/password-reset"
         ]

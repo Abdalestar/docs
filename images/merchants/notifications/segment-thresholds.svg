@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 600" font-family="system-ui, -apple-system, sans-serif">
+  <rect x="0" y="0" width="760" height="600" fill="#F8F5F2"/>
+  <text x="40" y="52" font-size="26" font-weight="700" fill="#423F4C">Audience segments and their default rules</text>
+  <text x="40" y="80" font-size="15" fill="#6B6770">A member must have push notifications turned on to land in any segment.</text>
+
+  <!-- table -->
+  <g>
+    <!-- header -->
+    <rect x="40" y="100" width="680" height="44" rx="8" fill="#8E4A63"/>
+    <text x="60" y="128" font-size="15" font-weight="700" fill="#FFFFFF">Segment</text>
+    <text x="300" y="128" font-size="15" font-weight="700" fill="#FFFFFF">Who qualifies (default)</text>
+
+    <!-- rows -->
+    <!-- row template: 56px tall -->
+    <rect x="40" y="148" width="680" height="56" fill="#FFFFFF"/>
+    <text x="60" y="181" font-size="15" font-weight="600" fill="#423F4C">All Customers</text>
+    <text x="300" y="181" font-size="14" fill="#6B6770">Every member with push enabled.</text>
+
+    <rect x="40" y="206" width="680" height="56" fill="#FBF3F6"/>
+    <text x="60" y="239" font-size="15" font-weight="600" fill="#423F4C">VIP Members</text>
+    <text x="300" y="239" font-size="14" fill="#6B6770">10 or more stamps earned in total.</text>
+
+    <rect x="40" y="264" width="680" height="56" fill="#FFFFFF"/>
+    <text x="60" y="290" font-size="15" font-weight="600" fill="#423F4C">Regulars</text>
+    <text x="300" y="290" font-size="14" fill="#6B6770">5 or more stamps earned, and</text>
+    <text x="300" y="308" font-size="14" fill="#6B6770">active within the last 30 days.</text>
+
+    <rect x="40" y="322" width="680" height="56" fill="#FBF3F6"/>
+    <text x="60" y="355" font-size="15" font-weight="600" fill="#423F4C">New Members</text>
+    <text x="300" y="355" font-size="14" fill="#6B6770">Joined in the last 30 days.</text>
+
+    <rect x="40" y="380" width="680" height="56" fill="#FFFFFF"/>
+    <text x="60" y="413" font-size="15" font-weight="600" fill="#423F4C">At Risk</text>
+    <text x="300" y="413" font-size="14" fill="#6B6770">Last activity was more than 30 days ago.</text>
+
+    <rect x="40" y="438" width="680" height="56" fill="#FBF3F6"/>
+    <text x="60" y="471" font-size="15" font-weight="600" fill="#423F4C">Birthday This Week</text>
+    <text x="300" y="471" font-size="14" fill="#6B6770">Birthday falls in the current Sun&#8211;Sat week.</text>
+
+    <rect x="40" y="496" width="680" height="56" fill="#FFFFFF"/>
+    <text x="60" y="522" font-size="15" font-weight="600" fill="#423F4C">Near Complete</text>
+    <text x="300" y="522" font-size="14" fill="#6B6770">8 or more stamps earned in total.</text>
+
+    <!-- outer border -->
+    <rect x="40" y="100" width="680" height="452" rx="8" fill="none" stroke="#E5D9DE" stroke-width="1.5"/>
+  </g>
+
+  <text x="40" y="582" font-size="13" fill="#6B6770">The stamp counts and day windows above are the defaults. An account's segment settings can change them.</text>
+</svg>

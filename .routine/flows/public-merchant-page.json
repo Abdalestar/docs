@@ -1,0 +1,21 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/merchant-page",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "viewport": { "width": 430, "height": 700 },
+  "steps": [
+    {
+      "name": "public-page-storefront",
+      "goto": "/m/najma-coffee",
+      "waitFor": "text=180+ members",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "img[alt=\"Cover 1\"]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "text=180+ members", "number": 2, "color": "plum" },
+        { "type": "box", "target": "a:has-text(\"Call\")", "number": 3, "color": "plum" },
+        { "type": "caption", "text": "A merchant's live public page: cover, logo, real member count, and contact details." }
+      ]
+    }
+  ]
+}

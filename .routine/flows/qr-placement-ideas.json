@@ -1,0 +1,70 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "placement-type",
+      "goto": "/qr-codes/generate",
+      "waitFor": "text=QR Code Type",
+      "waitMs": 3500,
+      "actions": [
+        { "hover": "label:has-text('Batch Generate')" },
+        { "wait": 1000 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "label:has-text('Reusable')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label:has-text('One-Time Use')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "label:has-text('Batch Generate')", "number": 3, "color": "plum" },
+        { "type": "caption", "text": "Match the type to the spot: Reusable (1) for a code that lives at the counter, One-Time Use (2) for a code on a cup or receipt, Batch Generate (3) for a print run of single-use codes." }
+      ]
+    },
+    {
+      "name": "placement-action",
+      "goto": "/qr-codes/generate",
+      "waitFor": "text=What happens when this QR code is scanned",
+      "waitMs": 3500,
+      "actions": [
+        { "hover": "label:has-text('Check-In')" },
+        { "wait": 1000 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "label:has-text('Add Stamp')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label:has-text('Award Points')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "label:has-text('Check-In')", "number": 3, "color": "plum" },
+        { "type": "caption", "text": "The action sets what a scan does: add a stamp (1), award points (2), or record a visit with Check-In (3) for events and walk-ins." }
+      ]
+    },
+    {
+      "name": "placement-limits",
+      "goto": "/qr-codes/generate",
+      "waitFor": "text=Advanced Settings",
+      "waitMs": 3500,
+      "actions": [
+        { "hover": "text=Expiry Date" },
+        { "wait": 1000 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "label:has-text('Maximum Scans (optional)')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "text=Expiry Date", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Two limits for promos: Maximum Scans (1) retires a code after a set number of scans (great for a first-50-customers giveaway), and Expiry Date (2) ends a seasonal code on a date you pick." }
+      ]
+    },
+    {
+      "name": "placement-export",
+      "goto": "/qr-codes",
+      "waitFor": "button:has-text('Generate QR Code')",
+      "waitMs": 4500,
+      "actions": [
+        { "click": "button[role=checkbox] >> nth=0" },
+        { "wait": 1500 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "button:has-text('PDF')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('ZIP')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Tick the codes you want, then send them to print: PDF (1) lays them out on a sheet, ZIP (2) downloads one PNG image per code." }
+      ]
+    }
+  ]
+}

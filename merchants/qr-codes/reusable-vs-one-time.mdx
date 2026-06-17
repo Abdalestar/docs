@@ -1,0 +1,61 @@
+---
+title: "Reusable vs one-time QR codes"
+sidebarTitle: "Reusable vs one-time"
+description: "Pick the right QR code type so a code can be scanned again and again, or used up after a single scan."
+---
+
+Every QR code you generate has a **type** that decides how many times the same code can be scanned. You set it on the **QR Code Type** card when you create a code, and you cannot change it afterward. There are three choices: Reusable, One-Time Use, and Batch Generate.
+
+<Frame caption="The QR Code Type card on the Generate QR Code page, with the three types you can choose from.">
+  <img src="/images/merchants/qr-codes/reusable-vs-onetime-types.png" alt="QR Code Type card showing Reusable, One-Time Use, and Batch Generate options" />
+</Frame>
+
+## Reusable
+
+A reusable code can be scanned again and again by different customers. This is the right pick for any code that stays in place: a sticker on the counter, a table tent, a poster in the window, or a code printed on every receipt. One code does all the work.
+
+By default a reusable code has no scan limit. To cap it, enter a number in the **Maximum Scans** field. Once the code reaches that many scans it stops working, and a customer who scans it sees "This QR code has reached its maximum number of scans." Leave the field empty for unlimited scans.
+
+<Frame caption="Reusable codes can run unlimited, or you can set a Maximum Scans cap.">
+  <img src="/images/merchants/qr-codes/reusable-vs-onetime-reusable.png" alt="Reusable type selected with the Maximum Scans field set to Unlimited" />
+</Frame>
+
+## One-Time Use
+
+A one-time code works for a single scan, then turns itself off. After that first scan the code becomes inactive, and anyone who scans it again sees "This QR code is no longer active." Use it for a single-use voucher, a one-off reward handed to one customer, or any code that should never be claimed twice.
+
+<Warning>
+A one-time code is used up by the **first** scan, even if that scan did not credit anyone. If a customer opens the code with their phone camera instead of the Qtap app, the scan still counts and the code goes inactive, with no stamp or points awarded. For a reward you want a specific member to claim, hand it to them in person or have a staff member scan their member code.
+</Warning>
+
+## Batch Generate
+
+Batch Generate makes a set of unique codes in one step, between 2 and 100 at a time. Every code in the batch is single-use: each one deactivates after its first scan, exactly like a One-Time Use code. Reach for this when you need a run of one-per-customer codes, such as printed coupons, event giveaways, or numbered cards in a mailout.
+
+<Frame caption="Batch Generate creates a set of unique single-use codes. Each one deactivates after a single scan.">
+  <img src="/images/merchants/qr-codes/reusable-vs-onetime-batch.png" alt="Batch Generate type selected with the Quantity field and the single-use note" />
+</Frame>
+
+For larger runs and managing a whole set at once, see [Batch QR Codes](/merchants/qr-codes/batch).
+
+## Which type to pick
+
+| You want to...                                    | Type          |
+| ------------------------------------------------- | ------------- |
+| Keep one code in place for everyone               | Reusable      |
+| Allow a fixed number of scans, then stop          | Reusable with a Max Scans cap |
+| Let a code be claimed once and then expire        | One-Time Use  |
+| Hand out many single-use codes at once            | Batch Generate |
+
+<Note>
+Generating QR codes needs the QR access permission. Owners and managers have it by default, so they can create any type. Staff have no QR access by default. See [Roles and permissions](/merchants/staff/roles-permissions).
+</Note>
+
+<CardGroup cols={2}>
+  <Card title="Generating QR Codes" href="/merchants/qr-codes/generating">
+    The full walkthrough for creating and downloading a code.
+  </Card>
+  <Card title="Troubleshooting" href="/merchants/qr-codes/troubleshooting">
+    What each scan error means and how to fix it.
+  </Card>
+</CardGroup>
