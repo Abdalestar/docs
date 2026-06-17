@@ -1,0 +1,51 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "campaigns",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "notification-templates-page",
+      "goto": "/notifications",
+      "waitFor": "h1:has-text(\"Push Notifications\")",
+      "waitMs": 4500,
+      "annotate": [
+        { "type": "box", "target": "[role=tab]:has-text(\"Templates\")", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "The Notifications page. Saved templates live under the Templates tab (1), alongside All, Drafts, Scheduled, and Sent." }
+      ]
+    },
+    {
+      "name": "notification-templates-empty",
+      "actions": [
+        { "click": "[role=tab]:has-text(\"Templates\")" },
+        { "wait": 1500 }
+      ],
+      "waitFor": "button:has-text(\"New Template\")",
+      "waitMs": 1200,
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"New Template\")", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "The Templates tab. Click New Template (1) to save a reusable message. This account has no templates yet." }
+      ]
+    },
+    {
+      "name": "notification-templates-new",
+      "actions": [
+        { "click": "button:has-text(\"New Template\")" },
+        { "wait": 900 },
+        { "fill": ["input[placeholder=\"e.g., Weekend Special\"]", "Weekend Special"] },
+        { "fill": ["input[placeholder=\"e.g., Don't miss out!\"]", "Weekend treat is on"] },
+        { "fill": ["textarea[placeholder=\"Write your message...\"]", "Stop by this weekend and earn double stars on every order. See you soon."] },
+        { "wait": 700 }
+      ],
+      "waitFor": "[role=dialog]:has-text(\"New Template\")",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "input[placeholder=\"e.g., Weekend Special\"]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "input[placeholder=\"e.g., Don't miss out!\"]", "number": 2, "color": "plum" },
+        { "type": "box", "target": "textarea[placeholder=\"Write your message...\"]", "number": 3, "color": "plum" },
+        { "type": "label", "target": "input[placeholder=\"https://...\"]", "text": "Image is optional", "color": "charcoal" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "section": "settings",
+  "account": "points",
+  "defaultWaitMs": 3500,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "settings-notifications-overview",
+      "goto": "/settings/notifications",
+      "waitFor": "text=Notification Preferences",
+      "waitMs": 4000,
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has-text('Email Notifications')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has-text('Push Notifications')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Save Preferences')", "color": "gold" },
+        { "type": "caption", "text": "Settings, Notifications: choose which events email you (1) and which send a push (2). Nothing saves until you click Save Preferences." }
+      ]
+    },
+    {
+      "name": "settings-notifications-email",
+      "goto": "/settings/notifications",
+      "waitFor": "text=Email Notifications",
+      "waitMs": 4000,
+      "clipTo": "div.rounded-xl:has-text('Email Notifications')",
+      "clipPadding": 12
+    },
+    {
+      "name": "settings-notifications-push",
+      "goto": "/settings/notifications",
+      "waitFor": "text=Push Notifications",
+      "waitMs": 4000,
+      "clipTo": "div.rounded-xl:has-text('Push Notifications')",
+      "clipPadding": 12
+    },
+    {
+      "name": "settings-notifications-unsaved",
+      "goto": "/settings/notifications",
+      "waitFor": "text=Notification Preferences",
+      "waitMs": 4000,
+      "actions": [
+        { "click": "[role=switch] >> nth=0" },
+        { "wait": 700 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "text=You have unsaved changes", "color": "plum" },
+        { "type": "box", "target": "button:has-text('Save Preferences')", "color": "gold" }
+      ]
+    }
+  ]
+}

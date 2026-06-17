@@ -1,6 +1,60 @@
 ---
 title: "Location Comparison"
-description: "Comparing loyalty program performance across your different locations"
+sidebarTitle: "Location comparison"
+description: "See how each of your branches is performing side by side, from stamps and points to redemptions, members served, and estimated revenue."
 ---
 
-Coming soon
+If you run more than one branch, the Location Comparison report puts them next to each other. Each location gets its own card with the same five figures, so you can see at a glance which branch is busiest, which is quiet, and where your members are spending. Use it to decide where to put a new offer or which branch needs a second look.
+
+The report lives in the [Detailed Reports hub](/merchants/analytics/reports-hub). There is no sidebar link, so open it directly at `dashboard.qtap.qa/analytics/reports/location-comparison`, or open the hub and click the Location Comparison card.
+
+<Frame caption="The Location Comparison report. One card per active branch, side by side, for the time window you choose.">
+  <img src="/images/analytics/location-comparison-overview.png" alt="Location Comparison page showing a card for each branch with stamps, points, redemptions, members served, and estimated revenue" />
+</Frame>
+
+## What each card shows
+
+Every card carries the same five figures for the branch named at the top, counted over the period you pick. Only transactions that were recorded against that branch are included.
+
+<Frame caption="One branch card. The same five figures appear for every location.">
+  <img src="/images/analytics/location-comparison-card.png" alt="A single branch card with numbered figures: Stamps, Points, Redemptions, Members Served, and Estimated Revenue" />
+</Frame>
+
+1. **Stamps** is the total number of stamps issued at that branch.
+2. **Points** is the total number of points earned there.
+3. **Redemptions** is how many rewards were redeemed at that branch.
+4. **Members Served** is how many different members had any activity there. A regular who came in ten times still counts once.
+5. **Estimated Revenue** adds up the purchase amounts behind the points your members earned at that branch.
+
+On a points-only program the Stamps figure reads zero, and on a stamp-only program the Points and Estimated Revenue figures read zero. That is expected for an account that runs one kind of program.
+
+<Note>
+Estimated Revenue is worked out from the spend your staff enter when they award points, not from a cash register. Treat it as a guide to which branch is busier, not as an exact sales total.
+</Note>
+
+## Pick a time window
+
+The time period selector covers Today, Last 7 days, Last 30 days, Last 90 days, and This year. It opens on Last 30 days. Change it and every card reloads for the new window at once, so the branches always cover the same dates.
+
+<Frame caption="The time period selector. The report opens on the last 30 days.">
+  <img src="/images/analytics/location-comparison-period.png" alt="Time period dropdown showing Today, Last 7 days, Last 30 days, Last 90 days, and This year" />
+</Frame>
+
+A card only appears for a branch that is active. If you have a single location you still get one card, with nothing to compare it against yet. If a branch shows no activity for the window you chose, its figures read zero rather than dropping off the page.
+
+<Warning>
+A transaction only counts toward a branch when it was tagged with that location. Activity recorded without a branch is left out here, so the totals on this report can come in lower than the org-wide totals you see elsewhere in Analytics.
+</Warning>
+
+## Who can see it
+
+Owners and managers can open the report. Staff can't by default, because analytics access is off for the staff role. To let a team member in, turn on their analytics permission (see [Roles and permissions](/merchants/staff/roles-permissions)).
+
+<CardGroup cols={2}>
+  <Card title="Detailed Reports" href="/merchants/analytics/reports-hub">
+    The hub that opens this report and three others.
+  </Card>
+  <Card title="Revenue Impact" href="/merchants/analytics/revenue-impact">
+    How loyalty activity tracks against estimated revenue across the whole business.
+  </Card>
+</CardGroup>
