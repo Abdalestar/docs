@@ -1,0 +1,71 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/members",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "profile-01-open",
+      "goto": "/members",
+      "waitFor": "table tbody tr",
+      "waitMs": 6000,
+      "actions": [
+        { "click": "table tbody tr:first-child button[aria-haspopup=\"menu\"]" },
+        { "wait": 900 }
+      ],
+      "waitFor": "[role=menu]",
+      "clipTo": "[role=menu]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text(\"View Profile\")", "number": 1, "color": "plum" }
+      ]
+    },
+    {
+      "name": "profile-02-overview",
+      "goto": "/members/ca5eb000-0000-4000-a000-000000000077",
+      "waitFor": "text=Recent Activity",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "redact", "target": "h1:has-text(\"Faisal\"), h2:has-text(\"Faisal\")", "color": "#423F4C" },
+        { "type": "redact", "target": "text=faisal.alsulaiti119@outlook.com", "color": "#423F4C" },
+        { "type": "redact", "target": "text=+974 33691385", "color": "#423F4C" },
+        { "type": "box", "target": "[role=tablist]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text(\"Complete Profile\")", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "A member profile shows contact details, loyalty balances, tags, and push status on the left, with their recent activity on the right. Switch between the Activity and Notes tabs (1). Complete Profile (2) appears when a phone or birthday is still blank." }
+      ]
+    },
+    {
+      "name": "profile-03-notes",
+      "goto": "/members/ca5eb000-0000-4000-a000-000000000077",
+      "waitFor": "text=Recent Activity",
+      "waitMs": 5000,
+      "actions": [
+        { "click": "[role=tab]:has-text(\"Notes\")" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "text=Internal Notes",
+      "clip": { "x": 668, "y": 300, "width": 764, "height": 470 },
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Save Notes\")", "number": 1, "color": "plum" },
+        { "type": "label", "target": "button:has-text(\"Save Notes\")", "text": "Private notes for your team, then Save Notes", "color": "plum" }
+      ]
+    },
+    {
+      "name": "profile-04-complete",
+      "goto": "/members/ca5eb000-0000-4000-a000-000000000077",
+      "waitFor": "text=Recent Activity",
+      "waitMs": 5000,
+      "actions": [
+        { "click": "button:has-text(\"Complete Profile\")" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "text=Update Member Information",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Save Information\")", "number": 1, "color": "plum" }
+      ]
+    }
+  ]
+}
