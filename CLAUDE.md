@@ -20,6 +20,31 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-13 — Audience Segments Explained
+
+**Article:** `merchants/notifications/segments.mdx` (new)
+**Branch:** `claude/eloquent-fermat-0ob78t`
+**PR:** https://github.com/Abdalestar/docs/pull/144
+**Status:** Done (2 real annotated screenshots + 1 SVG; validate-images 3/3 OK). One task this run.
+
+### Task selection
+Most of the board is `Done`. Two genuinely `Not started` rows remained: "The Member Profile: Activity, Notes & Tags" (P2, but its own Notes flag it as a duplicate of the published `members/profiles.mdx` and recommend closing — skipped) and **"Audience Segments Explained" (P1, no PR)** — the highest-priority real Not-started row. Picked it. Confirmed it is not a pure duplicate of `push-notifications.mdx`: that article lists the 7 segments but states the rules loosely and omits the exact thresholds and the per-account override (and even mislabels `near_complete`). The new page is the deep-dive reference companion.
+
+### What was written
+The 7 push-notification audience segments, what each reaches, the exact default thresholds, the `push_enabled` base requirement, live counts, where segments apply (one-off pushes vs campaign triggers), and access (owners + managers; staff none). Honest gotchas: VIP/Regulars/Near Complete count **total lifetime stamps**, not current-card stamps, so the UI's "Near Complete = 1-2 stamps away" label is a rough description, not the real rule (>=8 lifetime); At Risk excludes members with no activity on record. Thresholds are defaults that an account's `settings.segment_config` can override (no dashboard screen edits them — not invented).
+
+### Research sources (qtap, read-only)
+- `lib/notifications/segments.ts` — `matchesSegment`, `DEFAULT_SEGMENT_CONFIG` (vip 10 / regulars 5 / near_complete 8 stamps; new_member 30d / at_risk 30d), `getSegmentConfig` (merges `settings.segment_config`), `isBirthdayThisWeek`.
+- `components/dashboard/notifications/segment-selector.tsx` — live labels + descriptions + count badges; error/all-zero states.
+- `app/api/notifications/send/route.ts` — server filters match the client rules exactly; `push_enabled` base filter; `onesignal_player_id` needed to actually deliver; "No recipients with push enabled".
+- `hooks/use-notifications.ts` `useSegmentCounts`; `components/dashboard/notifications/notification-form.tsx` (Send To card; targetMemberCount swaps the selector); `lib/utils/permissions.ts` + `lib/validations/staff.ts` (`/notifications` = `campaigns !== 'none'`; staff default `none`, manager `edit`).
+
+### Screenshots
+`.routine/flows/segments.json` (points demo): `segments-selector` (7-segment Send To picker, VIP/At Risk/Near Complete boxed) and `segments-selected` (VIP selected state). Cropped to `[role=radiogroup]` (needs a tall viewport — the list runs below a 900px fold; used 1440x1500). SVG `segment-thresholds.svg` maps each segment to its exact default rule (the numbers the UI hides). No notification sent during capture.
+
+### Gotcha for future runs
+- **Segment count badges read "—" on BOTH demo accounts.** `useSegmentCounts` runs a client-side `member_org_view` query that errors on the demo (RLS limit, not fixable read-only), so the selector shows the "Couldn't load audience sizes" state. Crop to `[role=radiogroup]` (clipPadding 8) to exclude that red banner; the labels/descriptions render fine. Counts described in prose, not screenshotted.
+- The `[role=radiogroup]` audience list is ~544px tall starting ~y800 on the compose page, so it sits below a default 900px viewport. Set a tall `viewport` in the flow or the clipTo capture comes back as a 2-row sliver.
 ## 2026-06-13 — Push Notifications screenshots (backfill)
 
 **Article:** `merchants/campaigns/push-notifications.mdx`
