@@ -8,7 +8,15 @@ The Security page handles password changes and two-factor authentication setup. 
 
 Only account owners can reach this page by default. Managers and staff can access it if their account has the settings permission turned on. You can change that under **Staff → [staff member] → Permissions**.
 
+<Frame caption="The Security page stacks three sections: Change Password, Two-Factor Authentication, and Active Sessions.">
+  <img src="/images/settings/security-overview.png" alt="The Security page showing the Change Password, Two-Factor Authentication, and Active Sessions cards" />
+</Frame>
+
 ## Change your password
+
+<Frame caption="The Change Password form. Your current password is checked before a new one is saved.">
+  <img src="/images/settings/security-change-password.png" alt="The Change Password form with Current Password, New Password, and Confirm New Password fields and the Update Password button" />
+</Frame>
 
 <Steps>
   <Step title="Enter your current password">
@@ -31,6 +39,10 @@ If you need to reset a forgotten password instead of changing it, use the forgot
 Two-factor authentication (2FA) means that after you enter your password, you also need a 6-digit code from an authenticator app on your phone. Even if someone gets hold of your password, they still can't log in without your phone.
 
 Qtap uses TOTP (time-based one-time passwords). Any standard authenticator app works: Google Authenticator, Authy, Microsoft Authenticator, or 1Password's built-in authenticator.
+
+<Frame caption="The Two-Factor Authentication section. The badge reads Not Enabled until you finish setup; click Enable to start.">
+  <img src="/images/settings/security-2fa.png" alt="The Two-Factor Authentication card showing the Authenticator App row, a Not Enabled badge, and the Enable button" />
+</Frame>
 
 ### Setting it up
 
@@ -63,6 +75,10 @@ If your account has owner-level access to a live loyalty program, turning off 2F
 ## Active sessions
 
 The Active Sessions section shows your current login: the email address and when the session expires.
+
+<Frame caption="The Active Sessions section. Sign Out All Sessions ends every session on all devices at once.">
+  <img src="/images/settings/security-sessions.png" alt="The Active Sessions card showing the current session and the Sign Out All Sessions button" />
+</Frame>
 
 **Sign Out All Sessions** ends every active session across all browsers and devices at once. You're redirected to the login page immediately. Use this if you've left yourself logged in somewhere you shouldn't have, or if you suspect unauthorised access.
 
