@@ -20,6 +20,35 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-06-13 — Welcome to Qtap (screenshot backfill)
+
+**Article:** `merchants/welcome.mdx`
+**Branch:** `claude/eloquent-fermat-zfrnd4`
+**PR:** https://github.com/Abdalestar/docs/pull/139
+**Status:** Done — 3 real annotated screenshots added; prose unchanged. SMOKE_OK, validate-images 3/3 OK.
+
+### Task selection
+Board is effectively all `Done`. The one genuine `Not started` row ("The Member Profile: Activity, Notes & Tags") is a verified DUPLICATE of the published `profiles.mdx` (no editable-tags feature exists), so writing it would be a near-duplicate — skipped. `main` is frozen around PR #74, so almost every recent "Done" row's article/images sit in unmerged PRs (#90–#138). I confirmed every image-less on-main article except one already has a pending backfill PR (profiles #128, points/overview #130, batch-qr #131, qr-overview #132, birthday #133, etc.). The lone exception: **Welcome to Qtap** (`merchants/welcome.mdx`) — **P0**, `Needs Screenshots = YES`, **no prior PR**, full prose on main with zero images. Did that one backfill (per the one-task run request).
+
+### What was added
+3 real annotated PNGs (prose untouched, only `<Frame>` blocks added):
+- `welcome-sidebar.png` — dashboard home (points demo, Najma), left sidebar boxed, Recent Activity feed redacted → "How the dashboard is organized".
+- `welcome-points-sidebar.png` — sidebar cropped, **Points** highlighted.
+- `welcome-stamps-sidebar.png` — sidebar cropped (stamp demo, Dana), **Cards** highlighted.
+Shots 2+3 illustrate the "which sidebar you see" Note under "Stamp cards vs. points programs".
+
+### Research / selectors (qtap, read-only)
+- `components/layout/sidebar.tsx`: desktop sidebar is `aside[data-tour="sidebar"]` (256px, full height); nav items are `a[data-tour="nav-<route>"]`; loyalty filter renders **Cards** + **Stamp Ops** for `stamps`, **Points** + **Points Ops** for `points`; active item gets `bg-primary` (maroon).
+- Live probe confirmed labels on both accounts before writing the flows.
+
+### Flows
+`.routine/flows/welcome.json` (points, 2 steps) + `welcome-stamp.json` (stamp, 1 step). Flow files are single-account, so two files were needed. Sidebar/dashboard views only; no destructive/outbound clicks; no PII (activity feed redacted on the full-page shot).
+
+### Notes / gotchas for future runs
+- **Label drift (left as-is per backfill rule):** the Note in welcome.mdx says "If you see 'Stamp Cards' in the sidebar" but the live label is **Cards** (the points label "Points" matches). A maintainer could reconcile that one word in a prose pass.
+- The "Getting Started checklist" section stays imageless: both demo orgs are at 100% completion so the checklist card returns null (consistent with the 7eoo2g run).
+- **Dashboard Tour** row (`Needs Screenshots = YES`, PR #3) is STALE: its Notion path `/getting-started/dashboard-tour.mdx` was never used; the real article `merchants/dashboard-overview.mdx` is on main WITH 4 real images. Same path-reconciliation pattern as onboarding-wizard. Just needs the row flipped to `Needs Screenshots = NO`.
+- The real backlog is now a merge problem, not a writing problem: ~15 bot PRs (#90–#139) are unmerged, so main lacks all their articles/images. A human merging them would clear most `Needs Screenshots = YES` rows at once.
 ## 2026-06-13 — Editing a Points Program
 
 **Article:** `merchants/points/editing.mdx` (new)
