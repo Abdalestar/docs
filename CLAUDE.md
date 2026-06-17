@@ -41,6 +41,77 @@ Both remaining `Not started` rows were non-viable as new articles, so per routin
 - **Live members list differs from the repo prose.** A profile opens via the row's three-dot menu → **View Profile** (`<Link href="/members/[id]">` inside the dropdown). The member-name cell is NOT a link, so "click any row" / clicking the name does nothing. `profiles.mdx` prose still says "click any row" and "Edit button"; the live edit button is **Complete Profile** and its dialog is **Update Member Information** / **Save Information**. Left prose unchanged per the backfill rule.
 - Profile-page PII is confined to the sidebar (name heading, email, phone) — redact those three by exact-text selector. The Activity list shows the merchant's own staff + branch names (demo seed), not customer PII. Member ID (e.g. `Q19D976`) and tags (platinum/new/vip) are not sensitive.
 - Cropping to `[role=menu]` / `[role=dialog]` sidesteps PII entirely for the menu and dialog shots. Keep annotation **labels** off cropped shots whose target sits at the crop edge (the label spills outside the crop); use the numbered box + the MDX `<Frame caption>` instead.
+## 2026-06-12 — Completing a Member's Profile (Phone / Birthday)
+
+**Article:** `merchants/members/complete-profile.mdx` (new)
+**Branch:** `claude/eloquent-fermat-qnzh5u`
+**PR:** https://github.com/Abdalestar/docs/pull/127
+**Status:** Done (3 real annotated screenshots; validate-images 3/3 OK). One task this run per the run request.
+
+### Task selection
+The board is nearly all `Done`. Location Comparison (the previously-flagged "good next task") is now done (PR #126, today). The one genuine `Status = Not started` row was the P3 gap-audit row "Completing a Member's Profile (Phone / Birthday)" (`merchants/members/complete-profile.mdx`, not on main) — took it as the task-1 new article.
+
+### What was written
+Deep-dive how-to for the **Complete Profile** flow on `/members/[id]`, distinct from the one paragraph in `members/profiles.mdx` (cross-linked). Facts grounded in `app/(dashboard)/members/[id]/page.tsx`:
+- The dashed **Complete Profile** button renders only when `isOwnerOrManager` (`role==='owner'||'manager'`) **and** `hasMissingInfo` (`!member.birthday || !member.phone`). Role-gated, NOT permission-gated: a `staff` role with full Members access still never sees it.
+- Dialog title **Update Member Information**; phone field shown only when `!member.phone`, birthday field only when `!member.birthday` (shows just the missing pieces). Save button **Save Information**.
+- `saveMemberInfo()` writes `phone` only when `dialogPhone && !member.phone`, `birthday` only when `dialogBirthday && !member.birthday` → dashboard can ADD a blank field but never overwrite a saved one; birthday stored `yyyy-MM-dd`. Calendar `captionLayout="dropdown"`, `fromYear={1930}`.
+- Birthday eligibility: `app/api/campaigns/member-eligible/route.ts` `isBirthdayWithinDays(member.birthday, …)` returns false when null → a saved birthday is what makes a member eligible for a birthday campaign. Cross-linked `campaigns/birthday`.
+- `/members` guard is `members !== 'none'` (staff default `view`), so staff can open a profile but the button is role-gated.
+
+### KEY GOTCHA for future runs (the view-column quirk)
+`member_org_view` exposes **`birth_date`, not `birthday`**, but `members/[id]/page.tsx` reads `member.birthday`. So `member.birthday` is `undefined` for EVERY member → the Birthday row always reads "Not provided" and the **Complete Profile** button renders on any member when viewed as owner/manager (dialog then offers only the Birthday field, since `member.phone` is populated). No accessible org has any member with a null phone or null `birth_date` (Najma 180 / Dana 122 / Tea Time 22 all fully populated), so the **phone** completion field can't be screenshotted from live data — documented it in prose instead. Captured the birthday path on a Najma member (`ca5eb000-…-ac`).
+
+### Screenshots
+`.routine/flows/complete-profile.json` (points demo, Najma): `complete-profile-button.png` (profile card, button boxed, Birthday "Not provided" labelled; name/Qtap ID/phone/email redacted), `complete-profile-dialog.png` (Update Member Information dialog, Select birthday + Save Information boxed), `complete-profile-calendar.png` (calendar open, **explicit `clip` {x:486,y:456,w:474,h:536}** to exclude the left profile card — a full-viewport shot leaked the name/phone/email behind the dialog scrim, the clip fixed it). Nothing filled, Save Information never clicked → no member record changed. Added to Members nav after `profiles`.
+## 2026-06-12 — Location Comparison (stub replaced with real article)
+
+**Article:** `merchants/analytics/location-comparison.mdx`
+**Branch:** `claude/eloquent-fermat-wm0gsm`
+**PR:** https://github.com/Abdalestar/docs/pull/126
+**Status:** Done. SMOKE_OK; 3 real annotated screenshots (validate-images 3/3 OK). One task this run.
+
+### Task selection
+Board is fully `Done` with zero `Not started` rows, so per routine §3 this run did one
+screenshot-grade task: the highest-value `Needs Screenshots = YES` stub on `main`. Only
+two stubs remained (`git ls-tree -r origin/main | grep mdx`, <8 lines):
+`location-comparison.mdx` and `campaigns/analytics.mdx`. Picked **Location Comparison**
+(P2, `Done`/"Already published" but a 6-line "Coming soon" stub on main, flagged a "good
+next task" by the staff-performance run). `campaigns/analytics.mdx` stays blocked (its
+only uncovered surface, the `/campaigns/[id]` Performance card, doesn't render on the demo).
+
+### What was written
+The `/analytics/reports/location-comparison` report (no sidebar link; reached from the
+Reports hub or direct URL). One card per **active** location, each with five figures
+counted over the chosen period. Source: `useLocationComparison` (`hooks/use-reports.ts`):
+- **Stamps** = sum `amount` of `transactions.type='stamp'` at that `location_id`.
+- **Points** = sum `amount` of `type='points_earn'`.
+- **Redemptions** = count of `type='redeem'` or `points_spend`.
+- **Members Served** = distinct `member_id` with any tagged transaction there (field is
+  `new_members` in code but the label is "Members Served"; it's distinct members, not new).
+- **Estimated Revenue** = sum `points_transactions.transaction_amount` for `type='earn'`
+  earns at that branch (points-derived estimate, same caveat as Revenue Impact).
+Only transactions with a `location_id` count (untagged rows are skipped → totals can read
+lower than org-wide). Points-only org → Stamps 0; stamp-only org → Points/Revenue 0. Empty
+state: "No location data available for this period". Filters: time period only (no branch
+filter — it compares all branches). Access: owners+managers (`analytics !== 'none'`).
+
+### Screenshots
+3 real annotated PNGs from the live points demo (Najma Coffee, 3 branches: The Pearl —
+Qanat Quartier, West Bay — City Center, Msheireb Downtown) via
+`.routine/flows/location-comparison.json`: overview (period boxed, all 3 cards), one card
+close-up (5 figures numbered; Estimated Revenue gold), period dropdown (5 options). No PII
+on this aggregate page; read-only capture. `docs.json` unchanged (path already in Analytics nav).
+
+### Insights for future runs
+- Card crop selector `div.grid.gap-4 > div:nth-child(1)` cleanly isolates the first branch
+  card; metric labels are `div.text-xs:has-text("<Stamps|Points|Redemptions|Members Served|Estimated Revenue>")`
+  and `.first()` lands inside that first card. Period selector is the shared Radix Select
+  (`button:has-text("Last 30 days")` → `[role=listbox]`/`[role=option]`), same as the other reports.
+- Remaining on-main stub after this run: `merchants/campaigns/analytics.mdx` (blocked, see
+  the staff-performance/earn-rate notes). The four other analytics report pages are now all
+  real articles on this branch's history (revenue-impact #117, points-activity #119,
+  staff-performance #124, location-comparison #126).
 
 ---
 

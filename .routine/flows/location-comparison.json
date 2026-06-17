@@ -1,0 +1,51 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "analytics",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "location-comparison-overview",
+      "goto": "/analytics/reports/location-comparison",
+      "waitFor": "text=Compare performance across locations",
+      "waitMs": 7000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Last 30 days\")", "color": "plum" },
+        { "type": "label", "target": "button:has-text(\"Last 30 days\")", "text": "Pick the time window here.", "color": "charcoal" },
+        { "type": "caption", "text": "The Location Comparison report. One card per active branch, side by side, for the time window you choose." }
+      ]
+    },
+    {
+      "name": "location-comparison-card",
+      "goto": "/analytics/reports/location-comparison",
+      "waitFor": "text=Compare performance across locations",
+      "waitMs": 7000,
+      "clipTo": "div.grid.gap-4 > div:nth-child(1)",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "div.text-xs:has-text(\"Stamps\")", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.text-xs:has-text(\"Points\")", "number": 2, "color": "plum" },
+        { "type": "box", "target": "div.text-xs:has-text(\"Redemptions\")", "number": 3, "color": "plum" },
+        { "type": "box", "target": "div.text-xs:has-text(\"Members Served\")", "number": 4, "color": "plum" },
+        { "type": "box", "target": "div.text-xs:has-text(\"Estimated Revenue\")", "number": 5, "color": "gold" }
+      ]
+    },
+    {
+      "name": "location-comparison-period",
+      "goto": "/analytics/reports/location-comparison",
+      "actions": [
+        { "wait": 6000 },
+        { "click": "button:has-text(\"Last 30 days\")" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "[role=option]:has-text(\"This year\")",
+      "waitMs": 600,
+      "clipTo": "[role=listbox]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "[role=option]:has-text(\"Last 30 days\")", "color": "plum" }
+      ]
+    }
+  ]
+}
