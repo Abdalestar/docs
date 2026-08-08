@@ -1,0 +1,38 @@
+<svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
+  <rect x="0" y="0" width="880" height="250" rx="16" fill="#F8F5F2"/>
+
+  <!-- timeline base -->
+  <line x1="70" y1="140" x2="810" y2="140" stroke="#423F4C" stroke-width="2"/>
+
+  <!-- node 1: last visit -->
+  <circle cx="90" cy="140" r="10" fill="#8E4A63"/>
+  <text x="90" y="176" text-anchor="middle" font-size="14" font-weight="600" fill="#423F4C">Last visit</text>
+
+  <!-- span 1: inactivity window -->
+  <line x1="100" y1="140" x2="330" y2="140" stroke="#8E4A63" stroke-width="4"/>
+  <text x="215" y="112" text-anchor="middle" font-size="13" fill="#6B6770">quiet for your chosen window</text>
+  <text x="215" y="93" text-anchor="middle" font-size="13" font-weight="600" fill="#8E4A63">14 / 30 / 60 / 90 days</text>
+
+  <!-- node 2: push sent -->
+  <circle cx="345" cy="140" r="14" fill="#F0D793" stroke="#8E4A63" stroke-width="3"/>
+  <text x="345" y="176" text-anchor="middle" font-size="14" font-weight="600" fill="#423F4C">Win-back push</text>
+  <text x="345" y="196" text-anchor="middle" font-size="12" fill="#6B6770">reward code included</text>
+
+  <!-- span 2: cooldown -->
+  <line x1="360" y1="140" x2="640" y2="140" stroke="#6B6770" stroke-width="4" stroke-dasharray="8 6"/>
+  <text x="500" y="112" text-anchor="middle" font-size="13" fill="#6B6770">cooldown, no repeat sends</text>
+  <text x="500" y="93" text-anchor="middle" font-size="13" font-weight="600" fill="#423F4C">2&#215; your window, at least 60 days</text>
+
+  <!-- node 3: eligible again -->
+  <circle cx="655" cy="140" r="10" fill="none" stroke="#8E4A63" stroke-width="3"/>
+  <text x="655" y="176" text-anchor="middle" font-size="14" font-weight="600" fill="#423F4C">Can fire again</text>
+  <text x="655" y="196" text-anchor="middle" font-size="12" fill="#6B6770">only if they lapsed again</text>
+
+  <!-- arrowhead end -->
+  <path d="M 800 134 L 812 140 L 800 146 Z" fill="#423F4C"/>
+
+  <!-- returning visit resets -->
+  <path d="M 500 140 C 470 60, 150 55, 98 126" fill="none" stroke="#8E4A63" stroke-width="2" stroke-dasharray="4 5"/>
+  <path d="M 104 118 L 96 129 L 109 128 Z" fill="#8E4A63"/>
+  <text x="300" y="46" text-anchor="middle" font-size="13" fill="#8E4A63">a visit at any point resets the clock</text>
+</svg>
