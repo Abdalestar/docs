@@ -55,10 +55,14 @@ its environment configuration:
 - `QTAP_STAMP_EMAIL` / `QTAP_STAMP_PASSWORD` — a **stamp-card** demo account. Use it
   for any stamp-card-specific screenshot (the points account's `/cards` page is an
   empty state).
+- `QTAP_NAJMA_EMAIL` / `QTAP_NAJMA_PASSWORD` — the Najma demo merchant (optional).
+  Prefer it (or whichever configured account has the richest data for the topic)
+  for offer, voucher, and wallet-pass screenshots.
 
 Set these in the routine's environment (see the Claude Code on the web environment
 config), not in any file. If the credentials are missing or fail, add a dated note
-to the Notion parent page and stop the run.
+to the Notion parent page and stop the run. The environment's network policy must
+allow `dashboard.qtap.qa` and `*.supabase.co`, or the smoke test cannot pass.
 
 ---
 
@@ -144,13 +148,17 @@ node .routine/smoke-test.mjs
 ```
 
 - `=== SMOKE_OK ===` → screenshots work; proceed.
-- `SMOKE_FAIL: …` → set `SCREENSHOTS_DISABLED=true`, write the article without
-  screenshots, draw the SVG (Phase 9), set Notion `Needs Screenshots = YES` with a
-  note naming the failed check. If the task is a SCREENSHOT REFRESH, stop instead.
+- `SMOKE_FAIL: …` → **stop the run.** Screenshots are mandatory (founder decision,
+  2026-08-08): a how-to without real captures is exactly the stale-docs problem
+  this routine exists to fix, so shipping screenshot-less articles is no longer a
+  fallback. Add a dated note to the Notion parent page naming the failed check
+  (`missing_credentials`, `dashboard_unreachable`, …) and exit without touching
+  any task row.
 
 The corrected smoke test treats a Supabase 401 as reachable and does not use any
 Vercel SSO bypass. With the fixes in place, the only real failures left are a true
-network-policy block, dead credentials, or a down dashboard.
+network-policy block, dead credentials, or a down dashboard — all fixed in the
+environment config, not in this repo.
 
 ---
 
@@ -167,13 +175,17 @@ network-policy block, dead credentials, or a down dashboard.
 Write down: tables/columns, RLS, API routes, the dashboard paths the article
 references, and exact UI copy (labels, button text) so the article matches the UI.
 
-### Known dashboard routes (verified)
-`/` (Dashboard), `/merchants`, `/members`, `/cards` (Stamp Cards), `/points`
-(Points Programs), `/staff`, `/staff/activity`, `/qr-codes`, `/nfc-tags`,
-`/stamp-operations`, `/points-operations`, `/redemptions`, `/campaigns`,
-`/campaigns/new`, `/notifications`, `/notifications/new`, `/analytics`,
-`/analytics/wrapped`, `/settings`, `/settings/security`, `/merchant-page`.
-(There is no `/billing` route; billing is under Settings.)
+### Known dashboard routes (verified 2026-08-08)
+`/` (Dashboard), `/merchants`, `/members`, `/cards` (Stamp Cards), `/cards/design`
+(Card Designer), `/cards/[id]/pass-design` (Wallet Pass Studio, stamps),
+`/points` (Points Programs), `/points/[id]/pass-design` (Wallet Pass Studio,
+points), `/staff`, `/staff/activity`, `/qr-codes`, `/qr-codes/batch`,
+`/qr-codes/generate`, `/nfc-tags`, `/stamp-operations`, `/points-operations`,
+`/redemptions`, `/campaigns`, `/campaigns/new`, `/campaigns/offers` (Public
+Offers), `/notifications`, `/notifications/new`, `/analytics`,
+`/analytics/reports`, `/analytics/wrapped`, `/settings`, `/settings/billing`,
+`/settings/locations`, `/settings/notifications`, `/settings/security`,
+`/merchant-page`, `/onboarding`.
 
 ---
 
@@ -245,6 +257,54 @@ The worked example `.routine/flows/staff.json` captures: the Staff page (buttons
 badged), the filled Invite dialog (cropped, email boxed + labelled), the row menu
 (Edit Permissions / Remove), and the Edit Permissions dialog (cropped, the custom
 toggle boxed) — without sending an invite or saving anything.
+
+### 8c. Mobile-viewport captures (required for staff counter flows)
+
+`flow-capture.mjs` accepts a top-level `"viewport"` in the flow config. Staff use
+the redemption and scan pages on phones and tablets at the counter, so any
+article about those flows must show both form factors:
+
+- Desktop: the default `{ "width": 1440, "height": 900 }`.
+- Mobile: a second flow file with `"viewport": { "width": 390, "height": 844 }`,
+  capturing the same journey. Name the files `<name>-desktop-…` / `<name>-mobile-…`.
+
+Applies to: `/redemptions` (both the stamps and points redemption flows), the
+counter QR scanner dialog, and any other page the article tells staff to use
+"at the counter". Other articles stay desktop-only.
+
+## 8d. Standing content directives (founder feedback, 2026-08-08 — keep verbatim)
+
+These come from the founder and bind every future article on these topics. The
+original wording is preserved on the Notion rows; the requirements:
+
+1. **Redemption flows (stamps AND points).** When documenting the staff
+   redemption scan page: capture the redemptions page in BOTH desktop and
+   mobile viewports (§8c). Founder's original words: *"you can say to staff
+   that they can buy a qr code scanner from qtap and connect it to the desktop
+   or use a tablet or mobile with native qr code capabilities) and the customer
+   can show the member qr code and staff can scan it and its easy flow and
+   Highlight how easy its"*. So the article must (a) present both hardware
+   options — a Qtap QR scanner connected to the desktop, or a tablet/phone
+   camera — (b) walk the customer-shows-member-QR → staff-scans → done flow,
+   and (c) make the ease of the flow the point of the article, not a footnote.
+   (The counter camera scanner is `components/dashboard/qr-scanner.tsx` in the
+   app repo; verify current behavior there before writing.)
+
+2. **Public Offers is its own docs section.** Offers (`/campaigns/offers`) are
+   not a campaigns subsection in the docs. Create a dedicated "Public Offers"
+   nav group in `docs.json` when the first offer article ships, and move any
+   existing offer pages under it.
+
+3. **Voucher design.** Every voucher/offer-design article must tell merchants
+   they can customize and personalize their vouchers however they want,
+   including uploading their own images as the voucher background (the offer
+   form's cover image, JPG/PNG/WebP; colors and contrast derive automatically
+   from `lib/voucher/ground-tokens.ts`). Show it, don't just say it: generate
+   one or two tasteful example background images with the **Replicate** or
+   **Flora** MCP (café/salon-appropriate, no text in the image), upload one
+   through the form on a demo account (Najma preferred) and capture the result
+   on the voucher. Commit generated example images under
+   `images/offers/examples/`.
 
 ---
 
@@ -348,7 +408,8 @@ Priority P2, Needs Screenshots YES, Notes "Auto-discovered").
 
 ## 15. Definition of done (per task)
 
-- Smoke test ran (SMOKE_OK, or SCREENSHOTS_DISABLED with reason noted).
+- Smoke test ran and printed SMOKE_OK (on SMOKE_FAIL the run stops before any
+  task — see §6).
 - The row was locked via Status = "In progress"; work is grounded in
   code/Supabase/live dashboard/Mintlify.
 - For a new article: real screenshot **flows** captured from a populated account
