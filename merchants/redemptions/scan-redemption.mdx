@@ -1,0 +1,101 @@
+---
+title: "Redeeming by scanning the customer's QR"
+sidebarTitle: "Scan to redeem"
+description: "The fastest way to hand over a reward: the customer shows their Qtap QR, you scan it, and everything they can claim is on screen."
+---
+
+A customer walks up and says they have a free coffee waiting. You tap **Scan**, point the camera at the QR on their phone, and their card and every ready reward appear. No name to spell, no code to read out.
+
+<Frame caption="The Redemptions page opens on Enter Code (1). Look Up Customer (2) searches by name. Scan (3) skips both.">
+  <img src="/images/merchants/redemptions/scan-redeem-01-desktop-page.png" alt="The Redemptions page with the Enter Code, Look Up Customer and Scan buttons marked" />
+</Frame>
+
+## What the customer shows you
+
+Every Qtap member has one QR that identifies them. They can pull it up in three places, and all three work the same way at your counter:
+
+- The Qtap app, under **Show this code at the counter**
+- The card they have open in the app
+- Their Apple or Google Wallet pass
+
+The **Scan** button also reads a reward code straight off the customer's screen, so a customer who only has a voucher open still gets served in one tap.
+
+## What you scan with
+
+Either of these works, and staff can switch between them shift to shift:
+
+- **A tablet or phone.** Open `dashboard.qtap.qa` in the browser, go to Redemptions, and tap **Scan**. The device camera does the rest. This is the setup most counters end up using.
+- **A QR scanner wired to the till computer.** Qtap can supply one; ask your Qtap contact. A wired scanner types the code it reads into whichever box has your cursor, so click the code box first, and the page looks the code up as soon as the scanner finishes.
+
+<Frame caption="Tap Scan on a phone or tablet and the camera opens right there in the browser.">
+  <img src="/images/merchants/redemptions/scan-redeem-07-mobile-page.png" alt="The Redemptions page on a phone with the Scan button marked" />
+</Frame>
+
+<Frame caption="Hold the customer's QR inside the box. The first clean read closes the scanner on its own.">
+  <img src="/images/merchants/redemptions/scan-redeem-08-mobile-scanner.png" alt="The Scan customer dialog on a phone, with a customer QR code entering the scan box" />
+</Frame>
+
+The first code the camera reads closes the scanner, so there is nothing to press to finish. If the camera cannot start, the dialog says so and points you at the code box and the customer search, which always work.
+
+## Stamp cards
+
+<Steps>
+  <Step title="Tap Scan and read the customer's QR">
+    The scanner closes itself and Qtap moves you to **Look Up Customer** with the customer already found.
+  </Step>
+  <Step title="Tap the customer in the list">
+    Their card appears with live progress, and every reward they can claim is listed underneath with its code.
+  </Step>
+  <Step title="Tap Confirm Redemption on the reward they want">
+    Check the reward and the customer name in the dialog, then confirm. Qtap marks that voucher redeemed. It does not touch their stamp count, so a customer sitting on three ready rewards keeps all three until they claim them.
+  </Step>
+</Steps>
+
+<Frame caption="After one scan: the customer's card, how far along they are, and each ready reward with its code.">
+  <img src="/images/merchants/redemptions/scan-redeem-03-stamp-rewards.png" alt="A scanned customer's stamp card progress and a ready Free Pastry reward with a Confirm Redemption button" />
+</Frame>
+
+<Frame caption="The confirmation names the reward, the card it came from, and the customer, so staff can catch a mistake before it happens.">
+  <img src="/images/merchants/redemptions/scan-redeem-04-stamp-confirm.png" alt="The Confirm Redemption dialog for a Free Pastry stamp card reward" />
+</Frame>
+
+## Points programs
+
+The scan is the same. What comes back is the customer's balance and every reward that balance already covers, each with the points it costs.
+
+<Frame caption="A points customer after one scan: their balance, and the two rewards their 400 points already cover.">
+  <img src="/images/merchants/redemptions/scan-redeem-05-points-rewards.png" alt="A scanned points customer showing a 400 point balance and two available rewards with Redeem buttons" />
+</Frame>
+
+Tap **Redeem** on the one they want. The confirmation shows what it costs and what they are left with, so you can read the new balance back to them before anything is spent.
+
+<Frame caption="Points come off only after you confirm. On a multi-branch account, pick the branch first or the button stays greyed out.">
+  <img src="/images/merchants/redemptions/scan-redeem-06-points-confirm.png" alt="The Confirm Redemption dialog for a points reward showing a 50 point cost and a 350 point new balance" />
+</Frame>
+
+<Frame caption="The same customer view on a phone, ready to confirm at the counter.">
+  <img src="/images/merchants/redemptions/scan-redeem-09-mobile-rewards.png" alt="A scanned customer's ready rewards on a phone with the Confirm Redemption button marked" />
+</Frame>
+
+## When a scan does not land
+
+<AccordionGroup>
+  <Accordion title="Nothing happens when the code is in frame">
+    Hold the phone still and fill the box with the QR. A screen at low brightness or behind a cracked protector takes longer to read. If it will not catch, type the 8 digit code in the code box instead.
+  </Accordion>
+  <Accordion title="Qtap says the code is not recognized">
+    You scanned something that is neither a member QR nor a reward code. The printed QR codes on your own counter are for customers to earn with, not for this page.
+  </Accordion>
+  <Accordion title="No reward found with this code">
+    Qtap read the code, but the reward behind it is gone: claimed already, or past its expiry date. Look the customer up by name and check what is still ready under their card.
+  </Accordion>
+  <Accordion title="The camera will not open">
+    Allow camera access for `dashboard.qtap.qa` in your browser, then reopen the scanner. A wired scanner or the code box gets the customer served in the meantime.
+  </Accordion>
+</AccordionGroup>
+
+## Who can do this
+
+Owners, managers, and staff can all redeem. Redeeming is on by default for every role, so a new team member can serve a reward on their first shift without a permissions change.
+
+Two related pages: [Redemptions dashboard](/merchants/redemptions) covers the code and customer lookup routes in full, and [Redeeming points rewards](/merchants/redemptions/points-rewards) goes deeper on the points side.

@@ -51,7 +51,10 @@ if (TEST_ACCOUNTS.length === 0) {
   process.exit(64);
 }
 
-const browser = await chromium.launch({ headless: true });
+// PLAYWRIGHT_PROXY points the browser at an explicit proxy when the sandbox
+// requires one. Unset it and behaviour is unchanged.
+const PROXY = process.env.PLAYWRIGHT_PROXY;
+const browser = await chromium.launch({ headless: true, ...(PROXY ? { proxy: { server: PROXY } } : {}) });
 const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, ignoreHTTPSErrors: true });
 const page = await context.newPage();
 

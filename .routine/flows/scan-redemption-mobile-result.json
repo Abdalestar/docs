@@ -1,0 +1,28 @@
+{
+  "section": "merchants/redemptions",
+  "account": "stamp",
+  "viewport": { "width": 390, "height": 844 },
+  "fakeCamera": { "qr": "QTAP-TT024", "aim": "locked", "qrPx": 200 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "scan-redeem-09-mobile-rewards",
+      "goto": "/redemptions",
+      "waitFor": "button:has-text('Scan')",
+      "waitMs": 5500,
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 600 },
+        { "click": "button:has-text('Scan')" },
+        { "wait": 10000 },
+        { "click": ".divide-y button" },
+        { "wait": 4500 },
+        { "hover": "button:has-text('Confirm Redemption')" },
+        { "wait": 900 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Confirm Redemption')", "number": 1, "color": "gold" }
+      ]
+    }
+  ]
+}

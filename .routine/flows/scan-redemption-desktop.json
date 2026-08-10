@@ -1,0 +1,28 @@
+{
+  "section": "merchants/redemptions",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 900 },
+  "fakeCamera": { "qr": "QTAP-TT024", "aim": "partial" },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "scan-redeem-01-desktop-page",
+      "goto": "/redemptions",
+      "waitFor": "button:has-text('Scan')",
+      "waitMs": 5500,
+      "actions": [{ "click": "button:has-text('Decline')" }, { "wait": 800 }],
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Enter Code')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Look Up Customer')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Scan')", "number": 3, "color": "gold" },
+        { "type": "caption", "text": "Redemptions opens on Enter Code. Scan is the one-tap route: no typing, no searching." }
+      ]
+    },
+    {
+      "name": "scan-redeem-02-desktop-scanner",
+      "actions": [{ "click": "button:has-text('Scan')" }, { "wait": 3500 }],
+      "clipTo": "[role=dialog]",
+      "clipPadding": 12
+    }
+  ]
+}

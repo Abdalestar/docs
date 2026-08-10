@@ -1,0 +1,37 @@
+{
+  "section": "merchants/redemptions",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 1180 },
+  "fakeCamera": { "qr": "QTAP-TT024", "aim": "locked" },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "scan-redeem-03-stamp-rewards",
+      "goto": "/redemptions",
+      "waitFor": "button:has-text('Scan')",
+      "waitMs": 5500,
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 600 },
+        { "click": "button:has-text('Scan')" },
+        { "wait": 6000 },
+        { "click": ".divide-y button" },
+        { "wait": 4000 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "p:has-text('card completes at 5')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Confirm Redemption')", "number": 2, "color": "gold" },
+        { "type": "caption", "text": "One scan and the customer's card and every ready reward are on screen." }
+      ]
+    },
+    {
+      "name": "scan-redeem-04-stamp-confirm",
+      "actions": [{ "click": "button:has-text('Confirm Redemption')" }, { "wait": 2500 }],
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "[role=dialog] button:has-text('Confirm Redemption')", "color": "gold" }
+      ]
+    }
+  ]
+}
