@@ -1,106 +1,105 @@
 ---
 title: "Win-Back Campaigns"
-description: "How to automatically re-engage members who haven't visited in a while."
+description: "Automatically message members who haven't visited in a while, with a reward code attached to bring them back."
 ---
 
-A win-back campaign sends a push notification to members who haven't visited your business in a set number of days. You can attach a reward to bring them back.
+A win-back campaign watches for members who stopped coming in. After a quiet stretch you choose, Qtap sends them a push notification. Attach a reward and the notification carries a redemption code they can use on their next visit.
 
 ## How it works
 
-Qtap checks daily for members whose last recorded visit falls outside the inactivity window you set. When a match is found, they receive a push notification. If you attached a reward, it goes into their wallet when they open the message.
+Qtap checks your active campaigns every 15 minutes. A member qualifies when their last recorded visit is older than the inactivity window you set. If the campaign has a reward, Qtap issues it first and puts the code inside the message, so the member never has to go hunting for it.
 
-The campaign will only contact each member up to the maximum number of times you set, so you won't keep messaging the same inactive customers indefinitely.
+A visit means any activity on your loyalty program: earning stamps or points (from a scan or from staff), or redeeming a reward code. Members who joined but never earned anything have no recorded visit, so they count as inactive and will get the message too.
+
+Members who turned off push, or muted your business, don't get the push itself. The campaign still lands in their inbox inside the app.
+
+<Frame caption="One send per lapse. After the cooldown, a member who came back and went quiet again can be won back a second time.">
+  <img src="/images/campaigns/winback-lifecycle.svg" alt="Timeline showing the win-back cycle: last visit, inactivity window, push with reward code, cooldown, then eligible again" />
+</Frame>
 
 ## Setting up a win-back campaign
 
-Go to **Campaigns** in the left sidebar and click **New Campaign**. The wizard has seven steps.
+Go to **Campaigns** in the left sidebar and click **New Campaign**.
 
-<Frame caption="The Campaigns page. Click New Campaign in the top right to open the wizard.">
+<Frame caption="The Campaigns page. Click New Campaign to open the wizard.">
   <img src="/images/campaigns/winback-01-list.png" alt="Campaigns list with the New Campaign button highlighted" />
 </Frame>
 
 <Steps>
 
-### Step 1: Type
+### Choose the type
 
-Select **Win-Back Campaign** from the campaign type list. Give it a name (e.g., "We Miss You") and an optional internal description. Click **Next**.
+Select **Win-Back Campaign** and give it a name you'll recognize later, like "We Miss You". The description is optional and only your team sees it.
 
-<Frame caption="Step 1: choose Win-Back Campaign and enter a campaign name.">
+<Frame caption="Choose Win-Back Campaign and enter a campaign name.">
   <img src="/images/campaigns/winback-02-type.png" alt="Campaign type step with Win-Back Campaign selected and a name entered" />
 </Frame>
 
-### Step 2: Trigger
+### Set the trigger
 
-Set how long a member must be inactive before the campaign fires, and how many times they can receive it:
+Choose how long a member must be quiet before the message goes out: 14, 30, 60, or 90 days without a visit. Match it to your visit rhythm. A cafe that sees regulars weekly can act at 14 or 30 days. A salon with six-week appointment cycles should wait 60 or 90, or you'll message people who were coming back anyway.
 
-**Inactivity period** — choose from 14, 30, 60, or 90 days without a visit.
-
-**Maximum sends per customer** — how many times a single member can receive this campaign. Options are 1, 2, or 3 times. This prevents messaging the same person repeatedly if they remain inactive after receiving the first notification.
-
-Click **Next**.
-
-<Frame caption="Step 2: set the inactivity window and the maximum sends per customer.">
-  <img src="/images/campaigns/winback-03-trigger.png" alt="Trigger step with the inactivity period and maximum sends fields highlighted" />
+<Frame caption="The trigger step: pick the inactivity window.">
+  <img src="/images/campaigns/winback-03-trigger.png" alt="Trigger step showing the inactivity period and maximum sends fields" />
 </Frame>
 
-### Step 3: Reward (optional)
+<Note>
+This step also shows a **Maximum sends per customer** selector. That setting is saved but not applied yet. Repeat sends are spaced by an automatic cooldown instead: twice your inactivity window, and never less than 60 days.
+</Note>
 
-Attach a reward to give inactive members a reason to return. Choose from Free Item, Bonus Stamps, Bonus Points, Discount, or Special Badge. Fill in the reward details.
+### Attach a reward (optional)
 
-Leave this step empty to send a message without a reward.
+An inactive member needs a reason to come back, so most win-back campaigns carry one. Pick from **Free Item**, **Bonus Stamps** (1 to 20), **Bonus Points** (1 to 1,000), **Discount** (a percentage off), or **Special Badge**. Fill in the details; the wizard won't continue with a half-configured reward. You can also leave the whole step empty to send a message with no reward.
 
-Click **Next**.
-
-<Frame caption="Step 3: pick a reward type, or leave it empty to send only a message.">
-  <img src="/images/campaigns/winback-04-reward.png" alt="Reward step showing the five reward types with Bonus Points highlighted" />
+<Frame caption="Pick a reward type, or leave the step empty to send only a message.">
+  <img src="/images/campaigns/winback-04-reward.png" alt="Reward step showing the five reward types" />
 </Frame>
 
-### Step 4: Message
+### Leave the audience on "Nobody — notification only"
 
-Write the push notification:
+The Audience step decides whether this campaign appears on your page in the Qtap app. For a win-back push, keep the default: **Nobody — notification only**. Picking **Members only** or **Everyone** turns the campaign into a claimable offer on your page instead, and Qtap stops pushing it to inactive members automatically.
 
-- **Title** — the headline (e.g., "We miss you!")
-- **Message** — the body text. Be specific about what they'll get if they come back.
+### Write the message
 
-Both fields are required. Click **Next**.
+The title fits 100 characters and the message 500. Both are required. Say what they get, plainly: "Your next coffee is on us" beats "We have an offer for you."
 
-<Frame caption="Step 4: write the notification title and message. A live preview shows how it will look.">
+You can personalize with variables written in double curly braces: `{{first_name}}`, `{{customer_name}}`, `{{reward_name}}`, `{{merchant_name}}`, `{{stamps_count}}`, or `{{points_count}}`.
+
+<Warning>
+Type the double braces yourself. The tap-to-insert chips and the **Use Template** button currently insert single-brace variables like `{customer_name}`, and those go out to your customers as literal text instead of their name. If you used a chip or a template, add the second pair of braces before you activate.
+</Warning>
+
+<Frame caption="Write the notification title and message. A preview shows how it will look.">
   <img src="/images/campaigns/winback-05-message.png" alt="Message step with the notification title and message fields filled in" />
 </Frame>
 
-### Step 5: Conditions (optional)
+### Skip Conditions and A/B Test
 
-Add conditions to narrow the audience. For example, limit the campaign to members who have visited at least 3 times in the past but haven't come back. Leave empty to reach all inactive members.
+Both steps are optional, and neither changes what a win-back campaign does today. Click through them.
 
-Click **Next**.
+### Review and activate
 
-### Step 6: A/B Test (optional)
+Check the summary, then click **Activate Campaign** to start, or **Save as Draft** to finish later. Drafts sit on the Campaigns page until you activate them, and they don't count against your plan's campaign limit.
 
-Test two different messages to see which performs better. Leave this off if you don't need it.
-
-Click **Next**.
-
-### Step 7: Review
-
-Check your settings and click **Activate** to start the campaign, or **Save Draft** to publish later.
-
-<Frame caption="Step 7: review the summary, then activate the campaign or save it as a draft.">
-  <img src="/images/campaigns/winback-06-review.png" alt="Review step summarizing the campaign with the Activate Campaign and Save as Draft buttons highlighted" />
+<Frame caption="Review the summary, then activate the campaign or save it as a draft.">
+  <img src="/images/campaigns/winback-06-review.png" alt="Review step summarizing the campaign with the activate and draft buttons" />
 </Frame>
 
 </Steps>
 
-## Managing the campaign
+## Repeat sends
 
-Once active, the campaign runs automatically in the background. You can pause it from the Campaigns page by opening the three-dot menu on the campaign card and clicking **Pause**.
-
-<Note>
-A member's "last visit" is recorded when staff stamp their card or issue points. Members who have joined your loyalty program but never received a stamp will not be counted as having visited.
-</Note>
+One send no longer blocks a member forever. The campaign can reach the same person again once two things are true: the cooldown has passed (twice your window, at least 60 days), and they've gone quiet again since their last visit. Someone who came back after your first message and lapsed months later gets a second nudge instead of silence.
 
 <Warning>
-If you lower the inactivity threshold after a campaign is already active (for example, from 60 days to 30 days), some members who were previously outside the window may now qualify and receive a notification.
+If you shorten the inactivity window on an active campaign, say from 60 days to 30, members sitting between the two windows become eligible at the next check and get the notification right away.
 </Warning>
+
+## Pausing and plan limits
+
+An active campaign runs on its own. To stop it, open **Campaigns** and click **Pause** on the campaign card; **Resume** brings it back.
+
+Your plan sets how many campaigns can be active at once: 1 on Starter, 3 on Growth, 5 on Elite, and no limit on Franchise. At the cap, the **New Campaign** page asks you to pause an existing campaign or upgrade.
 
 <CardGroup cols={2}>
   <Card title="Campaigns Overview" href="/merchants/campaigns/overview">
