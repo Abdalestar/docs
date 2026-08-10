@@ -160,6 +160,35 @@ Vercel SSO bypass. With the fixes in place, the only real failures left are a tr
 network-policy block, dead credentials, or a down dashboard — all fixed in the
 environment config, not in this repo.
 
+### 6a. Sandboxes that force outbound HTTPS through a proxy
+
+Some run environments route every outbound connection through a local agent proxy
+(`HTTPS_PROXY`). Chromium does not pick that up on its own, so the smoke test fails
+with `supabase_unreachable` / `ERR_CONNECTION_RESET` even though `curl` reaches both
+hosts. Every capture script accepts `PLAYWRIGHT_PROXY`, so point the browser at a
+proxy explicitly:
+
+```bash
+PLAYWRIGHT_PROXY="$HTTPS_PROXY" node .routine/smoke-test.mjs
+```
+
+Observed on 2026-08-10: pointing Chromium straight at the agent proxy still reset
+during the TLS handshake for `dashboard.qtap.qa` and `*.supabase.co`, while `curl`
+and Node succeeded through the same proxy on the same hosts. `.routine/tls-bridge.mjs`
+works around that: it terminates the browser's TLS on loopback and re-opens a
+**verified** TLS connection upstream through `HTTPS_PROXY`, so certificate checking
+still happens on the real network hop.
+
+```bash
+openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 2 -nodes \
+  -subj "/CN=qtap-local-bridge" >/dev/null 2>&1        # any scratch dir
+BRIDGE_CERT_DIR=<that dir> node .routine/tls-bridge.mjs &   # listens on 38443
+PLAYWRIGHT_PROXY=http://127.0.0.1:38443 node .routine/smoke-test.mjs
+```
+
+Use the same `PLAYWRIGHT_PROXY` value for `flow-capture.mjs` and `screenshot.mjs`.
+Never disable TLS verification and never unset `HTTPS_PROXY` to get around this.
+
 ---
 
 ## 7. Research (consistency across all sources)

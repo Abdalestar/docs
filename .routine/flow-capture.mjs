@@ -15,6 +15,8 @@
 //   "deployUrl": "https://dashboard.qtap.qa",   // optional default
 //   "section": "merchants/staff",                // images/<section>/<name>.png
 //   "account": "points",                         // alias: "points" (default) or "stamp"
+//   "viewport": { "width": 390, "height": 844 }, // optional; default 1440x900
+//   "fakeCamera": { "qr": "Q721848", "aim": "partial" },  // counter-scanner flows only
 //   "defaultWaitMs": 2500,
 //   "steps": [
 //     {
@@ -169,8 +171,24 @@ async function resolveRect(page, sel) {
   try { return await page.locator(sel).first().boundingBox(); } catch { return null; }
 }
 
-const browser = await chromium.launch({ headless: true });
-const context = await browser.newContext({ viewport: VIEWPORT, ignoreHTTPSErrors: true });
+// Some sandboxes route all outbound HTTPS through a proxy that the browser must
+// be pointed at explicitly. Set PLAYWRIGHT_PROXY to that proxy's URL; unset it
+// and behaviour is unchanged.
+const PROXY = process.env.PLAYWRIGHT_PROXY;
+const browser = await chromium.launch({ headless: true, ...(PROXY ? { proxy: { server: PROXY } } : {}) });
+const context = await browser.newContext({
+  viewport: VIEWPORT,
+  ignoreHTTPSErrors: true,
+  ...(flow.fakeCamera ? { permissions: ['camera'] } : {}),
+});
+
+// Counter-scanner flows only: give the page a camera carrying a real QR so the
+// Scan dialog runs its real decode path. See .routine/fake-camera.mjs.
+if (flow.fakeCamera) {
+  const { installFakeCamera } = await import('./fake-camera.mjs');
+  await installFakeCamera(context, flow.fakeCamera);
+  console.log('Fake camera installed:', flow.fakeCamera.qr, `(aim: ${flow.fakeCamera.aim || 'locked'})`);
+}
 const page = await context.newPage();
 
 // Login

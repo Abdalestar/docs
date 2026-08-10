@@ -20,6 +20,87 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-10 — Redeeming by scanning the customer's QR
+
+**Article:** `merchants/redemptions/scan-redemption.mdx` (new)
+**Branch:** `claude/focused-cerf-375id8`
+**PR:** https://github.com/Abdalestar/docs/pull/161
+**Status:** Done. SMOKE_OK; 8 real annotated screenshots in desktop AND mobile viewports
+(validate-images 8/8 OK). One task this run.
+
+### Task selection
+The board gained two P1 founder-directive rows on 2026-08-08, both `Not started`, and
+they are the only genuine open work: "Redeeming by Scanning the Member QR (Stamps &
+Points)" and "Public Offers Overview (Own Docs Section)". Took the first (ROUTINE §8d
+directive 1). **Public Offers is still Not started and is the next run's task.** No
+screenshot backfill was available, so this run did one task.
+
+### What was written
+The **Scan** button on `/redemptions`, which neither on-main redemption article covers
+(`merchants/redemptions.mdx` = code + lookup; `merchants/redemptions/points-rewards.mdx`
+= points by lookup). Both cross-linked, nothing duplicated. Added to the Members nav
+after `merchants/redemptions`.
+
+Facts, all grounded in `Abdalestar/qtap`:
+- `components/dashboard/qr-scanner.tsx` — dialog "Scan customer", one decode per open
+  (`handledRef`), closes itself, camera-failure text pointing staff at the search/code inputs.
+- `lib/utils/resolve-scan.ts` — the classifier: member id (`Q`+6, legacy `QTAP-…`),
+  reward code (8 digits or `SLUG-XXXXXX`), merchant earning QR (`Q`+11 / `T`+12, wrong
+  surface at the counter). A member scan flips to Look Up Customer with the Qtap ID in
+  the search box (the live search really does match `qtap_id`); a code scan fills the
+  code box and looks it up.
+- `app/(dashboard)/redemptions/page.tsx` — four consume paths, the confirm dialog, the
+  branch selector that disables Confirm on a multi-branch account.
+- `app/api/rewards/redeem/route.ts` — redeeming a voucher flips `pending_rewards.status`
+  and writes a transaction; it does **not** touch `current_stamps` (documented as such).
+- `lib/utils/permissions.ts` + `lib/validations/staff.ts` — `/redemptions` needs
+  `redeem === true`, which is the default for manager AND staff.
+- Customer side from `Abdalestar/Qtap_app`: `QRDetailModal` ("Show this code at the
+  counter"), `OpenCardScreen`, wallet pass — all encode `members.qtap_id`.
+
+Hardware: both options the founder asked for. There is **no QR-scanner product in the
+in-dashboard Add-ons store** (`lib/stripe/config.ts` has extra_location, extra_loyalty_card,
+nfc_tag, batch_qr_100, ai_insight_pack, custom_qr_branding and nothing else), so the
+article says "ask your Qtap contact" and invents no price or checkout.
+
+### Screenshots (nothing was redeemed)
+8 PNGs; every flow stops at the Confirm Redemption dialog and never clicks it. Stamp side
+on the stamp demo, points side on the points demo. Desktop 1440px + mobile 390x844 per §8c.
+
+### TWO PIPELINE FIXES — read before the next scanner or proxy-blocked run
+1. **`.routine/fake-camera.mjs` (new).** Headless Chromium here has **no camera at all**,
+   and Chromium's own `--use-fake-device-for-media-capture` / `--use-file-for-fake-video-capture`
+   do not help (zero `videoinput` devices; I generated a Y4M and it was never picked up).
+   So the Scan dialog could only render its "could not start the camera" state. The module
+   installs a canvas-backed video track carrying a **real** QR, so the page runs its
+   genuine decode path. Opt in per flow: `"fakeCamera": {"qr": "...", "aim": "partial"|"locked", "qrPx": 340}`.
+   `aim: "partial"` keeps the code out of the scan box (the viewfinder shot); `"locked"`
+   decodes. **Mobile gotcha:** at 390px the dialog's scan window shrinks and a 340px QR
+   never decodes — use `qrPx: 200`.
+2. **`.routine/tls-bridge.mjs` + `PLAYWRIGHT_PROXY`.** This environment forces outbound
+   HTTPS through an agent proxy, and Chromium's TLS handshake was **reset by the gateway**
+   for `dashboard.qtap.qa` and `*.supabase.co` while `curl` and Node succeeded on the same
+   hosts through the same proxy (github.com worked in Chromium, so it is host-specific, not
+   a policy denial). Smoke test failed `supabase_unreachable` until the bridge was in place.
+   The bridge terminates the browser's TLS on loopback and re-opens a **verified** upstream
+   connection, so certificate checking still happens on the real hop. All three capture
+   scripts now accept `PLAYWRIGHT_PROXY`; unset, behaviour is unchanged. Documented in
+   ROUTINE.md §6a.
+
+### Environment drift (the demo accounts changed)
+- `QTAP_EMAIL` is now **owner@goldencrust.qa** (Golden Crust Bakery, **points**, multi-branch,
+  3 members). `QTAP_STAMP_EMAIL` is **owner@brewbean.qa** (Brew & Bean Cafe, **stamps**,
+  4 ready vouchers on member `QTAP-TT024`). `QTAP_NAJMA_EMAIL` timed out on login this run.
+  The old Najma/Dana accounts from earlier run logs are no longer what these env vars point at.
+- A **cookie consent banner** now covers the lower page on first load. Click **Decline** as
+  the first action of every flow or it sits on top of your target.
+- The RewardVoucher's redeem button is labelled **Confirm Redemption**, the same text as the
+  dialog's final button. Scope selectors carefully.
+- Live label drift left alone per the no-prose-edit rule: published `redemptions.mdx` says
+  "6-character code"; the live field says 8-digit.
+
+---
+
 ## 2026-06-14 — What is Qtap (screenshot backfill)
 
 **Article:** `merchants/what-is-qtap.mdx`

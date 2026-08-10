@@ -38,7 +38,10 @@ console.log('=== SMOKE TEST START ===');
 
 let browser;
 try {
-  browser = await chromium.launch({ headless: true });
+  // PLAYWRIGHT_PROXY points the browser at an explicit proxy when the sandbox
+  // requires one. Unset it and behaviour is unchanged.
+  const PROXY = process.env.PLAYWRIGHT_PROXY;
+  browser = await chromium.launch({ headless: true, ...(PROXY ? { proxy: { server: PROXY } } : {}) });
   console.log('[1/5] Playwright launched');
 } catch (e) {
   console.log('SMOKE_FAIL: playwright_launch -', e.message);
