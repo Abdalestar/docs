@@ -20,6 +20,109 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-14 — Public offers (new docs section)
+
+**Article:** `merchants/offers/overview.mdx` (new)
+**Branch:** `claude/bold-mendel-go9ikl`
+**PR:** https://github.com/Abdalestar/docs/pull/162
+**Status:** Done. SMOKE_OK; 8 real annotated screenshots (validate-images 8/8 OK).
+One task this run: **there is no screenshot backfill left on `main`** (see below).
+
+### Task selection
+Took the second of the two P1 founder-directive rows from 2026-08-08, "Public Offers
+Overview (Own Docs Section)" (the previous run took the scan-redemption one and
+flagged this as next). Created the dedicated **Public Offers** nav group in
+`docs.json` after Campaigns per directive 2; no existing offer pages needed moving,
+this is the first one.
+
+**Backfill genuinely exhausted.** Scanning `origin/main` for `.mdx` with zero `.png`
+refs returns only four files, none of them workable: `customer-app/settings-profile`
+(mobile app, not Playwright-capturable), `index.mdx` (landing page, not an article),
+`support/faq.mdx` (not a how-to), and `merchants/campaigns/analytics.mdx` (the
+long-standing 6-line stub, still blocked because
+`/api/analytics/campaigns/[id]/performance` 404s live). Every other on-main article
+carries real images now, so the old "unmerged backfill PR" backlog is cleared.
+
+### NEXT RUN'S TASK
+**"Wallet Passes: The Pass Design Studio"** (P1, Not started, no PR,
+`merchants/passes/pass-design-studio.mdx`) is the one remaining genuine row. Routes
+`/cards/[id]/pass-design` and `/points/[id]/pass-design`,
+`components/dashboard/pass-studio/pass-design-studio.tsx`. Its Notion note warns:
+verify Apple vs Google Wallet specifics in code before claiming either. I did not
+take it because this environment pins the run to one branch and PR #162 was already
+open on it; a second article would have muddied that diff.
+
+### What was written
+The `/campaigns/offers` surface, grounded in `Abdalestar/qtap`:
+- `app/(dashboard)/campaigns/offers/page.tsx` + `components/dashboard/offers/offer-row.tsx`
+  — H1 "Public offers", tabs All/Active/Drafts/Ended, per-row colour swatch, claims
+  fraction, redeemed count, Pause/Resume, ⋯ Edit/Delete, "Delete offer" confirm.
+- `components/dashboard/offers/offer-form.tsx` (1393 lines) — the three steps are
+  **Offer / Appearance / Review**, but note the middle step holds far more than
+  appearance: colour, cover, badge, audience, claim sheet, dates, claim window,
+  total claims, frequency, home placement and announce all live in step 2. Seven
+  reward types (discount, bogo, free_item, bonus_points, bonus_stamps,
+  points_multiplier, custom). Title prefills from the reward type until edited.
+- `lib/voucher/ground-tokens.ts` — ink/badge/rail/accent are all derived from the
+  card colour's WCAG relative luminance (5 bands), which is why the form can honestly
+  say any colour stays readable.
+- `supabase/migrations/052_claim_cooldown.sql` (`issue_campaign_reward`) — 8 numeric
+  digit code; claiming **auto-inserts `organization_members`** (a claim joins them);
+  expiry = `LEAST(end_date, now + claim_window_minutes)` else now+30d; a live
+  unredeemed voucher blocks re-claim; cooldown is anchored to `redeemed_at`, not to
+  the claim. Frequency presets map to (per_member, cooldown): once (1, null),
+  daily (null, 1440), weekly (null, 10080), monthly (null, 43200), no limit (null, null).
+- `supabase/migrations/050_protect_live_campaign_edits.sql` — the post-claim deal
+  lock (reward/value/title frozen; end date, claim window and total only ever extend).
+  Documented as a Warning.
+- `app/api/offers/expire/route.ts` + `vercel.json` `0 * * * *` — hourly sweep.
+- `app/api/campaigns/rewards/[code]/redeem/route.ts` lines 322-327 — only
+  bonus_stamps/bonus_points credit a balance; discount/bogo/free_item/badge are
+  handed over at the till. Said plainly in the article.
+- `lib/utils/permissions.ts` — `/campaigns` needs `campaigns !== 'none'` (owner,
+  manager `edit`; staff `none`), so owners + managers.
+- `app/m/[slug]/page.tsx` — the public page shows offers filtered to
+  `campaign_type='offer'`, `visibility='public'`, `status='active'`, inside the date window.
+
+### Screenshots (nothing was published)
+Captured on the **stamp** demo (Brew & Bean Cafe), which has 4 real offers including
+a genuine "11 of 25 claimed". The wizard was filled and walked to Review; **Publish
+offer / Save draft were never clicked**, so no offer was created. Offer names and
+merchant colours are the merchant's own, so no PII and no redaction needed.
+
+Founder directive 3 was honoured with a real upload rather than a prose claim: a café
+background was generated via the Replicate MCP (flux-schnell, 16:9), committed to
+`images/offers/examples/voucher-background-cafe.jpg`, uploaded through the live cover
+field, and `offers-cover-preview.png` shows the resulting voucher with that photo
+centre-cropped and tinted by a custom `#0F3D2E` card colour.
+
+### PIPELINE FIX — `upload` action in flow-capture.mjs
+`fill` does not work on `input[type=file]`, and the cover input is `hidden` behind a
+styled button. Added `{ "upload": ["input[type=file]", "path"] }`, which uses
+`setInputFiles` (works on hidden inputs). Any future voucher/pass design article needs it.
+
+### Gotchas for future runs
+- **The offers list needs ~8-9s to settle.** At 6s it renders "Active (0)" with an
+  empty list even though the org has offers, which reads exactly like an RLS failure
+  and is not one. The PostgREST call returns 200. Give it `waitFor [role=tablist]`
+  plus ~6.5s of extra wait.
+- **The cookie consent banner is per-context, not per-page.** Click **Decline** in the
+  first step of a flow only; later steps in the same run have no Decline button and
+  the click times out, failing the step.
+- **Do not use explicit `clip` on the offer form.** The step-2 card auto-scrolls by a
+  different amount per run, so a fixed rect captures the wrong band. `clipTo` with a
+  selector, plus a `hover` on the target first so it is in view, is reliable.
+  `div[class*="sm:grid-cols-2"]:has(#claim-total)` still resolved short twice; the
+  frequency `[role=listbox]` crop (dropdown open, all five presets) is the better shot.
+- Both accessible demo accounts are on **growth**, not franchise, so "Feature on app
+  Home" always shows the "email support@qtap.qa" note. That is the honest state and
+  the article says so rather than inventing a self-serve toggle.
+- The TLS bridge died mid-run once (`ERR_PROXY_CONNECTION_FAILED`). Restart it with
+  the Bash tool's background mode; `nohup`/`setsid` from a shell command did not
+  survive, and two half-dead bridges fighting over 38443 look like a network outage.
+
+---
+
 ## 2026-08-10 — Redeeming by scanning the customer's QR
 
 **Article:** `merchants/redemptions/scan-redemption.mdx` (new)
