@@ -91,6 +91,12 @@
         ]
       },
       {
+        "group": "Public Offers",
+        "pages": [
+          "merchants/offers/overview"
+        ]
+      },
+      {
         "group": "Analytics",
         "pages": [
           "merchants/analytics/overview",

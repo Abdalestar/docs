@@ -1,0 +1,77 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/offers",
+  "account": "stamp",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "offers-list",
+      "goto": "/campaigns/offers",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text(\"Decline\")"
+        },
+        {
+          "wait": 6500
+        }
+      ],
+      "waitFor": "[role=\"tablist\"]",
+      "waitMs": 2500,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "[role=\"tablist\"]",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "button:has-text(\"New offer\")",
+          "number": 2,
+          "color": "plum"
+        },
+        {
+          "type": "caption",
+          "text": "Every offer you have made, with how many customers claimed each one."
+        }
+      ]
+    },
+    {
+      "name": "offers-reward-types",
+      "goto": "/campaigns/offers/new",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "wait": 2000
+        }
+      ],
+      "waitFor": "#offer-name",
+      "waitMs": 2000,
+      "clipTo": "div.rounded-xl:has(#offer-name)",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "#offer-name",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "button:has-text(\"Custom voucher\")",
+          "number": 2,
+          "color": "plum"
+        }
+      ]
+    }
+  ]
+}

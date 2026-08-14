@@ -1,0 +1,28 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/offers",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 1000 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "offers-frequency",
+      "goto": "/campaigns/offers/new",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text(\"Decline\")" },
+        { "wait": 1200 },
+        { "click": "button:has-text(\"Next\")" },
+        { "wait": 2200 },
+        { "fill": ["#claim-total", "100"] },
+        { "wait": 600 },
+        { "click": "[role=\"combobox\"]:has-text(\"Only once\")" },
+        { "wait": 1400 }
+      ],
+      "waitFor": "[role=\"listbox\"]",
+      "waitMs": 1500,
+      "clipTo": "[role=\"listbox\"]",
+      "clipPadding": 14
+    }
+  ]
+}
