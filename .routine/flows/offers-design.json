@@ -1,0 +1,296 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/offers",
+  "account": "stamp",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "offers-colour",
+      "goto": "/campaigns/offers/new",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text(\"Decline\")"
+        },
+        {
+          "wait": 1200
+        },
+        {
+          "click": "button:has-text(\"Next\")"
+        },
+        {
+          "wait": 2000
+        },
+        {
+          "click": "button:has-text(\"Your colour\")"
+        },
+        {
+          "wait": 1200
+        }
+      ],
+      "waitFor": "input[aria-label=\"Custom color hex value\"]",
+      "waitMs": 1500,
+      "clipTo": "div.space-y-2:has(button:has-text(\"Qtap default\"))",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "button:has-text(\"Your colour\")",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "input[aria-label=\"Custom color hex value\"]",
+          "number": 2,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "offers-cover-upload",
+      "goto": "/campaigns/offers/new",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "wait": 1200
+        },
+        {
+          "click": "button:has-text(\"Next\")"
+        },
+        {
+          "wait": 2000
+        },
+        {
+          "hover": "button:has-text(\"Upload cover\")"
+        },
+        {
+          "wait": 800
+        }
+      ],
+      "waitFor": "button:has-text(\"Upload cover\")",
+      "waitMs": 1500,
+      "clipTo": "div.space-y-2:has(button:has-text(\"Upload cover\"))",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "button:has-text(\"Upload cover\")",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "button:has-text(\"Use my page cover\")",
+          "number": 2,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "offers-cover-preview",
+      "goto": "/campaigns/offers/new",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "wait": 1200
+        },
+        {
+          "click": "button:has-text(\"Next\")"
+        },
+        {
+          "wait": 2000
+        },
+        {
+          "click": "button:has-text(\"Your colour\")"
+        },
+        {
+          "wait": 800
+        },
+        {
+          "fill": [
+            "input[aria-label=\"Custom color hex value\"]",
+            "#0F3D2E"
+          ]
+        },
+        {
+          "wait": 800
+        },
+        {
+          "upload": [
+            "input[type=\"file\"]",
+            "images/offers/examples/voucher-background-cafe.jpg"
+          ]
+        },
+        {
+          "wait": 7000
+        }
+      ],
+      "waitFor": "img[alt=\"Voucher cover\"]",
+      "waitMs": 3000,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "img[alt=\"Voucher cover\"]",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div:has(> p:text-is(\"Live preview\"))",
+          "number": 2,
+          "color": "gold"
+        },
+        {
+          "type": "caption",
+          "text": "Your own photo as the voucher background. Qtap crops it to 16:9 and tints it with your card colour."
+        }
+      ]
+    },
+    {
+      "name": "offers-audience",
+      "goto": "/campaigns/offers/new",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "wait": 1200
+        },
+        {
+          "click": "button:has-text(\"Next\")"
+        },
+        {
+          "wait": 2000
+        },
+        {
+          "hover": "button:has-text(\"Open to members\")"
+        },
+        {
+          "wait": 800
+        }
+      ],
+      "waitFor": "button:has-text(\"Open to everyone\")",
+      "waitMs": 1500,
+      "clipTo": "div.space-y-2:has(button:has-text(\"Open to everyone\"))",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "button:has-text(\"Open to everyone\")",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "button:has-text(\"Open to members\")",
+          "number": 2,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "offers-claim-limits",
+      "goto": "/campaigns/offers/new",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "wait": 1200
+        },
+        {
+          "click": "button:has-text(\"Next\")"
+        },
+        {
+          "wait": 2000
+        },
+        {
+          "fill": [
+            "#claim-total",
+            "100"
+          ]
+        },
+        {
+          "wait": 900
+        }
+      ],
+      "waitFor": "#claim-total",
+      "waitMs": 1500,
+      "clipTo": "div[class*=\"sm:grid-cols-2\"]:has(#claim-total)",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "#claim-total",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "[role=\"combobox\"]:has-text(\"Only once\")",
+          "number": 2,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "offers-review",
+      "goto": "/campaigns/offers/new",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "wait": 1200
+        },
+        {
+          "click": "button:has-text(\"Next\")"
+        },
+        {
+          "wait": 1800
+        },
+        {
+          "click": "button:has-text(\"Next\")"
+        },
+        {
+          "wait": 2000
+        },
+        {
+          "hover": "button:has-text(\"Save draft\")"
+        },
+        {
+          "wait": 800
+        }
+      ],
+      "waitFor": "button:has-text(\"Publish offer\")",
+      "waitMs": 1500,
+      "clipTo": "div.rounded-xl:has(button:has-text(\"Publish offer\"))",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "button:has-text(\"Save draft\")",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "button:has-text(\"Publish offer\")",
+          "number": 2,
+          "color": "plum"
+        }
+      ]
+    }
+  ]
+}

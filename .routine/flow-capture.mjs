@@ -26,6 +26,7 @@
 //         { "click": "button:has-text('Invite Staff')" },
 //         { "fill": ["input[name=email]", "sara@example.com"] },
 //         { "select": ["select[name=role]", "Manager"] },
+//         { "upload": ["input[type=file]", "images/offers/examples/cover.jpg"] },
 //         { "press": "Enter" },
 //         { "hover": ".row" },
 //         { "wait": 800 }
@@ -220,6 +221,9 @@ for (const step of flow.steps) {
         await page.locator(act.select[0]).first().click();
         await page.getByText(act.select[1], { exact: false }).first().click();
       });
+      // File inputs need setInputFiles, not fill — and the real form's input is
+      // usually hidden behind a styled button, which setInputFiles handles.
+      else if (act.upload) await page.locator(act.upload[0]).first().setInputFiles(act.upload[1], { timeout: 15000 });
       else if (act.hover) await page.locator(act.hover).first().hover({ timeout: 10000 });
       else if (act.press) await page.keyboard.press(act.press);
       else if (act.wait) await page.waitForTimeout(act.wait);
