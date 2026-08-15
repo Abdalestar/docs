@@ -1,0 +1,23 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/passes",
+  "account": "points",
+  "defaultWaitMs": 4000,
+  "viewport": { "width": 1440, "height": 1000 },
+  "steps": [
+    {
+      "name": "pass-points-compare",
+      "goto": "/points/c0000000-0000-0000-0000-000000000001/pass-design",
+      "waitFor": "input.font-mono",
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 5000 },
+        { "fill": ["input.font-mono", "#1B3A5C"] },
+        { "wait": 1800 }
+      ],
+      "waitMs": 1500,
+      "clipTo": "div.grid.grid-cols-2.gap-3",
+      "clipPadding": 14
+    }
+  ]
+}

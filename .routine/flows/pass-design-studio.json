@@ -1,0 +1,193 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/passes",
+  "account": "stamp",
+  "defaultWaitMs": 4000,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "steps": [
+    {
+      "name": "pass-entry",
+      "goto": "/cards",
+      "actions": [
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 1200
+        }
+      ],
+      "waitFor": "a[href*='pass-design']",
+      "waitMs": 8000,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "a[href*='pass-design']",
+          "number": 1,
+          "color": "plum"
+        }
+      ],
+      "clip": {
+        "x": 265,
+        "y": 176,
+        "width": 650,
+        "height": 220
+      }
+    },
+    {
+      "name": "pass-studio-overview",
+      "goto": "/cards/b0000000-0000-0000-0000-000000000001/pass-design",
+      "waitFor": "button:has-text('Publish pass design')",
+      "waitMs": 7000,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(label:has-text('Background color'))",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.grid.grid-cols-2.gap-3",
+          "number": 2,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(button:has-text('Publish pass design'))",
+          "number": 3,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "pass-colors",
+      "goto": "/cards/b0000000-0000-0000-0000-000000000001/pass-design",
+      "waitFor": "label:has-text('Background color')",
+      "waitMs": 6000,
+      "clipTo": "div.rounded-xl:has(label:has-text('Background color'))",
+      "clipPadding": 10,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "input.font-mono",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": ":nth-match(input.font-mono, 2)",
+          "number": 2,
+          "color": "gold"
+        }
+      ]
+    },
+    {
+      "name": "pass-color-picker",
+      "goto": "/cards/b0000000-0000-0000-0000-000000000001/pass-design",
+      "waitFor": "button[aria-label='Choose background color']",
+      "actions": [
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 5000
+        },
+        {
+          "click": "button[aria-label='Choose background color']"
+        },
+        {
+          "wait": 1800
+        }
+      ],
+      "waitMs": 1500,
+      "clipTo": "[data-radix-popper-content-wrapper]",
+      "clipPadding": 0
+    },
+    {
+      "name": "pass-compare",
+      "goto": "/cards/b0000000-0000-0000-0000-000000000001/pass-design",
+      "waitFor": "input.font-mono",
+      "actions": [
+        {
+          "wait": 5000
+        },
+        {
+          "fill": [
+            "input.font-mono",
+            "#3E2723"
+          ]
+        },
+        {
+          "wait": 1800
+        }
+      ],
+      "waitMs": 1500,
+      "clipTo": "div.grid.grid-cols-2.gap-3",
+      "clipPadding": 14
+    },
+    {
+      "name": "pass-contrast",
+      "goto": "/cards/b0000000-0000-0000-0000-000000000001/pass-design",
+      "waitFor": "input.font-mono",
+      "actions": [
+        {
+          "wait": 5000
+        },
+        {
+          "fill": [
+            "input.font-mono",
+            "#FFF8E1"
+          ]
+        },
+        {
+          "wait": 800
+        }
+      ],
+      "waitMs": 600,
+      "clipTo": "div.rounded-xl:has(label:has-text('Background color'))",
+      "clipPadding": 10,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "span:has-text('Adjusted for legibility')",
+          "color": "gold"
+        }
+      ]
+    },
+    {
+      "name": "pass-logo",
+      "goto": "/cards/b0000000-0000-0000-0000-000000000001/pass-design",
+      "waitFor": "div.rounded-xl:has-text('Shown in the pass header')",
+      "waitMs": 6000,
+      "clipTo": "div.rounded-xl:has-text('Shown in the pass header')",
+      "clipPadding": 10,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "button:has-text('Upload')",
+          "number": 1,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "pass-strip-locked",
+      "goto": "/cards/b0000000-0000-0000-0000-000000000001/pass-design",
+      "waitFor": "div.rounded-xl:has-text('Strip artwork')",
+      "actions": [
+        {
+          "hover": "div.rounded-xl:has-text('Strip artwork')"
+        },
+        {
+          "wait": 1200
+        }
+      ],
+      "waitMs": 5000,
+      "clipTo": "div.rounded-xl:has-text('Strip artwork')",
+      "clipPadding": 10
+    }
+  ]
+}
