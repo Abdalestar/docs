@@ -52,6 +52,12 @@
         ]
       },
       {
+        "group": "Wallet Passes",
+        "pages": [
+          "merchants/passes/pass-design-studio"
+        ]
+      },
+      {
         "group": "QR Codes & NFC",
         "pages": [
           "merchants/qr-codes/overview",

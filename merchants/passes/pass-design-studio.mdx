@@ -1,0 +1,152 @@
+---
+title: "Designing your Wallet pass"
+sidebarTitle: "Wallet pass design"
+description: "Set the colors and logo customers see when your loyalty card sits in Apple Wallet."
+---
+
+When a customer adds your loyalty card to Apple Wallet, they see a pass with your
+colors and your logo on it. The Pass design studio is where you set that. Every
+stamp card and every points program has its own pass design, so a cafe running
+both can style them differently.
+
+## Opening the studio
+
+Go to **Cards** (or **Points** on a points account). Each program shows two
+previews side by side. The one on the right is labeled **Wallet pass**. Click it.
+
+<Frame caption="On the Cards page, the Wallet pass preview opens the design studio for that program.">
+  <img src="/images/merchants/passes/pass-entry.png" alt="A stamp card row with the Wallet pass preview highlighted" />
+</Frame>
+
+The studio puts your controls on the left and two live previews on the right.
+**Default (no branding)** shows what customers get today if you have never saved a
+design. **Your design** updates as you change things.
+
+<Frame caption="The Pass design studio: color and logo controls (1), the before and after previews (2), and the publish panel (3).">
+  <img src="/images/merchants/passes/pass-studio-overview.png" alt="The Pass design studio with the Colors card, the two previews, and the publish button" />
+</Frame>
+
+<Note>
+  The numbers on the previews are samples, not a real customer's balance. A stamp
+  pass shows a few stamps against your card's goal, and a points pass shows 250
+  points, so you can judge the layout before anything is published.
+</Note>
+
+## Choosing colors
+
+The **Colors** card has two fields.
+
+<Frame caption="Background color (1) fills the pass. Label color (2) is used for the small caps labels and the next-reward line.">
+  <img src="/images/merchants/passes/pass-colors.png" alt="The Colors card showing the background color and label color fields" />
+</Frame>
+
+**Background color** fills the whole pass. Type a hex code, or click the swatch to
+open the picker. The small swatches under the picker are pulled from your
+organization logo, so the suggestions already match your branding.
+
+<Frame caption="The color picker, with suggested swatches taken from your organization logo.">
+  <img src="/images/merchants/passes/pass-color-picker.png" alt="A color picker with four suggested brand swatches beneath it" />
+</Frame>
+
+**Label color** is used for the small caps labels like "STAMPS" and for the
+next-reward line at the bottom of the pass.
+
+You never pick the main text color. Qtap works it out from your background,
+choosing near-white or near-black depending on which one reads better.
+
+### Colors that cannot be read get fixed for you
+
+If your label color would not be readable against your background, Qtap swaps it
+for one that is and shows **Adjusted for legibility** next to the field. Here the
+background was set to a pale cream, so the default gold label was replaced with
+near-black.
+
+<Frame caption="Setting a pale background pushed the gold label below the readable threshold, so Qtap replaced it.">
+  <img src="/images/merchants/passes/pass-contrast.png" alt="The Colors card showing the label color snapped to near-black with an Adjusted for legibility note" />
+</Frame>
+
+Qtap runs the same check again when you publish, so a hard-to-read pass cannot
+reach a customer even if something goes wrong in the browser.
+
+## Your logo
+
+The **Logo** card sets the image in the pass header. Leave it alone and your
+organization logo is used.
+
+<Frame caption="Upload a logo to override the organization logo for this program only.">
+  <img src="/images/merchants/passes/pass-logo.png" alt="The Logo card with the current logo and an Upload button" />
+</Frame>
+
+Uploads must be PNG or JPEG and under 1 MB. Once you have uploaded one, a **Use
+default** button appears next to Upload so you can go back to your organization
+logo.
+
+The **Watermark logo** card below it does something else. That image goes on your
+vouchers and your merchant page, and it never appears on the Wallet pass, which
+has no background layer to put it on.
+
+## What you cannot change here
+
+Strip artwork is the band across the middle of the pass, and Qtap regenerates it as
+a customer's progress changes. You cannot edit it in the studio.
+
+<Frame caption="Strip artwork is generated automatically and has no controls.">
+  <img src="/images/merchants/passes/pass-strip-locked.png" alt="The Strip artwork card explaining that strip artwork updates automatically" />
+</Frame>
+
+## Publishing
+
+Compare the two previews before you commit. Put your branding next to the plain
+version and you can see exactly what a customer gains.
+
+<Frame caption="Default appearance on the left, a custom brown background on the right.">
+  <img src="/images/merchants/passes/pass-compare.png" alt="Two stamp card wallet passes side by side, one indigo and one brown" />
+</Frame>
+
+A points pass lays out differently. The balance sits over the strip instead of in
+the header, and the next-reward line uses your label color.
+
+<Frame caption="The same controls on a points program, showing the balance over the strip.">
+  <img src="/images/merchants/passes/pass-points-compare.png" alt="Two points wallet passes side by side, one indigo and one navy" />
+</Frame>
+
+Above the **Publish pass design** button, Qtap tells you how many passes are already
+in customers' wallets, so you know the size of what you are about to change. If
+nobody has added this program to their wallet yet, it says so and only future
+passes are affected.
+
+<Warning>
+  There is no draft and no separate save. **Publish pass design** saves your
+  design and pushes it to every pass already in a customer's wallet. Passes that
+  Qtap cannot reach right away pick the change up the next time the customer opens
+  them.
+</Warning>
+
+After publishing you get a confirmation showing how many passes were updated and
+how many devices were reached.
+
+## Who can edit a pass design
+
+Owners and managers can design and publish passes. Staff cannot: they have no
+access to stamp cards or points programs by default, so the studio does not open
+for them.
+
+If you give a team member view-only access to your cards or programs, they can open
+the studio and try colors, but publishing fails with a permissions error. Give
+them edit access on that program type if you want them to publish.
+
+<Note>
+  This studio covers the Apple Wallet pass. The subtitle at the top of the page
+  names the program you are editing and says so.
+</Note>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Designing a stamp card" href="/merchants/stamp-cards/designing">
+    Set the card color and stamp icon customers see in the Qtap app.
+  </Card>
+  <Card title="Roles and permissions" href="/merchants/staff/roles-permissions">
+    Control who on your team can edit programs.
+  </Card>
+</CardGroup>
