@@ -20,6 +20,120 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-15 — Wallet pass design (the Pass Design Studio)
+
+**Article:** `merchants/passes/pass-design-studio.mdx` (new)
+**Branch:** `claude/bold-mendel-1w7dm8`
+**PR:** https://github.com/Abdalestar/docs/pull/163
+**Status:** Done. SMOKE_OK; 9 real annotated screenshots (validate-images 9/9 OK).
+One task this run: **screenshot backfill is still genuinely exhausted** (see below).
+
+### Task selection
+Took the row the previous run flagged as next: **"Wallet Passes: The Pass Design
+Studio"** (P1, Not started, no PR), the last genuine open row. Created a **Wallet
+Passes** nav group after Points Programs, because the studio applies to stamp cards
+AND points programs equally and fits under neither loyalty group.
+
+**Backfill still exhausted.** The zero-PNG scan on `origin/main` returns the same four
+unworkable files as the 2026-08-14 run: `customer-app/settings-profile` (mobile app),
+`index.mdx` (landing page), `support/faq.mdx` (not a how-to), and
+`merchants/campaigns/analytics.mdx` (the 6-line stub, still blocked on the 404ing
+performance endpoint).
+
+### NEXT RUN'S TASK
+**"Designing Vouchers: Backgrounds, Images & Personalization"** (P1, Not started, no
+PR, `merchants/offers/voucher-design.mdx`) is the one remaining genuine row, and it
+carries founder directive 3 verbatim (ROUTINE §8d): say plainly that merchants can
+personalize vouchers however they want including their own background image, generate
+1-2 example backgrounds with the Replicate/Flora MCP, upload one through the live
+offer form, capture the finished voucher, commit examples under
+`images/offers/examples/`. Note the 2026-08-14 run already committed one such example
+(`voucher-background-cafe.jpg`) and added the `upload` action to flow-capture.mjs, so
+that groundwork exists. Belongs in the Public Offers group.
+
+### APPLE vs GOOGLE — the flag on this row, resolved
+The Notion note said *"verify Apple/Google Wallet specifics in code before claiming
+either."* Answer: **document it as Apple Wallet, make no Google claim.**
+- The studio's own subtitle reads "how this program looks in **Apple Wallet**", and
+  `wallet-pass-preview.tsx` is modelled on the PassKit `storeCard` layout.
+- `update-wallet-pass` (the publish-time bulk refresh) queries `wallet_passes` and
+  pushes **APNs only**. `google-wallet-pass/ACTIVATION.md` states the push side is
+  "not wired to Google yet".
+- `google-wallet-pass` DOES exist in `Abdalestar/Qtap_app` but is **inert**: it returns
+  `503 google_wallet_not_activated` until `GOOGLE_WALLET_ISSUER_ID` /
+  `GOOGLE_WALLET_SA_KEY` / `QTAP_DEFAULT_PASS_LOGO_URL` are set, and **nothing in the
+  app calls it** (grep found zero callers).
+- Even if activated, Google's LoyaltyClass has no foregroundColor/labelColor field, so
+  the label-colour control could never apply there (`google-pass-builder.ts` says so).
+Migration 053's comment says "Apple/Google", which is what makes this row look
+ambiguous. The comment is aspirational; the shipped path is Apple.
+
+### What was written
+- Entry: `/cards` and `/points` render a **Wallet pass** preview beside each program's
+  card preview; it links to `/cards/[id]/pass-design` / `/points/[id]/pass-design`.
+- H1 "Pass design"; two live previews, **Default (no branding)** vs **Your design**.
+  Preview balances are illustrative samples (stamps `min(3, target)`, points 250).
+- **The legibility guardrail** (the distinctive feature). Background and label colour
+  are picked; the body text colour never is (`pickForeground` returns near-white or
+  near-black, whichever contrasts more). A label under `MIN_LEGIBLE_CONTRAST` (3.0) is
+  snapped by `legibleOrFallback` and the UI flashes "Adjusted for legibility" for
+  3.2s. `sanitizeDesign` in the API re-applies the same check, so client-side failure
+  can't ship an illegible pass.
+- Colour picker suggests swatches extracted from the org logo (`extractPaletteFromImage`,
+  falling back to `FALLBACK_PALETTE`).
+- Logo override: PNG/JPEG, under 1MB, uploaded to the `wallet-pass-assets` bucket;
+  **Use default** appears once overridden. Defaults to `logo_trimmed_url ?? logo_url`.
+- **Watermark logo is NOT on the pass** (vouchers + merchant page only) — said plainly.
+- **Strips are locked** (migration 053, `StripLockedCaption`).
+- **Publishing has no draft.** `POST /api/pass-design` writes `pass_design` then
+  triggers the bulk refresh across every already-issued pass; unreachable passes pick
+  it up on next open.
+- **Permissions split (good gotcha).** Route guard only needs `stamp_cards` /
+  `points_programs` above `none`, but `canEditPassDesign` needs `edit` or `full`.
+  Owners + managers qualify; staff default to `none` on both, so the studio won't open.
+  A staff member granted **view-only** can open the studio but gets a permissions
+  error on publish.
+
+### Screenshots (nothing was published)
+9 PNGs in `images/merchants/passes/`. Stamp side on Brew & Bean Cafe, points side on
+Golden Crust Bakery. **Publish pass design was never clicked, no upload was performed,
+and no `pass_design` value was written to either demo program.** Colour changes are
+local component state until publish, so filling the hex inputs is safe.
+The contrast shot is genuine: setting `#FFF8E1` really did push the default gold
+`#F0D793` under 3.0 and swap the label to `#0A0A0A`.
+
+### KEY GOTCHA — the wallet-pass count can't be captured on any reachable demo
+The line above the publish button ("Publishing will update N passes…") **never
+resolves** on either accessible account, and it is **seed data, not a product fault**:
+`card_ref_id` is validated with zod `.uuid()`, and both reachable demo programs carry
+placeholder IDs (`b0000000-0000-0000-0000-000000000001`,
+`c0000000-0000-0000-0000-000000000001`) whose version and variant nibbles are not
+RFC 4122, so `GET /api/pass-design` returns **400 "Invalid card ID"**. Verified the
+diagnosis by requesting a valid-UUID program (`ca5e0004-0000-4000-a000-000000000001`),
+which returns **404 "Card not found"** instead — so the uuid schema is the gate, not
+ownership. Real programs use `gen_random_uuid()` and are unaffected. I dropped that
+frame rather than ship a permanently-stuck "Checking…" state and described the
+resolved behaviour in prose. **Worth a seed-data fix** so a future run can capture it.
+
+### ENVIRONMENT NOTE (narrower than the run log implies)
+`QTAP_EMAIL` **and** `QTAP_NAJMA_EMAIL` both point at **owner@goldencrust.qa**;
+`QTAP_STAMP_EMAIL` is **owner@brewbean.qa**. So only **two** orgs are reachable, both
+with placeholder UUIDs. `demo@najma.coffee` is the real owner of Najma Coffee (whose
+programs DO have valid UUIDs and real `wallet_passes` rows) but there are no
+credentials for it. Najma login no longer times out, it just resolves to Golden Crust.
+
+### Other notes
+- `flow-capture.mjs` annotate key is **`target`**, not `selector` (cost one wasted run).
+- The flow engine's login needs `waitUntil: 'networkidle'` + `waitForSelector('input[type="email"]')`.
+  Filling `#email` on a `domcontentloaded` load happens pre-hydration and the form
+  submits as a plain GET with the credentials in the query string.
+- `:nth-match(input.font-mono, 2)` works for the label-colour field (both colour inputs
+  share every class).
+- The cookie banner is still per-context: click **Decline** in the first step only.
+- `validate-images.mjs` rejects anything under 5KB, which killed a button-only crop.
+
+---
+
 ## 2026-08-14 — Public offers (new docs section)
 
 **Article:** `merchants/offers/overview.mdx` (new)
