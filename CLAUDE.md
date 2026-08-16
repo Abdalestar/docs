@@ -20,6 +20,88 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-16 — Designing your voucher (offer appearance deep-dive)
+
+**Article:** `merchants/offers/voucher-design.mdx` (new)
+**Branch:** `claude/bold-mendel-n2z5cx`
+**PR:** https://github.com/Abdalestar/docs/pull/164
+**Status:** Done. SMOKE_OK; 6 real annotated screenshots (validate-images 6/6 OK).
+One task this run.
+
+### READ THIS FIRST: the run log below was stale
+The 2026-08-14 entry names **"Wallet Passes: The Pass Design Studio"** as the next
+run's task. It was already done on **2026-08-15 as PR #163** by a run that updated
+Notion but never appended here. Ten minutes were spent researching a finished task.
+**Check the Notion row before trusting a "NEXT RUN'S TASK" note in this file.**
+
+### Task selection
+Board scan found one genuine `Not started` row with no PR: **"Designing Vouchers:
+Backgrounds, Images & Personalization"** (P1, founder directive, ROUTINE §8d
+directive 3). Took it. The other founder rows are done (#161 scan redemption, #162
+public offers, #163 wallet passes).
+
+### What was written
+An **Appearance-step** deep-dive. `offers/overview.mdx` (merged in #162) already
+spends one paragraph on cover upload, so this goes past it and cross-links rather
+than repeating. Grounded in `Abdalestar/qtap`:
+- `lib/voucher/ground-tokens.ts` — five luminance bands (abyss <.02, dark <.4,
+  murky <.55, light <.85, paper). Ink, badge, rail, tear and accent are all derived,
+  so a merchant picks one colour and never a text colour. Murky mid-tones get a
+  `k(.2)` scrim instead of an ink flip, because flipping "reads as a different brand".
+- `lib/cover-pipeline/server.ts` — sharp, `.rotate()` then 1200×675 `fit: 'cover'`
+  centre-crop, two variants (colour + grayscale mono for RN, which has no blend
+  modes). **Any aspect is accepted; nothing is rejected on dimensions.**
+- `offer-voucher-card.tsx` — the duotone is `mix-blend-mode: luminosity` at .55/.45
+  plus a scrim, so the photo can only add light and shade and the card colour still
+  sets the tone. This is the fact the whole article rests on.
+- `offer-form.tsx` — JPG/PNG/WebP ≤10MB, SVG explicitly rejected; badge 14 chars and
+  uppercased on the card; advice line 120, up to 3 terms at 80 (`lib/voucher/limits.ts`).
+- `app/api/cover-variants/route.ts` — owner/manager only (403 otherwise).
+
+Honest gotchas documented: cover variants are derived **only when the offer is
+saved**, and the call is non-fatal (the raw upload still renders because the card
+centre-crops via `object-fit`); a used, expired or fully claimed voucher drops the
+photo and goes plain, and only the **redeemed** state keeps the card colour on the
+stub (`wasted` uses `WASTED_RAIL`, `fullyClaimed` uses `CLOSED_GROUND`); and
+`badge_label` / `sheet_terms` / `sheet_advice` are exempt from the deal-lock trigger,
+so appearance stays editable after claims while the deal itself locks.
+
+### Founder directive 3, shown rather than claimed
+Two backgrounds generated via the Replicate MCP (flux-schnell, 16:9, no text) and
+committed under `images/offers/examples/`:
+- `voucher-background-beans.jpg` — dark, mean RGB ~79/72/64
+- `voucher-background-bakery.jpg` — bright, mean RGB ~183/171/150
+
+Both were uploaded through the live cover field. **The opposite exposures are the
+point**: the same voucher on `#123A2E` and on `#F3E3C3` produces white text and then
+near-black text, with each photo tinted to match. That pair of screenshots proves
+"any well-lit photo works" instead of asserting it.
+
+### Screenshots (nothing was published)
+`.routine/flows/voucher-design.json`, stamp demo (Brew & Bean Cafe). The wizard was
+filled and **Publish offer / Save draft were never clicked**, so no offer was created
+and no `cover_url` was written to the demo org. No PII (offer text and colours are
+the merchant's own).
+
+### Gotchas for future runs
+- **The claim-sheet term button is "Add a term", not "Add term".** The new row's
+  input is `input[aria-label="Term N text"]` (1-indexed), and leaving it blank trips
+  the "Write your term, or remove the empty row" gate.
+- `Next` on step 1 works **without filling anything**, because the voucher title
+  prefills from the default reward type. That is what makes every step-2 flow a
+  two-click walk from a fresh load.
+- The colour hex input is `input[aria-label="Custom color hex value"]`, revealed only
+  after clicking **Your colour**. `#badge-label` and
+  `input[aria-label="Claim sheet advice line"]` are stable ids.
+- The live preview is `div:has(> p:text-is("Live preview"))` and is `lg:sticky`, so a
+  `hover` on a lower field scrolls the form while the voucher stays in frame. That is
+  how the badge shot shows cause and effect in one image.
+- The preview's three state pills are **On merchant page / In their wallet / After
+  use**. The wallet state is where the gold accent pill actually appears; the
+  merchant-page state has a transparent rail and shows no countdown unless an end
+  date is set, so do not caption it as showing one.
+- Cookie banner: click **Decline** in the first step only (per-context, not per-page).
+
 ## 2026-08-14 — Public offers (new docs section)
 
 **Article:** `merchants/offers/overview.mdx` (new)
