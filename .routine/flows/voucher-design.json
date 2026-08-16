@@ -1,0 +1,348 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/offers",
+  "account": "stamp",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "voucher-design-dark",
+      "goto": "/campaigns/offers/new",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text(\"Decline\")"
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "click": "button:has-text(\"Next\")"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": "button:has-text(\"Your colour\")"
+        },
+        {
+          "wait": 1000
+        },
+        {
+          "fill": [
+            "input[aria-label=\"Custom color hex value\"]",
+            "#123A2E"
+          ]
+        },
+        {
+          "wait": 1000
+        },
+        {
+          "upload": [
+            "input[type=\"file\"]",
+            "images/offers/examples/voucher-background-beans.jpg"
+          ]
+        },
+        {
+          "wait": 8000
+        }
+      ],
+      "waitFor": "img[alt=\"Voucher cover\"]",
+      "waitMs": 3000,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "input[aria-label=\"Custom color hex value\"]",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div:has(> p:text-is(\"Live preview\"))",
+          "number": 2,
+          "color": "gold"
+        },
+        {
+          "type": "caption",
+          "text": "A dark card colour with a dark photo. Qtap puts white text on it automatically."
+        }
+      ]
+    },
+    {
+      "name": "voucher-design-light",
+      "goto": "/campaigns/offers/new",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "click": "button:has-text(\"Next\")"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": "button:has-text(\"Your colour\")"
+        },
+        {
+          "wait": 1000
+        },
+        {
+          "fill": [
+            "input[aria-label=\"Custom color hex value\"]",
+            "#F3E3C3"
+          ]
+        },
+        {
+          "wait": 1000
+        },
+        {
+          "upload": [
+            "input[type=\"file\"]",
+            "images/offers/examples/voucher-background-bakery.jpg"
+          ]
+        },
+        {
+          "wait": 8000
+        }
+      ],
+      "waitFor": "img[alt=\"Voucher cover\"]",
+      "waitMs": 3000,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "input[aria-label=\"Custom color hex value\"]",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div:has(> p:text-is(\"Live preview\"))",
+          "number": 2,
+          "color": "gold"
+        },
+        {
+          "type": "caption",
+          "text": "The same voucher on a pale colour. The text flips to near-black on its own."
+        }
+      ]
+    },
+    {
+      "name": "voucher-design-cover-uploaded",
+      "goto": "/campaigns/offers/new",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "click": "button:has-text(\"Next\")"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "upload": [
+            "input[type=\"file\"]",
+            "images/offers/examples/voucher-background-beans.jpg"
+          ]
+        },
+        {
+          "wait": 7000
+        },
+        {
+          "hover": "img[alt=\"Voucher cover\"]"
+        },
+        {
+          "wait": 800
+        }
+      ],
+      "waitFor": "img[alt=\"Voucher cover\"]",
+      "waitMs": 2000,
+      "clipTo": "div.space-y-2:has(img[alt=\"Voucher cover\"])",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "button[aria-label=\"Remove cover image\"]",
+          "number": 1,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "voucher-design-badge",
+      "goto": "/campaigns/offers/new",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "click": "button:has-text(\"Next\")"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "hover": "#badge-label"
+        },
+        {
+          "wait": 600
+        },
+        {
+          "fill": [
+            "#badge-label",
+            "ROASTERY PICK"
+          ]
+        },
+        {
+          "wait": 1500
+        }
+      ],
+      "waitFor": "#badge-label",
+      "waitMs": 1500,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "#badge-label",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div:has(> p:text-is(\"Live preview\"))",
+          "number": 2,
+          "color": "gold"
+        },
+        {
+          "type": "caption",
+          "text": "Whatever you type in Badge label lands on the voucher, in any language."
+        }
+      ]
+    },
+    {
+      "name": "voucher-design-terms",
+      "goto": "/campaigns/offers/new",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "click": "button:has-text(\"Next\")"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "hover": "input[aria-label=\"Claim sheet advice line\"]"
+        },
+        {
+          "wait": 600
+        },
+        {
+          "fill": [
+            "input[aria-label=\"Claim sheet advice line\"]",
+            "Show this to the barista before you order."
+          ]
+        },
+        {
+          "wait": 800
+        },
+        {
+          "click": "button:has-text(\"Add a term\")"
+        },
+        {
+          "wait": 1000
+        },
+        {
+          "fill": [
+            "input[aria-label=\"Term 1 text\"]",
+            "Dine-in only, one per table"
+          ]
+        },
+        {
+          "wait": 1200
+        }
+      ],
+      "waitFor": "input[aria-label=\"Claim sheet advice line\"]",
+      "waitMs": 1500,
+      "clipTo": "div.space-y-2:has(input[aria-label=\"Claim sheet advice line\"])",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "input[aria-label=\"Claim sheet advice line\"]",
+          "number": 1,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "voucher-design-preview-states",
+      "goto": "/campaigns/offers/new",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "click": "button:has-text(\"Next\")"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": "button:has-text(\"Your colour\")"
+        },
+        {
+          "wait": 800
+        },
+        {
+          "fill": [
+            "input[aria-label=\"Custom color hex value\"]",
+            "#123A2E"
+          ]
+        },
+        {
+          "wait": 800
+        },
+        {
+          "click": "button:has-text(\"In their wallet\")"
+        },
+        {
+          "wait": 2000
+        }
+      ],
+      "waitFor": "button:has-text(\"In their wallet\")",
+      "waitMs": 1500,
+      "clipTo": "div:has(> p:text-is(\"Live preview\"))",
+      "clipPadding": 16,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "button:has-text(\"In their wallet\")",
+          "number": 1,
+          "color": "plum"
+        }
+      ]
+    }
+  ]
+}
