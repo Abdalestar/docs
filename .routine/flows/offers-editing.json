@@ -1,0 +1,264 @@
+{
+  "section": "merchants/offers",
+  "account": "stamp",
+  "defaultWaitMs": 2500,
+  "viewport": {
+    "width": 1440,
+    "height": 1200
+  },
+  "steps": [
+    {
+      "name": "editing-01-list",
+      "goto": "/campaigns/offers",
+      "actions": [
+        {
+          "click": "button:has-text('Decline')"
+        }
+      ],
+      "waitFor": "[role=tablist]",
+      "waitMs": 7000,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(h3:has-text('Buy 1 latte, get 1 free')) div.flex.items-center.gap-4.text-xs",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(h3:has-text('Buy 1 latte, get 1 free')) button:has-text('Pause')",
+          "number": 2,
+          "color": "plum"
+        },
+        {
+          "type": "caption",
+          "text": "The claims count on each row tells you whether an offer is still fully editable."
+        }
+      ]
+    },
+    {
+      "name": "editing-02-menu",
+      "goto": "/campaigns/offers",
+      "waitFor": "[role=tablist]",
+      "waitMs": 7000,
+      "actions": [
+        {
+          "click": "div.rounded-xl:has(h3:has-text('Buy 1 latte, get 1 free')) button[aria-label='Offer actions']"
+        },
+        {
+          "wait": 900
+        }
+      ],
+      "clipTo": "[role=menu]",
+      "clipPadding": 80,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "[role=menu] a:has-text('Edit')",
+          "number": 1,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "editing-03-locked-banner",
+      "goto": "/campaigns/offers/7608ca88-4a8c-4a76-9a66-fbde255d3d14",
+      "waitFor": "text=hold this voucher",
+      "waitMs": 5000,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.rounded-lg:has-text('hold this voucher')",
+          "number": 1,
+          "color": "gold"
+        },
+        {
+          "type": "box",
+          "target": "#offer-name",
+          "number": 2,
+          "color": "plum"
+        },
+        {
+          "type": "caption",
+          "text": "Once customers hold a voucher, the deal they claimed is locked."
+        }
+      ]
+    },
+    {
+      "name": "editing-04-reward-locked",
+      "goto": "/campaigns/offers/7608ca88-4a8c-4a76-9a66-fbde255d3d14",
+      "waitFor": "text=hold this voucher",
+      "waitMs": 5000,
+      "actions": [
+        {
+          "hover": "button:has-text('Points Multiplier')"
+        },
+        {
+          "wait": 700
+        }
+      ],
+      "clipTo": "div.space-y-3:has(button:has-text('Points Multiplier'))",
+      "clipPadding": 12,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "button:has-text('Buy one, get one')",
+          "number": 1,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "editing-05-end-date",
+      "goto": "/campaigns/offers/7608ca88-4a8c-4a76-9a66-fbde255d3d14",
+      "waitFor": "text=hold this voucher",
+      "waitMs": 5000,
+      "actions": [
+        {
+          "click": "button:has-text('Next')"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "hover": "#end-date"
+        },
+        {
+          "wait": 600
+        }
+      ],
+      "clipTo": "div.space-y-2:has(#end-date)",
+      "clipPadding": 12,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "#end-date",
+          "number": 1,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "editing-06-valid-for",
+      "goto": "/campaigns/offers/7608ca88-4a8c-4a76-9a66-fbde255d3d14",
+      "waitFor": "text=hold this voucher",
+      "waitMs": 5000,
+      "actions": [
+        {
+          "click": "button:has-text('Next')"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": "button[role='combobox']:has-text('after claiming')"
+        },
+        {
+          "wait": 1100
+        }
+      ],
+      "clipTo": "[role=listbox]",
+      "clipPadding": 10
+    },
+    {
+      "name": "editing-07-claim-total",
+      "goto": "/campaigns/offers/7608ca88-4a8c-4a76-9a66-fbde255d3d14",
+      "waitFor": "text=hold this voucher",
+      "waitMs": 5000,
+      "actions": [
+        {
+          "click": "button:has-text('Next')"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "hover": "#claim-total"
+        },
+        {
+          "wait": 600
+        }
+      ],
+      "clipTo": "div.space-y-2:has(#claim-total)",
+      "clipPadding": 12,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "#claim-total",
+          "number": 1,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "editing-08-open-ended",
+      "goto": "/campaigns/offers/883395d2-8e6a-4f0f-b8fb-940d925396e9",
+      "waitFor": "text=hold this voucher",
+      "waitMs": 5000,
+      "actions": [
+        {
+          "click": "button:has-text('Next')"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "hover": "#end-date"
+        },
+        {
+          "wait": 600
+        }
+      ],
+      "clipTo": "div.space-y-2:has(#end-date)",
+      "clipPadding": 12,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "#end-date",
+          "number": 1,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "editing-09-unlocked",
+      "goto": "/campaigns/offers/9b8ab461-f79f-45b5-bf18-45b97b446a9a",
+      "waitFor": "#offer-name",
+      "waitMs": 5000,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "#offer-name",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "caption",
+          "text": "With no claims yet, every field on the offer stays editable."
+        }
+      ]
+    },
+    {
+      "name": "editing-10-delete",
+      "goto": "/campaigns/offers",
+      "waitFor": "[role=tablist]",
+      "waitMs": 7000,
+      "actions": [
+        {
+          "click": "div.rounded-xl:has(h3:has-text('Buy 1 latte, get 1 free')) button[aria-label='Offer actions']"
+        },
+        {
+          "wait": 900
+        },
+        {
+          "click": "[role=menuitem]:has-text('Delete')"
+        },
+        {
+          "wait": 1400
+        }
+      ],
+      "clipTo": "[role=alertdialog]",
+      "clipPadding": 8
+    }
+  ]
+}
