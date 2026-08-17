@@ -1,0 +1,119 @@
+---
+title: "Editing or ending a live offer"
+sidebarTitle: "Editing a live offer"
+description: "What you can still change after customers start claiming a voucher, and how to take an offer down."
+---
+
+An offer stays fully editable until the first customer claims it. After that, Qtap locks
+the parts of the deal your customers already agreed to and lets you change everything else.
+
+## Check the claims count first
+
+Open **Campaigns > Public offers**. Each row shows how many vouchers customers have
+claimed, so you can tell at a glance whether an offer is still open to free editing.
+
+<Frame caption="The claims count on each row tells you whether an offer is still fully editable.">
+  <img src="/images/merchants/offers/editing-01-list.png" alt="The Public offers list with the claims count and Pause button on one row" />
+</Frame>
+
+To open an offer, click its title or use the three-dot menu and choose **Edit**.
+
+<Frame caption="The three-dot menu on each offer row.">
+  <img src="/images/merchants/offers/editing-02-menu.png" alt="Offer row menu showing Edit and Delete" />
+</Frame>
+
+## What locks after the first claim
+
+Once at least one voucher is out, a gold banner at the top of the edit form tells you how
+many customers hold it, and the **Voucher title** field turns read-only.
+
+<Frame caption="Once customers hold a voucher, the deal they claimed is locked.">
+  <img src="/images/merchants/offers/editing-03-locked-banner.png" alt="Edit offer page showing the locked banner and a read-only voucher title" />
+</Frame>
+
+The reward type and its value lock too. Unavailable types grey out, and the one customers
+claimed stays selected.
+
+<Frame caption="The reward type is frozen at whatever customers claimed.">
+  <img src="/images/merchants/offers/editing-04-reward-locked.png" alt="Reward type grid with all options greyed out except the selected one" />
+</Frame>
+
+Your colour, cover image, badge label, description and audience stay editable the whole
+time. If you need a different deal, leave this one alone and create a new offer.
+
+## Dates and limits only stretch
+
+Timing and quantity fields still open, but they move in one direction: whatever a customer
+was promised can get better, never worse.
+
+An **end date** can be pushed later. The field refuses any earlier date.
+
+<Frame caption="An existing end date can move later, never earlier.">
+  <img src="/images/merchants/offers/editing-05-end-date.png" alt="End date field with the note: can be extended, not brought forward" />
+</Frame>
+
+An offer that never had an end date stays open-ended, so the field is disabled rather than
+letting you add a closing date to a promise that had none.
+
+<Frame caption="An open-ended offer cannot gain an end date while customers hold it.">
+  <img src="/images/merchants/offers/editing-08-open-ended.png" alt="Disabled end date field reading: open-ended while customers hold it" />
+</Frame>
+
+**Voucher valid for** works the same way. The dropdown hides any window shorter than the
+current one, so validity can grow but not shrink.
+
+<Frame caption="Shorter validity windows disappear from the list once vouchers are out.">
+  <img src="/images/merchants/offers/editing-06-valid-for.png" alt="Voucher valid for dropdown showing only the current window and longer options" />
+</Frame>
+
+**Total claims available** cannot drop below the number already claimed.
+
+<Frame caption="The claim limit stops at the number customers have already taken.">
+  <img src="/images/merchants/offers/editing-07-claim-total.png" alt="Total claims field showing it cannot go below 11 already claimed" />
+</Frame>
+
+<Note>
+These rules live in the database, not just the form, so they hold no matter how the change
+reaches Qtap. If a locked value does slip through, the save fails and the reason appears in
+a **Could not save** message.
+</Note>
+
+For comparison, an offer nobody has claimed yet gives you every field back, including the
+title and reward type.
+
+<Frame caption="With no claims yet, every field on the offer stays editable.">
+  <img src="/images/merchants/offers/editing-09-unlocked.png" alt="Edit page for an offer with no claims, all fields editable" />
+</Frame>
+
+## Taking an offer down
+
+**Pause** is the way to stop a live offer. It takes the offer off your merchant page right
+away and keeps it in your list, so you can resume it later.
+
+<Frame caption="A paused offer stays in your list and comes off your public page until you resume it.">
+  <img src="/images/merchants/offers/editing-11-paused.png" alt="A paused offer showing the Paused badge and Resume button" />
+</Frame>
+
+**Delete** removes the offer for good. Qtap asks you to confirm, and there is no undo.
+
+<Frame caption="Deleting asks for confirmation and cannot be reversed.">
+  <img src="/images/merchants/offers/editing-10-delete.png" alt="Delete offer confirmation dialog" />
+</Frame>
+
+<Note>
+There is no separate End button. When an offer's end date passes, customers stop seeing it
+on your page, but your list still shows the offer as **Active**. Pause it if you want the
+list to match what customers see.
+</Note>
+
+<Warning>
+Pausing or deleting an offer does not cancel vouchers customers already claimed. Those keep
+their own expiry date and your staff can still redeem them at the counter. Honour them, or
+contact the customer before you remove the offer.
+</Warning>
+
+## Who can edit offers
+
+Owners and managers can edit, pause and delete offers. Staff have no campaigns access by
+default, so they never see the Public offers page unless you grant it. See
+[Roles and permissions](/merchants/staff/roles-permissions) to change that.

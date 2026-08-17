@@ -20,6 +20,110 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-17 — Editing or ending a live offer (the deal lock)
+
+**Article:** `merchants/offers/editing.mdx` (new)
+**Branch:** `claude/bold-mendel-xl50mc`
+**Status:** Done. SMOKE_OK; 11 real annotated screenshots (validate-images 11/11 OK).
+One task this run: **screenshot backfill is still genuinely exhausted** (see below).
+
+### Task selection — the previous run's "NEXT RUN'S TASK" note was STALE
+The 2026-08-14 log named "Wallet Passes: The Pass Design Studio" as the next task. A run on
+**2026-08-15 already shipped it** (PR #163, row now Done). Don't trust that pointer; re-read
+the board.
+
+Every remaining P1 `Not started` row is blocked or already shipped, each verified this run:
+- **Canceling Your Subscription & the Grace Period** — SCREENSHOT-BLOCKED. The **Cancel Plan**
+  button renders only when `stripe_subscription_id && subscription_status === 'active'`
+  (`settings/billing/page.tsx`), and **both reachable demo orgs (Golden Crust, Brew & Bean)
+  have no `stripe_customer_id` and no `stripe_subscription_id`** (confirmed in Supabase). The
+  Cancel Trial button needs a subscription too. So the cancel dialog is unreachable in the UI,
+  and clicking it on an org that *did* have one would fire a real Stripe cancel. Needs a
+  seeded subscribed demo org before it can be written.
+- **Managing Locations** — already on `main` WITH 3 images (`locations-01-list` …). Stale row,
+  should be flipped to Done.
+- **Push Frequency & the Attention-Budget Guideline** — the only real limiter in code is
+  `rateLimiters.notifications` = **10 notification API calls per minute per organization**
+  (`lib/utils/rate-limit.ts`, used in `app/api/notifications/send/route.ts`), an abuse guard.
+  The per-customer weekly attention budget is a **design.md §10 aspiration, not shipped code**,
+  and has no UI. Writing it as a how-to would invent a feature.
+- Custom Campaigns / Condition Builder (product no-op), Redeeming by Code vs Lookup (duplicate
+  of on-main `merchants/redemptions.mdx`), Redeem Campaign Reward Code (no dashboard UI),
+  Stamp Card Rewards (duplicate of on-main `stamp-cards/rewards.mdx`), Campaigns Overview
+  (duplicate of on-main `campaigns/overview.mdx`) — all previously flagged, all still true.
+
+So this run took the highest-priority genuinely workable row: the P2 **"Editing or Ending a
+Live Offer (the Deal Lock)"**, auto-discovered by the offers-overview run, absent from `main`,
+and fully capturable.
+
+**Backfill still exhausted.** On-main `.mdx` with zero `.png` refs is the same four unworkable
+files as last run: `customer-app/settings-profile` (mobile), `index.mdx`, `support/faq.mdx`,
+`merchants/campaigns/analytics.mdx` (blocked stub).
+
+### What was written
+The `/campaigns/offers/[id]` edit surface and the migration-050 deal lock, which
+`offers/overview.mdx` only summarises in one Warning. Grounded in `Abdalestar/qtap`:
+- `supabase/migrations/050_protect_live_campaign_edits.sql` — the `protect_live_campaign_edits`
+  BEFORE UPDATE trigger. Locked once `total_claimed > 0`: `reward_type`, `reward_config` minus
+  `badge_label`, `offer_kind`, `discount_value`, `discount_label`, `offer_label`. One-directional:
+  `end_date` later only (an open-ended offer cannot GAIN an end date), `claim_window_minutes`
+  grows or goes NULL, `claim_limit_total` stays >= claimed. Errors prefixed `QTAP_LOCKED`.
+- `components/dashboard/offers/offer-form.tsx` — `locked = mode === 'edit' && claimedCount > 0`;
+  the gold "N customers hold this voucher" banner; disabled title with "Locked — this is the
+  promise customers claimed."; reward cards `opacity-40` when locked; `min` on `#end-date` and
+  `#claim-total`; the **Voucher valid for** option list FILTERED to `minutes >= current`.
+- `hooks/use-campaigns.ts:457` — strips the `QTAP_LOCKED:` prefix so the trigger's message
+  surfaces in the "Could not save" toast.
+- `app/(dashboard)/campaigns/offers/page.tsx` + `offer-row.tsx` — Pause/Resume, ⋯ Edit/Delete,
+  the "Delete offer … cannot be undone" confirm, claims fraction per row.
+
+### TWO honest findings the article states plainly
+1. **There is no End button for an offer.** `status='ended'` is set in exactly one place,
+   `app/api/campaigns/execute/route.ts:767`, and only for `campaign_type === 'flash_sale'`.
+   So the list's **Ended (0)** tab never fills from any merchant action on an offer. Worse,
+   `app/m/[slug]/page.tsx` filters the public page by the date window client-side while the
+   row's `status` stays `active`: **an offer past its end date still shows "Active" in the
+   dashboard but is already invisible to customers.** Verified live (Brew & Bean's "20% off
+   espresso drinks", Ends Jul 29 2026, still badged Active on 2026-08-17). Documented as a Note.
+2. **Pausing or deleting does NOT cancel vouchers already claimed.**
+   `app/api/campaigns/rewards/[code]/redeem/route.ts` validates `reward.status === 'issued'`
+   and `reward.expires_at` and the org, and **never checks the campaign's status**. So holders
+   can still redeem after a pause. Documented as a Warning (matches migration 050's own comment).
+
+### Screenshots (nothing was saved, paused, deleted or resumed)
+11 PNGs on the **stamp** demo (Brew & Bean) plus one on the points demo (Golden Crust) for the
+paused/Resume state. Three real lock states captured from genuine data:
+- "Buy 1 latte, get 1 free" — `total_claimed=11`, `claim_limit_total=25`, has an end date →
+  banner "11 customers hold this voucher", end date min-clamped, claim total min 11.
+- "15% Off Any Drink" — 2 claims, `end_date` NULL → end date field **disabled**, "Open-ended
+  while customers hold it."
+- "20% off espresso drinks" — 0 claims → the unlocked contrast shot, every field editable.
+The **Voucher valid for** dropdown genuinely renders only 2 hours / 1 day / Until the offer
+ends (the 1-hour option is filtered out by the 120-minute window). SAFETY: Save/Next only;
+**Pause, Resume, Delete and the delete confirm were never clicked**; no offer changed.
+
+### Gotchas for future runs
+- **`div.grid:has(#end-date)` is the WRONG crop** — it matches the outer page layout grid
+  (form + live preview) and returns a full-width shot. Use **`div.space-y-2:has(#<id>)`** for a
+  tight field+label+helper crop; that pattern worked first time for `#claim-total` and `#end-date`.
+  Same for the reward grid: `div.space-y-3:has(button:has-text('Points Multiplier'))`.
+- The status **Badge is a `div`, not a `span`** — `span:has-text('Paused')` silently resolves to
+  something at (0,0) and drops the number badge on the Qtap logo. Target `.bg-yellow-100`
+  (paused) / `.bg-green-100` (active) scoped to the row instead.
+- A `box` with a `number` puts the badge at the target's top-left, so boxing a short text node
+  like `text=11 of 25 claimed` hides its first characters. Box the wider meta row
+  (`div.flex.items-center.gap-4.text-xs`) instead.
+- A very tight `clipTo` crop can fail `validate-images` on the **>5KB** rule (the `[role=menu]`
+  Edit/Delete crop came in at 3.3KB). Raise `clipPadding` (80 worked) rather than dropping the shot.
+- **Logging in from a throwaway probe:** `waitUntil: 'networkidle'` TIMES OUT on `/login` in this
+  environment, but `domcontentloaded` alone submits before React hydrates and the form does a
+  native GET (credentials land in the URL). Use `domcontentloaded` + `waitForTimeout(5000)` then
+  fill/click, and `waitForURL(u => !u.includes('/login'))`.
+- The TLS bridge (§6a) was needed again: `BRIDGE_CERT_DIR=<dir> node .routine/tls-bridge.mjs` in
+  Bash background mode, then `PLAYWRIGHT_PROXY=http://127.0.0.1:38443`. SMOKE_OK first try with it.
+
+---
+
 ## 2026-08-14 — Public offers (new docs section)
 
 **Article:** `merchants/offers/overview.mdx` (new)

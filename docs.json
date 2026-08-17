@@ -93,7 +93,8 @@
       {
         "group": "Public Offers",
         "pages": [
-          "merchants/offers/overview"
+          "merchants/offers/overview",
+          "merchants/offers/editing"
         ]
       },
       {
