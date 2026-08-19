@@ -87,7 +87,8 @@
           "merchants/notifications/segments",
           "merchants/campaigns/notification-templates",
           "merchants/notifications/push-vs-campaign",
-          "merchants/notifications/targeted"
+          "merchants/notifications/targeted",
+          "merchants/notifications/automatic"
         ]
       },
       {
