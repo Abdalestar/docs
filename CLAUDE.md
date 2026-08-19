@@ -20,6 +20,113 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-20 — The Recent Activity feed (gap-discovery article)
+
+**Article:** `merchants/getting-started/recent-activity.mdx` (new)
+**Branch:** `claude/wizardly-bohr-97jyz8`
+**PR:** https://github.com/Abdalestar/docs/pull/184
+**Status:** Done. SMOKE_OK (TLS bridge, ROUTINE §6a); 3 real annotated screenshots,
+validate-images 3/3 OK. One task this run.
+
+### Task selection — THE BOARD IS FULLY BLOCKED, READ THIS BEFORE HUNTING
+Yesterday's run (2026-08-19) triaged every remaining row. I re-verified the top of the
+board and every Not-started row is one of: a verified duplicate of an on-main article, a
+reality-flagged non-feature, or **blocked on capture because of the demo accounts**. No
+screenshot backfill exists either: the zero-PNG scan of `origin/main` returns the same
+four non-workable files as the 2026-08-14 run (`customer-app/settings-profile`,
+`index.mdx`, `support/faq.mdx`, `merchants/campaigns/analytics.mdx`).
+
+**Confirmed live via Supabase this run — the three "needs a better account" blockers all
+still hold.** Only two orgs are reachable (`QTAP_EMAIL` and `QTAP_NAJMA_EMAIL` are BOTH
+`owner@goldencrust.qa`; `QTAP_STAMP_EMAIL` is `owner@brewbean.qa`):
+
+| Org | plan | status | ai_insight_credits | stripe_subscription_id |
+|---|---|---|---|---|
+| Golden Crust Bakery (reachable) | growth | active | 0 | NULL |
+| Brew & Bean Cafe (reachable) | growth | active | 0 | NULL |
+| Najma Coffee | elite | active | 78 | NULL |
+| Dana Salon & Spa | franchise | active | 84 | set |
+| Falcon Gym | elite | active | 0 | set |
+
+So these three rows stay blocked and **cannot be unblocked from inside this routine**:
+- **Canceling Your Subscription & the Grace Period** (P1) — the Cancel Plan button only
+  renders when `stripe_subscription_id` is set AND status is `active`. Neither reachable
+  org has a subscription.
+- **The AI Suite** (P2) — `/api/ai/insights` and `/api/ai/chat` need Elite/Franchise plus
+  credits; both reachable orgs are growth with 0 credits.
+- **Connecting Claude or ChatGPT (Settings > MCP / AI)** (P2) — owner-only AND
+  Elite/Franchise, so only the locked upsell state renders.
+
+**One env change fixes all three: point `QTAP_NAJMA_EMAIL` at Najma Coffee or Dana Salon
+& Spa** (today it is a duplicate of `QTAP_EMAIL`, so the third credential slot is wasted),
+or move Golden Crust to Elite with credits and a test-mode subscription. That single fix
+is worth more than anything else on the board right now.
+
+Also still blocked for data reasons, not plan reasons: **Deleted members** (no member in
+any org has `deletion_requested_at`/`deleted_at` set, verified read-only) and
+**Maintenance mode / announcements** (turning either on would hit every merchant).
+
+### What was written (gap discovery instead)
+With no workable row, I did §14 gap discovery and found a genuine uncovered surface:
+`components/dashboard/live-activity-feed.tsx`, the **Recent Activity** card on the
+dashboard home (`data-tour="activity-feed"`, mounted at `app/(dashboard)/page.tsx:343`).
+`dashboard-overview.mdx` gives it one paragraph and no screenshot, and **none of the 21
+open PRs (#163-#183) touches it** (I diffed every open-PR branch against `origin/main` to
+be sure). Created the Notion row for it and locked it before writing.
+
+Facts, all grounded in source and confirmed on the live page:
+- `.limit(10)` — the card holds the ten most recent `transactions` rows, however old they
+  are. On the points demo the top row was **8 days old** while the green "LIVE ACTIVITY"
+  marker pulsed, which is the honest gotcha the article leads with.
+- `setInterval(fetchActivities, 30000)` — self-refreshes about every 30 seconds, so a
+  stamp issued at the counter can take up to half a minute to appear.
+- The query filters on `organization_id` only, with **no location filter and no read of
+  the top-bar location picker**, so the feed spans every branch; the branch name renders
+  under the description only when the transaction carries a `location_id`.
+- Row description is `transactions.description` verbatim, so wording varies live
+  ("Points earned" next to "25 points at Golden Crust Bakery" and "Test purchase").
+- `MemberIdentity ... fallbackName="Member"` — a row with no resolvable member renders
+  literally as **Member** (seen live on Golden Crust).
+- `transactions`-sourced, so campaign sends, pushes, staff invites and QR generation are
+  absent. Cross-linked `staff/activity-logs` (`.limit(200)`, verified in
+  `hooks/use-staff-activity.ts`).
+- `canAccessRoute`: `pathname === '/'` returns true for everyone, so staff see it too.
+- Empty state string is "No recent activity".
+
+### Screenshots (read-only, nothing issued or redeemed)
+`.routine/flows/recent-activity.json` (points) + `recent-activity-stamp.json` (stamp):
+`recent-activity-context.png` (dashboard home, feed card boxed), `recent-activity-card.png`
+(cropped card, Live Activity marker / branch / relative time numbered),
+`recent-activity-stamps.png` (same card on Brew & Bean). Customer names redacted on all
+three: the demo member set includes the founder's own record (`abdalestar@gmail.com`).
+
+### Gotchas for future runs
+- **Do not copy the login block from `smoke-test.mjs` by hand.** A probe that filled
+  `#email`/`#password` after `domcontentloaded` silently failed (fields stayed empty and
+  the shot came back as the login page). The working sequence is the one in
+  `flow-capture.mjs`: `goto(/login, {waitUntil:'networkidle'})`, fill
+  `input[type="email"]` / `input[type="password"]`, click `button[type="submit"]`, then
+  `waitForURL(u => !u.includes('/login'))`.
+- Feed selectors, all stable and scoped to `[data-tour="activity-feed"]`:
+  `span.uppercase` (the LIVE ACTIVITY marker, exactly 1), `span.font-medium.truncate`
+  (the 10 member names, redact each with `>> nth=N`), `span.data-mono` (the 10 relative
+  times), `p.text-xs.text-muted-foreground` (branch lines, only on tagged rows).
+- The card sits at roughly `{x:860, y:638, w:556, h:726}` and runs **below a 900px fold**.
+  Set `"viewport": {"width":1440,"height":1500}` in the flow or `clipTo` returns a sliver.
+- **Points transactions render with the stamp icon.** `points_earn`/`points_spend` are not
+  in the component's `if/else` chain, so they keep the initial `eventType = 'stamp'` and
+  the `points`/`Coins` entry in `iconMap` is never used. Cosmetic, but do not write "each
+  activity type has its own icon" — the article deliberately says nothing about icons.
+- The cookie consent banner is still per-context: click **Decline** in the first step of a
+  flow only.
+
+### Board note
+21 PRs (#163-#183) are open and unmerged. The docs backlog is now a **merge** problem, not
+a writing problem: main lacks all of that work, which is also why the board looks
+exhausted from inside a run.
+
+---
+
 ## 2026-08-14 — Public offers (new docs section)
 
 **Article:** `merchants/offers/overview.mdx` (new)
