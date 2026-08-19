@@ -20,6 +20,115 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-19 — What each staff permission unlocks
+
+**Article:** `merchants/staff/permission-reference.mdx` (new)
+**Branch:** `claude/wizardly-bohr-sgc65b`
+**PR:** https://github.com/Abdalestar/docs/pull/176
+**Status:** Done. SMOKE_OK; 3 real annotated cropped screenshots (validate-images 3/3 OK).
+One task this run: **no screenshot backfill exists** and **every Not-started row is
+blocked or a duplicate**, so this was a gap-discovery article.
+
+### Task selection — the board is fully triaged, read this before hunting
+Earlier runs today annotated every open row. All seven P1 rows are dead ends:
+Canceling Your Subscription (blocked, neither reachable org has a
+`stripe_subscription_id` so Cancel Plan never renders), Custom Campaigns (condition
+builder still a no-op), Redeeming a Reward / Redeeming a Campaign Reward Code /
+Campaigns Overview / Stamp Card Rewards (all verified duplicates on `main`), Push
+Frequency (the attention-budget cap does not exist in the product). The top P2,
+Connecting Claude or ChatGPT (`/settings/mcp`), is blocked because both demo orgs are
+on `growth` and only render the locked upsell. Backfill is still exhausted: the
+no-PNG scan on `origin/main` returns the same four unworkable files as 2026-08-14.
+
+**`notion-query-data-sources` works on this board.** ROUTINE §3 says to use
+`notion-search` + per-row `notion-fetch`; that is no longer necessary. SQL mode
+against `collection://5aecc4c4-389b-458c-a114-43e5ee3704b6` returns every row with
+its properties in one call. Query `WHERE Status != 'Done'` plus `substr(Notes,1,600)`
+and you have the whole triage in two calls instead of twenty fetches.
+
+**PRs #163–#175 are open and unmerged**, so `main` lacks pass-design-studio,
+voucher-design, offers/editing, billing/add-ons, notifications/stats, the four QR
+articles, analytics/customer-lists, merchant-page/business-overview,
+members/joined-without-the-app and the customer-scan recapture. Do not re-do any of them.
+
+### What was written
+The 18-checkbox Edit Permissions list mapped to the pages and actions each box opens.
+`roles-permissions.mdx` covers the three roles and how to open the dialog, and
+`setup-recipes.mdx` covers cashier vs manager, but no article on `main` names a single
+checkbox (grepped: zero hits for "View QR codes", "Create cards", "Export data").
+
+This became worth documenting on 2026-08-09: qtap commit `6a3fb8c` ("Make staff
+permissions actually govern ops pages end to end") fixed the long-standing no-op that
+earlier runs flagged. Dotted custom grants are now normalized, route matching is
+segment-aware, and the sidebar plus the stamp/points APIs run the same helper.
+
+Facts, all grounded in `Abdalestar/qtap`:
+- `lib/utils/permissions.ts` `permissionIdsToEffectivePermissions` — the mapping, and
+  the four wider-than-they-look groupings the article calls out: any of
+  `members.create|edit|delete` → `members: 'full'` (so ticking Edit members also
+  grants delete, which is what `canDeleteMembers` reads on `members/page.tsx`);
+  `cards.*` sets **both** `stamp_cards` and `points_programs`; any `qr.*` →
+  `qr_batches: 'generate'`; `notifications.send` → `campaigns: 'edit'`;
+  `analytics.export` → `analytics: 'full'`.
+- Same file, `canAccessRoute` — the per-route rules, including `/nfc-tags` needing
+  `qr_batches !== 'none'` **and** `role !== 'staff'`, `/stamp-operations` →
+  `issue_stamps`, `/points-operations` → `issue_points`, `/redemptions` → `redeem`,
+  and `/` always allowed.
+- `components/dashboard/staff-permissions-dialog.tsx` `PERMISSION_CATEGORIES` — the
+  exact 18 labels and descriptions, and the per-role default id lists.
+- `lib/validations/staff.ts` `DEFAULT_PERMISSIONS` — manager `staff: 'view'`, staff
+  role `staff: 'none'`. Custom grants start from `NO_PERMISSIONS` and the checklist
+  has no Staff/Billing/Settings items, so **turning Use Custom Permissions on for a
+  manager silently removes their Staff page**. Shipped as a Warning.
+- `components/layout/sidebar.tsx` — nav is filtered through `canAccessRoute` plus the
+  loyalty-type rule, so a restricted teammate sees a shorter menu, not dead ends.
+- `app/api/staff/update-permissions/route.ts` — owner-only (403 otherwise) and the
+  owner row cannot be modified.
+
+### Screenshots (nothing was saved)
+3 cropped PNGs via `.routine/flows/permission-reference.json` on the points demo
+(Golden Crust Bakery), all of the Edit Permissions dialog for the Staff-role teammate:
+defaults greyed with the switch off, the switch on with Members + Loyalty, and the
+bottom half with four numbered boxes. **Save Changes was never clicked**, so no staff
+row changed. `custom_permissions` is `{}` on every demo staff row, so the dialog opens
+on role defaults and toggling the switch is pure client state.
+
+### Gotchas for future runs
+- **The dialog scrolls internally** (672x900 box, 1934px of content). `clipTo:
+  "[role=dialog]"` captures only the visible band, so the scroll position is the shot.
+  `hover` on a target scrolls it to the nearest edge, which is deterministic at the
+  ends: hovering the first field pins the top, hovering **Save Changes** pins the
+  bottom. Two different mid-list hovers can land on the same band, which is how a
+  4-step flow collapsed into 3 (steps 3 and 4 were identical).
+- Staff row menus are the **4th and 5th** `button[aria-haspopup="menu"]` on `/staff`
+  (1 = location filter, 2 = theme, 3 = account). The owner row has no menu.
+- Toggling **Use Custom Permissions** on pre-fills the boxes with the role defaults
+  (the `!useCustomPermissions` effect keeps `permissions` in sync), so the checklist
+  is never empty on screen.
+
+### Gap discovery (1 added, blocked)
+- **Deleted members: the 'Deleted member' ghost across the dashboard** →
+  `merchants/members/deleted-members.mdx` (P2, Not started). Genuinely uncovered, zero
+  mentions anywhere in the docs. `components/dashboard/member-identity.tsx` (qtap
+  commits `6a9d991` + `b74f6a5`, 2026-08-06) renders any member with
+  `deletion_requested_at` or `deleted_at` as "Deleted member" with a grey Deleted badge
+  and a generic avatar, across the members list and detail, redemptions, stamp and
+  points ops, code lookup, receipts, the live activity feed, the staff activity table
+  and its CSV, and QR analytics. Contact details and member actions are hidden; history,
+  stats and merchant-authored notes stay counted. Mechanics live in the **mobile** repo
+  (`Qtap_app/supabase/migrations/039_account_deletion_grace.sql` + `040`): the app calls
+  `request_account_deletion()`, push dies immediately, a 30-day grace window runs during
+  which a fresh OTP login calls `restore_own_account()` and the ghost reverts, then a
+  daily 02:15 UTC pg_cron job invokes the `finalize-account-deletions` edge function,
+  which zeroes every points balance with an "Account deletion: balance forfeited" ledger
+  entry, cancels active `reward_redemptions`, and scrubs the identity.
+  **BLOCKED ON CAPTURE:** no member in any org (Golden Crust 0, Brew & Bean 0, Tea Time
+  0, Najma 0, Dana 0) carries either flag, so the ghost cannot be screenshotted and
+  seeding is not allowed. Worth a seed-data fix, same class as the pass-studio
+  placeholder-UUID gap.
+
+---
+
 ## 2026-08-14 — Public offers (new docs section)
 
 **Article:** `merchants/offers/overview.mdx` (new)
