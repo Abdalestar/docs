@@ -20,6 +20,110 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-19 — Churn Risk & Best Customers (new article)
+
+**Article:** `merchants/analytics/customer-lists.mdx` (new)
+**Branch:** `claude/wizardly-bohr-x78lrf`
+**PR:** https://github.com/Abdalestar/docs/pull/170
+**Status:** Done. SMOKE_OK; 4 real annotated screenshots (validate-images 4/4 OK). One task
+this run: **there is still no screenshot backfill left on `main`**.
+
+### The run log above this line was four runs stale
+`CLAUDE.md` stopped at 2026-08-14 but PRs #163-#169 shipped since (pass design studio #163,
+voucher design #164, offer editing #165, add-on store #166, notification stats #167, QR
+colours/print #168, QR show-on-screen #169 — the last one about 90 minutes before this run).
+All are still **open and unmerged**, so `main` lacks them. Do not re-derive the board from
+this file alone: query the Notion data source and `list_pull_requests` first.
+
+### Task selection (the board is fully blocked, not empty)
+`notion-query-data-sources` in **SQL mode works** (`mode: "sql"`, table name is the
+`collection://` URL) and is far better than the search-then-fetch dance ROUTINE §3 describes.
+It returned 30 Not-started rows. Every one is already flagged by a prior verified run:
+- **P1**: cancel (no `stripe_subscription_id` on either reachable org, so the Cancel button
+  never renders), condition builder + campaign messages + A/B (product no-ops), redeeming +
+  campaign redeem-code + stamp-card rewards + campaigns overview (duplicates on main).
+- **P2**: staff permissions, member profile, alert preferences, manage-invites, detailed
+  reports (duplicates); scheduling-templates (schedule toggle is a no-op); AI suite (blocked,
+  see below); NFC registering, QR managing, QR plan limits, seat limits, hours/social — I
+  re-verified these four against `main` this run and they ARE covered (`nfc-tags.mdx` has the
+  full Add Tag walkthrough, `qr-code-detail.mdx` + `qr-codes/overview.mdx` cover
+  edit/activate/delete/bulk, `billing/plans.mdx` carries both quota tables,
+  `settings/merchant-page.mdx` has Business Hours and Social Links with screenshots).
+- **P3**: card designer + duplicate-and-status (on main), exporting analytics (covered in
+  `analytics/overview.mdx`), reward statuses (the status table is in `redemptions.mdx`).
+
+Zero-PNG scan on `origin/main` still returns only `support/faq.mdx`, `index.mdx`,
+`customer-app/settings-profile.mdx` and the `campaigns/analytics.mdx` stub. No backfill.
+
+### What was written
+The **Churn Risk** and **Best Customers** cards at the bottom of `/analytics`. This is the
+half of the BLOCKED "AI Suite" row that a Growth account *can* render: neither route has a
+plan gate, unlike `/api/ai/insights` (Elite + credits), and I confirmed both live on both
+demo orgs. `analytics/overview.mdx` on main mentions neither, so nothing is duplicated.
+
+Grounded in `Abdalestar/qtap`:
+- `churn-risk-list.tsx` / `best-customers-list.tsx` — titles, badge colours, day counter,
+  the `slice(0, 10)` top-ten cap, both empty states.
+- `app/api/ai/churn-prediction/route.ts` — members ordered by `last_activity_at` ascending
+  (nulls first, limit 50), the **20 quietest** handed to `gpt-4o-mini` for high/medium/low
+  plus a reason, and the rule-based fallback (>14d medium, >30d high, capped at 20).
+- `lib/ai/best-customers-scoring.ts` — `score = activity + recency*3 + frequency`, where
+  activity is points*0.1 or stamps*2 and frequency is the primary metric per month since
+  joining. Tiers are **relative bands** (rank 0 always platinum, then 10/30/60%).
+- `app/api/ai/best-customers/route.ts` — `scoring_method: 'rule_based'`, ranks on
+  `total_points_earned` for points orgs and `total_stamps_earned` for stamp orgs.
+- `lib/utils/permissions.ts` — `/analytics` needs `analytics !== 'none'`.
+
+Honest gotchas in the article: the risk level is a model's judgment, not a threshold (a
+10-day gap came back **medium** and a **low** row appeared on the points org even though the
+prompt asks for medium and high only — verified live, twice); the day counter falls back to
+`joined_at` for a member who never returned; tiers move when *other* members get busier, so
+merchants should not promise a tier as a reward. `total_spend` is hardcoded 0 in the scoring
+so `formatSpend` returns null and the spend chip never renders — left undocumented.
+
+### Screenshots
+`.routine/flows/customer-lists.json` (stamp, Brew & Bean: 6 members, 3 idle) and
+`customer-lists-points.json` (points, Golden Crust). Read-only: nothing clicked but the
+cookie banner and hovers. **The points shot is the teaching one** — a member holding 400
+points ranks 4th behind one with 252, which is recency*3 made visible.
+
+### Gotchas for future runs
+- **Both cards sit at y≈1440 on `/analytics`**, below any normal fold. Use a tall `viewport`
+  (2300+) AND a `hover` on the card so Playwright scrolls it in, or `clipTo` comes back
+  "empty/outside". They need ~13-15s to settle; at 8s the churn card is still skeletons.
+- **Redact the avatars, not just the names.** `best-customers-list.tsx` renders real
+  `avatar_url` photos for members who have one (3 of 6 on the stamp org). Names are
+  `<card> p.truncate`, avatars are `<card> li span[class*="h-9"]`; `>> nth=N` chaining works
+  in annotate targets.
+- Badges are `div`s, not spans: `div[class*="text-red-700"]` for high, `text-yellow-700` for
+  medium, `text-green-700` for low. A box on a selector that resolves to nothing is dropped
+  silently, so eyeball every annotated shot.
+- **The AI output changes between runs.** The same org returned 3 churn rows one minute and
+  2 the next, and the risk mix moved. Do not annotate by row index expecting a fixed level,
+  and do not re-run a capture you were happy with.
+- `flow-capture.mjs` **falls back to the points account** when the stamp login fails, and
+  says so only in one `Logged in as` line. A transient `networkidle` timeout on `/login` did
+  exactly that this run and produced a points-data capture inside a flow declared `"stamp"`.
+  Always grep the run output for `Logged in as`.
+
+### Reality flags found (do NOT document as working)
+- **`/settings` Danger Zone → Delete Account is a dead control.** `variant="destructive"
+  disabled` with no handler in `app/(dashboard)/settings/page.tsx`. There is no self-serve
+  account deletion in the dashboard.
+- **`/settings/mcp` exists and is undocumented** ("MCP / AI" tab: connect Claude or ChatGPT
+  read-only to your analytics). Owner-only AND Elite/Franchise, so both reachable demo orgs
+  render only the locked upsell. Filed as a gap row, blocked on credentials.
+- **`points/adjusting.mdx` is now wrong.** qtap commit `3ab2647` added an `adjust_points`
+  capability, `DEFAULT_PERMISSIONS` gives it to manager **and staff**, and the API gates on
+  `canAccess(staff, 'adjust_points')` rather than the old role check. The published article
+  still says staff get a 403. Filed as a follow-up row; verify the deploy before editing.
+
+### Gap discovery (3 rows added)
+MCP / AI settings page (P2, blocked on plan), the `points/adjusting.mdx` drift fix (P2), and
+the `/merchants` business-overview page (P3, a top-level sidebar item with nothing on main).
+
+---
+
 ## 2026-08-14 — Public offers (new docs section)
 
 **Article:** `merchants/offers/overview.mdx` (new)
