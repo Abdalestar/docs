@@ -20,6 +20,103 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-19 — Reading your notification stats
+
+**Article:** `merchants/notifications/stats.mdx` (new)
+**Branch:** `claude/bold-mendel-85onnj`
+**PR:** https://github.com/Abdalestar/docs/pull/167
+**Status:** Done. SMOKE_OK (TLS bridge required, ROUTINE §6a); 4 real annotated
+screenshots, validate-images 4/4 OK. One task this run.
+
+### Task selection (every P1 row is blocked; read this before hunting)
+All seven `Not started` P1 rows are dead ends and four of them are now annotated
+as such on the board: **Canceling Your Subscription** (blocked 2026-08-17: neither
+reachable demo org has a `stripe_subscription_id`, so Cancel Plan never renders),
+**Push Frequency** (blocked 2026-08-17: the per-customer attention budget is a
+design.md aspiration with no enforcing code), **Custom Campaigns / Condition
+Builder** (long-standing no-op), and Redeeming a Reward / Redeem Campaign Code /
+Stamp Card Rewards / Campaigns Overview (all duplicates of published articles).
+
+I also verified and annotated four more rows as duplicates this run: **Exporting
+Analytics** (analytics/overview.mdx already has the section + screenshot),
+**Business Hours & Social Links** (settings/merchant-page.mdx has both sections +
+screenshots), **Editing Staff Permissions** (roles-permissions.mdx covers the
+custom-permissions dialog), **Resending/Canceling Invites** (staff/overview.mdx +
+staff/inviting.mdx cover both halves).
+
+**The AI Suite row is a genuine gap but is BLOCKED on account capability**, not on
+product reality. On-main `analytics/overview.mdx` is 70 lines and mentions none of
+Churn Risk, Best Customers, Regional Benchmarks or Ask AI. But probing `/analytics`
+live: `/api/ai/insights` **403s** (needs Elite/Franchise **and** `ai_insight_credits > 0`)
+so the whole AIInsightsPanel returns null; `/api/ai/chat` has the same gate;
+RegionalBenchmarks returns 200 with no comparisons and renders null. Only Churn Risk
+and Best Customers render. Both reachable orgs are **growth with 0 credits**
+(Golden Crust = `QTAP_EMAIL` **and** `QTAP_NAJMA_EMAIL`; Brew & Bean = `QTAP_STAMP_EMAIL`);
+Najma (elite, 78 credits) and Dana (franchise, 84) are not reachable. Left for a run
+with better credentials rather than shipping a half-screenshotted article.
+
+So this run took the highest-priority **workable** row: "Reading Notification Stats
+(Delivery / Open / Click)" (P2, no PR).
+
+### ENVIRONMENT CHANGE — the notifications history renders now
+The 2026-06-12 note ("`/notifications` shows NO history on the live demo orgs", RLS
+invisibility, which is why push-notifications.mdx fell back to SVGs) **no longer
+applies to Golden Crust**. The org has 18 `sent` + 1 `suppressed` `push_notifications`
+rows and every one is visible to the demo login, with real Delivered/Opened/Clicked
+percentages including a `Clicked: 100%` row and a `Delivered: 0%` row. Anything that
+needed a populated notifications list is now capturable.
+
+### What was written
+The four figures on a sent notification, which `campaigns/push-notifications.mdx`
+covers in three bullets and which omit **Delivered** entirely. Grounded in `Abdalestar/qtap`:
+- `components/dashboard/notifications/notification-card.tsx` — figures render only for
+  `status === 'sent'`; `statusConfig` labels `suppressed` as **Not pushed** and `failed`
+  as **Failed**.
+- `hooks/use-notifications.ts` — all three percentages divide by the same
+  `total_recipients` and are `Math.round`ed; list is `.limit(50)` newest first.
+- `app/api/notifications/send/route.ts` — `total_recipients = members.length`; members
+  with push off or no device are deliberately NOT filtered out because the edge function
+  writes their inbox row; "suppressed members count as recipients but never as delivered".
+  `sendFailed = delivered === 0 && failed > 0`, so an **all-suppressed composer send still
+  ends `sent`** and reads Sent: 1 / Delivered: 0%.
+- `lib/notifications/notify-member.ts` — the `delivered` / `suppressed` / `failed` model.
+- `app/api/webhooks/onesignal/route.ts` — `total_opened` / `total_clicked` move only on
+  OneSignal events, so an in-app inbox read never registers as an open.
+- `lib/notifications/payloads.ts` — the automatic titles (`+N points at <org>`,
+  `Reward redeemed! 🎉`, `Offer redeemed! 🎉`, `You completed your <org> card! 🎉`).
+- `app/(dashboard)/settings/notifications/page.tsx` — those toggles are merchant-facing
+  alerts (`email_new_member`, `push_low_stock`…), NOT the member messages. Said in the article.
+- `lib/utils/permissions.ts` — `/notifications` needs `campaigns !== 'none'` (owners + managers).
+
+### PRECISION FIX worth keeping
+The amber **Not pushed** badge is `push_notifications.status = 'suppressed'`, and **no
+dashboard-composed or scheduled send ever writes it** — `send/route.ts` and
+`process-scheduled/route.ts` only ever write `sent` or `failed`. It appears only on the
+automatic single-member rows the edge function writes. My first draft presented it as a
+general send outcome; corrected before commit. Verified in Supabase: Golden Crust has
+exactly 18 `sent` + 1 `suppressed`.
+
+### Screenshots
+`.routine/flows/notification-stats.json` (points demo): the page with the Sent (18) tab
+and an automatic message boxed; one Sent card cropped with all four figures outlined; the
+**Not pushed** card cropped; the **Delivered: 0%** card cropped. Read-only — nothing sent,
+scheduled or deleted. No customer PII (titles/bodies name the merchant, its rewards, and
+point balances only).
+
+### Gotchas for future runs
+- **Numbered badges crowd a tight crop.** Four numbered boxes on a single ~120px-tall card
+  row put each badge on top of the neighbouring figure ("Sent: 1" read as "ent: 1"). Plain
+  boxes with no `number` plus an ordered `<Frame caption>` is the readable version.
+- A shadcn `Badge` renders as a **div**, so `span:has-text("Not pushed")` resolves nothing
+  and the box is silently dropped. `text="Not pushed"` works (matches the 2026-08-18 note).
+- `div.rounded-xl:has(h3)` `.first()` cleanly isolates the first notification card. A
+  descendant chain like `div.rounded-xl:has(h3:has-text("X")) span:has-text("Delivered:")`
+  DOES resolve — it is only `>> nth=` chaining that fails silently.
+- The list needs ~9s to settle; cards below the fold need a `hover` on the target first or
+  `clipTo` reports an empty area.
+- The cookie **Decline** click still has to be the first action of the first step only, and
+  needs a ~3s wait before it or the banner has not mounted yet.
+
 ## 2026-08-14 — Public offers (new docs section)
 
 **Article:** `merchants/offers/overview.mdx` (new)
