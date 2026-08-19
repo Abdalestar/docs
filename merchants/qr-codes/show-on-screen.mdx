@@ -1,0 +1,86 @@
+---
+title: "Showing a QR code on screen"
+sidebarTitle: "Show a code on screen"
+description: "Put any QR code full-screen on a laptop or tablet so a customer can scan it without a printed sign."
+---
+
+Any QR code you have already made can go full-screen on the device in front of you, so a customer can scan it straight off the screen. That covers a pop-up stall with nothing printed yet, or the morning the counter sign goes missing.
+
+## Switch to Gallery view
+
+Go to **QR Codes** in the left sidebar. The page opens as a table. Click the grid button to the right of the search box to switch to **Gallery** view.
+
+<Frame caption="Gallery view draws each code as a picture, so you can tell them apart before you show one to anyone.">
+  <img src="/images/merchants/qr-codes/show-on-screen-gallery.png" alt="The QR Codes page in Gallery view, with the view toggle and one code card marked" />
+</Frame>
+
+Each card draws the code in that code's own colours, with its name underneath, the code itself, a status badge, the type, and how many times it has been scanned. Click a card to open the code's full detail page.
+
+<Note>
+Gallery is not remembered between visits. The page goes back to the table each time you open it, so click the grid button again.
+</Note>
+
+## Show a code to a customer
+
+Hover a card and click the three-dot button in its corner, then choose **Show to customer**. On a phone or tablet the three-dot button is always visible, since there is nothing to hover with.
+
+<Frame caption="The card menu. Show to customer is the first item.">
+  <img src="/images/merchants/qr-codes/show-on-screen-menu.png" alt="The three-dot menu on a gallery card, with Show to customer highlighted" />
+</Frame>
+
+The code fills the screen on a plain white background, with your business name and the code's name above it and the code written out below. Your customer points their camera at it, same as they would at a printed sign.
+
+<Frame caption="The full-screen view. The code below the picture is there for the times a camera will not focus.">
+  <img src="/images/merchants/qr-codes/show-on-screen-presenter.png" alt="A QR code shown full-screen with the business name above and the code below" />
+</Frame>
+
+Press Escape or click the X in the corner to come back. Clicking anywhere on the white background closes it too.
+
+While the code is up, Qtap asks the browser to keep the screen awake so it does not dim halfway through a scan. Switching to another tab or app and coming back can drop that, so the screen may start sleeping again on a long queue.
+
+## The same button on a code's page
+
+Open any code from the table or the gallery and you get **Show to customer** under the code image, above the PNG and SVG download buttons. It opens the same full-screen view.
+
+<Frame caption="Every code's own page has the same button, under the download options.">
+  <img src="/images/merchants/qr-codes/show-on-screen-detail-button.png" alt="A QR code's detail page with the Show to customer button highlighted" />
+</Frame>
+
+## Use a screen wide enough
+
+The code is drawn at a fixed size of 640 pixels. Any laptop, tablet, or counter display is comfortably wider than that. A phone held in portrait is not, and the code gets cut off at both edges, which stops it scanning.
+
+<Frame caption="The same code on a phone. The edges are missing, so a camera cannot read it.">
+  <img src="/images/merchants/qr-codes/show-on-screen-presenter-mobile.png" alt="The full-screen QR code on a phone screen, cut off at the left and right edges" />
+</Frame>
+
+<Warning>
+Until this is fixed, show codes from a screen around 640 pixels wide or more. Browsing the gallery on a phone works fine, so you can still check a code's status from your pocket.
+</Warning>
+
+<Frame caption="Gallery view on a phone puts two codes per row and keeps every card's menu button on screen.">
+  <img src="/images/merchants/qr-codes/show-on-screen-gallery-mobile.png" alt="The QR Codes gallery on a phone, two cards per row, with a card menu button marked" />
+</Frame>
+
+## Check the badge before you show it
+
+The full-screen view will happily display a code that no longer works. A code marked **Inactive**, **Expired**, or **Max Reached** on its card still opens, and the customer's phone will reach a Qtap page telling them the code is no longer valid. Glance at the badge on the card first.
+
+<Info>
+Owners and managers can reach the QR Codes page. Staff members have no access to it by default, so a staff member showing codes at the counter needs QR access added to their permissions first.
+</Info>
+
+<CardGroup cols={2}>
+  <Card title="Code details and scans" href="/merchants/qr-codes/qr-code-detail">
+    Rename a code, pause it, or check what it has been doing.
+  </Card>
+  <Card title="What the customer sees" href="/merchants/qr-codes/customer-scan-flow">
+    What happens on their phone after the scan, and when it credits them.
+  </Card>
+  <Card title="QR codes overview" href="/merchants/qr-codes/overview">
+    Types, filters, and how codes fit into your program.
+  </Card>
+  <Card title="Roles and permissions" href="/merchants/staff/roles-permissions">
+    Give a staff member access to the QR Codes page.
+  </Card>
+</CardGroup>
