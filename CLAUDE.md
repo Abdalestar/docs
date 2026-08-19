@@ -20,6 +20,103 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-19 — Campaign audience (wizard step 4)
+
+**Article:** `merchants/campaigns/audience.mdx` (new)
+**Branch:** `claude/wizardly-bohr-hweohr`
+**PR:** https://github.com/Abdalestar/docs/pull/183
+**Status:** Done. SMOKE_OK (needed the TLS bridge); 7 real annotated screenshots,
+validate-images 7/7 OK. One task this run.
+
+### Task selection
+The run log in this file was stale: two runs already shipped earlier today (#177
+automatic notifications, #178 demo mode), so re-read the board before trusting it.
+Queried the board with `notion-query-data-sources` (SQL mode works, unlike the old
+`query_database_view`) and pulled Notes for every non-Done row. **Every P1 is blocked
+or a duplicate, all re-verified 2026-08-19 by earlier runs:** billing/cancel (no demo
+org has a `stripe_subscription_id`, so the Cancel Plan button never renders),
+custom-conditions (condition builder still a no-op), redeeming / redeem-code /
+cards-rewards / campaigns-overview (duplicates of published articles), push frequency
+(the attention-budget rate limiter in design.md does not exist in the app).
+
+Took the newest gap-discovery row instead, **"Campaign audience: who can see this
+campaign (wizard step 4)"** (P2, created 20:24 the same day, explicitly *not* blocked
+and confirmed screenshotable on Golden Crust). The other two new rows are blocked on
+account reach: MCP/AI needs an Elite or Franchise login, maintenance/announcements
+needs a real announcement to be live.
+
+### What was written
+The Audience step, which had zero coverage anywhere in the docs and is the switch
+between a pushed campaign and a claimable one. Grounded in `Abdalestar/qtap`:
+- `lib/campaigns/audience.ts` — `AUDIENCE_OPTIONS` (the exact labels/descriptions every
+  surface reads), `CLAIM_WINDOW_PRESETS` (5), `isClaimable` = anything except `private`.
+- `campaign-wizard.tsx` — the steps array is now **eight**: Type, Trigger, Reward,
+  **Audience**, Message, Conditions, A/B Test, Review. `canProceed` case 4 waives the
+  title/body requirement when the campaign is claimable.
+- `lib/campaigns/announce-gate.ts` `isPullOffer` covers every non-private visibility, so
+  `app/api/campaigns/execute/route.ts` skips `processCampaign` for a claimable campaign:
+  no mass push, no pre-issued rewards. That is why `campaign-card.tsx` swaps
+  Sent/Opened/Clicked for Claimed/Redeemed.
+- Migration `040_campaign_audience_and_shared_issuer.sql` — three-way visibility, the
+  `members_read_visible_campaigns` RLS, `issue_campaign_reward` (row-lock, claim limits,
+  **auto-insert into `organization_members`** so a public claim enrols the customer,
+  expiry `LEAST(end_date, now + window)` else now+30d), and `claim_campaign_reward`'s
+  `members_only` error, which the mobile app turns into a Join prompt
+  (`MerchantDetailsScreen.tsx`).
+- `050_protect_live_campaign_edits.sql` — post-claim lock, shipped as a Warning.
+- `campaign-audience-control.tsx` on `/campaigns/[id]` — the one field that page lets you
+  edit after the fact (explicit Save, Cancel restores; claim limits read-only there).
+
+### Also fixed the stale wizard article
+`merchants/campaigns/wizard.mdx` still said **seven** steps and numbered everything after
+Reward one too low. Corrected the count, inserted Audience at position 4 with a link to
+the new article, renumbered Message/Conditions/A-B/Review, and noted the message is only
+required for a notification-only campaign. Its own images still validate 8/8.
+
+### Verified live rather than assumed
+On the Members-only path, **Next on the Message step stays enabled with title and body
+empty**, and Review renders "No notification - customers find this on your page."
+`audience-04-review.png` is that shot.
+
+### Screenshots (nothing created, nothing saved)
+Wizard filled and walked to Review; **Activate Campaign / Save as Draft never clicked**.
+On the campaign detail page the audience dropdown was opened but **Save never clicked**.
+No customer PII (campaign names are the merchant's own).
+
+### Gotchas for future runs
+- **All three campaigns on Golden Crust are `private`**, so only the **Private** badge can
+  be captured. The Members/Public badges are prose; the options themselves are shown twice
+  (wizard radio group + detail dropdown), so nothing is left unillustrated.
+- **`notion-query-data-sources` in SQL mode works on this workspace** and is far cheaper
+  than fetching rows one by one. `SELECT "Article Title", substr("Notes",1,400) ... WHERE
+  "Status" != 'Done'` gives you the whole triage picture in one call. ROUTINE §3 still says
+  `query_database_view` returns 400 — that is a different tool, this one is the replacement.
+- **`step.waitFor` runs AFTER the actions loop.** A step that clicks Next three times can
+  never satisfy a `waitFor` naming the first screen; it logs "waitFor not found" and still
+  captures the right thing. Harmless, but do not chase it.
+- **The TLS bridge died mid-run again** (second time it is logged). Symptom: every account
+  fails login with `ERR_TIMED_OUT` / networkidle timeouts, which looks like dead credentials.
+  Check `.../tasks/<id>.output` still says listening, then restart via Bash background mode.
+  `ss` and `netstat` produce no output in this sandbox, so do not gate a retry on them.
+- **Do not `waitUntil: 'domcontentloaded'` on `/login` in a throwaway probe.** The form
+  submits as a plain GET before React hydrates and the credentials land in the query string.
+  Either use `networkidle` like the smoke test, or wait ~4s after the email input appears.
+- Claim-limit selectors: `#claim-limit-per-member`, `#claim-limit-total`, `#claim-window`
+  (they only exist once a claimable option is chosen). Audience radios are
+  `label[for="audience-private|members|public"]`. The card badge is best targeted by its
+  `title` attribute (`[title='Sent as a notification only']`); a `span:has-text('Private')`
+  box silently drew nothing.
+- Campaign detail pages are NOT linked as `a[href^="/campaigns/<id>"]` from the list; reach
+  them through the card's `button[aria-haspopup="menu"]`. The seeded demo campaign is
+  `11111111-0000-0000-0000-000000000001` ("Double Points Weekend").
+
+### Backfill
+None available. The same four unworkable zero-image files on `main` as the last several
+runs (customer-app/settings-profile = mobile, index.mdx = landing page, support/faq.mdx =
+not a how-to, campaigns/analytics.mdx = the blocked stub).
+
+---
+
 ## 2026-08-14 — Public offers (new docs section)
 
 **Article:** `merchants/offers/overview.mdx` (new)
