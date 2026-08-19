@@ -20,6 +20,66 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-19 — Card terms and the questions customers read
+
+**Article:** `merchants/cards/card-terms.mdx` (new)
+**Branch:** `claude/wizardly-bohr-a4n890`
+**PR:** https://github.com/Abdalestar/docs/pull/181
+**Status:** Done. SMOKE_OK; 5 real annotated screenshots (validate-images 5/5 OK). One task this run.
+
+### Task selection
+The board's remaining Not-started rows are all dead ends, re-verified this run:
+duplicates already on `main` (Campaigns Overview, Redeeming by Code vs Lookup, Stamp
+Card Rewards, Editing Staff Permissions, Resending Invites, NFC Registering, Staff Seat
+Limits, Merchant Alert Preferences, Managing QR Codes, Business Hours, Exporting
+Analytics); not-implemented features (Custom Conditions no-op, A/B Testing, Push
+Frequency cap — none shipped); or blocked-on-capture needing an entitled/seeded account
+the routine can't reach (Cancel Subscription + MCP/AI both need a live Stripe sub;
+Deleted-members ghost + Maintenance mode need seeded/live state). So per §3 this run did
+one **gap-discovery** new article and left the second task undone (screenshot backfill is
+genuinely exhausted — every on-main article carries real images; the only zero-image
+files are the blocked `campaigns/analytics` stub, `support/faq`, `index`, and the mobile
+`customer-app/settings-profile`).
+
+### What was written
+The **Terms and conditions** field and the up-to-4 **FAQs** editor that both stamp cards
+and points programs carry, plus the customer card details sheet they feed. Undocumented
+before: `stamp-cards/advanced-settings.mdx` covers the other Card Design fields but not
+terms/FAQs; only `points/editing.mdx` mentioned FAQs in passing. Grounded in
+`Abdalestar/qtap`:
+- `components/dashboard/shared/faqs-editor.tsx` — `MAX_FAQS = 4`, `normalizeFaqs` drops
+  rows with an empty question, Add-question disables at 4 with a limit note.
+- `components/dashboard/stamp-card/tabs/card-design-tab.tsx` — the **Back card** column:
+  `#termsConditions` (500-char counter, **Insert T&Cs Template** link) + FAQs editor.
+- `components/dashboard/points-program-form.tsx` — same two as separate **Terms &
+  Conditions** and **FAQs** cards.
+- `components/dashboard/merchant-page/terms-sheet.tsx` — the customer sheet: **How you
+  earn**, the derived **Valid / Limit / Where** rows, **Full terms**, the **Questions**
+  accordion, and the conditional rendering (full terms only with terms, Questions only
+  with ≥1 FAQ).
+- `components/dashboard/stamp-card/mobile-preview.tsx` — the live `TermsSheetContent`
+  preview in the editor's phone frame.
+
+### Screenshots
+5 PNGs via `.routine/flows/card-terms.json` on the **stamp** demo (Brew & Bean Cafe):
+Back card fields, Insert T&Cs Template result, the 2-question FAQ editor, and the live
+card details sheet in its earn/terms and Questions states. Wizard filled but **never
+published or saved**; no card written; no PII (all merchant-owned content). Added to the
+Stamp Cards nav after `advanced-settings`.
+
+### Notes for future runs
+- The board is exhausted of clean, capturable work with the two reachable growth-plan
+  demo orgs (Golden Crust points / Brew & Bean stamps). The genuine backlog is rows that
+  need an **Elite/Franchise** account with a **live Stripe subscription** the routine can
+  log into (Cancel, MCP/AI, AI Suite) or **seeded state** (a member with a deletion
+  request for the Deleted-members ghost; a live maintenance window). Ask for one of those,
+  or a plan bump on the reachable orgs, to unblock the next batch.
+- The single-vs-double-brace personalization bug is **fixed** (`lib/utils/personalize-message.ts`
+  now replaces both forms; commit f89d1b3), so the "Campaign Messages & Personalization
+  Variables" row is no longer blocked on that — but the campaign wizard is unreachable for
+  capture on both demo orgs (over the 3-campaign growth limit → `/campaigns/new` shows
+  Campaign Limit Reached). It needs an under-limit account or a plan bump.
+
 ## 2026-08-14 — Public offers (new docs section)
 
 **Article:** `merchants/offers/overview.mdx` (new)
