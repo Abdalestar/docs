@@ -84,6 +84,7 @@
           "merchants/campaigns/rewards",
           "merchants/campaigns/analytics",
           "merchants/campaigns/push-notifications",
+          "merchants/notifications/stats",
           "merchants/notifications/segments",
           "merchants/campaigns/notification-templates",
           "merchants/notifications/push-vs-campaign",
