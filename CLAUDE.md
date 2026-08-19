@@ -20,6 +20,84 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-19 — Switching between branches (the top-bar location switcher)
+
+**Article:** `merchants/settings/branch-switcher.mdx` (new)
+**Branch:** `claude/wizardly-bohr-pogi1n`
+**Status:** Done. SMOKE_OK (TLS bridge needed, §6a); 6 real annotated screenshots,
+validate-images 6/6 OK. One task this run.
+
+### Task selection
+Every `Not started` row on the board is flagged BLOCKED or DUPLICATE, all re-verified
+by earlier runs on 2026-08-19: all seven P1 rows (cancel-subscription needs a live
+Stripe sub; condition builder is still a no-op; redeeming / campaign redeem-code /
+stamp-card rewards / campaigns-overview are duplicates on main; push frequency is not
+implemented) and the P2 rows (deleted-member ghost cannot be captured because no member
+in any org carries `deletion_requested_at`; MCP/AI needs an Elite org; the rest are
+duplicates). The screenshot-backfill queue is also empty: the zero-image scan on
+`origin/main` still returns only `customer-app/settings-profile`, `index.mdx`,
+`support/faq.mdx` and the blocked `campaigns/analytics` stub. So this run did one
+gap-discovery article (§14), same call as the demo-mode run.
+
+**The gap:** zero doc mentions of the header location switcher (grepped `merchants/`,
+`customer-app/`, `support/`). New Notion row created and worked.
+
+### What was written
+`components/layout/location-switcher.tsx`, rendered from `components/layout/header.tsx`.
+Facts, all grounded in `Abdalestar/qtap` and confirmed live:
+- Renders only at 2+ active locations (`locations.length <= 1` returns null); menu is
+  All Locations / one item per active branch / Add Location. Staff-role users see only
+  their `assigned_locations`.
+- Selection persists per browser: zustand `persist`, localStorage key `qtap-location`,
+  `partialize` keeps `selectedLocationId` only.
+- **Only two pages read it.** `grep useLocationStore` returns `app/(dashboard)/page.tsx`
+  and `app/(dashboard)/analytics/page.tsx` (the third hit, points-program-form, is an
+  unrelated `valid_locations`).
+- Dashboard home: `useDashboardStats(locationId)` filters the Stamps/Points Issued and
+  Rewards Redeemed tiles; Total/Active Members are never filtered, and the page prints
+  its own note "Showing activity for X. Member counts are across all branches."
+- **THE COUNTING GOTCHA (documented as a Warning).** All-branches sums the
+  `organization_members` rollups (`total_points_earned`); branch view counts
+  `transactions` ROWS, because the rollups have no branch dimension (the code says so in
+  its own comment). Verified live: 797 across all locations vs 4 at Al Sadd, and
+  `sum(total_points_earned) = 797` in Supabase. So branches do not add up to the total.
+- Analytics: `useAnalyticsOverview`, `useStampsOverTime`, `useStaffPerformance` and
+  `usePeakHours` really filter (`.eq('location_id', …)`). Points hooks are never passed
+  `locationId` by the page, and the AI panels/churn/best-customers take none.
+- The four detailed reports + the campaign Performance card use a separate on-page
+  `BranchFilter`, independent of the header switcher. Cross-linked Location Comparison
+  as the way to actually compare branches.
+
+### REALITY FLAGS (raised on the Notion row, not documented as working)
+- `useCustomerSegments(locationId)` and `useInsights(locationId)` take the param but use
+  it **only in the SWR cache key**; their queries have no location filter. Same for
+  `usePointsOverTime`. So the segments donut, Insights panel and the points chart on the
+  dashboard home silently ignore the branch you picked. The article omits them from the
+  "what changes" list rather than claiming they follow the switcher.
+- `usePointsAnalyticsOverview` DOES filter by location but `/analytics` never passes it.
+
+### Screenshots
+`.routine/flows/branch-switcher.json`, points demo (Golden Crust Bakery, 2 branches:
+Al Sadd / The Pearl). Read-only: only the switcher selection changed (per-browser
+localStorage in the capture session). The all-branches vs one-branch pair is the whole
+article: same member tiles, 797 → 4 and 6 → 1 on the activity tiles, with the app's own
+scope note boxed. No customer PII on any shot (the dashboard home crops exclude the
+Recent Activity feed; staff names on the analytics/report shots are the merchant's own
+team, same treatment as the published staff-activity article).
+
+### Gotchas for future runs
+- **The TLS bridge is needed again** and its liveness check is misleading: `curl -x
+  http://127.0.0.1:38443` returned 000 and a restart died with EADDRINUSE, yet the
+  bridge was alive and the capture worked. Retry the capture before concluding the
+  bridge is dead; flow-capture's first login attempt timed out and the second succeeded.
+- `annotate` boxes key off `target` (a selector), not `selector`. A wrong key fails
+  silently and no box is drawn.
+- Dashboard tile row sits at page y≈168-298, but selecting a branch inserts the scope
+  note and pushes the tiles down ~20px to y≈188-318. Fixed `clip` rects need different
+  y for the all-branches and one-branch shots.
+- Golden Crust has 8 `points_earn` transactions with a NULL `location_id`, which is live
+  proof of the "untagged activity drops out of every branch view" line in the article.
+
 ## 2026-08-14 — Public offers (new docs section)
 
 **Article:** `merchants/offers/overview.mdx` (new)

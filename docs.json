@@ -143,6 +143,7 @@
           "merchants/billing/downgrade",
           "merchants/billing/invoices-payment",
           "merchants/settings/locations",
+          "merchants/settings/branch-switcher",
           "merchants/settings/notifications",
           "merchants/settings/merchant-page",
           "merchants/settings/merchant-page-editor",
