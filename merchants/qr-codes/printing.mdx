@@ -1,0 +1,71 @@
+---
+title: "Colors, logos, and print files"
+sidebarTitle: "Colors and print files"
+description: "Recolor a QR code, add your logo to the middle, and download the right file for whatever you are printing."
+---
+
+Every QR code you create can carry your own colors, and Qtap hands you the file in four shapes: a PNG, an SVG, a print-ready PDF sheet, or a ZIP of images. Which one you want depends on what the code is going on, a table tent or a shop window.
+
+## Picking the colors
+
+Colors are set on the **Generate QR Code** page, in the **Customization** card, before you save the code. Both fields take a color picker or a hex value you paste in, and the preview on the right redraws as you type.
+
+<Frame caption="QR Color (1) is the pattern itself, Background Color (2) is the square behind it. The center logo row (3) is the paid add-on.">
+  <img src="/images/merchants/qr-codes/printing-colors.png" alt="The Customization card with the QR Color and Background Color fields and the locked center logo row" />
+</Frame>
+
+A code starts black on white. Keep the pattern darker than the background when you change that, and keep the two far apart in tone. Qtap does not check the contrast for you, so a pale gold on cream will save happily and then fail on a customer's phone. Scan the preview with your own phone before you print anything in quantity.
+
+<Warning>
+Colors are stored with the code when you save it. The edit screen on a saved code only changes its name, its branch, and whether it is active, so there is no way to recolor a code later. To change the colors, generate a new code and retire the old one.
+</Warning>
+
+## Downloading one code
+
+The **Preview** card has a **PNG** and an **SVG** button, and both use whatever colors are on screen.
+
+<Frame caption="PNG (1) for screens and small prints, SVG (2) for anything large.">
+  <img src="/images/merchants/qr-codes/printing-preview.png" alt="The Preview card showing a recolored QR code with the PNG and SVG download buttons" />
+</Frame>
+
+The PNG comes out 500 pixels wide, which is plenty for a receipt, a table tent, or a post. The SVG has no fixed size at all, so use it for a window decal, a poster, or anything a printer is going to scale up. Both files are named after the code value, like `qr-QXXNGS32DB53.png`.
+
+These two buttons are switched off while the type is set to **Batch Generate**, because a batch has many code values rather than one. Save the batch first, then download the codes from the QR Codes list.
+
+You can also download a saved code later. Open the code's row menu on the QR Codes page and choose **Download** for the PNG, or **View Details** for a page with both buttons on it.
+
+## Exporting a set of codes
+
+Tick the codes you want on the QR Codes page and two export buttons appear at the top.
+
+<Frame caption="Select any number of codes, then take the whole set as a PDF (1) or a ZIP (2).">
+  <img src="/images/merchants/qr-codes/printing-export-bar.png" alt="The QR Codes header bar showing 3 selected with the PDF and ZIP export buttons highlighted" />
+</Frame>
+
+**PDF** lays the codes out on A4 pages, three to a row, each one about 40mm square with its name and code value underneath. Print it and cut them apart.
+
+<Frame caption="The exported sheet. Long names are cut to the first 20 characters, and a code you never named prints as Unnamed.">
+  <img src="/images/merchants/qr-codes/printing-pdf-sheet.png" alt="The first page of an exported QR codes PDF showing six codes in two rows with names and code values" />
+</Frame>
+
+**ZIP** gives you one 512 pixel PNG per code instead, each file named from the code's name and value, for dropping into a menu design or sending to a print shop. Both exports land in your downloads as `qr-codes-` plus today's date.
+
+<Note>
+Both bulk exports draw the codes in plain black on white, whatever colors you chose for them individually. If the color matters for a particular code, download that one on its own as a PNG or an SVG.
+</Note>
+
+## Putting your logo in the middle
+
+The **Center logo** switch sits under the color fields and puts your business logo in the middle of every code. It comes with the Franchise plan, and on any other plan it is part of the Custom QR Branding add-on, which you can buy from **Settings** then **Billing**. Until then the row shows a padlock instead of a switch.
+
+Upload your logo under **Settings** first, or the switch stays greyed out. Once it is on, it applies to your whole account rather than to one code, and older codes pick it up too, because the image is drawn fresh every time a code is shown or downloaded.
+
+Qtap protects the scan while it does this. A code carrying a logo is generated with heavier error correction, and Qtap then reads its own image back to confirm the code still resolves. If it does not, the logo is dropped for that code and the preview says the logo was hidden because it would have made scanning unreliable. You get a plain code that works instead of a pretty one that does not.
+
+## Who can do this
+
+Owners and managers reach the QR Codes pages and can generate, customize, and export. Team members on the Staff role have no QR access by default, so an owner has to grant it. See [Roles and permissions](/merchants/staff/roles-permissions) for how to change that.
+
+<Tip>
+Reprinting the same code forever is fine. A QR code's value never changes once it is created, so a sticker you printed a year ago keeps working as long as the code is still active.
+</Tip>
