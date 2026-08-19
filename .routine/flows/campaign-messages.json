@@ -1,0 +1,97 @@
+{
+  "section": "merchants/campaigns",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1100 },
+  "defaultWaitMs": 2000,
+  "steps": [
+    {
+      "name": "messages-01-step",
+      "goto": "/campaigns/new",
+      "waitMs": 7000,
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 500 },
+        { "click": "text=Win-Back Campaign" },
+        { "fill": ["#name", "Doc capture (not saved)"] },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 },
+        { "click": "[role=combobox]" },
+        { "wait": 600 },
+        { "click": "[role=option]:has-text('60 days')" },
+        { "wait": 600 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1500 }
+      ],
+      "waitFor": "#notification-body",
+      "waitMs": 1500,
+      "clipTo": "div.rounded-xl:has(#notification-body)",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "#notification-title", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#notification-body", "number": 2, "color": "plum" },
+        { "type": "box", "target": "div.flex.flex-wrap.gap-2:has-text('Customer Name')", "number": 3, "color": "gold" }
+      ]
+    },
+    {
+      "name": "messages-02-template",
+      "actions": [
+        { "click": "button:has-text('Use Template')" },
+        { "wait": 900 }
+      ],
+      "waitMs": 1200,
+      "clipTo": "div.rounded-xl:has(#notification-body)",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Use Template')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#notification-body", "number": 2, "color": "plum" },
+        { "type": "box", "target": "div.bg-white.border.shadow-sm", "number": 3, "color": "gold" }
+      ]
+    },
+    {
+      "name": "messages-03-variables",
+      "actions": [
+        { "fill": ["#notification-body", "Hi {{first_name}}, your stamp total so far: "] },
+        { "wait": 500 },
+        { "click": "div.cursor-pointer:has-text('Stamps Count')" },
+        { "wait": 900 }
+      ],
+      "waitMs": 1200,
+      "clipTo": "div.rounded-xl:has(#notification-body)",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "div.flex.flex-wrap.gap-2:has-text('Customer Name')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#notification-body", "number": 2, "color": "gold" }
+      ]
+    },
+    {
+      "name": "messages-04-preview",
+      "waitMs": 1200,
+      "clipTo": "div.bg-muted\\/50:has(div.bg-white)",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "div.bg-white.border.shadow-sm", "color": "plum" }
+      ]
+    },
+    {
+      "name": "messages-05-review",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 2000 }
+      ],
+      "waitMs": 2000,
+      "clipTo": "div.rounded-xl:has(> div > div.text-sm:has-text('Notification'))",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "div.bg-muted\\/50.rounded-lg:has-text('We miss you')", "color": "plum" }
+      ]
+    }
+  ]
+}

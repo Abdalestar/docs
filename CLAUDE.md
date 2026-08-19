@@ -20,6 +20,93 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-19 — Campaign messages and personalization
+
+**Article:** `merchants/campaigns/messages.mdx` (new)
+**Branch:** `claude/wizardly-bohr-ouup8z`
+**Status:** Done. SMOKE_OK; 5 real annotated screenshots + 1 brand SVG (validate-images 6/6 OK).
+One task this run: no screenshot backfill was available.
+
+### Task selection — every P1 row is blocked or a duplicate (checked this run)
+The board has 31 non-Done rows but the seven P1s are all unworkable:
+- **Canceling Your Subscription & the Grace Period** — BLOCKED on capture. The
+  **Cancel Plan** button renders only when `org.stripe_subscription_id` is set AND
+  `subscription_status === 'active'` (`app/(dashboard)/settings/billing/page.tsx`).
+  Both reachable demo orgs (Golden Crust Bakery, Brew & Bean Cafe) have
+  `stripe_subscription_id = null`, so neither the button nor the cancel dialog can be
+  screenshotted. Needs a demo org with a real Stripe subscription.
+- **Custom Campaigns & the Condition Builder** — still a product no-op. `target_conditions`
+  is only read inside `case 'custom':` in `execute/route.ts` + `member-eligible/route.ts`,
+  and `type-selection.tsx` still exposes only seven types (no `custom`).
+- **Redeeming a Reward: By Code vs Customer Lookup** — duplicate of on-main `merchants/redemptions.mdx`.
+- **Redeeming a Campaign Reward Code (Staff Guide)** — the `/redemptions` code box now DOES
+  resolve `campaign_rewards` codes (page.tsx line ~296), so the "no UI" blocker is gone, but
+  the surface is already covered by `redemptions.mdx` + `redemptions/scan-redemption.mdx`.
+- **Stamp Card Rewards** / **Campaigns Overview & the 8 Campaign Types** — duplicates of
+  on-main `stamp-cards/rewards.mdx` and `campaigns/overview.mdx`.
+- **Push Frequency & the Attention-Budget Guideline** — no rate limiter exists in the app
+  (grep over `lib/notifications`, `app/api/notifications`, `app/api/campaigns` finds none).
+  It is a design.md §10 principle, not a shipped feature. Do not write it as a how-to.
+
+So this run took the highest-value P2: **Campaign Messages & Personalization Variables**,
+whose only blocker was the single-vs-double brace bug.
+
+### THE BRACE BUG IS FIXED — that row is unblocked
+Verified in source AND on the live deployment this run:
+- `components/dashboard/campaigns/steps/message-config.tsx` chips now insert
+  `{{customer_name}}`, `{{first_name}}`, `{{stamps_count}}`, `{{reward_name}}`, and every
+  built-in template body uses double braces.
+- `lib/utils/personalize-message.ts` substitutes the 7 double-brace tokens AND now carries
+  single-brace fallbacks for campaigns saved before the fix, so old campaigns are no longer
+  sending raw text. There are unit tests (`__tests__/lib/personalize-message.test.ts`),
+  including one proving `Order {12345} is ready` is left alone.
+- `app/api/notifications/send/route.ts` no longer gates on `body.includes('{{')`; it
+  personalizes every send.
+Live probe on Golden Crust confirmed the deployed build: **Use Template** filled
+`Hey {{customer_name}}, it's been a while!` and the preview rendered "Hey John".
+
+### What was written
+The Message step deep-dive that `campaigns/wizard.mdx` only covers in one paragraph:
+the 100/500 limits and the both-required gate (`canProceed` case 4, waived when the
+campaign is claimable), **Use Template** overwriting both fields, the full six-token table
+(the chips expose four; `{{points_count}}` and `{{merchant_name}}` must be typed), and the
+honest gotchas:
+- The chip appends its tag to the **end** of the body (`onChange(title, body + variable)`),
+  not at the cursor.
+- The wizard preview substitutes **name tags only** (its regex covers customer_name and
+  first_name), so `{{stamps_count}}` sitting unfilled in the preview is normal.
+- `{{stamps_count}}` / `{{points_count}}` are **lifetime** totals, not current-card progress:
+  no caller passes `current_points_balance`, every send path passes `total_points_earned`.
+- An unrecognized tag goes out literally (documented as a Warning).
+- `{{reward_name}}` falls back to the word "reward" with no reward attached, and a one-off
+  push from `/notifications` has no campaign behind it, so it falls back the same way.
+- The Review step's Notification card shows the message **as written**, tags unfilled.
+
+**Deliberately NOT documented:** `{{stamps_remaining}}` is in the engine's token list, but no
+caller passes `stampsRequired`, so it always fills 0. Left out rather than claimed as working.
+
+### Screenshots (nothing was saved)
+`.routine/flows/campaign-messages.json`, points demo (Golden Crust Bakery), one continuous
+walk of the wizard: Message step empty, after Use Template, after clicking the Stamps Count
+chip, the preview close-up, and the Review notification card. **Activate Campaign / Save as
+Draft were never clicked**, so no campaign was created. No PII (wizard screens only).
+
+### Notes / gotchas for future runs
+- `/campaigns/new` renders on **Golden Crust (points)** and shows `Campaign Limit Reached`
+  on **Brew & Bean (stamp)**, which is at the 3-campaign Growth limit. That is the reverse of
+  the old Najma/Dana situation in earlier run logs. Check before picking an account.
+- The wizard now has **8 steps** (Type, Trigger, Reward, **Audience**, Message, Conditions,
+  A/B Test, Review) and the step indicator is **not clickable** any more (no `goToStep`), so a
+  flow has to walk with **Next**. The Trigger step gate is
+  `Object.keys(trigger_config).length > 0`, so a select has to be *changed*; its default value
+  alone does not enable Next.
+- Personalization chips are shadcn `Badge` divs: `div.cursor-pointer:has-text('Stamps Count')`.
+  `span:has-text(...)` times out.
+- **Drift worth a future prose pass:** on-main `campaigns/wizard.mdx` still describes a
+  7-step wizard and does not mention the Audience step. Left alone here (out of scope).
+
+---
+
 ## 2026-08-14 — Public offers (new docs section)
 
 **Article:** `merchants/offers/overview.mdx` (new)
