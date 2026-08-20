@@ -20,6 +20,98 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-20 — Joining from a QR code without the app (web enrollment)
+
+**Article:** `merchants/members/joining-without-the-app.mdx` (new)
+**Branch:** `claude/busy-clarke-bfqr71`
+**PR:** https://github.com/Abdalestar/docs/pull/185
+**Status:** Done. SMOKE_OK (TLS bridge); 8 real annotated screenshots, validate-images 8/8 OK.
+One task this run: the board has no workable row left and no backfill left (see below).
+
+### Task selection — READ THIS BEFORE HUNTING THE BOARD
+`notion-query-data-sources` **now works** (SQL mode, no Business-plan error). One query
+gets the whole board:
+`SELECT "Article Title","Status","Priority","MDX Path","Notes" FROM "collection://5aecc4c4-389b-458c-a114-43e5ee3704b6" WHERE "Status" != 'Done'`
+Do not go back to notion-search + fetch-per-row.
+
+All 30 open rows are already flagged. Every P1 is DUPLICATE (Redeeming a Reward,
+Redeem Campaign Code, Stamp Card Rewards, Campaigns Overview) or BLOCKED (Cancel
+Subscription needs a demo org with a real stripe_subscription_id; Custom Conditions
+and Push Frequency are features that do not exist). P2/P3 are the same story, plus
+three newer BLOCKED-on-capture rows (AI Suite, MCP/AI, Deleted members) that all
+need a demo account this routine cannot reach. Verified independently this run:
+"The Four Detailed Analytics Reports" and "Duplicating a Card & the Status Workflow"
+are ALSO duplicates now (all four report articles are on main; overview.mdx already
+has a "Card statuses" section and a "Duplicating a card" section with a screenshot).
+
+Backfill is still exhausted: the on-main zero-PNG scan returns the same four
+non-workable files as the 2026-08-14 run.
+
+So this run did **gap discovery** (§14) and wrote the gap. New Notion row created and
+worked in the same run.
+
+### The gap (worth a look from engineering too)
+qtap commits of 2026-08-03 ("Web enrollment page: /scan/[code] becomes phone-first
+enroll -> wallet pass; anonymous earn dies", 9f4927c, 2321d1c) **replaced the anonymous
+scan page**. A customer with a plain phone camera now types a phone number and becomes
+a real member with a first stamp and an Apple Wallet pass. Nothing in the docs covered
+it, and two published articles now contradict it:
+- `merchants/members/how-members-join.mdx` still says "An anonymous scan does not add a
+  member ... no member joins and no stamp or points are given".
+- `merchants/qr-codes/customer-scan-flow.mdx` documents the same dead behaviour.
+Both were left untouched (new-article run, not a rewrite) and flagged in the PR body
+and on the Notion row. **A future run should fix those two.**
+
+### What was written (all grounded, read-only)
+- `app/scan/[code]/page.tsx` + `components/enroll/enrollment-client.tsx` — the join page:
+  merchant's real card design, phone + Terms required, name/birthday optional, marketing
+  checkbox separate from Terms, `Get my card` -> "Confirm your phone number" dialog.
+- `app/api/enroll/route.ts` — E.164 normalization (NANP 11-digit rule, Italy trunk-zero
+  exception, default +974), plausibility check, per-IP 30/min and per-code 50/min limiter.
+- mobile repo `supabase/functions/enroll-web/index.ts` — the three endings, which is the
+  spine of the article: `enrolled` (earn + audit + scan_count/one-time burn + pass),
+  `welcome_back` (pass re-offered, NO earn, NO burned scan), `has_app_account` (no earn,
+  no pass). Same `_shared/earn.ts` engine as an in-app scan, so sign-up / interim / main /
+  campaign rewards all fire. **Vouchers are granted and stay silent** until the app.
+- `mint-pass.ts` — `platform: "apple"`, `.pkpass`. Apple Wallet only; no Google claim.
+- migration `037_web_enrollment_identity.sql` — `phone_verified` NOT NULL DEFAULT true,
+  written false only by web enrollment; `claim_web_member()` flips it on OTP.
+- `components/dashboard/app-required-notice.tsx` — the two counter variants.
+- `lib/validations/staff.ts` — staff default `members: 'view'`, so **staff do see the
+  badge**. I nearly shipped "owners and managers only"; check DEFAULT_PERMISSIONS, do not
+  assume.
+
+### Screenshots (nothing was created)
+`Get my card` only calls `setPhoneToConfirm` — the POST fires from `Confirm and join`
+alone, which was never clicked. So the confirm dialog is safe to capture and no member
+was enrolled and no code burned. Flows: `web-enroll-customer.json` (430px),
+`web-enroll-merchant.json` (1440px), `web-enroll-counter-mobile.json` (390x844, §8c).
+
+### Gotchas for future runs
+- **The country picker follows the sandbox IP.** `x-vercel-ip-country` resolves to US
+  from this runner, so the join page opens on "United States" and an 8-digit Qatar number
+  fails validation, silently killing the confirm-dialog step. Add
+  `{"select": ["select[aria-label='Country calling code']", "QA"]}` as the first action.
+- **The consent banner is suppressed on `/scan/*`** (deliberate, see the 2026-08-03
+  commit), so a `Decline` click there times out. Dashboard flows still need it.
+- `:text-is('...')` resolves badly for redaction on the redemptions summary strip (the
+  redact silently no-ops). An explicit `rect` works. It DOES work for boxing the shadcn
+  `No app yet` Badge, where `span:has-text(...)` lands the badge at 0,0 on the logo.
+- Useful demo data on **Brew & Bean Cafe** (`QTAP_STAMP_EMAIL`): QR codes
+  `CLAUDE-JOIN-COUNTER` (active stamp), `CEO-EXPIRED-001`, `CEO-MAXED-001`,
+  `CEO-ONETIME-COFFEE` (inactive) cover all four enroll error states, and member
+  `Q721848` is `phone_verified = false` WITH an available reward, which is the only way
+  to capture the loud redemption notice. Golden Crust has one such member, no reward.
+- `c.qtap.qa` (the domain `lib/utils/codes.ts` encodes into downloaded/exported QR art)
+  is **not reachable from this sandbox** (`ERR_CONNECTION_CLOSED`, though DNS resolves to
+  Vercel). Almost certainly the agent-proxy allowlist, which covers only dashboard.qtap.qa
+  and *.supabase.co. Do not report it as a product outage. Capture from
+  `dashboard.qtap.qa/scan/<code>`, which serves the same page. Separately worth an
+  engineering look: the QR gallery/export encode `c.qtap.qa` while `/qr-codes/generate`
+  and `/qr-codes/[id]` still build `${origin}/scan/...`.
+
+---
+
 ## 2026-08-14 — Public offers (new docs section)
 
 **Article:** `merchants/offers/overview.mdx` (new)
