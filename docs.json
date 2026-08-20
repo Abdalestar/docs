@@ -113,6 +113,7 @@
         "pages": [
           "merchants/members/overview",
           "merchants/members/how-members-join",
+          "merchants/members/joining-without-the-app",
           "merchants/members/profiles",
           "merchants/members/complete-profile",
           "merchants/members/export-delete",
