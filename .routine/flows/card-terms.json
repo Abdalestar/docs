@@ -1,0 +1,101 @@
+{
+  "section": "merchants/cards",
+  "account": "stamp",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 1000 },
+  "steps": [
+    {
+      "name": "card-terms-back-card",
+      "goto": "/cards/new",
+      "waitFor": "#termsConditions",
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1500 },
+        { "hover": "#termsConditions" }
+      ],
+      "waitMs": 2500,
+      "clipTo": "div.space-y-6:has(> h3:has-text('Back card'))",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "#termsConditions", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Add question')", "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "card-terms-template",
+      "goto": "/cards/new",
+      "waitFor": "#termsConditions",
+      "actions": [
+        { "hover": "#termsConditions" },
+        { "click": "button:has-text('Insert T&Cs Template')" },
+        { "wait": 800 }
+      ],
+      "waitMs": 2000,
+      "clipTo": "div.space-y-2:has(> div > button:has-text('Insert T&Cs Template'))",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Insert T&Cs Template')", "number": 1, "color": "plum" }
+      ]
+    },
+    {
+      "name": "card-terms-questions-editor",
+      "goto": "/cards/new",
+      "waitFor": "#termsConditions",
+      "actions": [
+        { "click": "button:has-text('Add question')" },
+        { "fill": ["#faq-question-0", "Can I earn a stamp on delivery orders?"] },
+        { "fill": ["textarea[aria-label='Answer 1']", "Stamps are for in-store visits only, so delivery orders do not count."] },
+        { "click": "button:has-text('Add question')" },
+        { "fill": ["#faq-question-1", "Can I use two rewards in one visit?"] },
+        { "fill": ["textarea[aria-label='Answer 2']", "One reward per visit, so save the second one for next time."] },
+        { "hover": "button:has-text('Add question')" }
+      ],
+      "waitMs": 2000,
+      "clipTo": "div.space-y-2:has(> div > button:has-text('Add question'))",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "#faq-question-0", "number": 1, "color": "plum" },
+        { "type": "box", "target": "textarea[aria-label='Answer 1']", "number": 2, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Add question')", "number": 3, "color": "gold" }
+      ]
+    },
+    {
+      "name": "card-terms-sheet-preview",
+      "goto": "/cards/new",
+      "waitFor": "#termsConditions",
+      "actions": [
+        { "hover": "#termsConditions" },
+        { "click": "button:has-text('Insert T&Cs Template')" },
+        { "fill": ["#termsConditions", "Collect one stamp per qualifying transaction. Rewards are valid for 30 days. Loyalty promotions are not valid in conjunction with any other offer."] },
+        { "wait": 1200 },
+        { "hover": "div.bg-foreground.shadow-xl" }
+      ],
+      "waitMs": 2500,
+      "clipTo": "div.bg-foreground.shadow-xl",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "div.mt-3.space-y-3:has(p:has-text('Valid'))", "color": "gold" },
+        { "type": "box", "target": "p:has-text('Collect one stamp per qualifying transaction')", "color": "plum" }
+      ]
+    },
+    {
+      "name": "card-terms-sheet-questions",
+      "goto": "/cards/new",
+      "waitFor": "#termsConditions",
+      "actions": [
+        { "click": "button:has-text('Add question')" },
+        { "fill": ["#faq-question-0", "Can I earn a stamp on delivery orders?"] },
+        { "fill": ["textarea[aria-label='Answer 1']", "Stamps are for in-store visits only, so delivery orders do not count."] },
+        { "click": "button:has-text('Add question')" },
+        { "fill": ["#faq-question-1", "Can I use two rewards in one visit?"] },
+        { "fill": ["textarea[aria-label='Answer 2']", "One reward per visit, so save the second one for next time."] },
+        { "wait": 1500 },
+        { "hover": "button[aria-expanded]:has-text('Can I use two rewards in one visit?')" },
+        { "wait": 800 }
+      ],
+      "waitMs": 2000,
+      "clipTo": "div.bg-foreground.shadow-xl",
+      "clipPadding": 12
+    }
+  ]
+}

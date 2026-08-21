@@ -1,0 +1,83 @@
+---
+title: "Switching between branches"
+sidebarTitle: "Branch switcher"
+description: "Use the location switcher in the top bar to read your dashboard numbers for one branch at a time."
+---
+
+If your business has more than one branch, a location button sits in the top bar next to the theme and notification icons. It starts on **All Locations** and lets you narrow the dashboard down to a single branch.
+
+<Frame caption="The location switcher in the top bar, showing All Locations.">
+  <img src="/images/merchants/settings/branch-switcher-header.png" alt="Dashboard top bar with the All Locations button highlighted next to the theme toggle and notification bell" />
+</Frame>
+
+The button only appears when your business has two or more active branches. With a single branch there is nothing to switch between, so Qtap hides it. Add branches under [Settings → Locations](/merchants/settings/locations).
+
+## Pick a branch
+
+<Steps>
+  1. Click the location button in the top bar.
+  2. Choose **All Locations** to go back to your whole business, or pick one branch by name.
+  3. The button label changes to the branch you picked.
+</Steps>
+
+<Frame caption="The switcher menu: All Locations (1), one entry per active branch (2), and a shortcut to add another branch (3).">
+  <img src="/images/merchants/settings/branch-switcher-menu.png" alt="Open location switcher menu listing All Locations, Al Sadd Branch, The Pearl Branch, and Add Location" />
+</Frame>
+
+Your choice sticks. Qtap saves it in the browser you are using, so the dashboard still opens on that branch tomorrow. It saves per browser rather than per account, so the phone at the counter and the laptop in the office can sit on different branches. If you wonder why a number looks low, check the button label first.
+
+## What the switcher changes
+
+Picking a branch rewrites two tiles on your dashboard home: **Stamps Issued** (or **Points Issued**) and **Rewards Redeemed**. Qtap counts only the activity recorded at that branch.
+
+<Frame caption="All Locations: member counts (1) and activity counts (2) cover the whole business.">
+  <img src="/images/merchants/settings/branch-switcher-all-branches.png" alt="Dashboard tiles for all locations showing Total Members 4, Active Members 3, Points Issued 797, Rewards Redeemed 6" />
+</Frame>
+
+<Frame caption="One branch: the member tiles hold steady while the activity tiles (2) drop to that branch, and Qtap says so above them (1).">
+  <img src="/images/merchants/settings/branch-switcher-one-branch.png" alt="Dashboard tiles for Al Sadd Branch showing the same member counts but Points Issued 4 and Rewards Redeemed 1, under a note reading Showing activity for Al Sadd Branch" />
+</Frame>
+
+On the **Analytics** page, the **Top Performing Staff** chart follows your branch choice. If you run stamp cards, the headline metrics, the stamps chart and the peak hours heatmap follow it too.
+
+<Frame caption="Top Performing Staff on the Analytics page, counted for the branch you have selected.">
+  <img src="/images/merchants/settings/branch-switcher-analytics-staff.png" alt="Top Performing Staff bar chart on the Analytics page listing three staff members" />
+</Frame>
+
+## What it leaves alone
+
+Plenty of the dashboard ignores the switcher, and knowing which parts saves you a wrong conclusion:
+
+- **Total Members and Active Members.** Members belong to your business as a whole, so these counts always cover everyone. Qtap prints a reminder under the greeting when a branch is selected.
+- **The Recent Activity feed** on your dashboard home.
+- **Your Members, QR Codes, Campaigns, Redemptions and Staff pages.** These lists always show the whole business.
+- **The points figures on Analytics** if you run a points program, along with the AI panels, Churn Risk and Best Customers.
+
+<Warning>
+Branch and all-branches numbers are counted two different ways, so do not read one as a slice of the other. Across all locations, Qtap totals the stamps or points themselves. For a single branch, it counts the visits recorded there, so a visit that awarded five stamps counts once. The branch figure is nearly always the smaller number, and adding your branches together will not match the all-locations total.
+</Warning>
+
+Activity also has to carry a branch tag to appear in a branch view. Stamps and points issued before you added your locations, or through a QR code with no branch assigned, still count for the whole business and drop out of every single-branch view.
+
+## For real branch-by-branch reporting
+
+Three of the four detailed reports, Points Activity, Revenue Impact and Staff Performance, carry their own **All branches** filter, sitting on the page rather than in the top bar. It works separately from the switcher, so setting one does not move the other.
+
+<Frame caption="The Staff Performance report has its own branch filter, independent of the top-bar switcher.">
+  <img src="/images/merchants/settings/branch-switcher-report-filter.png" alt="Staff Performance Report with its All branches dropdown open showing Al Sadd Branch and The Pearl Branch" />
+</Frame>
+
+The fourth report, [Location Comparison](/merchants/analytics/location-comparison), has no branch filter because it puts every branch on screen at once, with stamps, points, redemptions, members served and estimated revenue for each. Use it to compare branches side by side rather than one at a time.
+
+## Who sees which branches
+
+Owners and managers see every active branch in the menu. A staff member assigned to specific branches sees only those, and **All Locations** means "all of my branches" for them. Branch assignments live on each team member's record, covered in [Location-based staff access](/merchants/staff/location-access).
+
+<CardGroup cols={2}>
+  <Card title="Locations" href="/merchants/settings/locations">
+    Add a branch, set its GPS pin and opening hours, or deactivate one.
+  </Card>
+  <Card title="Location Comparison" href="/merchants/analytics/location-comparison">
+    Compare every branch side by side over a period you choose.
+  </Card>
+</CardGroup>
