@@ -1,0 +1,64 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/getting-started",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "top-bar-overview",
+      "goto": "/",
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "header button:has-text('Toggle theme')",
+      "waitMs": 6000,
+      "clip": { "x": 0, "y": 0, "width": 1440, "height": 86 },
+      "annotate": [
+        { "type": "box", "rect": { "x": 274, "y": 8, "width": 460, "height": 48 }, "number": 1, "color": "plum" },
+        { "type": "box", "rect": { "x": 1118, "y": 8, "width": 50, "height": 48 }, "number": 2, "color": "plum" },
+        { "type": "box", "rect": { "x": 1170, "y": 8, "width": 50, "height": 48 }, "number": 3, "color": "plum" },
+        { "type": "box", "rect": { "x": 1222, "y": 8, "width": 202, "height": 48 }, "number": 4, "color": "plum" }
+      ]
+    },
+    {
+      "name": "top-bar-theme-menu",
+      "goto": "/",
+      "waitFor": "header button:has-text('Toggle theme')",
+      "waitMs": 5000,
+      "actions": [
+        { "click": "header button:has-text('Toggle theme')" },
+        { "wait": 1500 }
+      ],
+      "clip": { "x": 990, "y": 0, "width": 450, "height": 190 },
+      "annotate": [
+        { "type": "box", "rect": { "x": 1029, "y": 50, "width": 136, "height": 114 }, "number": 1, "color": "plum" }
+      ]
+    },
+    {
+      "name": "top-bar-account-menu",
+      "goto": "/",
+      "waitFor": "header button:has-text('Toggle theme')",
+      "waitMs": 5000,
+      "actions": [
+        { "click": ":nth-match(header button, 6)" },
+        { "wait": 1500 }
+      ],
+      "clipTo": "[role=menu]",
+      "clipPadding": 8
+    },
+    {
+      "name": "top-bar-dark",
+      "goto": "/",
+      "waitFor": "header button:has-text('Toggle theme')",
+      "waitMs": 6000,
+      "actions": [
+        { "click": "header button:has-text('Toggle theme')" },
+        { "wait": 1000 },
+        { "click": "[role=menuitem]:has-text('Dark')" },
+        { "wait": 3500 }
+      ],
+      "clip": { "x": 0, "y": 0, "width": 1440, "height": 640 }
+    }
+  ]
+}

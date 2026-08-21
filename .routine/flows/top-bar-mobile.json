@@ -1,0 +1,34 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/getting-started",
+  "account": "points",
+  "viewport": { "width": 390, "height": 844 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "top-bar-mobile-search",
+      "goto": "/",
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1500 },
+        { "click": ":nth-match(header button, 1)" },
+        { "wait": 1500 }
+      ],
+      "waitMs": 5000,
+      "clip": { "x": 0, "y": 0, "width": 390, "height": 230 }
+    },
+    {
+      "name": "top-bar-mobile-menu",
+      "goto": "/",
+      "waitFor": "header",
+      "waitMs": 6000,
+      "actions": [
+        { "click": ":nth-match(header button, 6)" },
+        { "wait": 1800 },
+        { "click": "[role=menu] button:has-text('Toggle theme')" },
+        { "wait": 1800 }
+      ],
+      "clip": { "x": 40, "y": 0, "width": 350, "height": 460 }
+    }
+  ]
+}

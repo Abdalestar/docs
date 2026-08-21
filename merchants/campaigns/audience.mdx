@@ -1,0 +1,97 @@
+---
+title: "Who can see your campaign"
+sidebarTitle: "Campaign audience"
+description: "Choose whether a campaign is pushed to members or sits on your page in the app for customers to claim."
+---
+
+Step 4 of the New Campaign wizard asks one question: **Who can see this?** Your answer decides whether Qtap pushes the campaign out to people, or parks it on your page in the app and waits for customers to come and take it. The campaign type and the reward you attach stay the same whichever you pick. How the campaign is delivered, whether it needs a message, and the numbers it reports all follow from this choice, and the sections below cover each change.
+
+<Frame caption="Step 4 of the wizard. Notification only (1) is the default. Members only (2) and Everyone (3) put the campaign on your page in the app.">
+  <img src="/images/merchants/campaigns/audience-01-step.png" alt="The Audience step showing three options: Nobody notification only, Members only, and Everyone" />
+</Frame>
+
+## The three choices
+
+**Nobody, notification only** is the default, and it is how every campaign behaved before this step existed. Customers cannot find the campaign anywhere in the app. It goes out as a push notification to the members the campaign targets, and that push is the only way to get it. Pick this for a birthday greeting or a win-back nudge, where you decide who hears about it and when.
+
+**Members only** puts the campaign on your page in the app, visible to your members, the people who have already joined your loyalty program. They claim it themselves whenever they want. A customer who has not joined sees nothing at all.
+
+**Everyone** puts it on your page for every Qtap customer, your own members included. When someone who has not joined yet claims it, Qtap signs them up to your program at the same time. That makes it a way to win new customers rather than reward existing ones.
+
+<Note>
+"Everyone" already includes your members, so there is no fourth option for both. Members only is the narrower of the two.
+</Note>
+
+## What changes when customers can claim it
+
+Choosing Members only or Everyone flips the campaign from something Qtap sends to something customers take.
+
+The campaign is never pushed automatically. The engine that runs every fifteen minutes skips claimable campaigns entirely, so nobody is messaged and no rewards are issued in advance. Customers find it on your page.
+
+The notification message becomes optional. **Next** on the Message step stays available with the title and body empty, and the Review screen reads "No notification, customers find this on your page." Fill the message in anyway if you plan to switch the campaign back to notification only later.
+
+The numbers on the campaign change. A notification campaign reports Sent, Opened, Clicked and Redeemed. A claimable one reports how many customers claimed it and how many redeemed, because there was never a send to measure.
+
+## Claim limits
+
+A claimable campaign needs a ceiling, so the step adds three fields once you pick Members only or Everyone.
+
+<Frame caption="Claim limits appear once the campaign is claimable: per customer (1), total available (2), and how long a claimed voucher lasts (3).">
+  <img src="/images/merchants/campaigns/audience-02-claim-limits.png" alt="Claim limits panel with claims per customer, total claims available, and voucher valid for" />
+</Frame>
+
+**Claims per customer** starts at 1 and cannot go below it. This is also what stops the same person collecting the offer twice.
+
+**Total claims available** is empty by default, which means unlimited. Put a number in it and the campaign stops handing out vouchers once that many have been claimed.
+
+**Voucher valid for** sets how long a claimed voucher stays usable, counted from the moment the customer claims it.
+
+<Frame caption="The five voucher windows. The last one ties the voucher to the campaign instead of the claim.">
+  <img src="/images/merchants/campaigns/audience-03-claim-window.png" alt="Dropdown showing 1 hour, 2 hours, 1 day, 1 week after claiming, and until the campaign ends" />
+</Frame>
+
+A short window (an hour or two) suits a quiet-afternoon offer you want people to act on now. **Until the campaign ends** ties the voucher to your end date instead, and if the campaign has no end date the voucher lasts 30 days from the claim.
+
+<Warning>
+Once a customer has claimed the campaign, some of this locks. The reward and its value are frozen, the voucher window can only get longer, and the total claim limit cannot drop below the number already claimed. Qtap protects the deal people already took.
+</Warning>
+
+## Check it on the Review step
+
+The Review screen spells your choice back to you in plain words, along with the claim limits and the voucher window.
+
+<Frame caption="The Review step. Audience shows the choice, the limits, and that no notification is going out.">
+  <img src="/images/merchants/campaigns/audience-04-review.png" alt="Review step with an Audience card reading Members only and the claim limit summary" />
+</Frame>
+
+## Reading it later
+
+Every campaign carries a badge on the Campaigns page showing its audience: **Private**, **Members** or **Public**.
+
+<Frame caption="A notification-only campaign carries the Private badge next to its status.">
+  <img src="/images/merchants/campaigns/audience-05-badge.png" alt="Campaign row showing an Active badge and a Private audience badge" />
+</Frame>
+
+## Changing your mind
+
+Audience is the one setting the campaign page lets you edit after the campaign is built. Open the campaign and use the **Who can see this** card.
+
+<Frame caption="The Who can see this card on a campaign. The description under it updates as you choose.">
+  <img src="/images/merchants/campaigns/audience-06-detail-control.png" alt="Who can see this card with a dropdown reading Nobody notification only" />
+</Frame>
+
+<Frame caption="The same three options, so you can put a finished campaign on your page without rebuilding it.">
+  <img src="/images/merchants/campaigns/audience-07-detail-options.png" alt="Dropdown open showing Nobody notification only, Members only, and Everyone" />
+</Frame>
+
+Pick the new audience and click **Save**. Nothing changes until you do, and a **Cancel** button puts it back. A campaign only appears in the app once it is active, so a draft stays hidden whatever its audience says.
+
+<Note>
+Claim limits are not editable from this card. It shows the ones the campaign already has, so set them in the wizard while you are building it.
+</Note>
+
+## Who can set this
+
+Owners and managers can build and edit campaigns. Staff accounts have no campaign access by default, so they do not see this step unless the owner grants their account campaign access. See [Roles and permissions](/merchants/staff/roles-permissions) to change that.
+
+If what you want is a standing offer on your page rather than an automated campaign, build it as a [public offer](/merchants/offers/overview) instead. Offers have their own form with cover images and colours. For the rest of the wizard, see [Create a campaign](/merchants/campaigns/wizard).
