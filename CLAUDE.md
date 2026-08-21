@@ -20,6 +20,77 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-19 — Points-adjust correction (DASH-9) + Joined without the app
+
+**Articles:** `merchants/points/adjusting.mdx` (correction), `merchants/members/joined-without-the-app.mdx` (new)
+**Branch:** `claude/wizardly-bohr-mtce1h`
+**Status:** Done. SMOKE_OK (TLS bridge needed, §6a); 4 real annotated screenshots, validate-images 4/4 OK.
+Two tasks this run, one PR (this environment pins the branch).
+
+### Task 1 — the DASH-9 correction (P1, the only actionable Not-started row)
+Every other P1 row is annotated BLOCKED or DUPLICATE by the 2026-08-19 runs, and I
+re-verified the one live row in source before editing:
+- `lib/validations/staff.ts` `DEFAULT_PERMISSIONS` sets `adjust_points: true` for
+  **manager and staff**.
+- `app/api/points/adjust/route.ts` gates on `canAccess(staff,'adjust_points')`, not role.
+- `app/(dashboard)/points-operations/page.tsx` line 120/521: the **Adjust/Deduct tab
+  itself is gated on `canAdjust`**, so someone without the permission never sees the tab
+  and never reaches a refusal. The published "staff see the tab then get blocked" story
+  was wrong in both halves.
+- Dialog label is **Adjust points**, under **Loyalty** (`staff-permissions-dialog.tsx`).
+Also corrected the leak in `points/awarding.mdx` ("limited to owners and managers") and
+added the capability to the staff-defaults sentence in `staff/roles-permissions.mdx`.
+
+**Also corrected, same file:** "Adding points does not send a notice" is wrong.
+`pointsAdjustmentPayload` builds a message for both directions and the route calls
+`notifyMember` unconditionally; only the dashboard's orange note is deduct-only.
+
+**CONFLICT TO WATCH:** open PR #172 edits the same two paragraphs and keeps the stale
+access claim. Take this branch's "Who can adjust a balance", or merge this first.
+
+### Task 2 — new article: customers who joined without the app
+Genuinely uncovered on `main` and by every open PR. `/scan/[code]` is no longer an
+anonymous scan page: it is a full **join page** (`components/enroll/enrollment-client.tsx`,
+`app/api/enroll/route.ts` → the `enroll-web` edge function, read via Supabase MCP).
+Facts the article is built on:
+- No OTP on web by design, so `members.phone_verified` is written **false**; the app's
+  claim flow flips it true. That flag is the whole feature.
+- Outcomes: `enrolled` (founding scan earns + pass), `welcome_back` (**no earn** — repeat
+  earning is staff-scanned), `has_app_account`.
+- "VOUCHERS ARE GRANTED AND STAY SILENT": sign-up, interim, completed-card and campaign
+  rewards are all written and pushed, and none are shown on the web page. So staff can see
+  a reward the customer has never heard of.
+- Surfaces: **No app yet** badge on `/members`, the `earning` notice on Stamp/Points
+  Operations, the louder `redemption` notice on `/redemptions`
+  (`components/dashboard/app-required-notice.tsx`).
+
+### Knock-on corrections (the same single stale fact)
+`how-members-join.mdx` said "no member joins and no stamp or points are given" on a camera
+scan. Rewrote that section, its frontmatter description, one line of the intro, and the
+**"No" branch of `how-members-join-flow.svg`**. Same sentence fixed in `qr-codes/actions.mdx`.
+
+**LEFT FOR A FUTURE RUN (Notion row added):** `qr-codes/customer-scan-flow.mdx` carries the
+same stale claim, but its two live screenshots AND `customer-scan-paths.svg` all show the
+old anonymous-scan page, so it needs recapture, not a prose patch.
+
+### Screenshots (nothing redeemed, nobody enrolled)
+Stamp demo (Brew & Bean). Member `Q108836` is real web-enrolled data (`phone_verified=false`,
+one banked Free Pastry). `Confirm Redemption` was never clicked and the join form was never
+submitted (submitting POSTs `/api/enroll` and would create a member).
+Flows: `no-app-member.json` (earning notice), `no-app-member-voucher.json` (needs a
+**1150px-tall viewport** or the Confirm button clips), `no-app-member-list.json`,
+`no-app-member-join.json` (390px, the customer's view).
+
+### Gotchas for future runs
+- `button:has-text("Look Up")` matches **Look Up Customer** first. Use `:text-is("Look Up")`.
+- The page member search on `/stamp-operations` is `input[placeholder="Search members..."]`;
+  `input[placeholder*="Search"]` grabs the nav search and silently returns nothing. It does
+  match `qtap_id`, so you can find a nameless member without touching PII.
+- `/scan/<code>` has no cookie banner, so a `Decline` click there fails the step.
+- The members list rows show phone numbers: redact by text selector on the name and crop.
+
+---
+
 ## 2026-08-19 — Points adjustment: corrected access + notification claims
 
 **Article:** `merchants/points/adjusting.mdx` (correction, not a new article)
