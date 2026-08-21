@@ -89,6 +89,91 @@ Flows: `no-app-member.json` (earning notice), `no-app-member-voucher.json` (need
 - `/scan/<code>` has no cookie banner, so a `Decline` click there fails the step.
 - The members list rows show phone numbers: redact by text selector on the name and crop.
 
+---
+
+## 2026-08-19 — Points adjustment: corrected access + notification claims
+
+**Article:** `merchants/points/adjusting.mdx` (correction, not a new article)
+**Branch:** `claude/wizardly-bohr-64hsv7`
+**PR:** https://github.com/Abdalestar/docs/pull/172
+**Status:** Done. SMOKE_OK; 1 new annotated screenshot, validate-images 4/4 OK.
+
+### Task selection — the board has no clean new-article row left, and here is the proof
+I checked every `Not started` P1 individually rather than trusting the titles, and
+annotated each Notion row so the next run does not repeat the work. All seven P1s are
+dead ends:
+- **Campaigns Overview**, **Redeeming a Reward (Code vs Lookup)**, **Stamp Card Rewards**
+  → duplicates; the articles are on `main` already. These three keep sorting to the top
+  as P1 and being rejected by run after run. All three now carry a "recommend closing"
+  note.
+- **Custom Campaigns / Condition Builder** → still a no-op (re-verified: wizard exposes
+  7 types, none `custom`; `target_conditions` is read only inside `case 'custom'`).
+- **Redeeming a Campaign Reward Code** → now covered by scan-redemption.mdx + offers/overview.mdx.
+- **Canceling Your Subscription** → real, undocumented, worth writing, but **capture-blocked**:
+  the Cancel Plan button needs `stripe_subscription_id` + status `active`, and both
+  reachable demo orgs have a NULL subscription id.
+- **Push Frequency / Attention Budget** → **not implemented.** The only limiter is
+  `rateLimiters.notifications`, 10 req/min per org on the send endpoint. The deployed edge
+  function states outright there is "no merchant-wide, daily, quiet-hours, or global send
+  limit". The weekly cap is a design.md commitment, not shipped code.
+
+No screenshot backfill either: the zero-image scan on `main` still returns only the same
+four known-blocked files (campaigns/analytics stub, index, customer-app, support/faq).
+
+So the run took the verified **doc-drift correction** row instead.
+
+### What was actually wrong (two live errors on the published site)
+1. **"Adding points does not send a notice."** False. `points/adjust` calls `notifyMember`
+   unconditionally, and `pointsAdjustmentPayload` has an additions branch (title
+   `+N points`, type `points_earned`) alongside the deduction branch (title
+   `Points adjusted`, type `points_expired`).
+2. **"falls back to email if push is off."** There is no email leg anywhere. I fetched the
+   **deployed** `send-push-notification` edge function (version 21) rather than trusting the
+   repo, which has an empty `supabase/functions/`. It calls OneSignal and writes a
+   `notification_deliveries` inbox row, and writes that row even when the phone is
+   unreachable (status `suppressed`). Adjustments are `transactional` in
+   `_shared/notification-types.ts`, so prefs and merchant mutes cannot silence them.
+
+### The row's premise was half wrong — do not repeat it
+The Notion row said "staff can now adjust point balances". **They still cannot.** The API
+gate did move to `canAccess(staff, 'adjust_points')` and `DEFAULT_PERMISSIONS` grants it to
+manager *and* staff, but the database function did not move with it. I read the **live**
+`public.staff_adjust_points` definition via Supabase (not just migration 053) and it still
+raises `adjustment_not_allowed` for any role outside `('owner','manager')`. A staff member
+passes the API check, reaches the confirm dialog, and is refused by PostgreSQL. Observable
+behaviour is unchanged, so the access rule stayed "owners and managers".
+
+**Lesson for future runs: when a gap-discovery row claims a permission changed, check the
+RPC/migration too, not just the API route.** The two layers disagree here.
+
+### Two product bugs raised (in the PR body and the Notion row)
+- Staff are shown an Adjust/Deduct tab that can never succeed. Either the RPC should honour
+  `adjust_points` or the tab should be gated on role.
+- Confirm dialog copy (`points-operations/page.tsx` lines 1042, 1380) promises delivery
+  "via push notification or email". The send path has no email.
+
+### Screenshot
+One new shot, `images/points/points-adjust-permission.png`, of the **Adjust points**
+(`points.adjust`) permission in the Loyalty group of Edit Permissions. This doubles as the
+deploy verification the row asked for: the capability is visibly live on dashboard.qtap.qa.
+Flow at `.routine/flows/points-adjust-permission.json`. **Use Custom Permissions was toggled
+for the shot but Save changes was never clicked**, so no teammate's permissions changed and
+no points were adjusted.
+
+### Gotchas
+- Only **two** orgs are reachable and both are on **growth**: `QTAP_EMAIL` and
+  `QTAP_NAJMA_EMAIL` are now the *same* address (owner@goldencrust.qa), `QTAP_STAMP_EMAIL`
+  is owner@brewbean.qa. This is why the MCP / AI row and the billing-cancel row are both
+  capture-blocked — both need Elite/Franchise or a live Stripe subscription.
+- Neither org has a **pending** staff invite, and creating one would send a real email, so
+  the "Resending/Canceling Invites" row cannot be captured in its pending state either.
+- The TLS bridge (ROUTINE §6a) was needed again; the plain smoke test fails
+  `supabase_unreachable` with `ERR_CONNECTION_RESET` before it.
+- On a cropped `[role=dialog]` shot, an annotation `label` sits on top of the permission's
+  description text. Box only, and let the `<Frame caption>` carry the explanation.
+
+---
+
 ## 2026-08-14 — Public offers (new docs section)
 
 **Article:** `merchants/offers/overview.mdx` (new)

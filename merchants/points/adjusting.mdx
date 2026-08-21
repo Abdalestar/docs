@@ -12,9 +12,13 @@ Sometimes a balance is wrong. A purchase was rung up twice, a member was promise
 
 ## Who can adjust a balance
 
-Owners can always adjust a balance. Managers and staff both start with the **Adjust points** permission switched on, so by default anyone on your team can fix a balance from the counter. The **Adjust/Deduct** tab only shows for people who hold that permission, so if you cannot see it, an owner has taken it off your account.
+Only owners and managers can finish an adjustment. Managers and staff both start with the **Adjust points** permission switched on, so a staff member can open Points Operations, see the Adjust/Deduct tab, fill the form in, and reach the confirmation screen. Qtap refuses the change at that last step and tells them the action needs an owner or manager. If you are signed in as staff, hand the correction to an owner or manager.
 
-To take it off someone, open **Staff**, open the menu at the end of their row, and choose **Edit Permissions**. Turn on **Use custom permissions** and clear **Adjust points** under **Loyalty**. The tab stops appearing for them, and Qtap refuses the change if a request reaches it any other way.
+To take that tab away from someone, open **Staff**, open the menu at the end of their row, and choose **Edit Permissions**. Turn on **Use Custom Permissions**, clear **Adjust points** under **Loyalty**, and click **Save Changes**. The Adjust/Deduct tab stops appearing for them, which spares them a form that was going to be refused anyway.
+
+<Frame caption="The Adjust points permission in the Loyalty group of a teammate's Edit Permissions dialog. Clearing it hides the Adjust/Deduct tab for that person.">
+  <img src="/images/points/points-adjust-permission.png" alt="Edit Permissions dialog showing the Adjust points permission under the Loyalty category" />
+</Frame>
 
 ## Add or deduct points
 
@@ -38,9 +42,11 @@ As you fill the form, Qtap shows the member's current balance and what it become
 
 You cannot deduct more points than a member has. If the amount would push the balance under zero, Qtap rejects the change and leaves the balance untouched. Lower the amount and try again.
 
-## The member hears about the change
+## The member hears about every adjustment
 
-Both directions send the member a notice carrying the reason you typed and their new balance. A deduction arrives titled "Points adjusted" and an addition arrives as "+25 points", or whatever the amount was. Qtap sends it as a push notification and falls back to email if push is off. The dashboard only spells this out on the deduct side, where an orange note sits under the form and again on the confirmation screen, so write reasons a member will understand either way.
+Both directions tell the member. A deduction arrives titled "Points adjusted"; an addition arrives as "+25 points". Either way the message carries the reason you typed and their new balance, so write the reason in words the member will understand.
+
+The notice always lands in the member's in-app inbox, and Qtap pushes it to their phone as well unless they have push switched off or have not set up the app yet. A balance correction counts as transactional, so a member's notification preferences and any mute they have set on your business do not silence it.
 
 <Frame caption="The confirmation screen for a deduction, with the member, the amount, the new balance, and the reason.">
   <img src="/images/points/points-adjust-confirm.png" alt="Confirm Points Deduction dialog showing before and after balances and the reason" />
