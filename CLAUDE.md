@@ -20,6 +20,106 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-19 — Demo mode (gap-discovery new article)
+
+**Article:** `merchants/getting-started/demo-mode.mdx` (new)
+**Branch:** `claude/wizardly-bohr-utauck`
+**PR:** https://github.com/Abdalestar/docs/pull/178
+**Status:** Done. SMOKE_OK (needed the TLS bridge); 6 real annotated screenshots,
+validate-images 6/6 OK. One task this run: **no backfill exists and every board row
+is blocked or duplicate** (see below).
+
+### READ THIS BEFORE HUNTING FOR A TASK — the board is fully triaged
+The previous run log said the next task was "Wallet Passes: The Pass Design Studio".
+**That is stale**: it shipped 2026-08-15 as PR #163. Don't take it.
+
+`notion-query-database-view` still 400s, but **`notion-query-data-sources` in SQL mode
+works** and is far cheaper than search + fetch per row:
+
+```
+SELECT "Article Title","Status","Priority","MDX Path","Notes"
+FROM "collection://5aecc4c4-389b-458c-a114-43e5ee3704b6" WHERE "Status" != 'Done'
+```
+
+That returns 30 Not-started rows. **All seven P1 rows were re-verified and closed out by
+an earlier run on 2026-08-19**, and I re-confirmed the two worth re-checking:
+- Canceling Your Subscription (blocked: both reachable orgs have `stripe_subscription_id`
+  NULL, so the Cancel Plan button never renders), Custom Campaigns / Condition Builder
+  (still a no-op), Push Frequency (feature does not exist), and four verified duplicates
+  (Redeeming a Reward, Redeem Campaign Code, Stamp Card Rewards, Campaigns Overview).
+- Most P2 rows are duplicates too. The genuinely-open P2s are all capture-blocked:
+  **Deleted members** (no member in ANY org has `deletion_requested_at` set),
+  **MCP / AI** (owner + Elite/Franchise only), **AI Suite** (blocked per its note).
+
+**Backfill is exhausted.** The zero-PNG-on-main scan returns only
+`customer-app/settings-profile` (mobile), `index.mdx`, `support/faq.mdx`, and the
+`campaigns/analytics.mdx` stub. So per §14 this run did a gap-discovery article.
+
+### CAMPAIGN ANALYTICS — the old blocker diagnosis is WRONG, re-check narrowed
+The 2026-06 note says `/api/analytics/campaigns/[id]/performance` 404s because the route
+fetched the campaign with a user-scoped client and RLS blocked it. **That is no longer the
+cause.** The route was rebuilt (commits `24650f1`, `9f6b720`, `e77bd60`, all in `main`) and
+now fetches the campaign with `createAdminClient()`. I confirmed **production is running
+that new build**: `?period=bogus` returns the new `400 {"error":"Invalid period. Must be
+one of: 7d, 30d, 90d, all"}`. Yet `?period=30d` still returns `404 {"error":"Campaign not
+found"}` for campaigns that exist, while logged in as an `is_active` **owner** of the
+campaign's org (verified in `staff`). So the remaining suspect is the route's own staff
+check against the RLS policy `staff_select_own_org`, which gates on `user_organization_ids()`
+— the same function an earlier run found not returning the demo user's org for seeded
+`push_notifications`. The Performance card is `(performance || perfLoading)`-gated, so it
+renders a skeleton then unmounts. **Still not screenshotable, but the bug is one layer in
+from where the old note pointed.** Also: the card is NOT hidden by an `isDemoMode` check
+despite the code comment saying so.
+
+### What was written
+Demo mode, which had **zero mentions anywhere in the docs** yet ships on every dashboard
+page. The eye button in the header (`components/dashboard/demo/demo-toggle.tsx`, mounted
+from `components/layout/header.tsx`, unconditional, `hidden sm:block` with a fallback
+inside the account dropdown on small screens) flips `stores/demo-store.ts` `isDemoMode`,
+which swaps in ~1,750 lines of sample data from `lib/demo/demo-data.ts` (Brew House Qatar,
+2 branches, 20 fictional members, cards, programs, rewards, QR codes, NFC tags, campaigns,
+notifications, transactions, analytics, AI insights, churn, staff activity, wrapped).
+Consumed by `app/(dashboard)/{members,members/[id],qr-codes,nfc-tags,redemptions,
+stamp-operations,points-operations}` and `hooks/use-{analytics,campaigns,notifications,
+qr-codes,nfc-tags,staff-activity,ai-insights,wrapped,points-analytics,supabase-query}.ts`.
+Turning it on also starts a 10-step guided tour (`TOUR_STEPS` + `guided-tour.tsx`).
+The store is `persist`ed to localStorage under `qtap-demo-mode`, so it is per browser and
+survives reloads. No role or plan gate.
+
+### TWO HONEST GOTCHAS (both verified, do not soften them in a future edit)
+1. **Write blocking is NOT uniform.** Delete / toggle-active / add-tag / assign-location
+   hit explicit guards and toast `Demo Mode` + "... is disabled in demo mode". But
+   `handleIssueStamp` in `stamp-operations/page.tsx` and the points award path have **no
+   demo guard** and POST to the real `/api/stamps/issue` with the selected sample member id.
+   That is still safe only because the sample ids are fabricated: verified read-only,
+   `SELECT count(*) FROM members WHERE id::text LIKE 'd1000000-0000-4000-8000-%'` = 0.
+   The article says this plainly instead of claiming every button is blocked.
+2. **The dashboard home still shows REAL data in demo mode**: the org name in the top bar,
+   and the Recent Activity feed (`components/dashboard/live-activity-feed.tsx` never reads
+   the demo store). Shipped as a `<Warning>` because it matters when demoing to someone.
+   Customer names in that feed are redacted (charcoal) in `demo-02`.
+
+### Screenshots
+`.routine/flows/demo-mode.json`, points demo, 1440x900. Toggle (cropped to `header`),
+banner + tour step 1, tour step 2 cropped, `/members` (20 sample members, **no redaction
+needed, they are fictional**), `/qr-codes` (sample codes), banner Exit cropped.
+**SAFETY:** read-only; nothing created, deleted, issued or redeemed. The only state changed
+was the demo toggle itself.
+
+### Gotchas for a future run
+- The demo toggle is `button:has(svg.lucide-eye)` (exactly one on the page). The tour's
+  close X is `button.h-6.w-6:has(svg.lucide-x)`; the tour card is `div.w-\\[300px\\]`.
+- **Close the tour before capturing any other page.** Its `z-[60]` overlay dims the whole
+  screen and persists across navigation, so every later shot comes out greyed.
+- `setDemoMode(true)` also sets `tourActive: true`, so the tour always opens with demo mode.
+- The `redact` annotation defaults to **plum**, not charcoal (`col()` falls through to plum
+  when `color` is unset). Pass `"color": "charcoal"` or you get a loud pink block.
+- A `number` badge is drawn *above* the box, so it is clipped by a `clip` starting at `y:0`.
+  Drop the number on a top-edge crop.
+- TLS bridge was required again (§6a). It does not survive a container restart; restart it
+  with Bash background mode before any capture.
+---
+
 ## 2026-08-19 — Messages Qtap sends for you (automatic member notifications)
 
 **Article:** `merchants/notifications/automatic.mdx` (new)
