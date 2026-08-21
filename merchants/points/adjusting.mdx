@@ -12,7 +12,9 @@ Sometimes a balance is wrong. A purchase was rung up twice, a member was promise
 
 ## Who can adjust a balance
 
-Only owners and managers can finish an adjustment. A staff member can open the Points Operations page and see the Adjust/Deduct tab, but when they try to confirm, Qtap blocks the change and tells them the action needs an owner or manager. Hand a balance correction to an owner or manager if you are signed in as staff.
+Owners can always adjust a balance. Managers and staff both start with the **Adjust points** permission switched on, so by default anyone on your team can fix a balance from the counter. The **Adjust/Deduct** tab only shows for people who hold that permission, so if you cannot see it, an owner has taken it off your account.
+
+To take it off someone, open **Staff**, open the menu at the end of their row, and choose **Edit Permissions**. Turn on **Use custom permissions** and clear **Adjust points** under **Loyalty**. The tab stops appearing for them, and Qtap refuses the change if a request reaches it any other way.
 
 ## Add or deduct points
 
@@ -36,9 +38,9 @@ As you fill the form, Qtap shows the member's current balance and what it become
 
 You cannot deduct more points than a member has. If the amount would push the balance under zero, Qtap rejects the change and leaves the balance untouched. Lower the amount and try again.
 
-## Deductions notify the member
+## The member hears about the change
 
-When you deduct points, the member gets a notice with the reason you typed and their new balance. Qtap sends it as a push notification, and falls back to email if push is off. Adding points does not send a notice. The confirmation screen reminds you of this before a deduction goes through.
+Both directions send the member a notice carrying the reason you typed and their new balance. A deduction arrives titled "Points adjusted" and an addition arrives as "+25 points", or whatever the amount was. Qtap sends it as a push notification and falls back to email if push is off. The dashboard only spells this out on the deduct side, where an orange note sits under the form and again on the confirmation screen, so write reasons a member will understand either way.
 
 <Frame caption="The confirmation screen for a deduction, with the member, the amount, the new balance, and the reason.">
   <img src="/images/points/points-adjust-confirm.png" alt="Confirm Points Deduction dialog showing before and after balances and the reason" />
