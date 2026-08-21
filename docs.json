@@ -57,6 +57,7 @@
           "merchants/qr-codes/overview",
           "merchants/qr-codes/generating",
           "merchants/qr-codes/expiry-and-limits",
+          "merchants/qr-codes/plan-limits",
           "merchants/qr-codes/reusable-vs-one-time",
           "merchants/qr-codes/actions",
           "merchants/qr-codes/customer-scan-flow",

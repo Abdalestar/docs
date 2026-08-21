@@ -20,6 +20,100 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-19 — QR code plan limits and monthly quotas
+
+**Article:** `merchants/qr-codes/plan-limits.mdx` (new)
+**Branch:** `claude/wizardly-bohr-5rnq1r`
+**PR:** https://github.com/Abdalestar/docs/pull/171
+**Status:** Done. SMOKE_OK (TLS bridge needed); 3 real annotated screenshots
+(validate-images 3/3 OK). One task this run: **no screenshot backfill exists**
+(the zero-image scan on `origin/main` still returns only the same four
+non-workable files: `customer-app/settings-profile`, `index.mdx`,
+`support/faq.mdx`, and the blocked 6-line `campaigns/analytics.mdx` stub).
+
+### Task selection — read this before hunting, the board is misleading
+The run log's "NEXT RUN'S TASK" pointer (Wallet Passes / Pass Design Studio) was
+**stale**: that row is Done via PR #163, and today alone already produced #170
+(Churn Risk & Best Customers) plus several others. `main` is many PRs behind, so
+**never pick a task from this log's pointer — query the board.**
+
+`notion-query-data-sources` works on this board (`SELECT ... WHERE "Status" != 'Done'`)
+and is far cheaper than `notion-search` + per-row `notion-fetch`. It returns ~33 open
+rows, but almost every one carries a verified DUPLICATE or BLOCKED note in its Notes
+field. Both remaining P1s are dead: **Canceling Your Subscription** (neither reachable
+demo org has a `stripe_subscription_id`, so the Cancel button never renders) and
+**Push Frequency** (the per-customer attention budget does not exist in code; only a
+10-calls-per-minute-per-org abuse guard does). The one genuine, unflagged, screenshottable
+row was **QR Code Plan Limits & Monthly Quotas** (P2).
+
+### What was written
+The monthly QR **creation** quota, which is enforced server-side and documented
+nowhere on `main`. `billing/usage-meters.mdx` names the meter in passing without the
+numbers, the reset date or the batch rule; `qr-codes/expiry-and-limits.mdx` covers
+**per-code** limits, a different thing.
+
+Facts, all grounded in `Abdalestar/qtap`:
+- `lib/stripe/config.ts` — `qrCodesPerMonth` 50 / 300 / 1500 / Infinity. Confirmed
+  live: the Plans tab cards read exactly that, and Golden Crust (Growth) shows
+  "QR Codes (this month) 0 of 300 used".
+- `app/api/qr-codes/route.ts` — counts `qr_codes` where `created_at >= startOfMonth`
+  (1st, midnight), so the window is the calendar month and resets on the 1st;
+  `requestedCount = batch_quantity` and `currentCount + requestedCount > qrLimit`
+  rejects the **whole batch** before inserting anything; the 403 message is quoted
+  verbatim in the article.
+- `lib/billing/entitlement.ts` `entitledPlan()` — a non-paying status drops the org
+  to starter limits.
+- Delete is a hard `.delete()` on both the list and detail pages, so a code deleted
+  in the same month frees its slot; one from an earlier month frees nothing (written
+  as a Warning so nobody kills a working printed code for no gain).
+- `canAccess(staff, 'qr_batches')`; `DEFAULT_PERMISSIONS` manager `generate`, staff `none`.
+
+### Screenshots (nothing was created or deleted)
+`.routine/flows/qr-plan-limits.json`, points demo (Golden Crust, Growth): the cropped
+Billing meter row; the Plans tab with the QR line boxed on all four plan cards; and
+`/qr-codes/generate` with **Batch Generate** + Quantity 40, cropped to the QR Code Type
+card. **Generate 40 Codes was never clicked.**
+
+### TWO REALITY FLAGS — do NOT document either as working
+1. **`bonus_qr_codes` does not raise the enforced cap.** `hooks/use-plan-limits.ts`
+   adds it to the limit the Billing meter *displays*, but `app/api/qr-codes/route.ts`
+   gates on the raw `PLAN_TIERS` value. The field is only ever set by the legacy
+   `extra_qr_codes` add-on, which is not in the current store, so nobody should hit
+   it today, but the meter and the gate can disagree.
+2. **"Batch QR generation N/batch" on `/pricing`** (`batchQrPerBatch` 25/100/100/500)
+   is rendered but enforced **nowhere**. The generate form's Quantity input is a flat
+   `min={2} max={100}` regardless of plan. Same class as the Condition Builder no-op.
+
+### Board hygiene instead of gap discovery
+No new rows added (the board has 33 open rows and today's earlier run already added
+two). Instead, three rows were verified against `origin/main` and annotated DUPLICATE
+so future runs stop re-deriving them: **Staff Seat Limits per Plan** (covered by
+staff/overview + staff/inviting + billing/plans + billing/usage-meters), **Managing QR
+Codes** (covered by qr-code-detail + troubleshooting + overview), and **Buying &
+Registering an NFC Tag** (covered by nfc-tags.mdx's "Adding a tag" plus its $19 add-on
+Note).
+
+### Gotchas for future runs
+- **The TLS bridge was needed again.** Bare `PLAYWRIGHT_PROXY=$HTTPS_PROXY` still fails
+  `supabase_unreachable`/`ERR_CONNECTION_RESET`. Generate a scratch cert, start
+  `.routine/tls-bridge.mjs` with the Bash tool's **background mode** (not `nohup`), then
+  use `PLAYWRIGHT_PROXY=http://127.0.0.1:38443` for every capture script.
+- **Run node from the repo root.** `node_modules` lives in `/home/user/docs`; a throwaway
+  probe written to the scratchpad dir fails with `ERR_MODULE_NOT_FOUND` for `playwright`,
+  and a `cd` inside a Bash call does not persist to the next one (so a `rm` you think ran
+  in the repo may have run in `/home/user`).
+- **Login in a hand-rolled probe needs the smoke test's exact sequence**:
+  `goto('/login', {waitUntil:'networkidle'})` → `waitForSelector('input[type="email"]')`
+  → fill → `click('button[type="submit"]')` → `waitForURL(u => !u.includes('/login'))`.
+  Clicking too early submits the form as a GET and leaves you on
+  `/login?email=...&password=...` with the credentials in the URL.
+- The Billing Overview card still shows a **"Free Plan" badge next to "Current Plan:
+  Growth"** on the demo org (no `stripe_subscription_id`). It is in the meter screenshot.
+  Don't document that quirk; the caption carries the plan instead.
+- `#quantity` on `/qr-codes/generate` only exists after clicking **Batch Generate**;
+  `div.rounded-xl:has(#quantity)` crops the QR Code Type card cleanly.
+---
+
 ## 2026-08-19 — Churn Risk & Best Customers (new article)
 
 **Article:** `merchants/analytics/customer-lists.mdx` (new)
