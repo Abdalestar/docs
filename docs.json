@@ -85,6 +85,7 @@
           "merchants/campaigns/rewards",
           "merchants/campaigns/analytics",
           "merchants/campaigns/push-notifications",
+          "merchants/notifications/stats",
           "merchants/notifications/segments",
           "merchants/campaigns/notification-templates",
           "merchants/notifications/push-vs-campaign",
@@ -114,6 +115,7 @@
         "pages": [
           "merchants/members/overview",
           "merchants/members/how-members-join",
+          "merchants/members/joined-without-the-app",
           "merchants/members/profiles",
           "merchants/members/complete-profile",
           "merchants/members/export-delete",
@@ -142,6 +144,7 @@
           "merchants/billing/upgrade",
           "merchants/billing/trial",
           "merchants/billing/downgrade",
+          "merchants/billing/add-ons",
           "merchants/billing/invoices-payment",
           "merchants/settings/locations",
           "merchants/settings/notifications",
