@@ -20,6 +20,92 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-19 — Colors, logos, and print files (QR)
+
+**Article:** `merchants/qr-codes/printing.mdx` (new)
+**Branch:** `claude/wizardly-bohr-43loss`
+**PR:** https://github.com/Abdalestar/docs/pull/168
+**Status:** Done. SMOKE_OK (TLS bridge required, ROUTINE §6a); 4 real images,
+validate-images 4/4 OK. One task this run.
+
+### Task selection
+Took the P2 row "Customizing QR Colors & Printing (PNG / SVG / PDF / ZIP)"
+(`merchants/qr-codes/printing.mdx`, no PR). Every P1 row is still blocked and now
+annotated as such on the board (Canceling Subscription, Push Frequency, Condition
+Builder, plus four duplicates), and the 2026-08-19 run before this one had already
+taken the best P2 (notification stats). The AI Suite row stays blocked on account
+capability (both reachable orgs are growth with 0 AI credits).
+
+Overlap check before writing: `generating.mdx` mentions the color fields in one
+line, `overview.mdx` and `placement-ideas.mdx` each mention PDF/ZIP in one line.
+Nothing on `main` covers what is actually in each file, the color-persistence rules,
+or the center-logo add-on. The article cross-links rather than restating those.
+
+### What was written (all grounded in `Abdalestar/qtap`)
+- `app/(dashboard)/qr-codes/generate/page.tsx` — the **Customization** card
+  (`#qr_color` / `#bg_color`, default `#000000` on `#FFFFFF`), the live 200px preview,
+  PNG/SVG at width 500 named `qr-<CODE>.<ext>`, both disabled while `type === 'batch'`,
+  and `template_style: { color, bgColor }` written at save.
+- `app/(dashboard)/qr-codes/[id]/page.tsx` — redraws a saved code from its stored
+  `template_style`; `handleSave` updates **name, location_id, is_active only**, so a
+  saved code can never be recoloured (shipped as a Warning). Row menu **Download**
+  routes to `/qr-codes/[id]?download=true`, which auto-downloads the PNG (the on-main
+  `overview.mdx` line "exports the QR code as a PDF" is drift; left alone).
+- `lib/utils/qr-export.ts` — PDF is A4, 3 columns, 40mm codes, header "QR Codes Export",
+  per-cell name **sliced to 20 chars** + code + `action | type`; ZIP is 512px PNGs named
+  `<name-or-code>_<code>.png`. Both files `qr-codes-<ISO date>.<ext>`.
+- **THE GOTCHA WORTH KEEPING:** both bulk exports call `renderQrDataUrl` with only
+  `{width, margin, logoUrl}`, so `dark`/`light` fall back to black/white. **A PDF or ZIP
+  export silently drops per-code colours**; single PNG/SVG keep them. Shipped as a Note.
+- `lib/utils/qr-render.ts` + `qr-logo.ts` — error correction goes M → **H** when a logo
+  is set; the 24% plate / 20% image geometry; the **decode self-check** (`jsQR` reads the
+  composited canvas back and re-renders clean if it does not resolve to the same URL),
+  which is the "Logo hidden on this code" preview message. `isQrLogoEntitled` = franchise
+  (or legacy `enterprise`) **or** `custom_qr_branding_enabled`; `getQrLogoUrl` is opt-out
+  via `settings.qr_logo_enabled`, account-wide, and resolved at render time so existing
+  codes pick the logo up.
+- `lib/utils/permissions.ts` + `lib/validations/staff.ts` — `/qr-codes` needs
+  `qr_batches !== 'none'` (manager default `generate`, staff `none`).
+- No contrast validation exists anywhere in the render path, so the article tells
+  merchants to scan the preview themselves rather than implying Qtap checks it.
+
+### NEW TECHNIQUE — screenshotting an exported PDF
+`printing-pdf-sheet.png` is a real render of a real export, not a mock. Headless
+Chromium **downloads** a `file://*.pdf` instead of rendering it (`page.goto` throws
+"Download is starting"), and there is no poppler/imagemagick in this sandbox. What works:
+1. `acceptDownloads: true`, click **PDF**, `download.saveAs(...)`.
+2. `npm i pdfjs-dist`, `page.addScriptTag({ path: 'node_modules/pdfjs-dist/build/pdf.min.mjs', type: 'module' })` (exposes `window.pdfjsLib`), set
+   `GlobalWorkerOptions.workerSrc` to a Blob URL built from `pdf.worker.min.mjs`, feed the
+   PDF in as base64 → `Uint8Array`, render page 1 at scale 2 to a canvas, then
+   `locator('#cv').screenshot()`. Crop the empty page bottom with sharp.
+Clicking **PDF** is safe to capture: `jsPDF` runs entirely client-side, nothing is written
+to the account and nothing leaves the browser. Nothing else was clicked (no Save QR Code,
+no Delete); the two demo orgs are unchanged.
+
+### Screenshots
+`.routine/flows/qr-printing.json` (points demo) for the Customization card (colours filled
+with `#8E4A63` on `#F8F5F2`, the locked add-on row boxed) and the Preview card showing the
+recoloured code with PNG/SVG boxed. `.routine/flows/qr-printing-stamp.json` (stamp demo,
+which has named codes) for the cropped "3 selected / PDF / ZIP" header bar. No PII: QR
+names and codes are merchant-defined.
+
+### Gotchas for future runs
+- **Filling a field lower on `/qr-codes/generate` scrolls the page**, and the Preview card
+  is `lg:sticky top-6`, so a `clipTo` crop of it then includes the fixed nav bar. End the
+  action list with `{ "hover": "h1" }` to scroll back to the top before the shot.
+- The bulk-export bar is `grid grid-cols-3 gap-2 **sm:contents**`, so at desktop width that
+  wrapper has no box and `clipTo` on it silently falls back to a full-page shot. Use an
+  explicit `clip` (`{x:830,y:72,width:606,height:80}` at 1440px) instead.
+- The **logo** half of Custom QR Branding cannot be screenshotted working: Golden Crust and
+  Brew & Bean are both `growth` with `custom_qr_branding_enabled = false`, and the two orgs
+  that have it (Najma elite, Dana franchise) are not reachable with the configured
+  credentials. The locked padlock row is the honest capture; the enabled behaviour is prose.
+- No reachable org has a QR code with a non-default `template_style` (Najma has 2), so
+  "a saved code keeps its colours" is prose, not a screenshot.
+- The TLS bridge dropped one request mid-run (`ERR_TIMED_OUT` on `/login`) and the same
+  command succeeded on an immediate retry. Retry once before assuming the bridge died.
+---
+
 ## 2026-08-19 — Reading your notification stats
 
 **Article:** `merchants/notifications/stats.mdx` (new)

@@ -62,6 +62,7 @@
           "merchants/qr-codes/customer-scan-flow",
           "merchants/qr-codes/batch",
           "merchants/qr-codes/placement-ideas",
+          "merchants/qr-codes/printing",
           "merchants/qr-codes/troubleshooting",
           "merchants/qr-codes/qr-code-detail",
           "merchants/nfc-tags/what-is-nfc",
