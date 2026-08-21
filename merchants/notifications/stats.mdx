@@ -1,0 +1,82 @@
+---
+title: "Reading your notification stats"
+sidebarTitle: "Notification stats"
+description: "What Sent, Delivered, Opened, and Clicked mean on a notification, and why the four numbers often disagree."
+---
+
+Every message that goes out to your members leaves a record on the Notifications page, with four figures next to it. Between them the figures tell you whether the message reached anyone and whether anyone looked at it.
+
+## Where the numbers live
+
+Click **Notifications** in the sidebar. The page is titled **Push Notifications** and splits into five tabs: All, Drafts, Scheduled, Sent, and Templates. The Drafts, Scheduled, and Sent tabs carry a live count in their label, so the Sent tab tells you how many messages have gone out in total.
+
+The list holds the 50 most recent messages, newest first. Only messages with a green **Sent** badge show figures. A draft has nothing to report yet, and a scheduled message reports once it goes.
+
+<Frame caption="The Notifications page. The Sent tab (1) counts everything that has gone out, and Qtap's own automatic messages (2) sit in the same list.">
+  <img src="/images/merchants/notifications/notification-stats-list.png" alt="The Push Notifications page with the All, Drafts, Scheduled, Sent, and Templates tabs above a list of sent messages, each showing sent, delivered, opened, and clicked figures" />
+</Frame>
+
+## The four figures
+
+<Frame caption="Every sent message carries the same four figures, in this order: Sent, Delivered, Opened, Clicked.">
+  <img src="/images/merchants/notifications/notification-stats-card.png" alt="A single sent notification card with the Sent, Delivered, Opened, and Clicked figures outlined" />
+</Frame>
+
+**Sent** is a headcount: how many people Qtap handed the message to when you pressed send.
+
+**Delivered** is how many of those phones actually received the push.
+
+**Opened** is how many opened it, and **Clicked** is how many tapped through from the notification.
+
+The last three are percentages of the Sent count, rounded to a whole number. So a message with Sent: 1 can only ever read 0% or 100% on the other three.
+
+## Why Delivered can be lower than Sent
+
+A member counts towards Sent even when their phone stays quiet. Qtap writes the message into their in-app inbox either way, so they will see it next time they open the Qtap app. What they do not get is the push on their lock screen.
+
+That happens when the member has notifications turned off for Qtap, has not registered a device yet, or has muted your business. None of them are errors, and none are fixable from your side.
+
+<Frame caption="Sent: 1 with Delivered: 0%. The message is in the member's app inbox; their phone stayed quiet.">
+  <img src="/images/merchants/notifications/notification-stats-zero-delivered.png" alt="A sent notification card reading Sent 1, Delivered 0 percent, Opened 0 percent, Clicked 0 percent" />
+</Frame>
+
+Some rows carry an amber **Not pushed** badge instead of Sent, with no figures at all. That badge belongs to the automatic messages covered below: Qtap had something to tell one member, and that member's phone was not reachable. The message went to their app inbox and no further.
+
+<Frame caption="Not pushed: no push went out for this one, but the message is still waiting in the member's app inbox.">
+  <img src="/images/merchants/notifications/notification-stats-not-pushed.png" alt="A notification card with an amber Not pushed badge instead of the green Sent badge" />
+</Frame>
+
+A red **Failed** badge means something broke on the way out. That one is worth reporting to Qtap.
+
+## Messages you did not write
+
+Most of the list is usually Qtap's own work. Qtap messages a member when they earn points or a stamp, finish a card, or redeem a reward or an offer, with titles like "+25 points at your business" and "Reward redeemed!". Each goes to one person, which is why so many rows read Sent: 1.
+
+You cannot turn these off or edit them from the dashboard. The toggles under **Settings → Notifications** control alerts sent to you, not the messages your members get. Read these rows as a record of what your members were told.
+
+## Opens and clicks arrive late
+
+Opened and Clicked are reported back by each phone after the fact, so a message you just sent sits at 0% on both for a while before the numbers start moving. Give it an hour before reading anything into them.
+
+<Note>
+  A member who reads the message inside the Qtap app inbox rather than tapping the push does not register as an open. Treat Opened as a floor, not an exact count.
+</Note>
+
+## Who can see this
+
+Owners and managers can open the Notifications page. Staff have no access to it by default, so a staff member who sends stamps all day will not see these figures unless you check **View notifications** or **Send notifications** for them under **Edit Permissions**.
+
+<CardGroup cols={2}>
+  <Card title="Sending a notification" href="/merchants/campaigns/push-notifications">
+    Write and send a one-off message to your members.
+  </Card>
+  <Card title="Campaign stats" href="/merchants/campaigns/stats">
+    The separate scorecard a campaign keeps, including redemptions.
+  </Card>
+  <Card title="Audience segments" href="/merchants/notifications/segments">
+    Which members each segment reaches, and why Sent can come back small.
+  </Card>
+  <Card title="Roles and permissions" href="/merchants/staff/roles-permissions">
+    Give a manager or staff member access to the Notifications page.
+  </Card>
+</CardGroup>
