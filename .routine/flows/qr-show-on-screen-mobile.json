@@ -1,0 +1,39 @@
+{
+  "section": "merchants/qr-codes",
+  "account": "stamp",
+  "viewport": { "width": 390, "height": 844 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "show-on-screen-gallery-mobile",
+      "goto": "/qr-codes",
+      "actions": [
+        { "wait": 2000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 6000 },
+        { "click": "button:has(svg.lucide-layout-grid)" }
+      ],
+      "waitFor": "div.rounded-xl:has(canvas)",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "button[class*='group-hover:opacity-100']", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "On a phone the three-dot button sits on every card, because there is nothing to hover over." }
+      ]
+    },
+    {
+      "name": "show-on-screen-presenter-mobile",
+      "actions": [
+        { "click": "button[class*='group-hover:opacity-100']" },
+        { "wait": 1200 },
+        { "click": "[role=menuitem]:has-text('Show to customer')" },
+        { "wait": 2500 }
+      ],
+      "waitFor": "[aria-label='QR code presentation']",
+      "waitMs": 2000,
+      "annotate": [
+        { "type": "box", "target": "button[aria-label='Close presentation']", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "On a narrow phone screen the code is cut off at both edges and will not scan. Present from a wider screen." }
+      ]
+    }
+  ]
+}
