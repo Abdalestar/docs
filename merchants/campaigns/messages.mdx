@@ -16,7 +16,7 @@ Owners and managers can create and edit campaigns. Staff accounts have no campai
 
 The title takes up to 100 characters and the message up to 500. A counter under each field tracks what you have used. **Next** stays off until both fields have something in them, so a campaign that pushes cannot go out with an empty message.
 
-The exception is a campaign customers claim themselves. If you set the audience to Members only or Everyone, the campaign lives on your page in the app instead of arriving as a push, and the wizard lets you move past this step with both fields blank.
+The exception is a campaign members claim themselves. If you set the audience to Members only or Everyone, the campaign lives on your page in the app instead of arriving as a push, and the wizard lets you move past this step with both fields blank.
 
 ## Start from a template
 
@@ -45,12 +45,12 @@ Qtap fills six tags:
 | `{{reward_name}}` | The reward attached to this campaign |
 | `{{merchant_name}}` | Your business name |
 
-The last two have no chip, so type them yourself. Capitals do not matter, and the double braces do.
+`{{points_count}}` and `{{merchant_name}}` have no chip, so type those two yourself. Capitals do not matter, and the double braces do.
 
 Both counting tags run on lifetime totals, not on where the member sits on their current card. A member on their second card who has collected sixteen stamps with you reads sixteen, not six.
 
 <Warning>
-A tag Qtap does not recognize goes out exactly as you typed it. `{{firstname}}` with no underscore reaches the customer as `{{firstname}}`, so check any tag you type by hand against the table above.
+A tag Qtap does not recognize goes out exactly as you typed it. `{{firstname}}` with no underscore reaches the member as `{{firstname}}`, so check any tag you type by hand against the table above.
 </Warning>
 
 ## What the preview shows
