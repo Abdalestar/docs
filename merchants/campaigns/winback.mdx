@@ -13,8 +13,8 @@ A visit means any activity on your loyalty program: earning stamps or points (fr
 
 Members who turned off push, or muted your business, don't get the push itself. The campaign still lands in their inbox inside the app.
 
-<Frame caption="One send per lapse. After the cooldown, a member who came back and went quiet again can be won back a second time.">
-  <img src="/images/campaigns/winback-lifecycle.svg" alt="Timeline showing the win-back cycle: last visit, inactivity window, push with reward code, cooldown, then eligible again" />
+<Frame caption="A member gets one message per lapse. A second one needs room under your send cap, the cooldown behind you, and another full quiet stretch.">
+  <img src="/images/campaigns/winback-lifecycle.svg" alt="Timeline showing the win-back cycle: last visit, inactivity window, push with reward code, cooldown, then eligible again if the send cap allows" />
 </Frame>
 
 ## Setting up a win-back campaign
@@ -39,13 +39,19 @@ Select **Win-Back Campaign** and give it a name you'll recognize later, like "We
 
 Choose how long a member must be quiet before the message goes out: 14, 30, 60, or 90 days without a visit. Match it to your visit rhythm. A cafe that sees regulars weekly can act at 14 or 30 days. A salon with six-week appointment cycles should wait 60 or 90, or you'll message people who were coming back anyway.
 
-<Frame caption="The trigger step: pick the inactivity window.">
-  <img src="/images/campaigns/winback-03-trigger.png" alt="Trigger step showing the inactivity period and maximum sends fields" />
+**Maximum sends per customer** is a lifetime cap for this campaign: 1, 2, or 3 times. Once a member has had that many win-back messages from it, the campaign never writes to them again, however many times they lapse afterwards.
+
+<Frame caption="The trigger step. The inactivity window (1) decides who qualifies, and Maximum sends per customer (2) caps how many messages one person can ever get.">
+  <img src="/images/campaigns/winback-03-trigger.png" alt="Trigger step showing the inactivity period set to 30 days and maximum sends per customer set to 1 time" />
 </Frame>
 
-<Note>
-This step also shows a **Maximum sends per customer** selector. That setting is saved but not applied yet. Repeat sends are spaced by an automatic cooldown instead: twice your inactivity window, and never less than 60 days.
-</Note>
+<Warning>
+The cap starts at **1 time**, so out of the box each member gets one win-back message and no more. If you want a lapsed regular to hear from you again months later, raise it to 2 or 3 before you activate the campaign.
+</Warning>
+
+<Frame caption="Maximum sends per customer offers 1, 2, or 3 times, and opens on 1.">
+  <img src="/images/campaigns/winback-07-max-sends.png" alt="The Maximum sends per customer dropdown open, with 1 time ticked above 2 times and 3 times" />
+</Frame>
 
 ### Attach a reward (optional)
 
@@ -87,7 +93,15 @@ Check the summary, then click **Activate Campaign** to start, or **Save as Draft
 
 ## Repeat sends
 
-One send no longer blocks a member forever. The campaign can reach the same person again once two things are true: the cooldown has passed (twice your window, at least 60 days), and they've gone quiet again since their last visit. Someone who came back after your first message and lapsed months later gets a second nudge instead of silence.
+A member can hear from the same win-back campaign more than once, but three things all have to be true.
+
+They need room under **Maximum sends per customer**. At the starting value of 1, there is no second message and the other two rules never come into play.
+
+The cooldown has to pass: twice your inactivity window, and never less than 60 days. So a 14-day or 30-day window still waits a full 60 days, and a 90-day window waits 180.
+
+They have to go quiet again for the whole inactivity window. Any visit resets that clock, so someone who came back and kept coming back is never messaged a second time.
+
+A customer who returned after your first message and then drifted off months later gets another nudge, as long as your cap leaves room for it.
 
 <Warning>
 If you shorten the inactivity window on an active campaign, say from 60 days to 30, members sitting between the two windows become eligible at the next check and get the notification right away.
