@@ -117,6 +117,236 @@ pack tiers. Captured it.
   `supabase_unreachable / ERR_CONNECTION_RESET`, and passes through
   `PLAYWRIGHT_PROXY=http://127.0.0.1:38443`. Start the bridge with the Bash tool's
   background mode.
+---
+
+## 2026-08-19 — Camera scans now open the join page (recapture)
+
+**Article:** `merchants/qr-codes/customer-scan-flow.mdx` (rewritten, was factually wrong)
+**Branch:** `claude/wizardly-bohr-ytua17`
+**Status:** Done. SMOKE_OK; 5 new real annotated mobile screenshots + 1 redrawn SVG
+(validate-images 7/7 OK). One task this run.
+
+### Task selection
+Took the highest-priority `Not started` row, and the newest: **"Recapture
+customer-scan-flow.mdx: a camera scan now opens the join page"** (P1, created
+2026-08-19 09:32 by the PR #174 run, no PR). The published article told merchants a
+camera scan credits nobody and that they should ask customers to scan from the app,
+which stopped being true when web enrollment shipped. PR #174 fixed the same stale
+fact in `members/how-members-join.mdx` and `qr-codes/actions.mdx` and deliberately
+left this row out because it needed a recapture, not a prose patch: two of its three
+images and the whole `customer-scan-paths.svg` were built on the wrong branch.
+
+Note the board has moved well past what this log records: `origin/main` is still at
+the PR #162 merge, but PRs #163 to #174 are open, so most recent work is not on main.
+
+### What changed
+Rewritten against `Abdalestar/qtap` and the `enroll-web` edge function (read via the
+Supabase MCP, it is not in the dashboard repo):
+- `app/scan/[code]/page.tsx` now renders `components/enroll/enrollment-client.tsx`,
+  a join page. Heading "Welcome to <merchant>", card preview, Full name (optional),
+  Phone (required, country picker seeded from `x-vercel-ip-country`, falling back to
+  QA), Birthday (optional, "Get a reward on it"), Terms checkbox (required),
+  marketing opt-in (optional), **Get my card**, then a "Confirm your phone number"
+  dialog with Edit number / Confirm and join.
+- `app/api/enroll/route.ts` proxies to the `enroll-web` edge function with the
+  service-role key. Three endings, and the status is a property of (person, THIS
+  merchant): `enrolled` (founding scan through the shared `_shared/earn.ts` engine,
+  `qr_code_scans` row, `scan_count` bump, one-time burn, pass minted after the earn
+  so it renders 1/N), `welcome_back` (no earn, no audit row, no scan spent, pass
+  re-offered), `has_app_account` (no earn, no pass).
+- `WEB_VISIBLE_EARN_KEYS` is an allowlist of `action, message, merchant, stamp,
+  points`, so signup / interim / main / campaign rewards are written and pushed but
+  never shown on the web page. Documented as a Warning: staff can be looking at a
+  reward the customer has never heard of.
+- No OTP by design, so `phone_verified` is written FALSE and the app claim flips it.
+  Documented in a Note, cross-linked to `members/joined-without-the-app`.
+- A `checkin` code still joins the customer (`ensureEnrollment` runs) and only
+  updates `last_activity_at`; `passTargetFromQr` returns null so there is no pass.
+  The old "check-in adds nothing" Note was kept but corrected on the joining half.
+- Error states, exact live headings, all verified by loading real codes: "This QR
+  code is not valid" / "is inactive" / "has expired" / "has reached its limit".
+
+### Screenshots (nothing was submitted)
+`.routine/flows/customer-scan-join.json` (390x844) and `customer-scan-join-form.json`
+(390x1500, so a `clipTo` crop of the tall form and the dialog stays inside the
+viewport). Deleted `customer-scan-success.png`, `customer-scan-failed.png` and the
+old `customer-scan-result.json` flow; redrew `customer-scan-paths.svg` as the three
+endings. Kept the merchant-side `customer-scan-show-code.png`, still accurate.
+**SAFETY:** loading `/scan/<code>` is a GET on `/api/qr-codes/[code]/details` and
+writes nothing; the form was filled and walked to the confirm dialog but **Confirm
+and join was never clicked**, so no member was created and no scan was spent.
+
+### Gotchas for future runs
+- **The country picker follows the sandbox's IP, not Qatar.** `detectedCountry` comes
+  from `x-vercel-ip-country`, and this sandbox is US-routed, so the first capture
+  showed "United States" and a Qatari test number failed the NANP length rule with
+  "Please enter a valid phone number", so the confirm dialog never opened. Fix:
+  `{"select": ["select[aria-label='Country calling code']", "QA"]}` as the first
+  action. That is also the honest shot for a Qatar merchant's docs.
+- Phone plausibility is enforced client-side before the dialog opens
+  (`components/enroll/countries.ts`): QA is 8 digits starting 3/4/5/6/7.
+- The join page needs 9s to settle on a stamp code and up to 12s on the points demo
+  (`CEO-POINTS-001` was still on "Loading your loyalty card…" at 6s).
+- No cookie consent banner on `/scan/[code]`, unlike the dashboard.
+- Read-only capture codes on the reachable demos: `CLAUDE-JOIN-COUNTER` (Brew & Bean,
+  stamp, 5-stamp Coffee Lovers Card), `CEO-POINTS-001` (Golden Crust, points),
+  `CEO-EXPIRED-001`, `CEO-MAXED-001`, `CEO-ONETIME-COFFEE` (inactive), and any
+  nonexistent code for the not-valid card.
+- The article cross-links `merchants/members/joined-without-the-app`, which lands with
+  the open PR #174 and is not on main yet. Flagged in the PR body.
+---
+
+## 2026-08-19 — Points-adjust correction (DASH-9) + Joined without the app
+
+**Articles:** `merchants/points/adjusting.mdx` (correction), `merchants/members/joined-without-the-app.mdx` (new)
+**Branch:** `claude/wizardly-bohr-mtce1h`
+**Status:** Done. SMOKE_OK (TLS bridge needed, §6a); 4 real annotated screenshots, validate-images 4/4 OK.
+Two tasks this run, one PR (this environment pins the branch).
+
+### Task 1 — the DASH-9 correction (P1, the only actionable Not-started row)
+Every other P1 row is annotated BLOCKED or DUPLICATE by the 2026-08-19 runs, and I
+re-verified the one live row in source before editing:
+- `lib/validations/staff.ts` `DEFAULT_PERMISSIONS` sets `adjust_points: true` for
+  **manager and staff**.
+- `app/api/points/adjust/route.ts` gates on `canAccess(staff,'adjust_points')`, not role.
+- `app/(dashboard)/points-operations/page.tsx` line 120/521: the **Adjust/Deduct tab
+  itself is gated on `canAdjust`**, so someone without the permission never sees the tab
+  and never reaches a refusal. The published "staff see the tab then get blocked" story
+  was wrong in both halves.
+- Dialog label is **Adjust points**, under **Loyalty** (`staff-permissions-dialog.tsx`).
+Also corrected the leak in `points/awarding.mdx` ("limited to owners and managers") and
+added the capability to the staff-defaults sentence in `staff/roles-permissions.mdx`.
+
+**Also corrected, same file:** "Adding points does not send a notice" is wrong.
+`pointsAdjustmentPayload` builds a message for both directions and the route calls
+`notifyMember` unconditionally; only the dashboard's orange note is deduct-only.
+
+**CONFLICT TO WATCH:** open PR #172 edits the same two paragraphs and keeps the stale
+access claim. Take this branch's "Who can adjust a balance", or merge this first.
+
+### Task 2 — new article: customers who joined without the app
+Genuinely uncovered on `main` and by every open PR. `/scan/[code]` is no longer an
+anonymous scan page: it is a full **join page** (`components/enroll/enrollment-client.tsx`,
+`app/api/enroll/route.ts` → the `enroll-web` edge function, read via Supabase MCP).
+Facts the article is built on:
+- No OTP on web by design, so `members.phone_verified` is written **false**; the app's
+  claim flow flips it true. That flag is the whole feature.
+- Outcomes: `enrolled` (founding scan earns + pass), `welcome_back` (**no earn** — repeat
+  earning is staff-scanned), `has_app_account`.
+- "VOUCHERS ARE GRANTED AND STAY SILENT": sign-up, interim, completed-card and campaign
+  rewards are all written and pushed, and none are shown on the web page. So staff can see
+  a reward the customer has never heard of.
+- Surfaces: **No app yet** badge on `/members`, the `earning` notice on Stamp/Points
+  Operations, the louder `redemption` notice on `/redemptions`
+  (`components/dashboard/app-required-notice.tsx`).
+
+### Knock-on corrections (the same single stale fact)
+`how-members-join.mdx` said "no member joins and no stamp or points are given" on a camera
+scan. Rewrote that section, its frontmatter description, one line of the intro, and the
+**"No" branch of `how-members-join-flow.svg`**. Same sentence fixed in `qr-codes/actions.mdx`.
+
+**LEFT FOR A FUTURE RUN (Notion row added):** `qr-codes/customer-scan-flow.mdx` carries the
+same stale claim, but its two live screenshots AND `customer-scan-paths.svg` all show the
+old anonymous-scan page, so it needs recapture, not a prose patch.
+
+### Screenshots (nothing redeemed, nobody enrolled)
+Stamp demo (Brew & Bean). Member `Q108836` is real web-enrolled data (`phone_verified=false`,
+one banked Free Pastry). `Confirm Redemption` was never clicked and the join form was never
+submitted (submitting POSTs `/api/enroll` and would create a member).
+Flows: `no-app-member.json` (earning notice), `no-app-member-voucher.json` (needs a
+**1150px-tall viewport** or the Confirm button clips), `no-app-member-list.json`,
+`no-app-member-join.json` (390px, the customer's view).
+
+### Gotchas for future runs
+- `button:has-text("Look Up")` matches **Look Up Customer** first. Use `:text-is("Look Up")`.
+- The page member search on `/stamp-operations` is `input[placeholder="Search members..."]`;
+  `input[placeholder*="Search"]` grabs the nav search and silently returns nothing. It does
+  match `qtap_id`, so you can find a nameless member without touching PII.
+- `/scan/<code>` has no cookie banner, so a `Decline` click there fails the step.
+- The members list rows show phone numbers: redact by text selector on the name and crop.
+
+---
+
+## 2026-08-19 — Points adjustment: corrected access + notification claims
+
+**Article:** `merchants/points/adjusting.mdx` (correction, not a new article)
+**Branch:** `claude/wizardly-bohr-64hsv7`
+**PR:** https://github.com/Abdalestar/docs/pull/172
+**Status:** Done. SMOKE_OK; 1 new annotated screenshot, validate-images 4/4 OK.
+
+### Task selection — the board has no clean new-article row left, and here is the proof
+I checked every `Not started` P1 individually rather than trusting the titles, and
+annotated each Notion row so the next run does not repeat the work. All seven P1s are
+dead ends:
+- **Campaigns Overview**, **Redeeming a Reward (Code vs Lookup)**, **Stamp Card Rewards**
+  → duplicates; the articles are on `main` already. These three keep sorting to the top
+  as P1 and being rejected by run after run. All three now carry a "recommend closing"
+  note.
+- **Custom Campaigns / Condition Builder** → still a no-op (re-verified: wizard exposes
+  7 types, none `custom`; `target_conditions` is read only inside `case 'custom'`).
+- **Redeeming a Campaign Reward Code** → now covered by scan-redemption.mdx + offers/overview.mdx.
+- **Canceling Your Subscription** → real, undocumented, worth writing, but **capture-blocked**:
+  the Cancel Plan button needs `stripe_subscription_id` + status `active`, and both
+  reachable demo orgs have a NULL subscription id.
+- **Push Frequency / Attention Budget** → **not implemented.** The only limiter is
+  `rateLimiters.notifications`, 10 req/min per org on the send endpoint. The deployed edge
+  function states outright there is "no merchant-wide, daily, quiet-hours, or global send
+  limit". The weekly cap is a design.md commitment, not shipped code.
+
+No screenshot backfill either: the zero-image scan on `main` still returns only the same
+four known-blocked files (campaigns/analytics stub, index, customer-app, support/faq).
+
+So the run took the verified **doc-drift correction** row instead.
+
+### What was actually wrong (two live errors on the published site)
+1. **"Adding points does not send a notice."** False. `points/adjust` calls `notifyMember`
+   unconditionally, and `pointsAdjustmentPayload` has an additions branch (title
+   `+N points`, type `points_earned`) alongside the deduction branch (title
+   `Points adjusted`, type `points_expired`).
+2. **"falls back to email if push is off."** There is no email leg anywhere. I fetched the
+   **deployed** `send-push-notification` edge function (version 21) rather than trusting the
+   repo, which has an empty `supabase/functions/`. It calls OneSignal and writes a
+   `notification_deliveries` inbox row, and writes that row even when the phone is
+   unreachable (status `suppressed`). Adjustments are `transactional` in
+   `_shared/notification-types.ts`, so prefs and merchant mutes cannot silence them.
+
+### The row's premise was half wrong — do not repeat it
+The Notion row said "staff can now adjust point balances". **They still cannot.** The API
+gate did move to `canAccess(staff, 'adjust_points')` and `DEFAULT_PERMISSIONS` grants it to
+manager *and* staff, but the database function did not move with it. I read the **live**
+`public.staff_adjust_points` definition via Supabase (not just migration 053) and it still
+raises `adjustment_not_allowed` for any role outside `('owner','manager')`. A staff member
+passes the API check, reaches the confirm dialog, and is refused by PostgreSQL. Observable
+behaviour is unchanged, so the access rule stayed "owners and managers".
+
+**Lesson for future runs: when a gap-discovery row claims a permission changed, check the
+RPC/migration too, not just the API route.** The two layers disagree here.
+
+### Two product bugs raised (in the PR body and the Notion row)
+- Staff are shown an Adjust/Deduct tab that can never succeed. Either the RPC should honour
+  `adjust_points` or the tab should be gated on role.
+- Confirm dialog copy (`points-operations/page.tsx` lines 1042, 1380) promises delivery
+  "via push notification or email". The send path has no email.
+
+### Screenshot
+One new shot, `images/points/points-adjust-permission.png`, of the **Adjust points**
+(`points.adjust`) permission in the Loyalty group of Edit Permissions. This doubles as the
+deploy verification the row asked for: the capability is visibly live on dashboard.qtap.qa.
+Flow at `.routine/flows/points-adjust-permission.json`. **Use Custom Permissions was toggled
+for the shot but Save changes was never clicked**, so no teammate's permissions changed and
+no points were adjusted.
+
+### Gotchas
+- Only **two** orgs are reachable and both are on **growth**: `QTAP_EMAIL` and
+  `QTAP_NAJMA_EMAIL` are now the *same* address (owner@goldencrust.qa), `QTAP_STAMP_EMAIL`
+  is owner@brewbean.qa. This is why the MCP / AI row and the billing-cancel row are both
+  capture-blocked — both need Elite/Franchise or a live Stripe subscription.
+- Neither org has a **pending** staff invite, and creating one would send a real email, so
+  the "Resending/Canceling Invites" row cannot be captured in its pending state either.
+- The TLS bridge (ROUTINE §6a) was needed again; the plain smoke test fails
+  `supabase_unreachable` with `ERR_CONNECTION_RESET` before it.
+- On a cropped `[role=dialog]` shot, an annotation `label` sits on top of the permission's
+  description text. Box only, and let the `<Frame caption>` carry the explanation.
 
 ---
 
