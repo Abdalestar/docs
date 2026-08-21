@@ -1,0 +1,24 @@
+{
+  "section": "merchants/members",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 1000 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "no-app-members-badge",
+      "goto": "/members",
+      "waitMs": 8000,
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1500 }
+      ],
+      "clip": { "x": 281, "y": 292, "width": 330, "height": 250 },
+      "annotate": [
+        { "type": "redact", "target": "text=App Reviewer" },
+        { "type": "redact", "target": "text=Anonymous" },
+        { "type": "redact", "target": "text=Foreman Smoke Test" },
+        { "type": "box", "target": "text=No app yet", "color": "plum" }
+      ]
+    }
+  ]
+}

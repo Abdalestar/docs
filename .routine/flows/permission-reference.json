@@ -1,0 +1,59 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/staff",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1000 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "permission-reference-01-defaults",
+      "goto": "/staff",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text(\"Decline\")" },
+        { "wait": 4000 },
+        { "click": ":nth-match(button[aria-haspopup=\"menu\"], 4)" },
+        { "wait": 900 },
+        { "click": "[role=menuitem]:has-text(\"Edit Permissions\")" },
+        { "wait": 2000 }
+      ],
+      "waitFor": "text=Use Custom Permissions",
+      "clipTo": "[role=dialog]",
+      "clipPadding": 8,
+      "annotate": [
+        { "type": "box", "target": "[role=dialog] button[role=switch]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label:has-text(\"View members\")", "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "permission-reference-02-members-loyalty",
+      "actions": [
+        { "click": "[role=dialog] button[role=switch]" },
+        { "wait": 900 },
+        { "hover": "label:has-text(\"Redeem rewards\")" },
+        { "wait": 900 }
+      ],
+      "clipTo": "[role=dialog]",
+      "clipPadding": 8,
+      "annotate": [
+        { "type": "box", "target": "label:has-text(\"Delete members\")", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label:has-text(\"Redeem rewards\")", "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "permission-reference-03-cards-qr-analytics",
+      "actions": [
+        { "hover": "button:has-text(\"Save Changes\")" },
+        { "wait": 900 }
+      ],
+      "clipTo": "[role=dialog]",
+      "clipPadding": 8,
+      "annotate": [
+        { "type": "box", "target": "label:has-text(\"Create cards\")", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label:has-text(\"View QR codes\")", "number": 2, "color": "plum" },
+        { "type": "box", "target": "label:has-text(\"Export data\")", "number": 3, "color": "plum" },
+        { "type": "box", "target": "label:has-text(\"Send notifications\")", "number": 4, "color": "plum" }
+      ]
+    }
+  ]
+}
