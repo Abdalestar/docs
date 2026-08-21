@@ -133,6 +133,7 @@
           "merchants/staff/overview",
           "merchants/staff/inviting",
           "merchants/staff/roles-permissions",
+          "merchants/staff/permission-reference",
           "merchants/staff/location-access",
           "merchants/staff/setup-recipes",
           "merchants/staff/activity-logs"
