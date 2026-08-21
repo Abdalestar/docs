@@ -1,0 +1,139 @@
+{
+  "section": "merchants/members",
+  "account": "stamp",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "defaultWaitMs": 6000,
+  "steps": [
+    {
+      "name": "enroll-05-members-badge",
+      "goto": "/members",
+      "waitFor": "input[placeholder='Search by name, email, or phone...']",
+      "actions": [
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "fill": [
+            "input[placeholder='Search by name, email, or phone...']",
+            "Foreman"
+          ]
+        },
+        {
+          "wait": 3500
+        }
+      ],
+      "waitMs": 3500,
+      "annotate": [
+        {
+          "type": "box",
+          "target": ":text-is('No app yet')",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "redact",
+          "target": "tbody tr:nth-child(1) td:nth-child(3)"
+        }
+      ],
+      "clip": {
+        "x": 268,
+        "y": 70,
+        "width": 1164,
+        "height": 350
+      }
+    },
+    {
+      "name": "enroll-06-counter-earning",
+      "goto": "/stamp-operations",
+      "actions": [
+        {
+          "fill": [
+            "input[placeholder='Search members...']",
+            "Foreman"
+          ]
+        },
+        {
+          "wait": 3500
+        },
+        {
+          "click": ".divide-y button"
+        },
+        {
+          "wait": 3000
+        }
+      ],
+      "waitMs": 3500,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.border-amber-200",
+          "number": 1,
+          "color": "gold"
+        },
+        {
+          "type": "redact",
+          "target": ":text-is('Foreman Smoke Test')"
+        },
+        {
+          "type": "redact",
+          "target": ":text-is('+97430000001')"
+        }
+      ],
+      "clip": {
+        "x": 290,
+        "y": 220,
+        "width": 540,
+        "height": 410
+      }
+    },
+    {
+      "name": "enroll-07-counter-redemption",
+      "goto": "/redemptions",
+      "waitFor": "button:has-text('Look Up Customer')",
+      "actions": [
+        {
+          "click": "button:has-text('Look Up Customer')"
+        },
+        {
+          "wait": 1200
+        },
+        {
+          "fill": [
+            "input[placeholder='Search by name, email, phone, or Qtap ID...']",
+            "Foreman"
+          ]
+        },
+        {
+          "wait": 3500
+        },
+        {
+          "click": ".divide-y button"
+        },
+        {
+          "wait": 3500
+        }
+      ],
+      "waitMs": 3500,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.border-amber-200",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "redact",
+          "rect": {
+            "x": 312,
+            "y": 682,
+            "width": 150,
+            "height": 20
+          }
+        }
+      ]
+    }
+  ]
+}

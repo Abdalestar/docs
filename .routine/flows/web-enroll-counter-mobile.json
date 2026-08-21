@@ -1,0 +1,51 @@
+{
+  "section": "merchants/members",
+  "account": "stamp",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "defaultWaitMs": 6000,
+  "steps": [
+    {
+      "name": "enroll-08-counter-redemption-mobile",
+      "goto": "/redemptions",
+      "waitFor": "button:has-text('Look Up Customer')",
+      "actions": [
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "click": "button:has-text('Look Up Customer')"
+        },
+        {
+          "wait": 1200
+        },
+        {
+          "fill": [
+            "input[placeholder='Search by name, email, phone, or Qtap ID...']",
+            "Foreman"
+          ]
+        },
+        {
+          "wait": 3500
+        },
+        {
+          "click": ".divide-y button"
+        },
+        {
+          "wait": 3500
+        }
+      ],
+      "waitMs": 3500,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.border-amber-200",
+          "number": 1,
+          "color": "plum"
+        }
+      ]
+    }
+  ]
+}
