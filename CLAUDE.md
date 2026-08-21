@@ -20,6 +20,119 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-19 — The Merchants page (business overview)
+
+**Article:** `merchants/merchant-page/business-overview.mdx` (new)
+**Branch:** `claude/wizardly-bohr-d9rg8d`
+**PR:** https://github.com/Abdalestar/docs/pull/173
+**Status:** Done. SMOKE_OK; 6 real annotated screenshots (validate-images 6/6 OK).
+One task this run: **no screenshot backfill exists** (see below).
+
+### Task selection — the previous run's "NEXT RUN'S TASK" note was stale
+The 2026-08-14 log points at "Wallet Passes: The Pass Design Studio" as the next task.
+That row is already **Done** (PR #163, 2026-08-15). Do not take it.
+
+Read the board with `notion-query-data-sources` (SQL mode works on this workspace and is
+far cheaper than search + fetch per row):
+`SELECT "Article Title","Status","Priority","MDX Path" FROM "collection://5aecc4c4-…" WHERE "Status" != 'Done'`.
+
+All **seven P1 rows are blocked or duplicates**, each verified and annotated earlier the
+same day: Canceling Your Subscription (needs an org with a live `stripe_subscription_id`;
+both reachable demo orgs have it NULL), Push Frequency (the attention-budget cap is a
+`design.md` commitment, not shipped code), Custom Campaigns (condition builder no-op),
+Redeeming by Code vs Lookup / Stamp Card Rewards / Campaigns Overview (duplicates on main),
+Redeeming a Campaign Reward Code (no dashboard UI). **Every P2 row** is likewise flagged
+duplicate, blocked, or reality-flagged; I additionally confirmed "The Four Detailed
+Analytics Reports" is now a duplicate (all four report articles plus the hub are on main)
+and "Campaign Analytics" is a duplicate of the published `campaigns/stats.mdx` apart from
+the still-blocked Performance card. In P3, "Duplicating a Card & the Status Workflow" is
+also covered already (`stamp-cards/overview.mdx` has both a *Card statuses* and a
+*Duplicating a card* section with the row-menu screenshot).
+
+That left **"The Merchants page (/merchants business overview)"** (P3, auto-discovered
+2026-08-19, no PR) as the only genuinely open, unblocked, screenshotable row. Took it.
+
+### What was written
+`/merchants` is a top-level sidebar item and nothing on `main` documented it (old PR #54
+never merged). Distinct from the three neighbours, all cross-linked: `settings/merchant-page.mdx`
+(business settings), `settings/merchant-page-editor.mdx` (the editor at `/merchant-page`),
+`merchant-page/public-view.mdx` (the customer-facing `/m/<slug>`). Added to the Settings nav
+between `settings/merchant-page` and `settings/merchant-page-editor`.
+
+Grounded in `Abdalestar/qtap`:
+- `app/(dashboard)/merchants/page.tsx` (396 lines) — H1 "Merchants" / "Manage your merchants.";
+  the header button reads **Edit Merchant** or **Create Merchant** off `hasMerchantPage`; the
+  card (logo with a dashed placeholder fallback, name, badge, `line-clamp-2` description, then a
+  meta row of category / locationName / phone / website / googleRating); Preview / Edit / Delete;
+  the "No merchant yet" empty state.
+- The live totals are a **client-side aggregate over `organization_members`** (row count for
+  members, plus sums of `total_stamps_earned` / `total_points_earned` / `total_redemptions`).
+  Each figure is hidden while zero, and the whole row is hidden until `totalMembers > 0 ||
+  totalStampsEarned > 0 || totalPointsEarned > 0`. They are lifetime totals, not a date range.
+- `app/api/merchant-page/route.ts` `DELETE` — clears `settings.merchant_page`,
+  `cover_image_url` and `logo_url` **only**. Loyalty programs, members, balances and the org
+  name / phone / website survive. Written as a `<Warning>` so the confirm dialog ("This will
+  remove your cover photo, logo, and all merchant settings") is not read as "delete my business".
+
+### Three honest gotchas documented
+- **The Active badge is hardcoded** (`<Badge variant="default">Active</Badge>`). It appears
+  whenever a profile exists and tracks nothing. Same class as the other "displayed but not
+  wired" flags in this log.
+- **Preview only renders when the org has a `slug`.**
+- **`/merchants` is owner-only, `/merchant-page` is not.** `lib/utils/permissions.ts` returns
+  `false` for every non-owner on `/merchants` but allows `manager` on `/merchant-page` (its own
+  comment explains the API accepts managers). `components/layout/sidebar.tsx` filters nav through
+  `canAccessRoute`, and `/merchant-page` **is not in the sidebar nav array at all** — so a manager
+  may edit the profile but has no sidebar route to it. (`settings/merchant-page-editor.mdx` still
+  claims "Merchant Page in sidebar"; that is stale, left alone under the no-prose-edit rule.)
+
+### Screenshots (nothing was created, edited or deleted)
+`.routine/flows/merchants-overview.json` (points demo, Golden Crust Bakery, 5 steps) +
+`merchants-overview-stamp.json` (stamp demo, Brew & Bean Cafe, 1 step showing a **stamps**
+total in place of points). The delete confirmation was opened for the shot and its **Delete**
+action was never clicked. The card carries the merchant's own business details and aggregate
+counts, so there is no customer PII and no redaction was needed.
+
+**Two states could not be captured, described in prose instead:**
+- The **empty state**. Both reachable orgs have `settings.merchant_page` set; the four orgs
+  without one (Al liwan Suites, Chef Roza, Falcon Gym, saeedkhawaja) are not reachable with the
+  configured credentials.
+- The **"N loyalty cards"** line. `settings.merchant_page.loyaltyCards` is an array only on
+  Tea Time, which is unreachable.
+
+### GAP DISCOVERY — published prose is now wrong (new P1 row)
+qtap commit `3ab2647` "Add points.adjust staff permission (DASH-9)" invalidated
+`merchants/points/adjusting.mdx`, which is on `main` and says "Only owners and managers can
+finish an adjustment… when they try to confirm, Qtap blocks the change". Today
+`DEFAULT_PERMISSIONS` sets `adjust_points: true` for **manager AND staff**
+(`lib/validations/staff.ts` lines 42 and 58), and `app/api/points/adjust/route.ts` gates on
+`canAccess(staff, 'adjust_points')` rather than role. So staff CAN adjust by default and the
+403 only happens when an owner removes the capability. Filed as a P1 correction row; not fixed
+here because this branch already carried PR #173 for a different article.
+
+### Notes / gotchas for future runs
+- **The TLS bridge is still required** and `PLAYWRIGHT_PROXY="$HTTPS_PROXY"` alone is NOT
+  enough: Chromium's handshake is reset for `dashboard.qtap.qa` and `*.supabase.co` even
+  pointed straight at the agent proxy, while `curl` gets 200/401 on the same hosts. Run
+  `.routine/tls-bridge.mjs` (ROUTINE §6a) and use `PLAYWRIGHT_PROXY=http://127.0.0.1:38443`.
+  Start it with the Bash tool's background mode; it stayed up for the whole run.
+- Selector traps on `/merchants`: `span:has-text("members")` matches the **sidebar Members nav
+  item** first, so scope counters to `div.flex.items-center.gap-4.pt-1 > div:nth-child(N)`;
+  `button:has-text("Edit")` matches **Edit Merchant** first, use `button:text-is("Edit")`; the
+  card itself is a unique `div.rounded-xl`. Click the cookie **Decline** in the first step only.
+- `/merchants` needs ~9s to settle before the totals row appears.
+- **`campaigns/analytics.mdx` re-verified blocked today.** `GET /api/analytics/campaigns/<id>/performance`
+  returns 404 "Campaign not found" for a real `gen_random_uuid()` campaign owned by the logged-in
+  owner (`6ced08c4-…`), and `/campaigns/[id]` renders no Performance card. Note that Golden Crust's
+  seeded campaigns also carry non-RFC-4122 placeholder ids (`11111111-0000-…`), the same seed-data
+  problem the pass-design run hit; the 404 is not caused by that, since a valid UUID 404s too.
+- **`/settings/system` is NOT a docs gap.** It is a platform-only page (maintenance mode +
+  global announcements), hidden from merchants and gated by `PLATFORM_ADMIN_EMAILS`.
+- Route coverage is otherwise complete: every `app/(dashboard)` route now maps to an article or
+  an existing board row, so route-diff gap discovery is exhausted. The productive source of new
+  rows is now **drift between shipped code and published prose**, like the DASH-9 finding above.
+---
+
 ## 2026-08-19 — QR code plan limits and monthly quotas
 
 **Article:** `merchants/qr-codes/plan-limits.mdx` (new)
