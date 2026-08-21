@@ -1,0 +1,73 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "stamp",
+  "defaultWaitMs": 9000,
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "steps": [
+    {
+      "name": "customer-scan-join",
+      "goto": "/scan/CLAUDE-JOIN-COUNTER",
+      "waitFor": "h1:has-text('Welcome to')",
+      "waitMs": 9000,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "h1:has-text('Welcome to')",
+          "number": 1
+        },
+        {
+          "type": "box",
+          "target": "section[aria-label='Loyalty card preview']",
+          "number": 2
+        }
+      ],
+      "actions": [
+        {
+          "select": [
+            "select[aria-label='Country calling code']",
+            "QA"
+          ]
+        },
+        {
+          "wait": 500
+        }
+      ]
+    },
+    {
+      "name": "customer-scan-join-points",
+      "goto": "/scan/CEO-POINTS-001",
+      "waitFor": "h1:has-text('Welcome to')",
+      "waitMs": 12000,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "section[aria-label='Loyalty card preview']",
+          "number": 1
+        }
+      ],
+      "actions": [
+        {
+          "select": [
+            "select[aria-label='Country calling code']",
+            "QA"
+          ]
+        },
+        {
+          "wait": 500
+        }
+      ]
+    },
+    {
+      "name": "customer-scan-notvalid",
+      "goto": "/scan/QTAP-NOT-A-REAL-CODE",
+      "waitFor": "h1:has-text('This QR code is not valid')",
+      "waitMs": 6000,
+      "clipTo": "div.rounded-xl",
+      "clipPadding": 12
+    }
+  ]
+}

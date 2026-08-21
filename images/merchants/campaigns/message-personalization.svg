@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" role="img" aria-label="One campaign message template filling with two different members' details when the campaign sends" font-family="system-ui, -apple-system, sans-serif">
+  <rect width="900" height="420" fill="#F8F5F2"/>
+
+  <!-- Template -->
+  <text x="40" y="40" font-size="13" font-weight="700" fill="#6B6770" letter-spacing="0.08em">WHAT YOU WRITE ONCE</text>
+  <rect x="40" y="56" width="330" height="128" rx="14" fill="#FFFFFF" stroke="#8E4A63" stroke-width="2"/>
+  <text x="62" y="86" font-size="14" font-weight="700" fill="#423F4C">We miss you!</text>
+  <text x="62" y="112" font-size="13" fill="#423F4C">Hi <tspan font-weight="700" fill="#8E4A63">{{first_name}}</tspan>, your stamp</text>
+  <text x="62" y="134" font-size="13" fill="#423F4C">total so far: <tspan font-weight="700" fill="#8E4A63">{{stamps_count}}</tspan></text>
+  <text x="62" y="164" font-size="12" fill="#6B6770">Saved on the campaign, once.</text>
+
+  <!-- Engine -->
+  <line x1="370" y1="120" x2="424" y2="120" stroke="#423F4C" stroke-width="2"/>
+  <polygon points="436,120 424,114 424,126" fill="#423F4C"/>
+  <rect x="440" y="88" width="150" height="64" rx="12" fill="#423F4C"/>
+  <text x="515" y="114" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Qtap fills the tags</text>
+  <text x="515" y="134" font-size="12" fill="#F0D793" text-anchor="middle">as the push goes out</text>
+
+  <!-- Split arrows -->
+  <line x1="590" y1="120" x2="626" y2="86" stroke="#423F4C" stroke-width="2"/>
+  <polygon points="636,78 622,80 630,92" fill="#423F4C"/>
+  <line x1="590" y1="120" x2="626" y2="252" stroke="#423F4C" stroke-width="2"/>
+  <polygon points="629,262 632,248 620,254" fill="#423F4C"/>
+
+  <!-- Member A -->
+  <text x="648" y="40" font-size="13" font-weight="700" fill="#6B6770" letter-spacing="0.08em">EACH MEMBER READS</text>
+  <rect x="648" y="56" width="212" height="98" rx="14" fill="#FFFFFF" stroke="#E3DCD6" stroke-width="1.5"/>
+  <rect x="648" y="56" width="6" height="98" rx="3" fill="#F0D793"/>
+  <text x="670" y="84" font-size="13" font-weight="700" fill="#423F4C">We miss you!</text>
+  <text x="670" y="108" font-size="12.5" fill="#423F4C">Hi Noor, your stamp</text>
+  <text x="670" y="128" font-size="12.5" fill="#423F4C">total so far: 16</text>
+
+  <!-- Member B -->
+  <rect x="648" y="222" width="212" height="98" rx="14" fill="#FFFFFF" stroke="#E3DCD6" stroke-width="1.5"/>
+  <rect x="648" y="222" width="6" height="98" rx="3" fill="#F0D793"/>
+  <text x="670" y="250" font-size="13" font-weight="700" fill="#423F4C">We miss you!</text>
+  <text x="670" y="274" font-size="12.5" fill="#423F4C">Hi Hassan, your stamp</text>
+  <text x="670" y="294" font-size="12.5" fill="#423F4C">total so far: 3</text>
+
+  <!-- Records note -->
+  <rect x="40" y="236" width="330" height="120" rx="14" fill="#FFFFFF" stroke="#E3DCD6" stroke-width="1.5"/>
+  <text x="62" y="266" font-size="13" font-weight="700" fill="#423F4C">Where the values come from</text>
+  <text x="62" y="292" font-size="12.5" fill="#6B6770">Each member's own record at the moment</text>
+  <text x="62" y="312" font-size="12.5" fill="#6B6770">the campaign runs: their name, their</text>
+  <text x="62" y="332" font-size="12.5" fill="#6B6770">lifetime stamps and points with you.</text>
+</svg>

@@ -1,0 +1,28 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "stamp",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "printing-export-bar",
+      "goto": "/qr-codes",
+      "actions": [
+        { "wait": 9000 },
+        { "click": "button:has-text(\"Decline\")" },
+        { "wait": 800 },
+        { "click": "table tbody tr:nth-child(1) td:first-child button[role=checkbox]" },
+        { "click": "table tbody tr:nth-child(2) td:first-child button[role=checkbox]" },
+        { "click": "table tbody tr:nth-child(3) td:first-child button[role=checkbox]" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "button:has-text(\"PDF\")",
+      "waitMs": 1500,
+      "clip": { "x": 830, "y": 72, "width": 606, "height": 80 },
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"PDF\")", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text(\"ZIP\")", "number": 2, "color": "plum" }
+      ]
+    }
+  ]
+}
