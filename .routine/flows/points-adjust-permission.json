@@ -1,0 +1,31 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "points",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "points-adjust-permission",
+      "goto": "/staff",
+      "waitFor": "button:has-text('Invite Staff')",
+      "waitMs": 4000,
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 800 },
+        { "click": ":nth-match(button[aria-haspopup=\"menu\"], 4)" },
+        { "wait": 900 },
+        { "click": "[role=menuitem]:has-text('Edit Permissions')" },
+        { "wait": 1800 },
+        { "click": "[role=switch]" },
+        { "wait": 1200 },
+        { "hover": "text=Adjust points" },
+        { "wait": 600 }
+      ],
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "text=Adjust points", "color": "plum" }
+      ]
+    }
+  ]
+}
