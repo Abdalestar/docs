@@ -1,0 +1,87 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/settings",
+  "account": "points",
+  "defaultWaitMs": 5000,
+  "steps": [
+    {
+      "name": "branch-switcher-header",
+      "goto": "/",
+      "actions": [
+        { "click": "button:has-text('Decline')" }
+      ],
+      "waitFor": "text=Quick Actions",
+      "waitMs": 13000,
+      "clip": { "x": 0, "y": 0, "width": 1440, "height": 300 },
+      "annotate": [
+        { "type": "box", "rect": { "x": 953, "y": 10, "width": 162, "height": 44 }, "number": 1, "color": "plum" }
+      ]
+    },
+    {
+      "name": "branch-switcher-menu",
+      "goto": "/",
+      "actions": [
+        { "wait": 9000 },
+        { "click": "header button:has-text('All Locations')" },
+        { "wait": 1500 }
+      ],
+      "waitMs": 800,
+      "clip": { "x": 876, "y": 0, "width": 330, "height": 240 },
+      "annotate": [
+        { "type": "box", "rect": { "x": 909, "y": 52, "width": 200, "height": 34 }, "number": 1, "color": "plum" },
+        { "type": "box", "rect": { "x": 909, "y": 90, "width": 200, "height": 68 }, "number": 2, "color": "plum" },
+        { "type": "box", "rect": { "x": 909, "y": 165, "width": 200, "height": 36 }, "number": 3, "color": "gold" }
+      ]
+    },
+    {
+      "name": "branch-switcher-all-branches",
+      "goto": "/",
+      "waitFor": "text=Total Members",
+      "waitMs": 13000,
+      "clip": { "x": 262, "y": 150, "width": 1178, "height": 168 },
+      "annotate": [
+        { "type": "box", "rect": { "x": 276, "y": 162, "width": 568, "height": 144 }, "number": 1, "color": "charcoal" },
+        { "type": "box", "rect": { "x": 850, "y": 162, "width": 572, "height": 144 }, "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "branch-switcher-one-branch",
+      "goto": "/",
+      "actions": [
+        { "wait": 9000 },
+        { "click": "header button:has-text('All Locations')" },
+        { "wait": 1200 },
+        { "click": "[role=menuitem]:has-text('Al Sadd Branch')" },
+        { "wait": 12000 }
+      ],
+      "waitMs": 2000,
+      "clip": { "x": 262, "y": 134, "width": 1178, "height": 196 },
+      "annotate": [
+        { "type": "box", "rect": { "x": 274, "y": 142, "width": 474, "height": 24 }, "number": 1, "color": "gold" },
+        { "type": "box", "rect": { "x": 850, "y": 182, "width": 572, "height": 144 }, "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "branch-switcher-analytics-staff",
+      "goto": "/analytics",
+      "waitFor": "text=Top Performing Staff",
+      "waitMs": 12000,
+      "clipTo": "div.rounded-xl:has(> div > div:has-text('Top Performing Staff'))",
+      "clipPadding": 10
+    },
+    {
+      "name": "branch-switcher-report-filter",
+      "goto": "/analytics/reports/staff-performance",
+      "actions": [
+        { "wait": 8000 },
+        { "click": "button:has-text('All branches')" },
+        { "wait": 1500 }
+      ],
+      "waitMs": 800,
+      "clip": { "x": 262, "y": 60, "width": 1178, "height": 300 },
+      "annotate": [
+        { "type": "box", "target": "button:has-text('All branches')", "number": 1, "color": "plum" }
+      ]
+    }
+  ]
+}

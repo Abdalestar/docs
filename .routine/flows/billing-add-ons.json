@@ -1,0 +1,63 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "settings",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 1150 },
+  "steps": [
+    {
+      "name": "addons-store",
+      "goto": "/settings/billing",
+      "waitFor": "[role=tablist]",
+      "waitMs": 7000,
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 800 },
+        { "click": "[role=tab]:has-text('Add-ons')" },
+        { "wait": 3000 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "[role=tab]:has-text('Add-ons')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "h4:has-text('Extra Location')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Settings then Billing then the Add-ons tab (1). Each card in the Pay-Per-Feature Store (2) is one add-on you can buy on top of your plan." }
+      ]
+    },
+    {
+      "name": "addons-card",
+      "actions": [
+        { "hover": "h4:has-text('Extra Location')" },
+        { "wait": 1200 }
+      ],
+      "clipTo": "div.rounded-lg.border:has(h4:has-text('Extra Location'))",
+      "clipPadding": 10,
+      "waitMs": 800,
+      "annotate": [
+        { "type": "box", "target": "text=\"Growth+\"", "number": 1, "color": "gold" },
+        { "type": "box", "target": "div.rounded-lg.border:has(h4:has-text('Extra Location')) button:has-text('Purchase')", "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "addons-locked",
+      "actions": [
+        { "hover": "h4:has-text('AI Insight Pack')" },
+        { "wait": 1200 }
+      ],
+      "clipTo": "div.rounded-lg.border:has(h4:has-text('AI Insight Pack'))",
+      "clipPadding": 10,
+      "waitMs": 800,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Requires Elite+')", "number": 1, "color": "plum" }
+      ]
+    },
+    {
+      "name": "addons-batch-paywall",
+      "goto": "/qr-codes/batch",
+      "waitFor": "text=Unlock Batch QR Code Generation",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "box", "target": "text=Unlock Batch QR Code Generation", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Some add-ons also surface where you need them. Opening Batch Generate without batch credits shows the pack sizes you can buy." }
+      ]
+    }
+  ]
+}
