@@ -153,6 +153,7 @@
           "merchants/billing/add-ons",
           "merchants/billing/invoices-payment",
           "merchants/settings/locations",
+          "merchants/settings/branch-switcher",
           "merchants/settings/notifications",
           "merchants/settings/merchant-page",
           "merchants/merchant-page/business-overview",
