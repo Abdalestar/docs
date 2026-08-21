@@ -20,6 +20,101 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-21 — Win-back repeat sends (max_sends is enforced now)
+
+**Article:** `merchants/campaigns/winback.mdx` (correction, not a new article)
+**Branch:** `claude/busy-clarke-wmknga`
+**PR:** https://github.com/Abdalestar/docs/pull/186
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 2 real annotated screenshots + 1 SVG edit,
+validate-images 8/8 OK. One task this run: backfill is still exhausted.
+
+### THE BOARD MOVED — main is no longer 20 PRs behind
+`origin/main` is now at the **PR #185 merge**. The long-standing "main lacks everything,
+the backlog is a merge problem" note from the 08-19/08-20 runs is **out of date**: the
+open-PR pile was merged. Re-derive coverage from `origin/main`, not from those notes.
+
+### Task selection
+Queried the board with `notion-query-data-sources` (SQL mode, one call). Two P1 rows
+looked live and both turned out to be finished work:
+- **"Fix two articles that still describe the dead anonymous scan"** (P1, added 08-20) is
+  **already satisfied on main**. Grepped both files for `anonymous` / `no member joins` /
+  `credits nobody`: zero hits. `how-members-join.mdx` now has "A camera scan opens your
+  join page"; `customer-scan-flow.mdx` was rewritten and recaptured. **Closed the row** so
+  it stops sorting to the top of every run's P1 list.
+- Every other P1 carries a dated DUPLICATE or BLOCKED verdict and none has changed.
+
+Backfill: the zero-PNG scan on `origin/main` returns the same four non-workable files
+(`customer-app/settings-profile`, `index.mdx`, `support/faq.mdx`, the
+`campaigns/analytics.mdx` stub).
+
+Gap discovery came up empty for a reason worth recording: **`git log origin/main` in
+`Abdalestar/qtap` shows no commits after 2026-08-09.** The app has not shipped anything
+new, so route-diff and feature-diff discovery genuinely have nothing to find. Drift
+between shipped code and published prose is the only productive source, which is what
+this run worked.
+
+### What was actually wrong (worse than "a setting is now enforced")
+qtap commit `f89d1b3` is on qtap `main` and added `lib/campaigns/resend-policy.ts`.
+`app/api/campaigns/execute/route.ts:369` calls `winBackResendBlocked` from
+`hasAlreadyReceived`, counting `member_campaign_interactions` rows with
+`interaction_type = 'sent'` for that campaign and member:
+
+```
+if (sentCount >= maxSends) return true;              // lifetime cap, checked FIRST
+const cooldown = resend_cooldown_days ?? max(inactive_days * 2, 60);
+return daysSinceLastSend < cooldown;
+```
+
+The published article said the **Maximum sends per customer** selector was "saved but not
+applied yet" *and* told merchants repeat sends happen automatically once the cooldown
+passes. The wizard's default is **1 time** (`trigger-config.tsx` offers 1/2/3;
+`winBackTriggerSchema` defaults `max_sends` to 1), so on a default campaign the cap
+blocks every repeat before the cooldown is even evaluated. The page promised a second
+nudge that never fires. That is the merchant-facing bug, and it is why this was worth a
+run rather than a one-line patch.
+
+Fixed: the Trigger step documents the cap with a `<Warning>` that it starts at 1; the
+**Repeat sends** section states all three gates in order (room under the cap, then the
+cooldown, then a fresh full lapse); the lifecycle SVG's "Can fire again" node notes the
+cap. Eligibility still needs the full inactivity window on top (`isInactiveForDays`,
+line ~229) and that is stated too.
+
+**Deliberately NOT documented:** `resend_cooldown_days` is on `WinBackTriggerConfig` but
+is set by no UI and is absent from `winBackTriggerSchema`, so merchants always get the
+computed default. Do not write it up as a settable field.
+
+### Screenshots (nothing was created)
+`.routine/flows/winback-max-sends.json`, **points** demo (Golden Crust). Recaptured
+`winback-03-trigger.png` with both fields boxed, and added `winback-07-max-sends.png`
+(dropdown open, `1 time` ticked above `2 times` / `3 times`). The wizard was walked to the
+Trigger step only; **Activate Campaign / Save as Draft never clicked**, so no campaign was
+created. No customer PII on either shot.
+
+### Gotchas for future runs
+- **`/campaigns/new` renders on Golden Crust (points), not on Brew & Bean (stamp)**, which
+  is at the 3-campaign Growth limit. The on-main `.routine/flows/winback.json` still says
+  `"account": "stamp"` and would capture the Campaign Limit Reached screen. Left alone
+  (it is not referenced by this change) but do not reuse it as-is.
+- On the Trigger step `:nth-match(button[role=combobox], 1)` is the inactivity window and
+  `2` is Maximum sends. The header location switcher is `button[aria-haspopup="menu"]`,
+  not a combobox, so it does not shift the indices.
+- **The 5KB `validate-images` floor bites on dropdown crops again.** `clipTo:
+  "[role=listbox]"` on the Maximum sends menu produced a 156x134 / 3.1KB file that failed
+  the gate. An explicit `clip` of `{x:282,y:296,width:600,height:330}` at 1440x1000 catches
+  the two labels plus the open menu, comes in at 13KB, and is a better teaching image.
+- The TLS bridge was needed again and stayed up for the whole run. Same recipe: scratch
+  cert, `BRIDGE_CERT_DIR=<dir> node .routine/tls-bridge.mjs` in Bash background mode, then
+  `PLAYWRIGHT_PROXY=http://127.0.0.1:38443` on the smoke test and every capture.
+
+### Board hygiene
+Annotated **"Reward Statuses & the Double-Redemption Guard"** (P3) as mostly duplicate:
+`redemptions.mdx` already carries the full four-row status table and the no-reversal
+Warning. The only uncovered piece is the 409 concurrency guard, which is one paragraph of
+edge-case behaviour that no reachable demo account can produce for a screenshot.
+Recommended closing it or folding it into the existing section.
+
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
