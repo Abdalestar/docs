@@ -4,7 +4,7 @@ sidebarTitle: "Troubleshooting"
 description: "What to check when a customer says a QR code didn't work, and how to get it scanning again."
 ---
 
-A customer scans your printed code and gets a red "Scan Failed" screen instead of their stamp or points. Almost every time, the reason is sitting in the **Status** column on your QR Codes page. Go to **QR Codes** in the left sidebar and find the code by its name or code string.
+A customer scans your printed code and gets an error card instead of the join page or their stamp. Almost every time, the reason is sitting in the **Status** column on your QR Codes page. Go to **QR Codes** in the left sidebar and find the code by its name or code string.
 
 <Frame caption="The Scans and Status columns on the QR Codes page show why a code stopped working.">
   <img src="/images/merchants/qr-codes/qr-troubleshoot-status.png" alt="QR Codes page with the Scans and Status columns highlighted" />
@@ -19,6 +19,8 @@ A code only works while its status is **Active**. Three other statuses stop a sc
 | Inactive | Someone switched the code off. | "This QR code is no longer active." |
 | Expired | The code passed its expiry date. | "This QR code has expired." |
 | Max | The code hit its scan limit. A one-time code reaches this after a single scan. | "This QR code has reached its maximum number of scans." |
+
+A customer who scanned with a plain phone camera sees the join page wording of the same message: "This QR code is inactive", "This QR code has expired", or "This QR code has reached its limit".
 
 For an **Inactive** code, open the three-dot menu on its row and choose **Activate**. The scan works again right away.
 
@@ -42,9 +44,9 @@ Click a code's name to open its detail page. The **Details** panel lists its sca
   <img src="/images/merchants/qr-codes/qr-troubleshoot-limits.png" alt="QR code detail page Details panel with Max Scans and Expires highlighted" />
 </Frame>
 
-## Scans go up but customers get nothing
+## A scan didn't add a stamp or points
 
-Sometimes the Total Scans count rises while customers tell you they never got their stamp or points. This happens when a customer opens the code with their phone's plain camera or a browser instead of the Qtap app. Qtap records the scan, but it has no member account to credit, so nobody earns anything. Ask the customer to scan from inside the Qtap app, where they're signed in.
+Sometimes customers tell you they scanned but never got their stamp or points. A scan from a plain phone camera opens a join page rather than crediting on the spot. A new customer who completes the form becomes a member and earns from that first scan. A customer who is already a member sees a welcome back message instead and earns nothing; their repeat earning happens at the counter, where a staff member scans them, or from inside the Qtap app where they're signed in. Someone who opens the join page and walks away adds nothing, not even to the scan count.
 
 <Warning>
 If a stamp code shows "This QR code is not linked to a stamp card," the stamp card it pointed to was deleted. Generate a new code tied to one of your current stamp cards.

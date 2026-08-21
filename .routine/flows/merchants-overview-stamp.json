@@ -1,0 +1,24 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/merchant-page",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 900 },
+  "defaultWaitMs": 2000,
+  "steps": [
+    {
+      "name": "merchants-06-stamp-counters",
+      "goto": "/merchants",
+      "actions": [
+        { "wait": 4000 },
+        { "click": "button:has-text('Decline')" }
+      ],
+      "waitFor": "div.rounded-xl",
+      "waitMs": 6000,
+      "clipTo": "div.rounded-xl",
+      "clipPadding": 16,
+      "annotate": [
+        { "type": "box", "target": "div.flex.items-center.gap-4.pt-1", "number": 1, "color": "plum" }
+      ]
+    }
+  ]
+}
