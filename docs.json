@@ -81,6 +81,7 @@
         "pages": [
           "merchants/campaigns/overview",
           "merchants/campaigns/wizard",
+          "merchants/campaigns/messages",
           "merchants/campaigns/timing",
           "merchants/campaigns/stats",
           "merchants/campaigns/birthday",
