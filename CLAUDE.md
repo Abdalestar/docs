@@ -20,6 +20,83 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-19 — Camera scans now open the join page (recapture)
+
+**Article:** `merchants/qr-codes/customer-scan-flow.mdx` (rewritten, was factually wrong)
+**Branch:** `claude/wizardly-bohr-ytua17`
+**Status:** Done. SMOKE_OK; 5 new real annotated mobile screenshots + 1 redrawn SVG
+(validate-images 7/7 OK). One task this run.
+
+### Task selection
+Took the highest-priority `Not started` row, and the newest: **"Recapture
+customer-scan-flow.mdx: a camera scan now opens the join page"** (P1, created
+2026-08-19 09:32 by the PR #174 run, no PR). The published article told merchants a
+camera scan credits nobody and that they should ask customers to scan from the app,
+which stopped being true when web enrollment shipped. PR #174 fixed the same stale
+fact in `members/how-members-join.mdx` and `qr-codes/actions.mdx` and deliberately
+left this row out because it needed a recapture, not a prose patch: two of its three
+images and the whole `customer-scan-paths.svg` were built on the wrong branch.
+
+Note the board has moved well past what this log records: `origin/main` is still at
+the PR #162 merge, but PRs #163 to #174 are open, so most recent work is not on main.
+
+### What changed
+Rewritten against `Abdalestar/qtap` and the `enroll-web` edge function (read via the
+Supabase MCP, it is not in the dashboard repo):
+- `app/scan/[code]/page.tsx` now renders `components/enroll/enrollment-client.tsx`,
+  a join page. Heading "Welcome to <merchant>", card preview, Full name (optional),
+  Phone (required, country picker seeded from `x-vercel-ip-country`, falling back to
+  QA), Birthday (optional, "Get a reward on it"), Terms checkbox (required),
+  marketing opt-in (optional), **Get my card**, then a "Confirm your phone number"
+  dialog with Edit number / Confirm and join.
+- `app/api/enroll/route.ts` proxies to the `enroll-web` edge function with the
+  service-role key. Three endings, and the status is a property of (person, THIS
+  merchant): `enrolled` (founding scan through the shared `_shared/earn.ts` engine,
+  `qr_code_scans` row, `scan_count` bump, one-time burn, pass minted after the earn
+  so it renders 1/N), `welcome_back` (no earn, no audit row, no scan spent, pass
+  re-offered), `has_app_account` (no earn, no pass).
+- `WEB_VISIBLE_EARN_KEYS` is an allowlist of `action, message, merchant, stamp,
+  points`, so signup / interim / main / campaign rewards are written and pushed but
+  never shown on the web page. Documented as a Warning: staff can be looking at a
+  reward the customer has never heard of.
+- No OTP by design, so `phone_verified` is written FALSE and the app claim flips it.
+  Documented in a Note, cross-linked to `members/joined-without-the-app`.
+- A `checkin` code still joins the customer (`ensureEnrollment` runs) and only
+  updates `last_activity_at`; `passTargetFromQr` returns null so there is no pass.
+  The old "check-in adds nothing" Note was kept but corrected on the joining half.
+- Error states, exact live headings, all verified by loading real codes: "This QR
+  code is not valid" / "is inactive" / "has expired" / "has reached its limit".
+
+### Screenshots (nothing was submitted)
+`.routine/flows/customer-scan-join.json` (390x844) and `customer-scan-join-form.json`
+(390x1500, so a `clipTo` crop of the tall form and the dialog stays inside the
+viewport). Deleted `customer-scan-success.png`, `customer-scan-failed.png` and the
+old `customer-scan-result.json` flow; redrew `customer-scan-paths.svg` as the three
+endings. Kept the merchant-side `customer-scan-show-code.png`, still accurate.
+**SAFETY:** loading `/scan/<code>` is a GET on `/api/qr-codes/[code]/details` and
+writes nothing; the form was filled and walked to the confirm dialog but **Confirm
+and join was never clicked**, so no member was created and no scan was spent.
+
+### Gotchas for future runs
+- **The country picker follows the sandbox's IP, not Qatar.** `detectedCountry` comes
+  from `x-vercel-ip-country`, and this sandbox is US-routed, so the first capture
+  showed "United States" and a Qatari test number failed the NANP length rule with
+  "Please enter a valid phone number", so the confirm dialog never opened. Fix:
+  `{"select": ["select[aria-label='Country calling code']", "QA"]}` as the first
+  action. That is also the honest shot for a Qatar merchant's docs.
+- Phone plausibility is enforced client-side before the dialog opens
+  (`components/enroll/countries.ts`): QA is 8 digits starting 3/4/5/6/7.
+- The join page needs 9s to settle on a stamp code and up to 12s on the points demo
+  (`CEO-POINTS-001` was still on "Loading your loyalty card…" at 6s).
+- No cookie consent banner on `/scan/[code]`, unlike the dashboard.
+- Read-only capture codes on the reachable demos: `CLAUDE-JOIN-COUNTER` (Brew & Bean,
+  stamp, 5-stamp Coffee Lovers Card), `CEO-POINTS-001` (Golden Crust, points),
+  `CEO-EXPIRED-001`, `CEO-MAXED-001`, `CEO-ONETIME-COFFEE` (inactive), and any
+  nonexistent code for the not-valid card.
+- The article cross-links `merchants/members/joined-without-the-app`, which lands with
+  the open PR #174 and is not on main yet. Flagged in the PR body.
+---
+
 ## 2026-08-19 — Points-adjust correction (DASH-9) + Joined without the app
 
 **Articles:** `merchants/points/adjusting.mdx` (correction), `merchants/members/joined-without-the-app.mdx` (new)
