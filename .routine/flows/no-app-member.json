@@ -1,0 +1,45 @@
+{
+  "section": "merchants/members",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 900 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "no-app-earning-notice",
+      "goto": "/stamp-operations",
+      "waitMs": 7000,
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 800 },
+        { "fill": ["input[placeholder=\"Search members...\"]", "Q108836"] },
+        { "wait": 4000 },
+        { "click": ".divide-y button" },
+        { "wait": 3500 }
+      ],
+      "clipTo": "div.rounded-lg.border:has-text('No Qtap app yet')",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "redact", "rect": { "x": 376, "y": 358, "width": 122, "height": 26 } },
+        { "type": "box", "target": "div[class*=\"border-amber-200\"]", "color": "plum" }
+      ]
+    },
+    {
+      "name": "no-app-redemption-notice",
+      "goto": "/redemptions",
+      "waitMs": 7000,
+      "actions": [
+        { "click": "button:text-is('Enter Code')" },
+        { "wait": 1200 },
+        { "fill": ["input[placeholder=\"e.g. 48271593\"]", "28480388"] },
+        { "click": "button:text-is('Look Up')" },
+        { "wait": 5000 }
+      ],
+      "clipTo": "div.min-w-0.space-y-2",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "div[class*=\"border-amber-200\"]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Confirm Redemption')", "number": 2, "color": "plum" }
+      ]
+    }
+  ]
+}
