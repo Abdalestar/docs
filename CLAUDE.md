@@ -20,7 +20,7 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
-## 2026-08-19 — Card terms and the questions customers read
+## 2026-08-19 — Card terms and the questions members read
 
 **Article:** `merchants/cards/card-terms.mdx` (new)
 **Branch:** `claude/wizardly-bohr-a4n890`
