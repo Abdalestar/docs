@@ -1,41 +1,65 @@
-<svg viewBox="0 0 760 470" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif">
-  <rect width="760" height="470" fill="#F8F5F2"/>
-  <text x="380" y="44" text-anchor="middle" font-size="24" font-weight="700" fill="#423F4C">One code, two ways to scan</text>
-  <text x="380" y="70" text-anchor="middle" font-size="14" fill="#6B6770">Only the app credits the customer. A plain camera scan just records the visit.</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" role="img"
+     aria-label="Three endings after a customer scans a Qtap code: joined, welcome back, or already has the app"
+     font-family="system-ui, -apple-system, sans-serif">
+  <rect width="900" height="520" fill="#F8F5F2"/>
 
-  <!-- The code at the top -->
-  <g>
-    <rect x="320" y="96" width="120" height="120" rx="14" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2"/>
-    <g fill="#423F4C">
-      <rect x="340" y="116" width="26" height="26"/><rect x="394" y="116" width="26" height="26"/>
-      <rect x="340" y="170" width="26" height="26"/><rect x="372" y="148" width="16" height="16"/>
-      <rect x="398" y="172" width="22" height="22"/><rect x="372" y="178" width="14" height="14"/>
-    </g>
-    <text x="380" y="236" text-anchor="middle" font-size="13" fill="#6B6770">Your code at the counter or table</text>
-  </g>
+  <text x="450" y="38" text-anchor="middle" font-size="19" font-weight="600" fill="#423F4C">
+    What a scan does now
+  </text>
 
-  <!-- branch lines -->
-  <path d="M380 248 L380 268 M380 268 L190 268 L190 292 M380 268 L570 268 L570 292" fill="none" stroke="#9CA3AF" stroke-width="2"/>
-  <polygon points="190,300 184,290 196,290" fill="#9CA3AF"/>
-  <polygon points="570,300 564,290 576,290" fill="#9CA3AF"/>
+  <!-- Step 1 -->
+  <rect x="270" y="58" width="360" height="52" rx="10" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
+  <text x="450" y="82" text-anchor="middle" font-size="14" fill="#423F4C">A customer points any phone camera</text>
+  <text x="450" y="100" text-anchor="middle" font-size="14" fill="#423F4C">at your printed code</text>
 
-  <!-- Left path: the app -->
-  <g>
-    <rect x="40" y="300" width="300" height="138" rx="16" fill="#FFFFFF" stroke="#8E4A63" stroke-width="2.5"/>
-    <text x="60" y="332" font-size="16" font-weight="700" fill="#8E4A63">Scans in the Qtap app</text>
-    <text x="60" y="360" font-size="13.5" fill="#423F4C">The app knows which member is scanning,</text>
-    <text x="60" y="380" font-size="13.5" fill="#423F4C">so it sends their account with the scan.</text>
-    <rect x="60" y="396" width="260" height="28" rx="8" fill="#F5E6EC"/>
-    <text x="72" y="415" font-size="13.5" font-weight="600" fill="#8E4A63">Stamp or points land on their card</text>
-  </g>
+  <path d="M450 110 L450 138" stroke="#8E4A63" stroke-width="1.5"/>
+  <path d="M450 146 l-5 -9 h10 z" fill="#8E4A63"/>
 
-  <!-- Right path: camera -->
-  <g>
-    <rect x="420" y="300" width="300" height="138" rx="16" fill="#FFFFFF" stroke="#423F4C" stroke-width="2.5"/>
-    <text x="440" y="332" font-size="16" font-weight="700" fill="#423F4C">Scans with the phone camera</text>
-    <text x="440" y="360" font-size="13.5" fill="#423F4C">The camera opens your Qtap scan page</text>
-    <text x="440" y="380" font-size="13.5" fill="#423F4C">in a browser, with no account attached.</text>
-    <rect x="440" y="396" width="260" height="28" rx="8" fill="#EFEDEA"/>
-    <text x="452" y="415" font-size="13.5" font-weight="600" fill="#6B6770">The visit is recorded, nothing is earned</text>
-  </g>
+  <!-- Step 2 -->
+  <rect x="240" y="148" width="420" height="52" rx="10" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
+  <text x="450" y="172" text-anchor="middle" font-size="14" fill="#423F4C">Your join page opens, showing your name and the card</text>
+  <text x="450" y="190" text-anchor="middle" font-size="14" fill="#423F4C">they are about to start</text>
+
+  <path d="M450 200 L450 228" stroke="#8E4A63" stroke-width="1.5"/>
+  <path d="M450 236 l-5 -9 h10 z" fill="#8E4A63"/>
+
+  <!-- Step 3 -->
+  <rect x="270" y="238" width="360" height="52" rx="10" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
+  <text x="450" y="262" text-anchor="middle" font-size="14" fill="#423F4C">They type a phone number, agree to the terms,</text>
+  <text x="450" y="280" text-anchor="middle" font-size="14" fill="#423F4C">and tap Get my card</text>
+
+  <!-- Split -->
+  <path d="M450 290 L450 312 M150 312 L750 312 M150 312 L150 336 M450 312 L450 336 M750 312 L750 336"
+        stroke="#8E4A63" stroke-width="1.5" fill="none"/>
+  <path d="M150 344 l-5 -9 h10 z" fill="#8E4A63"/>
+  <path d="M450 344 l-5 -9 h10 z" fill="#8E4A63"/>
+  <path d="M750 344 l-5 -9 h10 z" fill="#8E4A63"/>
+
+  <!-- Ending 1 -->
+  <rect x="20" y="346" width="260" height="112" rx="10" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
+  <rect x="20" y="346" width="260" height="6" rx="3" fill="#F0D793"/>
+  <text x="36" y="376" font-size="14" font-weight="600" fill="#8E4A63">New to your business</text>
+  <text x="36" y="399" font-size="13" fill="#423F4C">They become a member, the scan</text>
+  <text x="36" y="417" font-size="13" fill="#423F4C">earns their first stamp or points,</text>
+  <text x="36" y="435" font-size="13" fill="#423F4C">and a wallet pass is offered.</text>
+
+  <!-- Ending 2 -->
+  <rect x="320" y="346" width="260" height="112" rx="10" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
+  <text x="336" y="376" font-size="14" font-weight="600" fill="#8E4A63">Already a member here</text>
+  <text x="336" y="399" font-size="13" fill="#423F4C">Welcome back, with the pass</text>
+  <text x="336" y="417" font-size="13" fill="#423F4C">offered again. Nothing is earned:</text>
+  <text x="336" y="435" font-size="13" fill="#423F4C">repeat visits are staff scanned.</text>
+
+  <!-- Ending 3 -->
+  <rect x="620" y="346" width="260" height="112" rx="10" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
+  <text x="636" y="376" font-size="14" font-weight="600" fill="#8E4A63">Already has the Qtap app</text>
+  <text x="636" y="399" font-size="13" fill="#423F4C">The page sends them to the app,</text>
+  <text x="636" y="417" font-size="13" fill="#423F4C">where their card already lives.</text>
+  <text x="636" y="435" font-size="13" fill="#423F4C">Nothing is earned.</text>
+
+  <!-- Footnote -->
+  <rect x="20" y="474" width="860" height="34" rx="8" fill="#FFFFFF" stroke="#6B6770" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="450" y="496" text-anchor="middle" font-size="13" fill="#6B6770">
+    Any reward the joining scan hands out is saved to their account and stays hidden until they install the app.
+  </text>
 </svg>

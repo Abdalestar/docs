@@ -1,0 +1,51 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "printing-colors",
+      "goto": "/qr-codes/generate",
+      "actions": [
+        { "wait": 5000 },
+        { "click": "button:has-text(\"Decline\")" },
+        { "wait": 800 },
+        { "fill": ["#name", "Window decal"] },
+        { "fill": ["#qr_color", "#8E4A63"] },
+        { "fill": ["#bg_color", "#F8F5F2"] },
+        { "hover": "label[for=\"bg_color\"]" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "#qr_color",
+      "waitMs": 2000,
+      "clipTo": "div.rounded-xl:has(> div:has-text(\"Customize the QR code appearance\"))",
+      "clipPadding": 16,
+      "annotate": [
+        { "type": "box", "target": "label[for=\"qr_color\"]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label[for=\"bg_color\"]", "number": 2, "color": "plum" },
+        { "type": "box", "target": "text=Center logo is part of the Custom QR Branding add-on.", "number": 3, "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "printing-preview",
+      "goto": "/qr-codes/generate",
+      "actions": [
+        { "wait": 5000 },
+        { "fill": ["#name", "Window decal"] },
+        { "fill": ["#qr_color", "#8E4A63"] },
+        { "fill": ["#bg_color", "#F8F5F2"] },
+        { "hover": "h1" },
+        { "wait": 1500 }
+      ],
+      "waitFor": "canvas",
+      "waitMs": 2000,
+      "clipTo": "div.rounded-xl:has(canvas)",
+      "clipPadding": 16,
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"PNG\")", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text(\"SVG\")", "number": 2, "color": "plum" }
+      ]
+    }
+  ]
+}
