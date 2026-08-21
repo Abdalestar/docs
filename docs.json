@@ -19,6 +19,7 @@
           "merchants/onboarding-wizard",
           "merchants/dashboard-overview",
           "merchants/getting-started/demo-mode",
+          "merchants/getting-started/top-bar",
           "merchants/getting-started/checklist",
           "merchants/first-loyalty-program"
         ]
