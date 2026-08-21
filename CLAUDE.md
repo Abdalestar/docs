@@ -20,6 +20,93 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-19 — Showing a QR code on screen (Gallery + presenter)
+
+**Article:** `merchants/qr-codes/show-on-screen.mdx` (new)
+**Branch:** `claude/wizardly-bohr-fjjalx`
+**Status:** Done. SMOKE_OK; 6 real annotated screenshots in desktop AND mobile viewports
+(validate-images 6/6 OK). One task this run.
+
+### Task selection — every P1 on the board is blocked or a duplicate
+All 7 `Not started` P1 rows were checked against their own Notes and against `origin/main`,
+and none is workable: **Cancel subscription** (BLOCKED 2026-08-17, neither reachable demo org
+has a `stripe_subscription_id`, so the Cancel button never renders), **Custom Campaigns /
+Condition Builder** and **Push Frequency** (verified product no-ops), **Redeeming by code vs
+lookup** (duplicate of on-main `redemptions.mdx`), **Redeem a Campaign Reward Code** (no
+dashboard UI at all), **Stamp Card Rewards** (duplicate of on-main `stamp-cards/rewards.mdx`),
+**Campaigns Overview** (already on main, 81 lines). So the run took the highest-value genuine
+P2: the row the previous run auto-discovered, "Showing a QR Code on Screen (Gallery View &
+Show to Customer)". No screenshot backfill exists on `main`, so one task this run.
+
+Note the SQL path works now: `notion-query-data-sources` in `sql` mode against
+`collection://5aecc4c4-…` returns the whole board in one call. ROUTINE §3 still says
+`query_database_view` 400s (true, that tool is deprecated) — use `query-data-sources` instead
+and skip the search+fetch-per-row loop.
+
+### What was written
+The two undocumented surfaces on `/qr-codes`: **Gallery** view and the full-screen presenter.
+On-main `overview.mdx` gives Gallery one sentence and never mentions the presenter;
+`qr-code-detail.mdx` documents the detail page without its **Show to customer** button.
+Grounded in `Abdalestar/qtap`:
+- `components/dashboard/qr-codes/qr-code-gallery.tsx` — 140px canvas per card rendered from
+  the code's own `template_style`; card menu **Show to customer / View / Copy Code /
+  Deactivate|Activate / Delete**; the menu button is `opacity-100` below `sm` and
+  hover-revealed from `sm` up (the component's own comment says a phone has no hover); card
+  body routes to `/qr-codes/[id]`; badges Expired / Max Reached / Active / Inactive.
+- `components/dashboard/qr-codes/qr-fullscreen.tsx` — org name + code name above, 640px
+  canvas, mono code + "Point your camera at the code" below; Escape, the X, and a backdrop
+  click all close; `navigator.wakeLock` held while open and **not** re-acquired on
+  `visibilitychange` (documented as the honest caveat).
+- `app/(dashboard)/qr-codes/page.tsx` — `viewMode` is `useState('table')`, so Gallery is not
+  remembered between visits (documented as a Note); the presenter is also reachable from a
+  full-width button on `/qr-codes/[id]` (line 396).
+- `lib/utils/permissions.ts` + `lib/validations/staff.ts` — `/qr-codes` needs
+  `qr_batches !== 'none'` (owner full, manager `generate`, staff `none`), so owners + managers.
+
+### REAL BUG FOUND AND DOCUMENTED — the presenter is cut off below 640px
+`qr-fullscreen.tsx:105` sets `className="w-[min(85vw,60vh)] h-auto"` on the canvas, but that
+arbitrary Tailwind class **is not taking effect**: computed width is a flat `640px` at every
+viewport. Measured live on the stamp demo at 1440 / 1024 / 820 / 768 / 700 / 688 / 640 / 430:
+the canvas stays 640px wide throughout and its `x` only goes negative at 430 (and is -125 at
+390). So on a phone in portrait the QR loses ~125px off each edge, the finder patterns go with
+it, and the code cannot scan. Nobody noticed because 640 fits every desktop.
+The article states this plainly (a Warning plus a mobile screenshot of the clipped code) and
+tells merchants to present from a screen about 640px wide or more. **Worth an engineering fix**
+(the class is almost certainly not being generated); once the canvas really is
+`min(85vw,60vh)`, drop the Warning and the phone caveat from the article.
+
+### Screenshots (nothing was changed on the account)
+`.routine/flows/qr-show-on-screen.json` (1440x900) + `qr-show-on-screen-mobile.json` (390x844),
+both on the **stamp** demo (Brew & Bean Cafe, 10 codes, several named, one Expired and one
+Max Reached, so the badges are real). Read-only: only the view toggle, a card hover, the card
+menu, and **Show to customer** were clicked. Deactivate / Delete / Copy were never clicked and
+no code was created, edited, or removed.
+
+### Gotchas for future runs
+- **`div.grid > div` matches the KPI tiles, not the gallery.** The gallery card is
+  `div.rounded-xl:has(canvas)`; `:nth-match(div.rounded-xl:has(canvas), N)` works as an
+  annotate/clipTo target (top-level only, it cannot take a descendant).
+- **`button[aria-haspopup="menu"]` first-matches the header location switcher.** The gallery
+  card's menu button is `button[class*='group-hover:opacity-100']`, which is unique to it and
+  works at both viewports (`.first()` = first card).
+- The view toggle is reliably `button:has(svg.lucide-layout-grid)` (gallery) /
+  `svg.lucide-list` (table).
+- **Table rows are not clickable.** Clicking a `<tr>` does nothing; a detail page opens from
+  the row menu's View Details or from a gallery card body. A probe that clicks a row and then
+  reads `page.url()` will silently still be on `/qr-codes`.
+- The presenter overlay is `z-[100]` but the app header still bleeds through the top ~46px, so
+  clip the desktop shot to `{y:48, height:852}` (that also drops the account-name chip).
+- `/login` needs ~5s after `input[type=email]` appears before filling. Submit any earlier and
+  the un-hydrated form does a **GET**, putting the demo password in the query string.
+- The TLS bridge (§6a) was needed again: direct and plain-`HTTPS_PROXY` runs both fail
+  `supabase_unreachable`. `BRIDGE_CERT_DIR=<dir> node .routine/tls-bridge.mjs` in Bash
+  background mode, then `PLAYWRIGHT_PROXY=http://127.0.0.1:38443` on every capture.
+- App inconsistency, not documented (no merchant-visible effect): the gallery presenter encodes
+  `scanUrlFor(code)` = `https://c.qtap.qa/scan/<code>` while the detail page's presenter and its
+  PNG/SVG downloads encode `${origin}/scan/<code>`. Both routes exist; the same code can ship
+  as two different URLs depending on where it was shown or downloaded from.
+---
+
 ## 2026-08-19 — Colors, logos, and print files (QR)
 
 **Article:** `merchants/qr-codes/printing.mdx` (new)
