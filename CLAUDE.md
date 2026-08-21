@@ -20,6 +20,94 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-19 — Messages Qtap sends for you (automatic member notifications)
+
+**Article:** `merchants/notifications/automatic.mdx` (new)
+**Branch:** `claude/wizardly-bohr-yy6lek`
+**PR:** https://github.com/Abdalestar/docs/pull/177
+**Status:** Done. SMOKE_OK; 7 real annotated screenshots (validate-images 7/7 OK).
+One task this run: **no screenshot backfill exists on `main`** (same four unworkable
+files as 2026-08-14).
+
+### Task selection — read this before hunting the board
+The board has been triaged hard by the 2026-08-19 runs and **every P1 Not-started row
+is now a verified duplicate or blocked**, with the finding written into its Notes:
+Campaigns Overview, Redeeming by Code vs Lookup, Stamp Card Rewards, Redeeming a
+Campaign Reward Code (all duplicates of published pages), Custom Campaigns (condition
+builder still a no-op), Push Frequency (the attention-budget cap is a `design.md`
+commitment, not shipped code), Canceling Your Subscription (real feature, but neither
+reachable demo org has a `stripe_subscription_id`, so the Cancel Plan button never
+renders). The two newest P2 rows are blocked too: Deleted members (no member in any
+org carries `deletion_requested_at`) and MCP / AI (both demo orgs are `growth`, so the
+page only shows the locked upsell). **Read the Notes column before picking a row** —
+those rows keep sorting to the top and being re-rejected, which burns a chunk of every
+run. Several of them carry an explicit "recommend closing".
+
+The highest-priority genuinely actionable row was the P3 **Automatic Reward
+Notifications (System)**, whose own note said it became capturable once the
+notifications history started rendering on Golden Crust. Took it.
+
+### What was written
+The receipts Qtap sends a customer on its own. They fill most of a merchant's
+`/notifications` history and were mentioned nowhere in the docs (grepped
+`merchants/`, `customer-app/`, `support/`). Grounded in `Abdalestar/qtap` and
+`Abdalestar/Qtap_app`, read-only:
+- `lib/notifications/payloads.ts` — the six builders and their exact copy
+  (`stampEarnedPayload`, `cardCompletedPayload`, `pointsEarnedPayload`,
+  `pointsAdjustmentPayload`, `rewardRedeemedPayload`, `offerRedeemedPayload`).
+- `lib/notifications/notify-member.ts` — one path for all of them: OneSignal push +
+  `push_notifications` history row + the `notification_deliveries` row the app inbox
+  reads. That third write is *why* these appear on the merchant's Notifications page.
+  Its header table is the canonical `data.type` contract; keep reading it first.
+- Callers: `stamps/issue` (card_completed on the completing stamp), `points/award`,
+  `points/adjust` (add rides `points_earned`, deduct rides `points_expired`),
+  `rewards/redeem`, `rewards/redeem-code`, `points/redeem`,
+  `campaigns/rewards/[code]/redeem`, `points/expire`, and
+  `lib/notifications/reward-earned.ts` (the self-scan path, `reward_earned`).
+- Customer-initiated ones live in the **mobile** repo, not the dashboard:
+  `supabase/functions/_shared/earn.ts` (the `+N pts earned · Balance: N` receipt),
+  `join-merchant/index.ts` (the welcome message, only when no signup reward exists),
+  `claim-campaign/index.ts` (`<Org> · offer claimed`).
+- `send-push-notification/index.ts` — transactional messages skip the
+  `notification_prefs` and `member_merchant_mutes` checks entirely
+  (`if (canPush && category !== "transactional")`), and the inbox rows are written
+  even when the phone stays quiet. That is the basis for the "can't be turned off"
+  and "Not pushed" sections.
+- `notification-card.tsx` — **Not pushed** is the label for status `suppressed`
+  (amber, BellOff icon); the row menu on a sent notification offers **Delete** and
+  nothing else.
+- `lib/utils/permissions.ts` — `/notifications` needs `campaigns !== 'none'`.
+
+Honest gotchas shipped: percentages on a one-recipient row can only read 0% or 100%;
+Delete removes the merchant's copy only; **points expiry and self-scan reward-earned
+fall back to email** when the push is undeliverable, and `points/expire` gates
+`notifyMember` on `push_enabled`, so unlike the counter receipts it writes no inbox
+row for a member with push off. `reward_ready` is legacy and was deliberately not
+documented.
+
+### Screenshots (nothing was sent or deleted)
+7 PNGs from the points demo (Golden Crust Bakery) via
+`.routine/flows/automatic-notifications.json`: the full list (Not pushed + Reward
+redeemed boxed), the row menu with Delete boxed, and cropped single rows for the
+points receipt, a redemption, the Not pushed badge, the join welcome, and an offer
+claim. **Delete was never clicked** — `deleteNotification` fires immediately with no
+confirm dialog. No customer PII: these rows carry only the merchant's own business,
+reward and offer names.
+
+### Gotchas for future runs
+- **`/notifications` renders real history on Golden Crust now.** The long-standing
+  "both demo orgs show empty tabs" note (2026-06-12) is out of date: the account has
+  18 sent rows, almost all of them automatic. That unblocked this article and would
+  unblock any other notification-history capture.
+- The list needs ~9s plus a `waitFor [role=tablist]`. Row cards are
+  `div.rounded-xl.bg-card`, 110px tall, and `:has-text('<body text>')` resolves one
+  cleanly; `clipTo` on the card is enough to include an open row menu, since the Radix
+  menu opens inside the card's bounding box.
+- Cookie banner: click **Decline** as the first action of the first step only.
+- A one-step temp copy of a flow (`node -e` filter into `/tmp/one.json`) is the cheap
+  way to re-shoot a single step without re-running the whole flow.
+---
+
 ## 2026-08-19 — What each staff permission unlocks
 
 **Article:** `merchants/staff/permission-reference.mdx` (new)
