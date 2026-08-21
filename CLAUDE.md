@@ -20,6 +20,105 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-18 — The add-on store (new article)
+
+**Article:** `merchants/billing/add-ons.mdx` (new)
+**Branch:** `claude/bold-mendel-1w9mzt`
+**Status:** Done. SMOKE_OK (via the TLS bridge); 4 real annotated screenshots, validate-images 4/4 OK.
+One task this run.
+
+### Task selection — the P1 shelf is fully blocked, read this before hunting
+The run log's "NEXT RUN'S TASK" (Wallet Passes / Pass Design Studio) was **already
+shipped** on 2026-08-15 as PR #163. The log was stale; trust the board, not the log.
+
+Every remaining `Not started` **P1** row is verified-blocked or a duplicate, so this run
+went to P2:
+- *Canceling Your Subscription* — BLOCKED 2026-08-17 (verified again this run): both
+  reachable demo orgs have no `stripe_customer_id`/`stripe_subscription_id`, so the
+  Cancel button never renders. Needs seeded demo data.
+- *Custom Campaigns / Condition Builder* — product no-op, re-verified 2026-08-08.
+- *Redeeming a Reward by Code vs Lookup* — duplicate of on-main `redemptions.mdx`.
+- *Redeeming a Campaign Reward Code* — no dashboard UI (API/mobile only).
+- *Stamp Card Rewards* — duplicate of on-main `stamp-cards/rewards.mdx`.
+- *Push Frequency* — BLOCKED 2026-08-17, the attention budget does not exist in code.
+- *Campaigns Overview* — `campaigns/overview.mdx` already on main.
+
+Two P2 rows were checked and rejected as duplicates before picking:
+**Editing Staff Permissions & Custom Permissions** is fully covered by on-main
+`staff/roles-permissions.mdx` (Custom Permissions, the six categories, the Locations
+tab, role reset, and even Resending an Invitation) — which also makes
+*Resending/Canceling Invites* a near-duplicate. Took **The Add-Ons Store** (P2), the
+highest-priority genuinely-new, screenshotable row. `merchants/billing/add-ons.mdx`
+was not on main, and `settings/billing.mdx` only carries a 6-row price table.
+
+### What was written
+The `/settings/billing` **Add-ons** tab (card title "Pay-Per-Feature Store"), grounded in
+`Abdalestar/qtap`:
+- `lib/stripe/config.ts` `FEATURE_DISPLAY_PRICES` — the six add-ons, prices, and the
+  `availableOn` strings that drive the badges.
+- `app/(dashboard)/settings/billing/page.tsx` — `getFeatureLabel/Description`, the
+  `isAvailable` gate (button reads `Requires <tier>` and is disabled), `isTrialing` →
+  "Subscribe first" + amber alert, `isOwner` → "Contact Owner", `getFeaturePurchaseState`
+  (Active badge / "Already Active" / "Purchase Another" / "N credits — Buy More"), and the
+  **Active Add-ons** card on Overview (only renders for extra locations, extra loyalty
+  cards, or custom QR branding).
+- `lib/stripe/client.ts` — **the one-time vs monthly split**, which is the fact the
+  existing billing article omits: `mode: 'subscription'` for extra_location,
+  extra_loyalty_card, custom_qr_branding; `mode: 'payment'` for nfc_tag, batch_qr_100,
+  ai_insight_pack.
+- `app/api/billing/create-checkout/route.ts` — owner-only 403, trial 403, Stripe Checkout.
+- `app/api/webhooks/stripe/route.ts` — what each purchase actually writes
+  (`max_locations`, `extra_loyalty_cards`, `purchased_nfc_tags`, `batch_qr_credits`,
+  `ai_insight_credits +50`, `custom_qr_branding_enabled`) **and the cancellation path**
+  that decrements them (extra_location never below the plan default).
+- `hooks/use-plan-limits.ts` — how the extras fold into effective limits.
+- `app/api/ai/insights/route.ts` — 1 credit per run, 403 at zero.
+- `lib/utils/qr-logo.ts` — Franchise gets custom QR branding without buying it.
+
+### Screenshots (nothing was purchased)
+4 PNGs in `images/settings/`, flow `.routine/flows/billing-add-ons.json`, points demo
+(Golden Crust Bakery, **growth/active**): the full store; the Extra Location card cropped
+(badge 1 / Purchase 2); the **AI Insight Pack locked** card ("Elite+" badge, disabled
+"Requires Elite+"); and the Batch Generate paywall. **No Purchase button was ever
+clicked** — every one of them opens a real Stripe checkout. No PII on any of these screens.
+
+### NEW CAPTURE UNLOCKED — the batch paywall
+A 2026-06-12 run recorded that the batch purchase paywall could not be captured because
+both demo accounts had batch access (Elite/Franchise). **That has changed.** Both demo
+orgs are now **growth** with `batch_qr_credits = 0` and no paid `billing_history` row, so
+`/qr-codes/batch` renders the real "Unlock Batch QR Code Generation" paywall with all four
+pack tiers. Captured it.
+
+### TWO PRODUCT BUGS FOUND (documented honestly, flagged for engineering)
+1. **The larger batch packs cannot be bought.** `BATCH_TIERS` in
+   `components/dashboard/qr-codes/batch-generator.tsx` offers `batch_qr_500/1000/5000`,
+   but `FEATURE_PRICES` in `lib/stripe/client.ts` only defines `batch_qr_100`. So
+   `getFeaturePrice` returns null and `/api/billing/create-checkout` answers **503
+   "Price not configured"**. Even if one were bought, the webhook's `BATCH_QR_QUANTITIES`
+   only maps `batch_qr_100`, so credits would compute as `NaN`. Not click-verified (a
+   working button would fire a real Stripe checkout), so the article warns rather than
+   asserts.
+2. **Two prices for the same pack.** The Add-ons store shows the 100-code pack at
+   "$15 admin fee" (`FEATURE_DISPLAY_PRICES`), the Batch Generate paywall shows
+   "100 QR Codes / $10 one-time" (`BATCH_TIERS`). Both are live on screen. The article
+   tells merchants to check the amount at checkout.
+
+### Gotchas for future runs
+- **The demo orgs are on `growth` now, not Elite/Franchise.** This is what makes the
+  "Requires Elite+" gate and the batch paywall capturable, and it also means the
+  **Active Add-ons** card never renders (all add-on counts are 0) — described in prose,
+  not screenshotted.
+- Annotation selector gotcha: a shadcn `Badge` is a **div**, so
+  `... span:has-text('Growth+')` silently resolves to nothing and the box is dropped with
+  no error (you get a shot numbered "2" with no "1"). Use the exact-text engine
+  `text="Growth+"` instead; `.first()` lands on the first card in DOM order.
+  Chained `>> nth=0 >> css=` targets also silently fail in `resolveRect`.
+- The TLS-bridge condition from ROUTINE §6a is still live: the bare smoke test fails
+  `supabase_unreachable / ERR_CONNECTION_RESET`, and passes through
+  `PLAYWRIGHT_PROXY=http://127.0.0.1:38443`. Start the bridge with the Bash tool's
+  background mode.
+---
+
 ## 2026-08-19 — Camera scans now open the join page (recapture)
 
 **Article:** `merchants/qr-codes/customer-scan-flow.mdx` (rewritten, was factually wrong)

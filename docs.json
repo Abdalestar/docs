@@ -142,6 +142,7 @@
           "merchants/billing/upgrade",
           "merchants/billing/trial",
           "merchants/billing/downgrade",
+          "merchants/billing/add-ons",
           "merchants/billing/invoices-payment",
           "merchants/settings/locations",
           "merchants/settings/notifications",
