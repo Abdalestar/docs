@@ -1,0 +1,59 @@
+{
+  "section": "merchants/campaigns",
+  "account": "points",
+  "defaultWaitMs": 4000,
+  "viewport": { "width": 1440, "height": 1200 },
+  "steps": [
+    {
+      "name": "campaign-numbers-tiles",
+      "goto": "/campaigns/6ced08c4-cd45-4a07-a2c2-d625739cbcb7",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text(\"Decline\")" },
+        { "wait": 1000 }
+      ],
+      "waitFor": "text=Est. Revenue",
+      "waitMs": 9000,
+      "clip": { "x": 268, "y": 146, "width": 1160, "height": 196 },
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(:text-is(\"Total Sent\"))", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has(:text-is(\"Opened\"))", "number": 2, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has(:text-is(\"Clicked\"))", "number": 3, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has(:text-is(\"Redeemed\"))", "number": 4, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has(:text-is(\"Est. Revenue\"))", "number": 5, "color": "plum" }
+      ]
+    },
+    {
+      "name": "campaign-numbers-zero-rates",
+      "goto": "/campaigns/6ced08c4-cd45-4a07-a2c2-d625739cbcb7",
+      "waitFor": "text=Est. Revenue",
+      "waitMs": 9000,
+      "clip": { "x": 268, "y": 150, "width": 930, "height": 190 },
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(:text-is(\"Total Sent\"))", "color": "gold" },
+        { "type": "box", "target": "div.rounded-xl:has(:text-is(\"Opened\"))", "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has(:text-is(\"Redeemed\"))", "color": "plum" }
+      ]
+    },
+    {
+      "name": "campaign-numbers-revenue",
+      "goto": "/campaigns/6ced08c4-cd45-4a07-a2c2-d625739cbcb7",
+      "waitFor": "text=Est. Revenue",
+      "waitMs": 9000,
+      "clip": { "x": 1040, "y": 150, "width": 390, "height": 190 },
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(:text-is(\"Est. Revenue\"))", "color": "gold" }
+      ]
+    },
+    {
+      "name": "campaign-numbers-list-cards",
+      "goto": "/campaigns",
+      "waitFor": "text=Campaigns",
+      "waitMs": 9000,
+      "clip": { "x": 268, "y": 215, "width": 1160, "height": 130 },
+      "annotate": [
+        { "type": "box", "target": "span:has-text(\"Clicked:\")", "color": "plum" }
+      ]
+    }
+  ]
+}
