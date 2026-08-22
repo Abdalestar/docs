@@ -20,6 +20,120 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-22 — What the campaign numbers mean (stub replaced + stats.mdx drift fix)
+
+**Articles:** `merchants/campaigns/analytics.mdx` (stub replaced), `merchants/campaigns/stats.mdx` (correction)
+**Branch:** `claude/busy-clarke-3lf7tw`
+**PR:** https://github.com/Abdalestar/docs/pull/187
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 4 new annotated screenshots + 1 recapture,
+validate-images 4/4 and 4/4 OK. One task this run.
+
+### THE MERGE BACKLOG IS CLEARED — re-read this before you re-derive the board
+Every previous run log entry back to 2026-08-19 complains that `main` is 20+ PRs behind.
+**That is over.** PRs **#166 through #185 are all merged**; `main` now carries 111 `.mdx`
+files including pass-design-studio's neighbours, the QR set, customer-lists, demo-mode,
+top-bar, recent-activity and both web-enrollment articles. Do not assume an article is
+missing from main because an old log entry says so — check.
+
+Still open and unmerged, so do NOT re-write these: **#163** (Wallet pass design studio),
+**#164** (voucher design), **#165** (editing a live offer), **#186** (win-back max_sends
+correction), plus stale `#137/#145/#148` (three duplicate "Editing a Stamp Card" PRs) and
+`#154`, `#158`. `/cards/[id]/pass-design` and `/campaigns/offers/{new,[id]}` are the only
+dashboard routes with no article on main, and all three are covered by those open PRs.
+
+### Task selection
+Board queried with `notion-query-data-sources` (SQL mode). All 29 non-Done rows carry a
+dated DUPLICATE / BLOCKED / NOT-A-FEATURE verdict, and I re-verified the two that had no
+triage note:
+- **"Update show-on-screen.mdx once the presenter width bug is fixed"** (P3) — still
+  blocked. `qr-fullscreen.tsx:105` is unchanged (`w-[min(85vw,60vh)]`); `qtap` has had no
+  commits since 2026-08-10, so nothing on that board has moved.
+- **"Campaign Analytics"** (P2) — took it. See below.
+
+Backfill is still empty: the zero-PNG scan on `origin/main` returns the same four
+non-workable files (`customer-app/settings-profile`, `index.mdx`, `support/faq.mdx`, and
+the `campaigns/analytics.mdx` stub, which this run killed — so that scan is now three).
+
+### Why this row was workable when previous runs called it blocked
+Every run since 2026-06 rejected this row because the `/campaigns/[id]` **Performance**
+card 404s. That is true and still true, but it was the wrong reason to skip the row: the
+Performance card is one card on a page whose **five headline tiles render fine**, and
+`merchants/campaigns/analytics.mdx` was a six-line "Coming soon" **stub live in the
+Campaigns nav**. Killing a live stub beats leaving it because one card below the fold does
+not load. The article omits the Performance card entirely rather than claiming it works.
+
+### THE FINDING — claimable campaigns read 0% on everything
+`safePercent` returns 0 when the denominator is <= 0, and `computeOpenRate` /
+`computeClickRate` / `computeRedemptionRate` all divide by `total_sent`. A claimable
+campaign (audience Members only or Everyone) is skipped by `processCampaign`, so it never
+pushes and `total_sent` stays 0 forever. Verified live on Golden Crust
+`6ced08c4-cd45-4a07-a2c2-d625739cbcb7` ("25% off after 6pm"):
+
+> Total Sent **0** · Opened **3** (0% of sends) · Clicked **0** (0% of sends) ·
+> Redeemed **1** (0% of sends) · Est. Revenue **$20**
+
+So the merchant reads 0% across the row on a campaign that really got three opens and a
+redemption. Shipped as a `<Warning>` telling them to read the raw counts. **Worth a product
+fix.** The detail page also never renders `total_claimed`, though both the Campaigns list
+card and the Public offers row do.
+
+Second, smaller: `ASSUMED_AVG_TICKET_VALUE_USD = 20` is flat, identical for every business
+on the platform, and rendered as **US dollars** to merchants who take QAR. Said plainly.
+
+### stats.mdx was wrong on main and is now fixed
+It said "The four headline numbers" and carried a **four-card screenshot**. The page ships
+**five** — a **Clicked** tile was added (`campaigns.total_clicked` + the OneSignal click
+webhook, per `analytics-math.ts`, which notes the old `click_rate` was redemptions-over-opens
+wearing a click label). Clicked was documented **nowhere** in the docs. Fixed the count,
+added the bullet, **recaptured `images/campaigns/campaign-stats-cards.png`** (the old one
+showed four cards), and cross-linked the new article. Moved `campaigns/analytics` in
+`docs.json` to sit directly after `campaigns/stats`.
+
+### Counter write paths (worth keeping, they are scattered)
+- `total_sent` — **only** `app/api/campaigns/execute/route.ts`, `+= result.notifications_sent`, on the `*/15` cron.
+- `total_opened` / `total_clicked` — `app/api/webhooks/onesignal/route.ts` **and** `app/api/campaigns/[id]/track-open|track-click` (so the app can move them with no push involved, which is how the offer got 3 opens on 0 sends).
+- `total_redeemed` — `app/api/campaigns/rewards/[code]/redeem/route.ts`, +1 per counter redemption.
+- `total_claimed` — `issue_campaign_reward` in migration `040`.
+- `hooks/use-campaigns.ts` recomputes `estimated_revenue` from `total_redeemed` (the stored column is never written) and derives all rates at **0 decimals**; the API route passes 2.
+
+### PERFORMANCE CARD — diagnosis narrowed one more layer
+Re-verified live: `?period=bogus` returns the new `400`, so production **is** the rebuilt
+route. `?period=30d` still 404s for a real campaign owned by the logged-in active owner.
+The campaign fetch uses `createAdminClient()` and cannot be the cause. The 404 comes from
+the **staff lookup immediately below it**, which uses the **user-scoped** `supabase` client
+against `staff` and returns null → `staff_select_own_org` / `user_organization_ids()`. Same
+function an earlier run found not returning the demo user's org for seeded
+`push_notifications`. That is the thing to fix.
+
+### Screenshots (read-only; nothing sent, paused, deleted or redeemed)
+`.routine/flows/campaign-numbers.json` + `campaign-stats-recapture.json`, points demo.
+No customer PII (campaign names and figures are the merchant's own).
+
+### Gotchas for future runs
+- **`:text-is("Opened")` inside `div.rounded-xl:has(...)` is the reliable tile selector.**
+  A plain `:has-text("Opened")` matches the outer grid and several ancestors.
+- **Number badges are drawn ABOVE the box**, so a `clip` whose `y` starts at the tile row
+  clips them. The tile row sits at y≈150 at 1440x1200; `y:146, height:196` fits the badges
+  and excludes the red **Delete** button that bleeds in from the header above.
+- **`/campaigns` does not list offers.** Offers live on `/campaigns/offers`, so the
+  campaign-card **Claimed** variant is not capturable on Golden Crust (its three campaigns
+  are all Private). Documented in prose.
+- The one-step re-shoot trick works well: `node -e` filter the flow into `/tmp/one.json`,
+  re-run just that step, then fold the final clip back into the committed flow.
+- Reachable orgs and their plans are unchanged (Golden Crust points + Brew & Bean stamps,
+  both growth). The three "needs a better account" blockers (Cancel subscription, AI Suite,
+  MCP/AI) all still hold.
+
+### Gap discovery (1 row added)
+**Two near-duplicate articles are live and adjacent in the Members nav.**
+`merchants/members/joined-without-the-app.mdx` (PR #174) and
+`merchants/members/joining-without-the-app.mdx` (PR #185) both shipped, four days apart,
+and neither run saw the other because both were unmerged at the time. They merged together
+in the #166-#185 batch. Their sidebar titles differ by one letter ("Joined" / "Joining")
+and they overlap heavily. Filed as P2 with a suggested merge plan; not done here because
+deleting a published page needs a redirect and a human call on which one survives.
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
