@@ -20,6 +20,100 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-23 — Deleted members (the "Deleted member" ghost)
+
+**Article:** `merchants/members/deleted-members.mdx` (new)
+**Branch:** `claude/busy-clarke-g3ieta`
+**PR:** https://github.com/Abdalestar/docs/pull/188
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 6 real annotated screenshots, validate-images 6/6 OK.
+One task this run: the backfill queue is still the same four unworkable on-main files.
+
+### THE BLOCKER CLEARED — check Supabase before trusting a BLOCKED note
+This row had been re-rejected as BLOCKED by four separate runs since 2026-08-19 because no
+member in any org carried `deletion_requested_at`. **That changed on 2026-08-22.** Member
+`Q102812` on **Brew & Bean Cafe** (`QTAP_STAMP_EMAIL`) now has
+`deletion_requested_at = 2026-08-22 20:52 UTC`, 5 stamps earned, and **4 available
+`pending_rewards`** — so both the ghost identity and a live voucher held by a ghost were
+capturable. One `SELECT count(*) ... WHERE deletion_requested_at IS NOT NULL` would have
+found it. **Re-verify capture blockers with a query, not by reading last week's note.**
+`main` has also caught up: PRs #163-#185 are merged, so the "21 open PRs" note is stale.
+
+### What was written
+The ghost treatment (`components/dashboard/member-identity.tsx`, qtap `6a9d991` + `b74f6a5`):
+- `isGhostMember` = `deletion_requested_at || deleted_at`. Name becomes **Deleted member**,
+  a grey outline **Deleted** badge appears, and the avatar falls back to a `UserRound` icon
+  even when `avatar_url` is set (the demo ghost has one, so the shot proves it).
+- `/members`: contact and push cells become a dash, the row **checkbox is disabled** so a
+  ghost can never join a bulk action, and the row menu drops to **View Profile** alone
+  (Send Notification / Add Tag / **Delete Member** are all hidden — so you cannot remove a
+  deleted member from your own list).
+- `/members/[id]`: the page **skips the `member_stamps` / `member_points` fetches** for a
+  ghost, so the per-card breakdown is gone, but the three Quick Stats keep their totals
+  (they come off `member_org_view`). Recent Activity is relabelled
+  `Retained activity with <org name>`. The **Notes tab still saves** (that is what `b74f6a5`
+  restored) and is the one thing on the page a ghost still lets you edit.
+- CSV export: `Deleted member` in First Name, four contact columns blanked, every count kept.
+- Mobile `app/account/edit-account.tsx` -> `request_account_deletion()`; migrations
+  `039_account_deletion_grace.sql` + `040_account_deletion_hardening.sql`: push dies at once
+  (`push_enabled=false`, tokens cleared), a repeat request **keeps the first timestamp**
+  rather than extending the window, `restore_own_account()` reverts on a fresh OTP sign-in,
+  and a `15 2 * * *` pg_cron job invokes `finalize-account-deletions` after 30 days, which
+  zeroes balances with an `Account deletion: balance forfeited` ledger entry, cancels
+  `reward_redemptions`, expires `pending_rewards` and `campaign_rewards`, and scrubs identity
+  to `Deleted User`.
+
+### THE FACT THE ARTICLE LEADS ON — a deletion blocks nothing
+`grep deletion_requested_at app/api lib` returns exactly one route:
+`app/api/rewards/redeem-code/route.ts`, and it only swaps the displayed name to
+`Deleted member` and nulls the email **before allowing the redemption**. There is no guard
+anywhere else. Staff can still issue stamps, award points and redeem live vouchers for a
+deleted member all through the grace window. `deleted-member-redemption.png` is a real
+`Free Coffee` voucher on that member with a working code and an active **Confirm
+Redemption** button. Do not soften that in a future edit; the honest counter advice is the
+point of the article.
+
+### Screenshots (read-only, nothing redeemed or saved)
+`.routine/flows/deleted-members.json` (5 steps, 1440x1000) + `deleted-members-redemption.json`
+(1 step, 1440x1200), both on the stamp demo. **Confirm Redemption was never clicked**, no
+stamp or point was issued, no note was saved. No customer PII: the ghost has none on screen
+and every other shot is cropped to exclude other members' rows.
+
+### Gotchas for future runs
+- **The `/members` list search does NOT match `qtap_id`** (name / email / phone only), so a
+  ghost cannot be found by ID there and you cannot search their real name because you cannot
+  see it. The `/redemptions` and ops searches DO match it
+  (`input[placeholder="Search by name, email, phone, or Qtap ID..."]`). The ghost sorts
+  **first** on `/members` under the default Newest First, which makes
+  `table tbody tr:nth-child(1)` a stable target.
+- Row-menu button: `table tbody tr:nth-child(1) button[aria-haspopup="menu"]` avoids the
+  header-switcher first-match trap entirely. Useful geometry at 1440 wide: thead y=279 h=40,
+  each row h=57 starting y=319; Member col x=329 w=292, Contact x=621, Stamps x=820.
+- **A `[role=menu]` crop of a one-item menu is ~138x42 and dies on the 5KB
+  `validate-images` floor.** Crop a wider band of the row instead.
+- `clipTo: "[role=tabpanel]"` silently did not resolve on the member profile; the engine fell
+  back to a full-page shot and only the missing `(cropped)` in the log said so. **Grep the run
+  output for `(cropped)` on every step you expected to crop.**
+- Numbered badges are drawn *above* the box and sit on top of whatever is there. On the tight
+  redemption crop they covered the `CUSTOMER` label and the `0 of 5 stamps` line; plain boxes
+  plus an ordered `<Frame caption>` is the readable version (same finding as 2026-08-19).
+- TLS bridge needed again and stayed up for the whole run. Bare `PLAYWRIGHT_PROXY=$HTTPS_PROXY`
+  is still not enough.
+
+### Gap discovery (2 rows added, both P3)
+- **QR scan address drift** — `lib/utils/codes.ts` `SCAN_URL_BASE = https://c.qtap.qa/scan/`
+  is used by the gallery canvas, the gallery presenter, and both bulk exports (PDF + ZIP),
+  while `/qr-codes/generate` and `/qr-codes/[id]` still build `${origin}/scan/`. Published
+  `customer-scan-flow.mdx` quotes only the second. Same code, two printed URLs.
+- **`export-delete.mdx` predates the ghost** — it reads as if any member can be removed, and
+  its CSV section is a column short. Needs two paragraphs and a cross-link to the new article.
+
+### Left alone deliberately
+The P2 row "Merge the two near-duplicate 'without the app' member articles" is still open.
+Both files are on `main` and adjacent in the Members nav with sidebar titles one letter apart.
+Folding one into the other means deleting a published page and adding a redirect, which the
+row itself flags as a human call, so a scheduled run should not do it unasked.
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
