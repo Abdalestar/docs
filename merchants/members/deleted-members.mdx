@@ -1,0 +1,85 @@
+---
+title: "Customers who deleted their Qtap account"
+sidebarTitle: "Deleted members"
+description: "What the Deleted member label means, what you can still do for that customer at the counter, and what happens to their points and vouchers after 30 days."
+---
+
+A customer can ask Qtap to delete their account from the Qtap app, on the Account screen. From the moment they do, their name stops appearing anywhere in your dashboard. Every screen that used to show it reads **Deleted member** with a grey Deleted badge and a plain grey avatar.
+
+Their history with you does not disappear. The stamps they earned, the points they spent, and the notes your team wrote about them all stay exactly where they were.
+
+## Where you see it
+
+On the Members page they look like any other row, minus a name and contact details.
+
+<Frame caption="A member who has asked Qtap to delete their account. (1) the name and Deleted badge, (2) contact details replaced by a dash, (3) the stamps they earned with you, still counted.">
+  <img src="/images/members/deleted-member-list.png" alt="A Members table row reading Deleted member with a Deleted badge, a dash in the Contact column, and 5 in the Stamps column" />
+</Frame>
+
+The same treatment follows the customer everywhere their name would normally show up: the member profile, Redemptions, Stamp Operations and Points Operations, the code lookup box, redemption receipts, the Recent Activity feed on your dashboard home, the staff activity log and its CSV, and the scan list on a QR code's page.
+
+## What is hidden, and what stays
+
+Contact details go first. Email, phone, birthday, photo, Qtap ID, tags, and push status are all replaced by a dash or dropped from the screen. Their row can no longer be ticked for a bulk action, and the row menu shrinks to a single item.
+
+<Frame caption="The row menu on a deleted member. Send Notification, Add Tag, and Delete Member are gone, leaving View Profile.">
+  <img src="/images/members/deleted-member-menu.png" alt="A Members row menu showing only View Profile" />
+</Frame>
+
+Open the profile and the card carries the Deleted badge, the join date, and nothing else.
+
+<Frame caption="The profile card for a deleted member. The join date is the only detail left.">
+  <img src="/images/members/deleted-member-profile.png" alt="A member profile card with a grey avatar, the name Deleted member, a Deleted badge, and the line Joined Aug 22 2026" />
+</Frame>
+
+Their totals and their transaction history with your business are untouched, and Qtap labels the list so your staff know why it is still there.
+
+<Frame caption="Total stamps, points balance, and redemptions all survive, under a heading that names your business.">
+  <img src="/images/members/deleted-member-activity.png" alt="Member stats showing 5 total stamps and a Recent Activity list headed Retained activity with the business name" />
+</Frame>
+
+Your team's private notes survive too, and you can still edit them.
+
+<Frame caption="The Notes tab still works on a deleted member, so a note like a returned order or an allergy stays useful.">
+  <img src="/images/members/deleted-member-notes.png" alt="The Internal Notes tab on a deleted member profile with an editable text box and a Save Notes button" />
+</Frame>
+
+<Note>
+  You cannot remove a deleted member from your list. **Delete Member** is hidden on their row, which keeps your stamp and points totals from moving after the fact. See [Exporting and deleting members](/merchants/members/export-delete) for the removals you can still do.
+</Note>
+
+## You can still serve them at the counter
+
+Deleting an account does not void anything on the day it is requested. If that customer walks in with a reward, your staff can hand it over as usual.
+
+Search by their Qtap ID on Redemptions, since their name is no longer something you can look up. The customer's own app screen and their wallet pass still show that ID.
+
+<Frame caption="Redemptions, after looking up a deleted member by Qtap ID. The reward is live, the code works, and Confirm Redemption behaves normally. Both places their name would sit read Deleted member.">
+  <img src="/images/members/deleted-member-redemption.png" alt="A redemption voucher for Free Coffee with the customer field reading Deleted member and a Confirm Redemption button" />
+</Frame>
+
+Issuing stamps and awarding points work the same way. Nothing about the deletion blocks a transaction.
+
+## The 30 days after the request
+
+The request starts a 30-day countdown, and the customer is told so in the app before they confirm. Push notifications stop that same moment, so campaigns and receipts no longer reach their phone.
+
+If they sign back into the Qtap app within those 30 days, the request is cancelled and their name comes straight back on your side. Nothing was lost.
+
+<Warning>
+  After 30 days, a nightly job finishes the job. Point balances are zeroed with a ledger entry reading "Account deletion: balance forfeited", every voucher they were holding is cancelled or expired, and their personal details are erased for good. Do not promise a reward to a deleted account you have not checked, because a voucher that was ready last month may already be void.
+</Warning>
+
+The row itself stays in your Members list after all that, still labelled Deleted member, still carrying the totals they earned with you.
+
+## What your exports look like
+
+A CSV export from the Members page writes `Deleted member` in the First Name column and leaves last name, email, phone, and birthday blank. Join date, total stamps, points balance, lifetime points, visit count, and last visit are all exported as normal.
+
+## Who can see this
+
+Anyone who can open the Members page, which is owners, managers, and staff by default. The label is not a permission setting and cannot be turned off. See [Staff roles and permissions](/merchants/staff/roles-permissions) for how to change who reaches the page at all.
+
+<Note>
+  This is different from removing a member yourself. A customer's account deletion is theirs, covers every business they belong to, and is undone only by them signing back in. Removing a member from your side takes them out of your loyalty program alone.
+</Note>

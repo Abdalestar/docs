@@ -1,0 +1,60 @@
+{
+  "section": "members",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 1000 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "deleted-member-list",
+      "goto": "/members",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1000 }
+      ],
+      "waitFor": "table",
+      "waitMs": 9000,
+      "clip": { "x": 265, "y": 262, "width": 1190, "height": 114 },
+      "annotate": [
+        { "type": "box", "rect": { "x": 340, "y": 328, "width": 228, "height": 40 }, "number": 1, "color": "plum" },
+        { "type": "box", "rect": { "x": 622, "y": 332, "width": 32, "height": 32 }, "number": 2, "color": "plum" },
+        { "type": "box", "rect": { "x": 833, "y": 332, "width": 40, "height": 32 }, "number": 3, "color": "plum" }
+      ]
+    },
+    {
+      "name": "deleted-member-menu",
+      "goto": "/members",
+      "actions": [
+        { "wait": 9000 },
+        { "click": "table tbody tr:nth-child(1) button[aria-haspopup=\"menu\"]" },
+        { "wait": 1500 }
+      ],
+      "clip": { "x": 880, "y": 288, "width": 552, "height": 152 }
+    },
+    {
+      "name": "deleted-member-profile",
+      "goto": "/members/4f43b089-696e-4647-9a02-10d99cc3cbfd",
+      "waitMs": 11000,
+      "clip": { "x": 270, "y": 138, "width": 382, "height": 322 }
+    },
+    {
+      "name": "deleted-member-activity",
+      "goto": "/members/4f43b089-696e-4647-9a02-10d99cc3cbfd",
+      "waitMs": 11000,
+      "clip": { "x": 655, "y": 138, "width": 772, "height": 700 },
+      "annotate": [
+        { "type": "box", "target": "text=Retained activity with Brew & Bean Cafe", "color": "plum" }
+      ]
+    },
+    {
+      "name": "deleted-member-notes",
+      "goto": "/members/4f43b089-696e-4647-9a02-10d99cc3cbfd",
+      "actions": [
+        { "wait": 10000 },
+        { "click": "[role=\"tab\"]:has-text('Notes')" },
+        { "wait": 2000 }
+      ],
+      "clip": { "x": 655, "y": 268, "width": 775, "height": 355 }
+    }
+  ]
+}

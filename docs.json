@@ -130,6 +130,7 @@
           "merchants/members/profiles",
           "merchants/members/complete-profile",
           "merchants/members/export-delete",
+          "merchants/members/deleted-members",
           "merchants/members/redemptions",
           "merchants/redemptions",
           "merchants/redemptions/scan-redemption"
