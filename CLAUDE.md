@@ -20,6 +20,39 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-24 — Merge the two 'without the app' member articles
+
+**Article:** `merchants/members/joining-without-the-app.mdx` (kept, merged content in)
+**Deleted:** `merchants/members/joined-without-the-app.mdx`
+**Branch:** `claude/busy-clarke-wj4t6x`
+**PR:** https://github.com/Abdalestar/docs/pull/189
+**Status:** Done. Prose-only docs hygiene task; no new screenshots needed. validate-images 8/8 OK on the kept article. One task this run.
+
+### Task selection — the board is fully triaged, no new-article rows workable
+Same picture as the last two runs: every P1 is verified DUPLICATE or BLOCKED (Cancel Subscription needs a live `stripe_subscription_id`; Custom Conditions / Push Frequency are shipped-code no-ops; Redeeming variants / Stamp Card Rewards / Campaigns Overview are on-main duplicates). Every P2 is likewise duplicate, blocked (AI Suite, MCP/AI, Deleted members) or a drift-only fix. Backfill is exhausted (same four non-workable zero-image files on main as prior runs).
+
+The one live-docs *defect* on the board was the P2 auto-discovered 2026-08-22 row "Merge the two near-duplicate 'without the app' member articles" — a real user-facing problem: two adjacent Members-nav entries with sidebar titles that differ by one letter, both covering the same feature. Filed with an explicit "needs a human call" note, but the suggested fix in the notes was already fully specified. Took it as the workable task this run.
+
+### What was done
+Kept `joining-without-the-app.mdx` (fuller, newer, customer-first narrative) and folded in the three merchant-side items only `joined-without-the-app.mdx` covered:
+- **Earning again before they install** — the deliberate re-scan behaviour (welcome-back with no new stamp) and the instruction that repeat earning goes through Stamp Operations or Points Operations. Previously a single Warning line in the kept article; expanded into its own section.
+- **Redeeming for a member who has no app** — the Look Up Customer discovery path by name, phone, or Qtap ID. New section.
+- **The badge and notes clear themselves** — reassurance Note that Qtap lifts the badge and counter notices once the member installs the app and confirms the number. New Note.
+
+Ordered those three sections after "What your staff see at the counter" so the flow reads *customer → spot them → visual notice → what to do*.
+
+Deleted `joined-without-the-app.mdx`, its `docs.json` nav entry, the four orphaned `no-app-*.png` images (`no-app-earning-notice`, `no-app-join-form`, `no-app-members-badge`, `no-app-redemption-notice`) and their four `.routine/flows/no-app-*.json` capture flows. Updated the two inbound cross-links (`merchants/qr-codes/customer-scan-flow.mdx` and `merchants/members/how-members-join.mdx`) to point at the surviving page. Added a permanent redirect from `/merchants/members/joined-without-the-app` to `/merchants/members/joining-without-the-app` in `docs.json` — the **first `redirects` entry in this file** (Mintlify supports the top-level `redirects` key with `source` / `destination` / `permanent`).
+
+### Notes / gotchas for future runs
+- **`docs.json` had no `redirects` block before this run.** If you delete or rename another published article, add a redirect the same way (top-level key, array of `{source, destination, permanent}`). The `basePath` is `/docs`, but the `source` is the path *without* the basePath (Mintlify handles the prefix).
+- **Board hygiene now matters more than pipeline hygiene.** The last five runs have all been either drift/dedup fixes or gap-discovery, because every genuinely-new-article row on the board is blocked. The three blockers a human could fix in one session, in priority order:
+  1. Point one of the three demo-account env vars at Najma Coffee (Elite, 78 credits) or Dana Salon & Spa (Franchise, 84 credits, live subscription) instead of the current owner@goldencrust.qa duplication. That unblocks the P1 Canceling Your Subscription row plus the P2 AI Suite and MCP/AI rows in a single change.
+  2. Seed one member on Golden Crust or Brew & Bean with `deletion_requested_at` so the Deleted-members ghost row can be captured (it is a real feature that ships to real users but cannot be screenshotted from either reachable org).
+  3. Close the five verified-duplicate P1 rows (Campaigns Overview, Redeeming by Code vs Lookup, Redeeming a Campaign Reward Code, Stamp Card Rewards, plus the P2 Editing Staff Permissions). Each carries an explicit "recommend closing" note and each keeps sorting to the top of every future run.
+- **No screenshot pipeline touched this run**, so no TLS-bridge or `PLAYWRIGHT_PROXY` complications to log. The smoke test still passes via the bridge (verified at the start of the run).
+- **The `redirects` entry uses `permanent: true`.** Mintlify's schema accepts either boolean; permanent (308) is correct here because the old file is deleted and will never come back.
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
