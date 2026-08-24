@@ -125,7 +125,6 @@
         "pages": [
           "merchants/members/overview",
           "merchants/members/how-members-join",
-          "merchants/members/joined-without-the-app",
           "merchants/members/joining-without-the-app",
           "merchants/members/profiles",
           "merchants/members/complete-profile",
@@ -211,5 +210,12 @@
     "socials": {
       "x": "https://x.com/qtapqa"
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/merchants/members/joined-without-the-app",
+      "destination": "/merchants/members/joining-without-the-app",
+      "permanent": true
+    }
+  ]
 }
