@@ -1,0 +1,44 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/nfc-tags",
+  "account": "stamp",
+  "defaultWaitMs": 3500,
+  "viewport": { "width": 1440, "height": 1200 },
+  "steps": [
+    {
+      "name": "placement-edit-tag",
+      "goto": "/nfc-tags",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 4000 },
+        { "click": "tr:has-text('Test Tag 2') button" },
+        { "wait": 1200 },
+        { "click": "[role=menuitem]:has-text('View Details')" },
+        { "wait": 6000 },
+        { "click": "button:has-text('Edit')" },
+        { "wait": 1800 }
+      ],
+      "clipTo": "div.rounded-xl:has(div:text-is('Edit NFC Tag'))",
+      "clipPadding": 16,
+      "waitMs": 800,
+      "annotate": [
+        { "type": "box", "target": "[id='edit_name']", "number": 1, "color": "plum" }
+      ]
+    },
+    {
+      "name": "placement-tag-details",
+      "goto": "/nfc-tags",
+      "actions": [
+        { "wait": 4500 },
+        { "click": "tr:has-text('TEST_SERIAL_123') button" },
+        { "wait": 1200 },
+        { "click": "[role=menuitem]:has-text('View Details')" },
+        { "wait": 6000 }
+      ],
+      "clipTo": "div.rounded-xl:has(div:text-is('Details'))",
+      "clipPadding": 16,
+      "waitMs": 800
+    }
+  ]
+}

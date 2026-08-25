@@ -1,0 +1,94 @@
+---
+title: "Where to put your NFC tags"
+sidebarTitle: "Placement ideas"
+description: "Pick a spot for each NFC tag, then set the name, branch, and action that decide what its taps are worth and what they tell you."
+---
+
+Nothing about your business is written on an NFC tag. The tag carries one permanent web address, and everything else lives in its row in the dashboard: the name, the branch, the action, the card or program it credits. So where you stick a tag and how you fill in that row are the same decision.
+
+<Frame caption="Every tag carries its own branch and its own tap count. The orange Unassigned card counts tags that belong to no branch.">
+  <img src="/images/merchants/nfc-tags/placement-inventory.png" alt="NFC Tags page with the Unassigned summary card, the Location column, and the Taps column called out" />
+</Frame>
+
+## Start at the counter
+
+The till is where a tag earns its keep. A customer pays, holds their phone to the tag, and the stamp or the points land before they have put their wallet away. Set the action to **Add Stamp** to fill the card the tag was set up against, or to **Award Points** and give each tap a value.
+
+<Note>
+A stamp tag adds one stamp per card, per customer, per day. A second tap on the same card the same day is refused with "You already earned a stamp here today. Come back tomorrow!" The day rolls over at midnight UTC, which is 3am in Qatar. Points tags have no daily limit.
+</Note>
+
+That daily rule is worth knowing before you buy a second tag. Two stamp tags in one room will not stamp the same card twice in a day, so a second tag saves steps at a busy till and adds nothing to the card.
+
+## Give every branch its own tag
+
+A tag is screwed to one counter, so Qtap treats the tag's branch as the branch the customer earned at. Assign each tag to the branch it lives in and its taps show up in your per-branch numbers on the Analytics page and in the Location Comparison report.
+
+<Frame caption="A tag assigned to a branch. Taps from this tag are counted at Souq Waqif Branch.">
+  <img src="/images/merchants/nfc-tags/placement-branch-tag.png" alt="NFC tag detail page showing total taps, action, the assigned branch, and status" />
+</Frame>
+
+<Warning>
+A tag with no branch still works, and every tap it takes still adds the stamp or the points. But those taps carry no branch, so they drop out of every per-branch breakdown. The **Unassigned** card at the top of the NFC Tags page is the count to keep at zero.
+</Warning>
+
+<Frame caption="The same page for a tag with no branch set. Its taps count toward your totals but never toward a branch.">
+  <img src="/images/merchants/nfc-tags/placement-unassigned-tag.png" alt="NFC tag detail page showing Unassigned in place of a branch name" />
+</Frame>
+
+To fix one, open the tag's three-dot menu on the NFC Tags page and choose **Assign Location**.
+
+<Frame caption="The Assign Location dialog. Picking a branch here saves straight away, with no separate save button.">
+  <img src="/images/merchants/nfc-tags/placement-assign-location.png" alt="Assign Location dialog showing the tag and a location dropdown reading No Location" />
+</Frame>
+
+## Name each tag after its spot
+
+The tag name is yours alone; customers never see it. Use it for the exact place the tag sits, like `Till 2` or `Table 5`. Each tag keeps its own running **Total Taps** and its own **Last Tapped** date, so named tags tell you which spots people actually use.
+
+<Frame caption="A tag's Details panel. Last Tapped and the total tap count are what tell you a spot is being used.">
+  <img src="/images/merchants/nfc-tags/placement-tag-details.png" alt="Details panel showing serial number, purchase date, last tapped date, and creation date" />
+</Frame>
+
+<Note>
+Those two figures are all the per-tag history the dashboard shows. There is no per-tag list of who tapped and when, so compare tags by their tap counts rather than looking for a log.
+</Note>
+
+## Put a tag where you do not want to give anything away
+
+Some spots are worth measuring without paying for it, like a table or the waiting area. Set the action to **Check-In** and a tap records the visit and nothing else, so there is no stamp to honour and no balance to fund. The tag's own tap count still goes up, and the customer's last-activity date moves, which keeps them out of the At Risk audience for another 30 days.
+
+A check-in tap still counts as the customer showing up, so a birthday, milestone, or welcome reward they are owed is handed over on that tap the same as on any other.
+
+## Moving a tag later
+
+The address written on a tag never changes, and neither does the business it belongs to. Everything else you can rewrite from the dashboard as often as you like: rename it, move it to another branch, change what a tap does, or switch it off. Open the tag, click **Edit**, and save.
+
+<Frame caption="The Edit panel on a tag's page. Name, branch, action, and the Active switch are all editable after the tag is on the wall.">
+  <img src="/images/merchants/nfc-tags/placement-edit-tag.png" alt="Edit NFC Tag panel with name, location, action, and an Active switch" />
+</Frame>
+
+A tag that spent the summer on a table can move to the counter in the autumn, and the hardware never has to be touched.
+
+<Warning>
+Changing a tag's action to **Award Points** does not link it to a points program, and the Edit panel has no field for one. A points tag that was never linked to a program answers a tap with "This tag isn't linked to a points program yet." Ask Qtap support to link it before you put it out.
+</Warning>
+
+## Before a tag goes on the wall
+
+- Its status is **Active**.
+- A stamp tag names the card it fills, or the tap fails.
+- Its branch is set, unless you are happy losing it from branch reports.
+- Your regulars have the Qtap app. A tap only works from inside the app, so a poster QR code is the better choice for people who have not installed it yet.
+
+<CardGroup cols={3}>
+  <Card title="How a tap works" href="/merchants/nfc-tags/tap-and-earn">
+    What a tap adds, and what the customer sees
+  </Card>
+  <Card title="NFC Tags" href="/merchants/nfc-tags">
+    Manage your tag inventory
+  </Card>
+  <Card title="Location Comparison" href="/merchants/analytics/location-comparison">
+    Read the per-branch numbers your tags feed
+  </Card>
+</CardGroup>

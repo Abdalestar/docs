@@ -11,7 +11,7 @@ NFC tags let customers stamp their card or earn points by tapping their phone ag
 
 ## How NFC tags work
 
-When a member taps their phone on an NFC tag, Qtap reads the tag's serial number and performs the action you've configured — adding a stamp to a specific stamp card, awarding points, or recording a check-in. The tap is logged with a timestamp and linked to the member's account.
+When a member taps their phone on an NFC tag, Qtap reads the address written on the tag and performs the action you've configured — adding a stamp to a specific stamp card, awarding points, or recording a check-in. The tap is logged with a timestamp and linked to the member's account.
 
 Each tag belongs to your organization and can optionally be assigned to a specific location.
 
@@ -90,8 +90,9 @@ Click the three-dot menu and select **Deactivate**. Inactive tags remain in your
 Click **View Details** on any tag to open its detail page. You'll see:
 
 - Total tap count, action type, location assignment, and current status
-- A line chart showing taps over the last 7 days
-- A list of recent taps with timestamps
+- A Details panel with the serial number, the purchase date, and the date of the last tap
+
+The running tap count and the last tap date are the whole per-tag history the dashboard keeps, so compare tags by their counts rather than looking for a log of individual taps.
 
 <Frame caption="A tag's detail page shows its total taps, action, location, and status, plus its serial number and key dates.">
   <img src="/images/merchants/nfc-tags/04-tag-detail.png" alt="NFC tag detail page with stat cards and a details panel" />
