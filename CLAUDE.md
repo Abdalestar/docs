@@ -20,6 +20,117 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-25 — Where to put your NFC tags (+ three stale NFC claims corrected)
+
+**Article:** `merchants/nfc-tags/placement-ideas.mdx` (new)
+**Branch:** `claude/busy-clarke-41h56k`
+**PR:** https://github.com/Abdalestar/docs/pull/190
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 6 real annotated screenshots, validate-images
+6/6 OK. One task this run: the backfill queue is still the same four unworkable zero-PNG
+files on `main` (`customer-app/settings-profile`, `index.mdx`, `support/faq.mdx`,
+`merchants/campaigns/analytics.mdx`).
+
+### Task selection — main has caught up, and the board has exactly one workable row
+`origin/main` is now at the PR #185 merge, so the long "21 open PRs, main lacks
+everything" backlog the last few entries describe is **cleared**. Query the board with
+`notion-query-data-sources` (SQL mode) as usual; of the 29 open rows, every P1 and P2 is
+still a verified DUPLICATE, a reality-flagged non-feature, or blocked on an account this
+routine cannot reach. The only open row with neither flag was the P3 **NFC Tag Placement
+Ideas**, and `merchants/nfc-tags/placement-ideas.mdx` was genuinely absent from `main`
+(the on-main `qr-codes/placement-ideas.mdx` is the QR sibling, not this). Took it.
+
+Re-verified as still blocked, so nobody re-derives them: the **show-on-screen presenter
+width bug** is unchanged in source (`qr-fullscreen.tsx:105` still sets
+`w-[min(85vw,60vh)]`), and `QTAP_NAJMA_EMAIL` is *still* a duplicate of `QTAP_EMAIL`
+(both `owner@goldencrust.qa`), so Cancel Subscription / AI Suite / MCP-AI stay unreachable.
+
+### What was written
+Where a tag goes and how its row is filled in are one decision. Grounded in the
+**deployed** `process-nfc-tap` edge function (v15, fetched via the Supabase MCP and
+byte-identical to `Qtap_app/supabase/functions/process-nfc-tap/index.ts`) plus the live
+schema:
+- The tag is a blank carrier: one permanent `https://c.qtap.qa/t/{token}` URL. `token`
+  and `organization_id` are immutable (`guard_nfc_tag_identity`, migration 006); name,
+  branch, action, points value and active are editable forever, so a tag moves from a
+  table to the counter without new hardware.
+- **One tag per branch works.** `source.locationId` is the tag's own `location_id` and
+  flows into `transactions.location_id` via `process_stamp_scan` / `process_points_scan`.
+  Checked the thing that would have killed the claim: the channel goes in
+  `transactions.transaction_type` (`nfc_tap`), while `type` stays `stamp` / `points_earn`,
+  so taps DO count in Location Comparison and the analytics branch filter.
+- **A stamp tap is capped at one per card per member per calendar day** — NFC only,
+  hardcoded in `_shared/earn.ts`, QR and typed codes deliberately uncapped. UTC day
+  boundary, so it rolls over at 3am in Qatar. Two stamp tags in one room therefore never
+  double-stamp a card, which is the whole point of the placement section.
+- **Check-in writes `last_activity_at` and nothing else** — no stamp, no points, no
+  transaction row. So the row's original "per-table check-in for analytics" idea needed
+  correcting: the only trace is the tag's own tap counter. It does keep the member out of
+  At Risk (`at_risk_days: 30`), and campaign rewards are still evaluated on a check-in tap.
+
+### FOUR published claims were falsified and corrected in the same PR
+All four are in the NFC articles this one cross-links, so leaving them would have made the
+new page contradict its own neighbours. Edits are single sentences, not rewrites.
+1. "Qtap reads the tag's **serial number**" (`nfc-tags.mdx`, `tap-and-earn.mdx`, and
+   `nfc-tap-flow.svg`) — it reads the token URL. `serial_number` became nullable inventory
+   metadata in migration 006.
+2. "The card's wait time between stamps and its daily cap still apply" (`tap-and-earn.mdx`)
+   — `stamping_delay_minutes` / `daily_stamp_cap` / `valid_locations` live in the
+   dashboard's TypeScript and are explicitly **not** consolidated into the tap path (the
+   `earn.ts` header says so). The real rule is the daily cooldown above.
+3. "Points multipliers don't apply to taps" **and** "A tap doesn't send the reward push"
+   (`tap-and-earn.mdx` Warning + SVG) — **both false now.** `grep source.kind earn.ts`
+   returns exactly four hits: the transaction channel, two error-copy wordings, and the
+   NFC-only cooldown. Nothing else in the engine branches on tap vs scan.
+4. "A line chart showing taps over the last 7 days / a list of recent taps"
+   (`nfc-tags.mdx`, `detail.mdx`) — **neither renders.** See below.
+
+### THE CAPTURE THAT TAUGHT ME SOMETHING — `nfc_taps` is service-role only
+A flow step that cropped to the **Recent Taps** card failed with a hover timeout. The
+cause is not a selector: `nfc_taps` has RLS enabled with a **single service-role policy**,
+so a merchant login reads zero rows, and both the `Tap Activity (Last 7 Days)` chart and
+the `Recent Taps` card are conditional on that data. They are dead UI for every merchant.
+What a merchant can actually see per tag is **Total Taps** and **Last Tapped**, which are
+columns on `nfc_tags` that the edge function updates. The article says exactly that.
+
+### Screenshots (read-only, nothing written)
+`.routine/flows/nfc-placement.json` + `nfc-placement-edit.json`, stamp demo (Brew & Bean,
+3 tags, 4 taps, 1 unassigned — the Unassigned card reads 1, which is the article's whole
+branch argument in one number). **Save Changes, the Assign Location dropdown, Deactivate
+and Delete were never clicked.** No customer PII: tag names, serials and branch names are
+the merchant's own.
+
+### Gap discovery (1 row added, P1) — the Add Tag dialog cannot work
+`handleAddTag` inserts into `nfc_tags` **without `token`**; `token` is NOT NULL with no
+default and no BEFORE INSERT trigger (verified against `information_schema` and
+`pg_trigger`), and `generate_nfc_token()` is revoked from `authenticated`. There is no
+other insert path in either repo. So the "Adding a tag" walkthrough on `main` tells
+merchants to do something that fails with the generic "Failed to add NFC tag" toast.
+**Not click-verified** — clicking Add Tag is a write on a demo org, so I stopped at the
+schema. Filed as P1 rather than rewritten here, because the fix depends on whether the
+dialog is meant to mint a token server-side or to be replaced with "tags arrive
+programmed". A future run should NOT guess that answer.
+
+### Gotchas for future runs
+- **`/nfc-tags` selectors are stable and cheap to probe.** Summary cards are the first
+  four `div.rounded-xl` (Total Tags / Active Tags / Total Taps / Unassigned, at x280/568/
+  856/1144, y168, 272x110 at 1440px). `div:text-is("Unassigned")` resolves exactly 1 (the
+  card title) because the table cell is a `<span>`. Row menus are `table tbody tr button`.
+- **Fixed `rect` annotations beat selectors for table columns.** Boxing the Location and
+  Taps columns as explicit rects over the `thead th` x-offsets (818/1027) is stable; a
+  `:has-text` selector on a column would have hit the sidebar nav.
+- The tag detail page is short without the chart, so `clip: {x:280,y:76,width:1136,
+  height:300}` frames the four stat cards cleanly on both a branch-assigned and an
+  unassigned tag — the pair that makes the branch point visually.
+- `points_program_id` is set on every seeded points tag, but **the dashboard never writes
+  it**: neither Add Tag nor the Edit panel has a field for it. So switching a tag's action
+  to Award Points leaves it unlinked and a tap answers "This tag isn't linked to a points
+  program yet." Shipped as a Warning.
+- The Assign Location dialog's Select has `onValueChange={handleAssignLocation}` and only a
+  **Close** button, so **picking an option writes immediately**. Open the dialog for the
+  shot; never open and pick.
+
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
