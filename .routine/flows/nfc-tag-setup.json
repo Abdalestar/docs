@@ -1,0 +1,31 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/nfc-tags",
+  "account": "stamp",
+  "defaultWaitMs": 3500,
+  "viewport": { "width": 1440, "height": 1200 },
+  "steps": [
+    {
+      "name": "nfc-tag-edit-panel",
+      "goto": "/nfc-tags",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 5000 },
+        { "click": "tr:has-text('Test Tag 2') button" },
+        { "wait": 1500 },
+        { "click": "[role=menuitem]:has-text('View Details')" },
+        { "wait": 6500 },
+        { "click": "button:has-text('Edit')" },
+        { "wait": 2000 }
+      ],
+      "clipTo": "div.rounded-xl:has(div:text-is('Edit NFC Tag'))",
+      "clipPadding": 16,
+      "waitMs": 900,
+      "annotate": [
+        { "type": "box", "target": "[id='edit_name']", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has(div:text-is('Edit NFC Tag')) button[role=combobox]", "number": 2, "color": "charcoal" }
+      ]
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 ---
 title: "NFC Tags"
-description: "How to register, configure, and manage NFC tags for contactless loyalty interactions in your locations."
+description: "How to set up, configure, and manage NFC tags for contactless loyalty interactions in your locations."
 ---
 
-NFC tags let customers stamp their card or earn points by tapping their phone against a physical tag, instead of scanning a QR code. You register each tag in the dashboard, configure what it does when tapped, and place it somewhere in your location.
+NFC tags let customers stamp their card or earn points by tapping their phone against a physical tag, instead of scanning a QR code. Each tag arrives already programmed, you set what it does when tapped from the dashboard, and you place it somewhere in your location.
 
 <Frame caption="The NFC Tags page lists every registered tag with its action, location, and tap count, above four summary cards.">
   <img src="/images/merchants/nfc-tags/01-nfc-tags-page.png" alt="NFC Tags page with summary cards and the tag inventory table" />
@@ -11,54 +11,48 @@ NFC tags let customers stamp their card or earn points by tapping their phone ag
 
 ## How NFC tags work
 
-When a member taps their phone on an NFC tag, Qtap reads the tag's serial number and performs the action you've configured — adding a stamp to a specific stamp card, awarding points, or recording a check-in. The tap is logged with a timestamp and linked to the member's account.
+When a member taps their phone on an NFC tag, Qtap reads the address written on the tag and performs the action you've configured — adding a stamp to a specific stamp card, awarding points, or recording a check-in. The tap is logged with a timestamp and linked to the member's account.
 
 Each tag belongs to your organization and can optionally be assigned to a specific location.
 
 <Note>
-NFC tags are physical items you purchase through the dashboard. Go to **Settings → Billing** and look for the NFC Tags add-on ($19 per tag) to order them. Once they arrive, you register each one by entering its serial number.
+NFC tags are physical items you order through the dashboard. Go to **Settings → Billing** and look for the NFC Tags add-on ($19 per tag).
 </Note>
 
-## Adding a tag
+## Getting a tag onto your account
 
-<Steps>
+Every tag carries one permanent web address, written to the hardware before it reaches you. That address is what a tap reads, and it cannot be created from the dashboard, so tags are added to your account by Qtap rather than by you.
 
-### Open the NFC Tags page
+<Warning>
+The **Add Tag** button on the NFC Tags page opens a form, but saving it does not work. Whatever you type, the dialog answers **Failed to add NFC tag** and nothing is added to your list. Order your tags under **Settings → Billing**, then ask Qtap support to put them on your account.
+</Warning>
 
-Go to **NFC Tags** in the main navigation. Click **Add Tag**.
-
-### Enter the serial number
-
-Type the serial number printed on the tag. It looks something like `NTAG215-ABC123`. This must match exactly — if it doesn't, taps won't register.
-
-### Give it a name (optional)
-
-Add a name so you can identify it later, such as `Counter Tag` or `Table 5`. This only appears in your dashboard, not to customers.
-
-### Choose an action
-
-Select what happens when a customer taps the tag:
-
-- **Add Stamp** — adds one stamp to the stamp card you select. You'll need to pick which active stamp card this tag links to.
-- **Award Points** — adds a set number of points to the member's points balance. Enter the points value in the **Points Value** field.
-- **Check-In** — records a visit without issuing a stamp or points.
-
-### Assign a location (optional)
-
-If you have multiple locations, select which one this tag belongs to. This helps you track taps by location later.
-
-### Click Add Tag
-
-The tag appears in your inventory immediately.
-
-</Steps>
-
-<Frame caption="The Add Tag form: enter the serial number, name the tag, then choose what a tap does.">
+<Frame caption="The Add Tag form. It still opens, but saving it fails, so tags reach your list through Qtap support.">
   <img src="/images/merchants/nfc-tags/02-add-tag-dialog.png" alt="Add NFC Tag dialog with a serial number, the action set to Award Points, and a points value" />
 </Frame>
 
+### What the serial number is for
+
+The serial number is a note to yourself. It plays no part in making a tap work, so some of your tags will have one and some will not, and a tag with that field empty records taps normally. Taps are matched on the address written to the tag, which never changes and which you never have to type.
+
+## Setting up what a tap does
+
+Once a tag is on your list, its behaviour is yours to set and change as often as you like. Open the tag's three-dot menu, choose **View Details**, then click **Edit**:
+
+- **Name**: how you recognise it, such as `Counter Tag` or `Table 5`. Customers never see it.
+- **Location**: the branch the tag sits in, so its taps count toward that branch.
+- **Action**: **Add Stamp**, **Award Points**, or **Check-In**.
+- **Points Value**: what a tap is worth on a points tag.
+- **Active**: switch a tag off without deleting it.
+
+Click **Save Changes** when you are done.
+
+<Frame caption="The Edit panel on a tag's detail page: rename the tag (1) and move it to another branch (2). Points Value appears here only when the action is Award Points.">
+  <img src="/images/merchants/nfc-tags/nfc-tag-edit-panel.png" alt="Edit NFC Tag panel with the Name field and the Location dropdown called out, above the Action select, Active switch, and Save Changes button" />
+</Frame>
+
 <Warning>
-If you select **Add Stamp** as the action, you must have at least one active stamp card. If no stamp cards appear in the dropdown, create one first under **Cards** before adding the tag.
+The Edit panel has no field for the stamp card or the points program a tag credits, and nowhere else in the dashboard sets one either. If a tap answers that the tag is not linked to a card or a program, ask Qtap support to link it.
 </Warning>
 
 ## Managing your tags
@@ -108,7 +102,7 @@ Deleting a tag cannot be undone. If you want to stop using a tag temporarily, de
 ## Stats at a glance
 
 At the top of the NFC Tags page, four summary cards show:
-- **Total Tags** — how many tags you've registered
+- **Total Tags** — how many tags are on your account
 - **Active Tags** — how many are currently active
 - **Total Taps** — combined tap count across all tags
 - **Unassigned** — tags not linked to any location
