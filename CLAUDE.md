@@ -20,6 +20,81 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-26 — The NFC Add Tag walkthrough cannot work (P1 correction)
+
+**Article:** `merchants/nfc-tags.mdx` (correction, not a new article)
+**Branch:** `claude/busy-clarke-c4yfs6`
+**PR:** https://github.com/Abdalestar/docs/pull/191
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 1 new annotated screenshot, validate-images
+5/5 OK. One task this run: backfill is genuinely exhausted (the zero-PNG scan on
+`origin/main` still returns the same four unworkable files, and `campaigns/analytics.mdx`
+is being replaced by open PR #187).
+
+### Task selection
+`origin/main` is at the PR #185 merge; 13 PRs are open (#186–#190 are the recent ones).
+Every P1/P2 row on the board still carries a verified DUPLICATE / not-shipped / blocked
+note, and **the app repo has shipped nothing since 2026-08-10**, so there is no new-feature
+gap to write. The one open row with a real, actionable finding was the P1
+**"Fix nfc-tags.mdx: a merchant cannot add an NFC tag from the dashboard"**, filed by the
+PR #190 run. Took it.
+
+That row said a future run should NOT guess the engineering answer, and this run did not.
+The two candidate answers (wire the dialog up server-side, or replace it with Qtap-side
+provisioning) are still open. What is **not** in doubt is that the published walkthrough
+fails today, so the article was corrected to describe today's behaviour and the PR body
+hands the decision back to engineering.
+
+### Re-verified rather than trusted
+The 08-25 note was right, and re-checking it turned up one more thing:
+- `handleAddTag` (`nfc-tags/page.tsx:242`) inserts without `token`; `nfc_tags.token` is
+  NOT NULL with no default (`information_schema`); the only two triggers are **both
+  BEFORE UPDATE** (`pg_trigger`); `generate_nfc_token()` is revoked from `authenticated`.
+- **New:** there is a *second* insert path, `createNFCTag` (`hooks/use-nfc-tags.ts:145`),
+  which also omits `token` and is **never called**. So both writers in the codebase are
+  broken, one of them dead.
+- Still **not click-verified**. Clicking Add Tag is a write on a demo org, so I stopped at
+  the schema, same call PR #190 made.
+
+### The live-data proof worth reusing
+`serial_number` is nullable since migration 006, and the demo data proves the published
+"must match exactly, if it doesn't taps won't register" claim false: Brew & Bean's
+**Test Tag 1** and Najma's **Test Tag 3** both have `serial_number IS NULL` and have each
+registered a tap. The article's suggested format `NTAG215-ABC123` also matches nothing in
+the database, where real serials are hardware UIDs like `04:A2:BC:5E:8F:71:80`.
+
+### NEW FINDING (new P2 row) — a stamp tag's card cannot be set anywhere
+`handleSave` on `/nfc-tags/[id]` updates exactly `{name, location_id, action,
+points_value, is_active}`. There is **no stamp-card field in the Edit panel**, and
+`stamp_card_id` is written only by the failing insert. `updateNFCTag` accepts it but is
+never called. So a stamp tag's card link can only ever be set by Qtap. This is the exact
+twin of the `points_program_id` gap PR #190 documented, and the new screenshot is evidence
+for it: the Edit panel visibly has no card field.
+
+### Screenshot
+`.routine/flows/nfc-tag-setup.json`, stamp demo (Brew & Bean). One cropped shot of the
+Edit panel with Name (1) and Location (2) boxed. Read-only: **Save Changes was never
+clicked**; nothing was added, edited, deactivated or deleted. No PII (tag and branch names
+are the merchant's own). The old `02-add-tag-dialog.png` was kept and recaptioned, since
+the dialog does still open; only its caption changed.
+
+### Gotchas for future runs
+- **PR #190 edits the same file and is still open.** It fixes the "reads the tag's serial
+  number" line in *How NFC tags work*. This PR makes the **identical** edit so the article
+  is self-consistent whichever lands first; identical text merges cleanly. Check for that
+  overlap before touching an NFC file while #190 is open.
+- The Edit-panel selectors from #190 still work unchanged: `tr:has-text('Test Tag 2')
+  button` → `[role=menuitem]:has-text('View Details')` → `button:has-text('Edit')`, cropped
+  with `clipTo: "div.rounded-xl:has(div:text-is('Edit NFC Tag'))"`. The detail page needs
+  ~6.5s after View Details before Edit is clickable.
+- **Points Value is conditional** on `action === 'points'`, so a capture on a stamp tag
+  will not show it. Say "on a points tag" rather than implying the field is always there.
+- The house rules ban em dashes outright (`.writing-rules/SKILL.md` rule 1). Use colons in
+  definition bullets; the pre-existing article prose still has them, left alone.
+- `Section` on the Notion board is a **fixed select**. "Merchants" is not a valid option
+  and 400s; the NFC value is `NFC Tags`.
+
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
