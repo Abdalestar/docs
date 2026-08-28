@@ -20,6 +20,117 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-28 — What kind of reward you are handing over (redemption type strip)
+
+**Article:** `merchants/redemptions/reward-types.mdx` (new)
+**Branch:** `claude/busy-clarke-ex5hem`
+**PR:** https://github.com/Abdalestar/docs/pull/193
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 8 real annotated screenshots, validate-images 8/8 OK.
+One task this run: the backfill queue is genuinely empty (see below).
+
+### Task selection — the board is still fully triaged, and the log above is stale
+The run log stopped at PR #185, but **PRs #186-#192 have shipped since** (win-back
+max_sends, campaign analytics + stats, deleted members, the two "without the app"
+articles merged, NFC placement, the NFC Add Tag correction, merchant-page rating and
+hours). All are open and unmerged, so `main` lacks them. Query the board and
+`list_pull_requests` before trusting this file.
+
+`notion-query-data-sources` in SQL mode gives the whole board in one call. Every
+`Not started` row is a verified duplicate, a feature that does not exist, or blocked on
+an account this routine cannot reach. Nothing changed there this run. The genuinely
+actionable rows left are all **small prose-drift corrections**, not new articles:
+- P3 "QR scan address drift: gallery and bulk exports encode c.qtap.qa" → a correction
+  to `qr-codes/customer-scan-flow.mdx`.
+- P3 "export-delete.mdx: note that a deleted member cannot be removed".
+- P3 "Update show-on-screen.mdx once the presenter width bug is fixed" (still blocked;
+  the bug is in the app, not the docs).
+Any of those three is a clean, cheap task for a future run.
+
+**Backfill is exhausted, re-verified this run.** The zero-image scan on `origin/main`
+returns the same four non-workable files as every run since 2026-08-14:
+`customer-app/settings-profile` (mobile), `index.mdx`, `support/faq.mdx`, and the
+`campaigns/analytics.mdx` stub (which open PR #187 already replaces).
+
+**`Abdalestar/qtap` main has not moved since 2026-08-10.** Three unmerged feature
+branches exist (`feat/merchant-mcp-v2`, `feat/voucher-redesign`,
+`fix/campaign-reward-balance-credit`) and are not live, so nothing there is documentable
+yet. Route-diff gap discovery stays exhausted; the productive vein is still
+component-level surfaces and drift.
+
+### The gap
+`components/dashboard/shared/redemption-type.tsx` is a 359-line staff-facing mapping
+that renders a type badge, a source label, the terms, the origin and a one-line counter
+note above every voucher on `/redemptions`. **Zero doc coverage on main**: grep found no
+hit for `Signup bonus`, `Campaign voucher`, `Loyalty reward`, `Take this off the bill`,
+`nothing to hand over`, `Already paid in the app` or `Buy 1 get 1`. I diffed all 15 open
+PR branches against `origin/main` to confirm none touches redemptions. New Notion row
+created and locked before writing.
+
+### What was written (all grounded, read-only)
+- `redemption-type.tsx` — the three loyalty tiers (`main` / `signup` / `interim`, shown
+  as Main reward / Signup bonus / **Milestone** reward), the eight campaign kinds with
+  their exact notes, `tierNote()`, `programOrigin()`, and the terms rules: `At N stamps`
+  for a stamp milestone, `Costs N pts` for a pay-at-the-till points reward, and **no
+  threshold on a stamp main reward** because it fires on card completion rather than at
+  `trigger_value`.
+- `describePrepaidRedemption()` — a voucher bought inside the app keeps its loyalty
+  badge and gains the "already paid" line.
+- `app/(dashboard)/redemptions/page.tsx` — four render sites: Enter Code result (983),
+  each held voucher on Look Up Customer (1116), the points-eligible list as a **badge
+  only** (1170), and the Confirm Redemption dialog (1393).
+- `app/api/rewards/redeem-code/route.ts` — the GET lookup fills `program_name` with the
+  literal placeholder `'Points reward'`, which the page deliberately maps to `null`.
+  That is why a prepaid voucher shows no origin line; the article says so rather than
+  inventing one. Note a stamps-bought voucher comes back with that same placeholder.
+- `lib/utils/offer-display.ts` `deriveTypedOfferColumns` — terms formatting for older
+  campaign rows that carry the value only in `reward_config`.
+- `lib/utils/permissions.ts` + `lib/validations/staff.ts` — `/redemptions` needs
+  `redeem`, `true` by default for manager **and** staff, so everyone at the counter sees it.
+
+Two gotchas shipped, both verified: a voucher with **no strip** means the type could not
+be read (both `describe*` helpers return null on an unrecognised type and the strip is
+dropped entirely), and the strip is a label only, since confirming behaves identically
+either way and Qtap never adjusts a bill. The article also makes the point that the
+wording comes from stored columns and never the reward's name, which the screenshots
+prove: a stamp reward named "10% Off Any Drink" is badged **Milestone reward**.
+
+### Screenshots (nothing redeemed, no code burned)
+Flows `reward-types.json` / `-member` / `-points` / `-mobile`. Stamp demo (Brew & Bean)
+for the strip in context, a member holding a main plus a milestone, discount, bogo and
+prepaid; points demo (Golden Crust) for the badge-only eligible list; 390x844 for the
+counter phone view (§8c). Every flow stops at the Confirm Redemption dialog and the
+dialog's own Confirm was never clicked.
+
+### Gotchas for future runs
+- **The strip selector is `div.rounded-lg.border.bg-muted\\/40`** (escape the slash in
+  JSON). It resolves cleanly and is unique per voucher, so `:nth-match(...)` numbers the
+  strips in a stacked list.
+- **Scope any dialog annotation to `[role=dialog] div.rounded-lg...`.** A bare selector
+  first-matches a strip on the page *behind* the scrim, and the box silently lands on
+  the dialog header instead. Cost one re-shoot.
+- **Member `Q102812` on Brew & Bean carries a deletion request**, so it renders as
+  "Deleted member" everywhere and is the PII-free way to shoot a member holding several
+  vouchers. It holds one main and three milestone rewards.
+- Read-only codes that render each variant on Brew & Bean: `43898886` (main),
+  `24083777` (milestone, At 4 stamps), `35555217` (discount -15%), `41460342` (bogo),
+  `58875222` (free item), `12078583` (prepaid, active until 2026-08-29). The campaign
+  vouchers are all long expired and **still render their strip**, because `issued` maps
+  to `available` and expiry only shows on the voucher itself. On Golden Crust, member
+  `Q086993` renders the points-eligible badge list.
+- **The first code lookup in a chained flow can silently return nothing.** One probe
+  filled four codes in a row and the third came back with no strip; the identical run a
+  minute later worked. Give each lookup ~5s and re-run before concluding a code is dead.
+- Cropping straight to the strip gives a 1138x131 sliver that still clears the 5KB
+  `validate-images` floor (~18KB), but the in-context crop showing the strip above its
+  voucher is the more useful image.
+
+### Product note raised (cosmetic, not documented)
+The stamp milestone terms line is not pluralised: a reward at one stamp renders
+**"At 1 stamps"** (`At ${triggerValue.toLocaleString()} stamps` in `redemption-type.tsx`).
+Raised on the Notion row and in the PR body.
+
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)

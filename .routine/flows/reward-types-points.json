@@ -1,0 +1,32 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/redemptions",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 1400 },
+  "steps": [
+    {
+      "name": "reward-types-08-points-list",
+      "goto": "/redemptions",
+      "waitFor": "text=Enter Redemption Code",
+      "actions": [
+        { "wait": 4000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1500 },
+        { "click": "button:text-is('Look Up Customer')" },
+        { "wait": 1500 },
+        { "fill": ["input[placeholder*='Search by name']", "Q086993"] },
+        { "wait": 3500 },
+        { "click": ".divide-y button" },
+        { "wait": 7000 },
+        { "hover": "text=Available Rewards:" },
+        { "wait": 800 }
+      ],
+      "clipTo": "div.mt-4.space-y-3",
+      "clipPadding": 16,
+      "annotate": [
+        { "type": "box", "target": "div.mt-4.space-y-3 div.border.bg-white", "color": "plum" }
+      ]
+    }
+  ]
+}
