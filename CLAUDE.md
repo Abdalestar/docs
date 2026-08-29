@@ -20,6 +20,92 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-29 — The Members page: dead tag controls and three wrong labels
+
+**Articles:** `merchants/members/overview.mdx` + `merchants/members/export-delete.mdx` (both corrections)
+**Branch:** `claude/busy-clarke-76o9of`
+**PR:** https://github.com/Abdalestar/docs/pull/194
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 4 new real annotated screenshots,
+validate-images 5/5 and 4/4 OK. One task this run.
+
+### Task selection — the board still has no workable new-article row
+30 non-Done rows, every P1 and P2 still DUPLICATE, BLOCKED, or "needs an engineering
+fix, not a docs change". Two P3 correction rows added on 2026-08-23 are the only
+genuinely actionable ones left. I took **"export-delete.mdx: note that a deleted member
+cannot be removed"**, and while verifying it found much worse drift one file over, so I
+opened a row for that too and worked both in the same PR.
+
+Route-diff gap discovery stays exhausted (every `app/(dashboard)` route maps to an
+article). As the 2026-08-19 run predicted, **drift between shipped code and published
+prose is now the productive source of work.** Reading a page's source next to its
+published article finds more in ten minutes than another pass over the board.
+
+### THE FINDING: `/members` ships two controls that do nothing
+`app/(dashboard)/members/page.tsx` has exactly **eight** `onClick` handlers (367, 380,
+391, 424, 669, 700, 713, 738) and none is on a tag control:
+- Row menu **Add Tag** (~line 659) is a bare `DropdownMenuItem`.
+- Bulk toolbar **Tags** menu (412-416): `Add Tag: VIP`, `Add Tag: Regular`,
+  `Add Tag: Inactive`, `Remove All Tags`. All four bare.
+
+Nothing in either repo writes `organization_members.tags` (the only tag write in
+`Qtap_app` is OneSignal segmentation in `useWalletStore.ts`, unrelated). Tags render
+read-only on the profile. Supabase confirms the column is seed-only: Najma 180/182,
+Dana 122/125, Tea Time 22/23 tagged, and **both reachable demo orgs have zero**.
+Published prose said "Add Tag — attach a label to the member for your own reference".
+Filed as a P2 engineering row. Same class as the top-bar search and `/cards/design`.
+
+### Everything else corrected (all verified in code AND live before editing)
+`overview.mdx`: **Mute Notifications does not exist** (menu is View Profile / Send
+Notification, disabled as `Push not enabled` / Add Tag / Delete Member); the header
+button is **Export CSV** not Download; the profile button is **Complete Profile** not
+Edit Info, and only renders for owner-or-manager while phone or birthday is empty; sort
+is Newest First / Recent Activity / Most Stamps / **Highest Points Balance** with **no
+name sort**; managers *can* delete by default (`canDeleteMembers` = owner OR effective
+`members === 'full'`, and manager defaults to `full`); the bulk bar also has Export
+Selected and Send Notification; the member name is **not** a link and the row has no
+`onClick`.
+
+`export-delete.mdx`: the CSV is **eleven** columns, not ten (`Total Points` split into
+**Current Points Balance** and **Lifetime Points Earned**, headers identical at lines
+204 and 293), plus the new "Members you cannot remove" section.
+
+### ENVIRONMENT CHANGE — a ghost member exists now, that blocker is gone
+Every run from 2026-08-19 on recorded "no member in any org carries
+`deletion_requested_at`". **Brew & Bean now has one** (`Q102812`, joined 2026-08-22,
+the newest row so it sorts first under the default `joined_at` desc). Verified live:
+name renders `Deleted member` with a grey `Deleted` badge, checkbox carries `disabled`
++ `aria-label="Deleted member cannot be selected"`, `toggleSelectAll` filters ghosts
+out, and the row menu contains **only View Profile**. Anything that needed the ghost
+state is capturable now, including the still-open PR #188.
+
+### Screenshots (read-only; no tag clicked, nothing exported, deleted or sent)
+`.routine/flows/members-tags-and-ghosts.json` + `members-tags-menu.json`, stamp demo.
+Deleted two stale images that showed the old UI (`02-sort-options.png` had the old
+"Most Points" label, `03-row-menu.png` predates Send Notification); neither was
+referenced elsewhere. Checked with grep first — `images/merchants/**staff**/03-row-menu.png`
+is a different file and is still in use.
+
+### Gotchas for future runs
+- **A `[role=menu]` crop of a 4-item Radix menu came in at 4.4KB and failed the 5KB
+  `validate-images` floor.** Widening to an explicit `clip` that includes the button
+  that opened it (522x226, 15.7KB) both passed and made a better screenshot. Prefer
+  "the control plus its open menu" over a bare menu crop.
+- **Geometry moves with the cookie banner.** With the banner up the members table sits
+  at y=361; after Decline it is at y=279. Measure in the same state you capture in.
+  Selecting a row inserts the bulk bar and pushes `tbody` from y=319 to y=401.
+- Members table columns at 1440: checkbox x281 w48, Member x329 w292, Contact x621
+  w199, then Stamps / Points Balance / Joined / Last Active / Push / menu.
+- `notion-create-pages` rejects a **Section** value outside the existing select list.
+  There is no "Members" option; the members rows use **Dashboard**.
+- The probe-from-repo-root rule still bites: `node_modules` lives in `/home/user/docs`,
+  so a probe written to the scratchpad dies with `ERR_MODULE_NOT_FOUND`. Copy it into
+  the repo, run it, delete it.
+- `QTAP_NAJMA_EMAIL` is **still** a duplicate of `QTAP_EMAIL` (`owner@goldencrust.qa`).
+  That third credential slot has been wasted for ten days and is still the single
+  cheapest unblock on the board (cancel-subscription, AI Suite, MCP/AI all need it).
+
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
