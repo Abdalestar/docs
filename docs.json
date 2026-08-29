@@ -176,6 +176,14 @@
         ]
       },
       {
+        "group": "Marketing & Resources",
+        "pages": [
+          "merchants/resources/marketing-asset-library",
+          "merchants/resources/staff-counter-guide",
+          "merchants/resources/counter-setup"
+        ]
+      },
+      {
         "group": "Support",
         "pages": [
           "support/faq"
