@@ -1,0 +1,27 @@
+{
+  "section": "merchants/members",
+  "account": "stamp",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "overview-tags-menu",
+      "goto": "/members",
+      "waitFor": "button:has-text(\"Export CSV\")",
+      "waitMs": 9000,
+      "actions": [
+        { "wait": 2500 },
+        { "click": "button:has-text(\"Decline\")" },
+        { "wait": 1200 },
+        { "click": "table tbody tr:nth-child(2) td:first-child button[role=checkbox]" },
+        { "wait": 1500 },
+        { "click": "button:has-text(\"Tags\")" },
+        { "wait": 1200 }
+      ],
+      "clip": { "x": 900, "y": 158, "width": 522, "height": 226 },
+      "annotate": [
+        { "type": "box", "target": "button:has-text(\"Tags\")", "color": "plum" }
+      ]
+    }
+  ]
+}
