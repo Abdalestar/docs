@@ -132,7 +132,8 @@
           "merchants/members/export-delete",
           "merchants/members/redemptions",
           "merchants/redemptions",
-          "merchants/redemptions/scan-redemption"
+          "merchants/redemptions/scan-redemption",
+          "merchants/redemptions/card-preview"
         ]
       },
       {

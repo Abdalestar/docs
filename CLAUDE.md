@@ -20,6 +20,92 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-30 — The customer's card at the counter (card preview + staff summary line)
+
+**Article:** `merchants/redemptions/card-preview.mdx` (new)
+**Branch:** `claude/busy-clarke-cb01on`
+**PR:** https://github.com/Abdalestar/docs/pull/195
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 7 real annotated screenshots, desktop +
+mobile, validate-images 7/7 OK. One task this run: no backfill exists (same four
+unworkable zero-PNG files on `main` as every run since 2026-08-14).
+
+### This log was ten days stale — read the board and the open PRs, not this file
+The newest entry above is 2026-08-20, but PRs **#186 to #194** have shipped since
+(win-back max_sends, campaign analytics, deleted members, the two "without the app"
+articles merged, NFC placement, the NFC Add Tag correction, merchant-page rating and
+hours, redemption reward types, the Members page correction). All are open and
+unmerged. Diff every open `claude/busy-clarke-*` branch against `origin/main` before
+picking anything, or you will re-derive work that already exists on a branch.
+
+### Task selection — the board is still fully triaged, nothing workable
+`notion-query-data-sources` (SQL mode) returns 30 open rows and every one carries a
+dated DUPLICATE / BLOCKED / NOT-A-FEATURE verdict from an earlier run. The P1 shelf is
+unchanged (cancel-subscription needs a `stripe_subscription_id`; condition builder and
+push frequency do not exist; four duplicates). Three newer P2 rows are engineering
+tickets, not writing tasks (NFC `stamp_card_id` unsettable, opening hours read from two
+different branches, member tags written by nothing) and each already ships its caveat in
+an open PR. So this run did §14 gap discovery, created the row, locked it, and wrote it.
+
+### The gap
+`components/dashboard/member-loyalty-card-preview.tsx` (qtap commits `da7ff22` and
+`6d958fc`, 2026-07-28) renders the customer's real loyalty card plus a one-line staff
+readout on **all three counter pages**, and nothing on `main` or in any open PR mentions
+it. Confirmed live on both demo orgs this run.
+
+- `stamp-operations/page.tsx:740` passes `previewLabel` + `projectionInsight` and **no
+  member and no `onChangeMember`**, so its strip is the `AFTER THIS ISSUE · 5 OF 5` tag
+  over `Now: 2 of 5 stamps · completes card · unlocks Free Drink`, with no name and no
+  Change button. The card itself renders the **projected** stamp count.
+- `points-operations/page.tsx:559` (Award) and `:830` (Adjust/Deduct) pass
+  `pointsStaffInsight` plus the member, so those strips carry the name and a **Change**
+  button and no tag.
+- `redemptions/page.tsx:1046` picks `pointsStaffInsight` or `stampsStaffInsight` off
+  `memberLoyaltyState.type`.
+Do not describe the three as one identical component; the halves differ.
+
+### Verified live rather than assumed (every string was read back off the dashboard)
+`AFTER THIS ISSUE · 5 OF 5`, `Now: 2 of 5 stamps · completes card · unlocks Free Drink`,
+`10 pts · next: Free Pastry at 50 pts (40 to go) · top reward at 100 pts`,
+`400 pts · all active rewards earned · top reward at 100 pts`,
+`2 of 5 stamps · next: Free Drink at 3 · card completes at 5`.
+
+### TWO FINDINGS (shipped honestly; neither is claimed as broken)
+1. **The points progress bar and its caption measure different things.** The bar fills
+   toward `pointsProgressTarget`, which the page sets to `getTopPointsReward` (the
+   LARGEST reward), while the caption inside the card uses `nextRewardTrigger` (the NEXT
+   unearned one). On Golden Crust (50 and 100 pts) a member holding 10 pts gets a
+   near-empty bar beside "Next reward at 50 pts". Shipped as a Warning pointing merchants
+   at the summary line. Worth an engineering look.
+2. **`activeRewards` filters on `is_active !== false` AND `trigger_value > 0`**, so a
+   paused reward silently leaves the summary line while staying on the card.
+
+### Screenshots (read-only; nothing issued, awarded or redeemed)
+Issue Stamps / Award / Confirm Redemption were never clicked. Customer names **and the
+avatar photo** are redacted on every shot that carries one: the demo member set includes
+the founder's own record (`abdalestar@gmail.com`).
+
+### Gotchas for future runs
+- **The member search does not match a bare prefix.** `Q` returns zero results on
+  `/stamp-operations`; the full `qtap_id` (`QTAP-TT024`, `Q056329`) matches. A probe that
+  types one letter looks exactly like an RLS failure and is not one.
+- Stable selectors for this component: wrapper
+  `div.space-y-2:has(> div.max-w-\\[366px\\])` (card + strip, ~506x238 at 1440), insight
+  `p[class*="leading-4"]`, name `span[class*="truncate"]` (scope both through the
+  wrapper), tag `span:has-text('AFTER THIS ISSUE')`, and `button:text-is('Change')`.
+  Pending Rewards crops cleanly with
+  `div.space-y-2:has(> div.text-sm:has-text('Pending Rewards'))`.
+- **On mobile the page renders a second `MemberIdentity` line above the card**
+  (`className="xl:hidden"`), so a `clipPadding` of 20 on the wrapper pulls the customer's
+  name into the crop. Drop it to 2.
+- `clipPadding` under ~30 clips the numbered badges on the left edge of a cropped shot.
+- Useful capture data: Brew & Bean `QTAP-TT024` sits at 2 of 5 on Coffee Lovers Card
+  (interims at 1, 3 and 4, main at 5) and holds 4 available vouchers, which is what makes
+  the richest projection line reachable at quantity 3. Golden Crust `Q056329` (10 pts) is
+  the next-reward line and `QTAP-TT026` (400 pts) is the all-earned edge case.
+- `organization_members` has no `qtap_id` or balance columns; join `members` for
+  `qtap_id` and read `member_org_view` for `current_points_balance`.
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
