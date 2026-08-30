@@ -1,0 +1,92 @@
+---
+title: "The customer's card at the counter"
+sidebarTitle: "The card preview"
+description: "Every counter page shows the customer's real loyalty card and a one-line summary of where they stand, so staff can check before they issue or hand anything over."
+---
+
+Pick a customer on Stamp Operations, Points Operations, or Redemptions and Qtap draws their loyalty card on screen, exactly as it looks in their app. Under it sits a short line telling you where that customer stands and what happens next. It is there so whoever is at the till can confirm they have the right person and the right card before pressing anything.
+
+<Frame caption="On Stamp Operations, the card preview (1) sits under the stamp card selector, above the customer's banked rewards.">
+  <img src="/images/merchants/redemptions/card-preview-01-context.png" alt="Stamp Operations with a member selected, showing the loyalty card preview under the Number of Stamps field" />
+</Frame>
+
+## What the card shows
+
+The card is the same one your customer sees, not a generic template. It carries your business name, your card colour, your stamp icon and your logo watermark, and it fills in the customer's own progress. On a stamp card you get the grid of stamps and the count in the corner. On a points program you get the balance, your earn rate, and a progress bar.
+
+## On Stamp Operations, it shows the future
+
+This is the one place the card does not show the current state. Once you set a quantity, the card jumps to what the customer will have **after** you confirm, and a small tag above the summary line spells it out: `AFTER THIS ISSUE · 5 OF 5`.
+
+<Frame caption="The projection tag (1) and the summary line (2). The card behind them already shows 5 of 5, which is what this customer gets when you confirm.">
+  <img src="/images/merchants/redemptions/card-preview-02-strip.png" alt="Close-up of the stamp card preview with the After this issue tag and the summary line boxed" />
+</Frame>
+
+The summary line starts with where they are now, then adds what the issue triggers. Two stamps on a five-stamp card, three stamps about to go on, and the line reads `Now: 2 of 5 stamps · completes card · unlocks Free Drink`. It names an interim reward only when the stamps you are adding cross that reward's threshold, and it says "completes card" only when the card was unfinished and this issue finishes it. Nothing has been saved at this point, so if the line is not what you expected, change the quantity or the card.
+
+<Note>
+The quantity field caps itself at the stamps left on the card, so the projection can never run past the finish line. A customer on 2 of 5 can be given at most 3.
+</Note>
+
+## On Points Operations
+
+The points version reads the customer's balance instead. It gives the balance, the next reward they can reach with how far they still have to go, and the largest reward in the program.
+
+<Frame caption="The summary line (1) on Points Operations, and the Change button (2) that clears the customer and returns you to the search box.">
+  <img src="/images/merchants/redemptions/card-preview-04-points.png" alt="Points card preview showing a 10 point balance and a summary line naming the next reward" />
+</Frame>
+
+A customer who has passed every reward gets an honest version of the same line rather than a made-up target.
+
+<Frame caption="A customer holding 400 points in a program whose largest reward costs 100. There is no next target left, so the line says so.">
+  <img src="/images/merchants/redemptions/card-preview-05-all-earned.png" alt="Points card preview reading 400 pts, all active rewards earned, top reward at 100 pts" />
+</Frame>
+
+<Warning>
+The progress bar inside the points card fills toward the **largest** reward in the program, while the caption under it names the **next** one. On a program with rewards at 50 and 100 points, a customer holding 10 points shows a bar that looks nearly empty even though they are a fifth of the way to their next reward. Read the summary line for the number that matters.
+</Warning>
+
+## On the Redemptions page
+
+Look up a customer to redeem something and the same card appears above their vouchers, with the current state this time. A stamp customer gets `2 of 5 stamps · next: Free Drink at 3 · card completes at 5`. It is a quick way to confirm you pulled up the right person before you hand anything over.
+
+<Frame caption="The card preview on the Redemptions page, above the customer's vouchers.">
+  <img src="/images/merchants/redemptions/card-preview-06-redemptions.png" alt="Redemptions page card preview with the summary line boxed" />
+</Frame>
+
+## Rewards they already hold
+
+The summary line is about progress. What the customer has already earned and can claim today sits in its own list under the card on Stamp Operations, with the reward name, the card it came from, its code, and whether it is available.
+
+<Frame caption="Pending Rewards lists what this customer has already banked, each with the code staff can redeem it against.">
+  <img src="/images/merchants/redemptions/card-preview-03-pending.png" alt="Pending Rewards list showing four available rewards with their codes" />
+</Frame>
+
+## At the till on a phone
+
+The card and its summary follow you onto a phone screen, so a member of staff working from a handset sees the same check. The line wraps onto two rows and everything else stays put.
+
+<Frame caption="The same preview on a phone. Nothing is dropped from the small-screen version.">
+  <img src="/images/merchants/redemptions/card-preview-07-mobile.png" alt="Card preview rendered on a 390 pixel wide phone screen" />
+</Frame>
+
+## Two things to know
+
+Only rewards that are switched on and carry a threshold appear in the summary line, so a paused reward stays out of it even though it is still on the card. And a customer who is not yet on the stamp card you picked gets an amber "Not Enrolled" notice above the preview; confirming the issue signs them up first, then adds the stamps.
+
+Everyone who works your counter sees this. Owners, managers and staff all have the stamp, points and redemption permissions switched on by default, and the preview comes with the page.
+
+<CardGroup cols={2}>
+  <Card title="Issuing stamps manually" href="/merchants/stamp-cards/manual-stamps">
+    The full walkthrough for awarding stamps from the dashboard.
+  </Card>
+  <Card title="Awarding points" href="/merchants/points/awarding">
+    By amount or by typing an exact number of points.
+  </Card>
+  <Card title="Redemptions" href="/merchants/redemptions">
+    Looking up a customer and handing over a reward.
+  </Card>
+  <Card title="Roles and permissions" href="/merchants/staff/roles-permissions">
+    Who can reach the counter pages.
+  </Card>
+</CardGroup>
