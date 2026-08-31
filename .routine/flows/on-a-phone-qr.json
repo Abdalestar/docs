@@ -1,0 +1,35 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/getting-started",
+  "account": "stamp",
+  "viewport": { "width": 390, "height": 844 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "on-a-phone-qr-list",
+      "goto": "/qr-codes",
+      "waitFor": "table",
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 2000 }
+      ],
+      "waitMs": 10000,
+      "clip": { "x": 0, "y": 200, "width": 390, "height": 490 },
+      "annotate": [
+        { "type": "box", "rect": { "x": 31, "y": 378, "width": 230, "height": 48 }, "number": 1, "color": "plum" },
+        { "type": "box", "rect": { "x": 60, "y": 555, "width": 250, "height": 122 }, "number": 2, "color": "gold" }
+      ]
+    },
+    {
+      "name": "on-a-phone-qr-filters",
+      "goto": "/qr-codes",
+      "waitFor": "table",
+      "waitMs": 10000,
+      "actions": [
+        { "click": "button:has-text('Filters')" },
+        { "wait": 2000 }
+      ],
+      "clip": { "x": 0, "y": 300, "width": 390, "height": 300 }
+    }
+  ]
+}
