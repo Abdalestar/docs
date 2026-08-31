@@ -20,6 +20,115 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-08-31 — Using the dashboard on a phone (gap-discovery article)
+
+**Article:** `merchants/getting-started/on-a-phone.mdx` (new)
+**Branch:** `claude/busy-clarke-9wdp3l`
+**PR:** https://github.com/Abdalestar/docs/pull/196
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 5 real annotated mobile screenshots,
+validate-images 5/5 OK. One task this run.
+
+### READ THIS FIRST — main caught up, but 18 PRs are open again
+`origin/main` has absorbed #163-#185 **except** #163 (pass design studio), #164
+(voucher design) and #165 (editing a live offer), which are **still open**. Those three
+topics are taken; do not rewrite them, even though `main` has no `merchants/passes/`
+article and the run log above claims #163 shipped. Open now: #137, #145, #148, #154,
+#158, #163, #164, #165, and #186-#195. I diffed every one of them against `origin/main`
+before picking, which is the only reliable way to avoid a duplicate.
+
+### Task selection — board still fully blocked, backfill still exhausted
+`notion-query-data-sources` (SQL mode) returns 30 non-Done rows and **every one** carries
+a dated BLOCKED / DUPLICATE / NOT-A-FEATURE verdict from an earlier run. Nothing has
+changed on the three account-blocked rows (Cancel Subscription, AI Suite, MCP/AI); they
+still need an Elite/Franchise login with a live Stripe subscription, which this routine
+cannot reach. Four newer rows (#191, #192, #194 follow-ups) are explicitly engineering
+tickets, not docs work, and say so in their own Notes.
+
+Zero-PNG scan on `origin/main` returns the same four non-workable files as every run
+since 2026-08-14: `customer-app/settings-profile` (mobile), `index.mdx`, `support/faq.mdx`,
+and the `campaigns/analytics.mdx` stub — and that stub is now **taken by open PR #187**.
+So: no backfill exists, and this was a §14 gap-discovery run. New row created and locked
+before writing.
+
+### The gap
+qtap commit **`0850cef`** (2026-07-30, "Make members and QR codes work on the phone staff
+actually hold") rebuilt `/members` and `/qr-codes` for phone widths, and **`2c568d4`**
+moved the operations grids back to `lg` so tablets get the two-up change and laptops do
+not. **Zero docs coverage** of any of it: grepping `main` for "on your phone" / "mobile
+browser" / "phone at the counter" returns only incidental hits in three unrelated
+articles, and none of the 18 open PRs touches the topic. ROUTINE §8c and §8d both assume
+staff work these pages on a phone at the counter, so the docs were assuming a surface
+they never described.
+
+### What was written (all grounded, read-only)
+- `components/layout/sidebar.tsx:265-285` — below `md`/768 the sidebar is a Radix `Sheet`
+  (`side="left"`, `w-64`) behind `button[aria-label='Open navigation menu']`, and
+  `onNavigate` closes it, so tapping a page needs no separate close.
+- `app/(dashboard)/members/page.tsx:490-600` — Contact / Stamps / Points Balance / Push are
+  `hidden sm:table-cell`, Joined / Last Active are `hidden lg:table-cell`, and a
+  `lg:hidden` block reprints every hidden field as a labelled stack under the name. So the
+  fold is **two-stage**: below 640 the stack holds email, phone, stamps, points and push;
+  between 640 and 1024 it holds only Joined and Last active.
+- `app/(dashboard)/qr-codes/page.tsx:401-690` — **three-stage** fold (Type below `sm`,
+  Action + Scans below `md`, Location + Created below `lg`); the status badge moves next to
+  the name below `sm`; the five filter selects collapse behind one **Filters** button
+  carrying `activeFilterCount`; search gets its own row; the stat labels shorten to
+  Total / Active / Scans and the CTA to **Generate**.
+- `h-11 … sm:h-9` throughout both pages — a 44px touch floor below `sm`, desktop heights
+  back at `sm`. Matches design.md §7's 44x44 rule.
+- `points-operations/page.tsx:483` + `stamp-operations/page.tsx:478` — `grid-cols-1
+  lg:grid-cols-2`, so a portrait tablet gets the single-column counter layout.
+- `redemptions/page.tsx:1269-1310` — the history table folds the same way (sm + xl).
+- `qr-code-gallery.tsx:67` — card menus are `opacity-100 … sm:opacity-0`, because a phone
+  has no hover. (Noted, not documented; it needs no merchant action.)
+
+### THREE HONEST LIMITS (do not soften these in a future edit)
+1. **Only Members and QR Codes got the phone pass.** `staff/page.tsx:204-212` keeps four
+   columns with no folding inside an `overflow-x-auto` Card. Measured live at 390px: the
+   row is **523px wide and the row-menu button sits at x=496**, past the right edge, so
+   Status, Joined and the menu need a sideways swipe. Shipped as a `<Warning>` with the
+   screenshot. Worth the same treatment as the other two pages.
+2. **The QR presenter still clips on a phone** (flat 640px canvas, PR #169's finding).
+   Cross-linked `qr-codes/show-on-screen.mdx` rather than restating it.
+3. **There is still NO "best experienced on a larger screen" notice**, despite design.md
+   §2.7 describing one. Third separate run to confirm this by grep over `app/` and
+   `components/`. Shipped as a `<Note>` so a cramped page does not read as an error.
+   **Do not reintroduce that claim from design.md.**
+
+### Screenshots (read-only; nothing created, issued or deleted)
+`.routine/flows/on-a-phone.json` (points, Golden Crust) + `on-a-phone-qr.json` (stamp,
+Brew & Bean, which has named codes and a real Active badge), both 390x844. Only the cookie
+Decline, the nav menu button and the Filters toggle were clicked. Customer name + phone
+redacted on the members shot (the demo set still includes the founder's own record,
+`Abdalle` / `+974…`); all three staff emails redacted on the Staff shot.
+
+### Gotchas for future runs
+- **Live geometry at 390px, reusable for any mobile capture.** Members row 0 is at
+  `17,407 356x203`; its folded stack lines are 20px apart starting at the Email line
+  (`x 65, w 240`), so explicit `rect` redaction lands cleanly on the name (`110,412
+  120x26`) and the phone value (`103,502 155x20`). Staff rows are 57px apart with the
+  email at `y 294 / 351 / 408`. A first pass redacted only two of three staff rows: at a
+  200px crop you get **three** rows, not two, so count them in the shot before shipping.
+- **Probe scripts must live in the repo root.** `node_modules` is at `/home/user/docs`, so
+  a probe written to the scratchpad dies with `ERR_MODULE_NOT_FOUND` for `playwright`.
+  Write it as `/home/user/docs/.probe.mjs` and delete it before staging (this run staged
+  explicit paths only, so it never risked being committed).
+- The hamburger is `button[aria-label='Open navigation menu']`, which is stable and much
+  better than the positional `:nth-match(header button, N)` the top-bar run had to use.
+- Brew & Bean renders only **three** of the five QR filter selects (one location, no
+  batches), so do not annotate by expecting five. The article says "the dropdowns that
+  apply to your account".
+- The TLS bridge was needed again and stayed up for the whole run. Generate a scratch
+  cert, start `.routine/tls-bridge.mjs` in Bash **background mode**, then
+  `PLAYWRIGHT_PROXY=http://127.0.0.1:38443` on every capture.
+
+### Board note
+The docs backlog remains a **merge** problem. 18 PRs are open, three of them (#137, #145,
+#148) are triplicate "Editing a Stamp Card" PRs from June that should just be closed, and
+#158 is a human-authored Marketing & Resources PR. A human spending an hour on that queue
+would unblock more than any single run can write.
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
