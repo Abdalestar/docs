@@ -1,0 +1,84 @@
+{
+  "section": "getting-started",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1500 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "dashboard-home-hero",
+      "goto": "/",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" }
+      ],
+      "waitFor": "[data-tour=\"metrics\"]",
+      "waitMs": 11000,
+      "clip": { "x": 264, "y": 72, "width": 1176, "height": 560 },
+      "annotate": [
+        { "type": "box", "target": "[data-tour=\"metrics\"]", "color": "plum" },
+        { "type": "box", "target": "button:has-text('Issue Points')", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "dashboard-home-tiles",
+      "goto": "/",
+      "waitFor": "[data-tour=\"metrics\"]",
+      "waitMs": 11000,
+      "clipTo": "[data-tour=\"metrics\"]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "[data-tour=\"metrics\"] > div:nth-child(3) span.data-mono", "number": 1, "color": "plum" },
+        { "type": "box", "target": "[data-tour=\"metrics\"] > div:nth-child(3) div.text-xs", "number": 2, "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "dashboard-home-chart",
+      "goto": "/",
+      "waitFor": "[data-tour=\"charts\"]",
+      "waitMs": 12000,
+      "clip": { "x": 272, "y": 312, "width": 572, "height": 412 }
+    },
+    {
+      "name": "dashboard-home-quick-actions",
+      "goto": "/",
+      "waitFor": "[data-tour=\"quick-actions\"]",
+      "waitMs": 11000,
+      "clipTo": "[data-tour=\"quick-actions\"]",
+      "clipPadding": 10
+    },
+    {
+      "name": "dashboard-home-issue-dialog",
+      "goto": "/",
+      "actions": [
+        { "wait": 9000 },
+        { "click": "button:has-text('Issue Points')" },
+        { "wait": 1500 },
+        { "fill": ["#memberSearch", "Q086993"] }
+      ],
+      "waitMs": 2000,
+      "clipTo": "[role=\"dialog\"]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "#memberSearch", "color": "plum" }
+      ]
+    },
+    {
+      "name": "dashboard-home-issue-landing",
+      "goto": "/",
+      "actions": [
+        { "wait": 9000 },
+        { "click": "button:has-text('Issue Points')" },
+        { "wait": 1500 },
+        { "fill": ["#memberSearch", "Q086993"] },
+        { "press": "Enter" },
+        { "wait": 12000 }
+      ],
+      "waitMs": 3000,
+      "clip": { "x": 264, "y": 150, "width": 1176, "height": 440 },
+      "annotate": [
+        { "type": "redact", "rect": { "x": 329, "y": 319, "width": 467, "height": 248 }, "color": "charcoal" },
+        { "type": "box", "target": "input[placeholder=\"Search by name, email, or phone...\"]", "color": "plum" }
+      ]
+    }
+  ]
+}
