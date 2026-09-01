@@ -1,0 +1,23 @@
+{
+  "section": "getting-started",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 1500 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "dashboard-home-tiles-stamp",
+      "goto": "/",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" }
+      ],
+      "waitFor": "[data-tour=\"metrics\"]",
+      "waitMs": 12000,
+      "clipTo": "[data-tour=\"metrics\"]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "[data-tour=\"metrics\"] > div:nth-child(3)", "color": "plum" }
+      ]
+    }
+  ]
+}

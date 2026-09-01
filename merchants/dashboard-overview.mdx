@@ -1,78 +1,98 @@
 ---
 title: "Dashboard Overview"
-description: "What the Qtap main dashboard shows and how to use it."
+description: "What the Qtap main dashboard shows, what each number counts, and where to issue a stamp or points."
 ---
 
 The main dashboard shows your loyalty program's activity at a glance. It loads automatically when you log in.
 
-<Frame caption="The main dashboard with stat cards, the activity chart, quick actions, and recent activity.">
-  <img src="/images/getting-started/dashboard-home.png" alt="Qtap main dashboard showing the four stat cards and the Issue Points button" />
+<Frame caption="The dashboard home: the four stat cards, the Activity Overview chart, and Quick Actions.">
+  <img src="/images/getting-started/dashboard-home-hero.png" alt="Qtap dashboard home showing four stat cards outlined, the Issue Points button in the top right, the Activity Overview chart, and the Quick Actions card" />
 </Frame>
 
 ## Stats cards
 
-Four cards appear at the top of the page:
+Four cards sit at the top of the page:
 
-- **Total Members** — every customer who has joined your loyalty program, with a percentage change from the previous period
-- **Active Members** — members who earned stamps or points or redeemed a reward in the last 30 days
-- **Stamps Issued** or **Points Issued** — the total issued this period, depending on your loyalty type
-- **Rewards Redeemed** — how many times customers have claimed their reward
+- **Total Members**: every customer who has joined your loyalty program.
+- **Active Members**: members with any activity in the past 30 days. Earning, redeeming, and a check-in scan all count.
+- **Stamps Issued** or **Points Issued**, depending on your loyalty type: everything your program has issued since it started.
+- **Rewards Redeemed**: every reward your customers have claimed since the program started.
 
-The percentage change badge next to each number shows whether the figure is up or down compared to the same period before.
+The big number on each card is a running total for the life of your program. The small badge beside it measures something different: it counts how many stamp, point, or redemption events happened in the last 30 days against the 30 days before that, so the two figures often move in opposite directions.
+
+<Frame caption="Golden Crust Bakery has issued 797 points in total (left outline), while the badge (right outline) reads 20% down because the last 30 days carried four earning events against five in the 30 days before.">
+  <img src="/images/getting-started/dashboard-home-tiles.png" alt="The four dashboard stat cards, with the Points Issued total of 797 and its red 20% badge each outlined" />
+</Frame>
+
+A lifetime total never falls, so a red badge sitting next to a number that keeps climbing is normal. When nothing changed between the two periods the badge is hidden, and when the earlier period was empty it reads 100%. The Total Members badge follows the same rule on new sign-ups rather than on the total itself.
+
+On a stamp card program the third card counts stamps instead.
+
+<Frame caption="The same row on a stamp card account: Stamps Issued in place of Points Issued.">
+  <img src="/images/getting-started/dashboard-home-tiles-stamp.png" alt="Dashboard stat cards on a stamp card account showing Stamps Issued 38 with a 244 percent badge" />
+</Frame>
+
+<Note>
+If you run more than one branch and pick one in the top bar, the issued and redeemed cards count that branch alone while the member counts stay across every branch. The page says so in small text under the welcome line. See [Switching between branches](/merchants/settings/branch-switcher).
+</Note>
 
 ## Activity Overview chart
 
-Below the stat cards, the Activity Overview chart shows stamps or points issued over the last 30 days, alongside redemptions. Hover over any point on the chart to see the exact count for that day.
+Below the stat cards, the Activity Overview chart covers the last 30 days. Hover any point to see that day's figure.
 
-<Frame caption="The Activity Overview chart: issued against redeemed over the last 30 days.">
-  <img src="/images/getting-started/dashboard-activity.png" alt="Activity Overview chart showing points issued and redeemed over 30 days" />
+A stamp card program draws two counts: stamps issued and redemptions. A points program draws points earned above the zero line and points redeemed below it, so a day with a redemption shows as a dip rather than a second hill. The chart follows earning and redeeming only, so bonus points and manual adjustments never appear on it.
+
+<Frame caption="The Activity Overview chart on a points program. The trough is a redemption day, drawn below the zero line.">
+  <img src="/images/getting-started/dashboard-home-chart.png" alt="Activity Overview area chart over 30 days with points earned above the zero line and a redemption drawn below it" />
 </Frame>
 
-If no activity has been recorded yet, the chart shows a message and a link to Analytics.
+If nothing has been recorded yet, the chart shows "No activity data yet" and a link to your detailed analytics.
 
 ## Quick Actions
 
-The Quick Actions card lists the most common things you'll do:
+The Quick Actions card holds four shortcuts:
 
-- **Create Stamp Card** (or **Create Points Program** on a points program) — goes to the card or program creation form
-- **Generate QR Code** — goes to the QR Codes page
-- **Create Campaign** — opens a new campaign form
-- **Invite Staff Member** — opens the staff invitation dialog
+- **Create Stamp Card** (or **Create Points Program** on a points account) opens the card or program form.
+- **Generate QR Code** opens your QR Codes page.
+- **Create Campaign** opens the campaign wizard.
+- **Invite Staff Member** opens your Staff page, where the Invite Staff button lives.
 
-<Frame caption="The Quick Actions card. Each button jumps straight to that task.">
-  <img src="/images/getting-started/dashboard-quick-actions.png" alt="Quick Actions card with Create Points Program, Generate QR Code, Create Campaign, and Invite Staff Member buttons" />
+<Frame caption="Quick Actions. Each button jumps to that task.">
+  <img src="/images/getting-started/dashboard-home-quick-actions.png" alt="Quick Actions card with Create Points Program, Generate QR Code, Create Campaign, and Invite Staff Member buttons" />
 </Frame>
 
 ## Recent Activity
 
-The Recent Activity feed shows the last few transactions as they happen: stamps issued, points earned, and rewards redeemed. It updates without you needing to refresh the page.
+The Recent Activity feed lists your ten most recent transactions and refreshes itself about every 30 seconds. [The Recent Activity feed](/merchants/getting-started/recent-activity) covers what it counts and what it leaves out.
 
-## Issue Stamp / Issue Points button
+## Issue Stamp and Issue Points button
 
-The **Issue Stamp** or **Issue Points** button in the top right lets you manually look up a member and add a stamp or points from the dashboard. Click it, then enter the member's phone number, email, or member code in the search box that appears and press Enter or click the search icon. Qtap takes you to the Members page with that member's record pulled up so you can issue from there.
+The button in the top right opens a dialog titled **Issue Points** (or **Issue Stamp**) with a **Find Member** box that takes a phone number, email, or member code. On a phone the same button repeats at full width under the stat cards.
 
-<Frame caption="The Issue Points dialog. Search for a member, then issue from their record.">
-  <img src="/images/getting-started/dashboard-issue.png" alt="Issue Points dialog with a search box for phone, email, or member code" />
+<Frame caption="The Issue Points dialog. The Find Member box accepts a phone number, email, or member code.">
+  <img src="/images/getting-started/dashboard-home-issue-dialog.png" alt="Issue Points dialog with a Find Member search box outlined, containing a member code" />
 </Frame>
 
-<Note>
-This button is most useful when a customer forgot their QR code. For regular use, staff issue stamps and points by scanning the customer's QR code in the mobile app.
-</Note>
+<Warning>
+This dialog does not issue anything, and it does not find anyone. Whatever you type, Qtap drops the search and sends you to the Members page with the search box empty and every member listed. The Members page has no button for adding a stamp or points either. Use Stamp Operations or Points Operations instead.
+</Warning>
+
+<Frame caption="After searching for one member code, the Members page opens with an empty search box and all four members listed. Customer names and contact details are covered here.">
+  <img src="/images/getting-started/dashboard-home-issue-landing.png" alt="Members page reached from the Issue Points dialog, with the empty search box outlined and every member row still listed" />
+</Frame>
+
+To add a stamp or points by hand, open **Stamp Operations** or **Points Operations** in the sidebar, search for the customer there, and confirm. Those pages check your program rules and write the transaction properly. See [Issuing stamps manually](/merchants/stamp-cards/manual-stamps) and [Awarding points](/merchants/points/awarding).
 
 ## Trial Impact card
 
-If your account is on a trial, a Trial Impact card appears between the Getting Started checklist and the stat cards. It shows three numbers from your trial period so far: customers enrolled, stamps or points issued, and rewards redeemed.
-
-Once any of those numbers are above zero, the card also shows a note about upgrading to keep your data and features. The card only appears during a trial and disappears once you subscribe.
+During a trial, a Trial Impact card appears between the Getting Started checklist and the stat cards, titled with how many days you are into the trial. It shows customers enrolled, stamps or points issued, and rewards redeemed. Once any of those pass zero, the card adds a line about keeping your Growth features. It stops appearing once you subscribe.
 
 ## Getting Started checklist
 
-If you haven't completed the initial setup, a checklist appears between the welcome header and the Trial Impact card. It shows which setup steps are done and which remain. Completed tasks show a green checkmark. Incomplete tasks show an arrow you can click to go straight to that section.
-
-The checklist disappears once all steps are complete, or you can dismiss it manually with the **Skip** button.
+If your setup is unfinished, a checklist appears between the welcome header and the Trial Impact card. Completed tasks show a green checkmark, and the rest show an arrow that takes you to that section. The checklist disappears once every step is done, or you can dismiss it with **Skip**.
 
 <Note>
-On trial accounts, each checklist task shows a bonus day reward. After completing a task, click **Claim +Xd** next to it to add those days to your trial. The days are not added automatically.
+On trial accounts each checklist task carries a bonus day. After finishing a task, click **Claim +Xd** next to it to add the days. They are not added for you.
 </Note>
 
 <CardGroup cols={2}>
