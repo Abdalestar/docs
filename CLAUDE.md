@@ -20,6 +20,107 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-01 — Dashboard home: lifetime stat cards, and an Issue button that issues nothing
+
+**Article:** `merchants/dashboard-overview.mdx` (correction + full recapture)
+**Branch:** `claude/busy-clarke-podasg`
+**PR:** https://github.com/Abdalestar/docs/pull/197
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 7 real annotated screenshots, validate-images 7/7 OK.
+One task this run.
+
+### Task selection — the board is still fully triaged, and main has caught up
+`notion-query-data-sources` in SQL mode returned 32 non-Done rows and **every one is a
+verified DUPLICATE, a BLOCKED-on-capture row, or an engineering-fix tracker that explicitly
+says "not a docs change"**. Nothing workable. So §14 gap discovery again, seventh run running.
+
+Two things changed since the last log entry and are worth knowing:
+- **`origin/main` is now at the PR #185 merge**, so #163-#185 have landed. The long-standing
+  "main is 20 PRs behind" note is out of date.
+- **PRs #186-#196 are open and unmerged** (one per day, 08-21 to 08-31): winback max_sends,
+  campaign analytics stub, deleted members, the two "without the app" articles merged, NFC
+  placement, NFC Add Tag correction, merchant-page rating/hours, redemption type strip,
+  Members page correction, card at the counter, phone layout. Do not re-derive any of those.
+- **The `qtap` clone is stale** (last commit 2026-08-10). It still matched the live build
+  everywhere I checked this run, but probe live before trusting it.
+
+### The gap: the busiest page in the dashboard has been wrong since June
+`merchants/dashboard-overview.mdx` (2026-06-08, untouched since) carried two false claims and
+four generic reused hero images. Both claims verified in source AND live before writing.
+
+**1. The stat cards are LIFETIME totals, not "this period".** `useDashboardStats`
+(`hooks/use-supabase-query.ts`) sums the `organization_members` rollups
+(`total_stamps_earned` / `total_points_earned` / `total_redemptions`) with no date filter.
+Only the badge is time-bound: `calculateChange` compares transaction COUNTS in the last 30
+days against the 30 before. Live on Golden Crust: **Points Issued 797 with a red 20% down
+badge**. Supabase read-only: `sum(total_points_earned) = 797`, 4 `points_earn` rows in the
+last 30d vs 5 in the 30 before = exactly -20%. A lifetime total cannot fall, so a red badge
+beside a climbing number is normal, and that pairing is the most confusing thing on the page.
+`calculateChange` also returns 100 when the earlier window was empty, and the badge is hidden
+at 0. The Total Members badge measures **new sign-ups**, not the total.
+
+**2. The Issue Stamp / Issue Points button is a dead end.** The article said it "takes you to
+the Members page with that member's record pulled up so you can issue from there". Neither
+half is true:
+- `app/(dashboard)/page.tsx` `handleSearchMember` runs a 500 ms **fake** spinner (its own
+  comment: "In a real implementation, this would search for the member") then
+  `window.location.href = /members?search=<query>`.
+- `app/(dashboard)/members/page.tsx` **never reads `searchParams`** (grep: zero
+  `useSearchParams` hits in that file). Its `searchQuery` is local `useState`, so the param
+  is dropped.
+- `/members` has no issue action at all. Row menu: View Profile / Send Notification / Add Tag
+  / Delete Member.
+Confirmed live: typing the real member code `Q086993` and pressing Enter landed on
+`/members?search=Q086993` with the **search box empty and all 4 members listed**. Shipped as
+a Warning plus that screenshot, pointing staff at Stamp/Points Operations. Filed as a P2
+engineering-fix row (same class as the dead top-bar search in `top-bar.mdx`).
+
+### Smaller corrections, all verified
+- **The points chart draws redemptions BELOW the zero line.** `usePointsOverTime` sums
+  `points_transactions.points`, and every `redeem` row is negative (Supabase: 524 rows,
+  min -3000, max -50). The stamp chart is different: `useStampsOverTime` draws two positive
+  COUNTS. Do not describe the two loyalty types as drawing the same chart.
+- The chart covers `earn` and `redeem` only, so `bonus` (212 rows) and `adjust` never appear.
+- Quick Actions **Invite Staff Member** links to `/staff`, it does not open the invite dialog.
+- **Active Members** is `last_activity_at` within 30 days, and a **check-in scan** updates it
+  (`app/api/scan/route.ts:416`), so it is wider than the old "earned or redeemed" wording.
+- Added the branch-scope note (the page prints "Showing activity for X. Member counts are
+  across all branches.") and cross-links to recent-activity, branch-switcher, manual-stamps
+  and awarding.
+
+### Screenshots (read-only, nothing issued)
+`.routine/flows/dashboard-home.json` (points, Golden Crust, 6 shots) +
+`dashboard-home-stamp.json` (stamp, Brew & Bean, the "Stamps Issued 38" tile row). The only
+clicks were the cookie Decline, the Issue dialog, and its search. Customer names and contacts
+redacted on the Members landing shot with an explicit rect.
+
+### Gotchas for future runs
+- **The dashboard home needs a 1500px-tall viewport for `clipTo`.** `[data-tour="charts"]` is
+  stretched by the grid to the height of the right column (1044px at 1440 wide), so a
+  `clipTo` on it returns a mostly-empty card. Use an explicit clip for the chart
+  (`{x:272,y:312,w:572,h:412}` at 1440) and `clipTo` only for `[data-tour="metrics"]` (128px)
+  and `[data-tour="quick-actions"]` (294px).
+- Stable selectors on the home page: `[data-tour="metrics"] > div:nth-child(N)` for the four
+  tiles (col x = 280/568/856/1144, y168, 272x128), the tile value is
+  `... span.data-mono` and its badge is `... div.text-xs`. **Do not target the badge by
+  `[class*="bg-green"]`**: it is red on a decrease, and a class probe timed out on it.
+- **Numbered badges crowd the tiles crop.** The badge for box 1 sat on top of "797". Plain
+  boxes plus an ordered `<Frame caption>` is the readable version, same finding as the
+  notification-stats run.
+- Members table geometry at 1440x900 is unchanged by the recent phone-layout work: search box
+  y193, thead y279, tbody y319, rows 77px. Redact `{x:329,y:319,w:467,h:248}` to cover the
+  Member and Contact columns for 4 rows.
+- **Preserve CRLF when editing an older article.** `dashboard-overview.mdx` was CRLF; writing
+  it back as LF turned the PR diff into a 105-line full-file replacement. Converting back to
+  CRLF and amending gave a real 55/35 diff. Newer articles (recent-activity) are LF, so check
+  with `file` before writing.
+- The TLS bridge was needed again and dropped exactly one login mid-run
+  (`ALL_CREDENTIALS_FAILED` on the stamp flow); the identical command succeeded on an
+  immediate retry. Retry once before touching the bridge.
+- Golden Crust member codes for a safe, real-data capture: `Q056329`, `Q086993`,
+  `QTAP-TT024`, `QTAP-TT026`. `QTAP-TT024` is the founder's own record, so prefer `Q086993`.
+
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
