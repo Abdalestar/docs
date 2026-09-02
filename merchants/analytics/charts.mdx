@@ -1,0 +1,83 @@
+---
+title: "The charts below your analytics numbers"
+sidebarTitle: "Analytics charts"
+description: "What the Customer Segments donut counts, and the chart beside it: busiest hours on a stamp program, outstanding points on a points program."
+---
+
+Under the four headline figures on **Analytics** sits a second row of cards. One of them is the same for everyone. The other depends on whether you run a stamp card or a points program, so no single account ever shows both.
+
+<Frame caption="The second row on Analytics. A points program shows Outstanding Points Liability (1) next to Customer Segments (2). A stamp card shows Peak Hours in the same spot.">
+  <img src="/images/analytics/analytics-charts-context.png" alt="Analytics page with the Outstanding Points Liability chart and the Customer Segments donut boxed below the metric tiles" />
+</Frame>
+
+## Customer Segments
+
+The donut sorts your members into four groups. Hover a slice to see its count and share.
+
+| Segment | Who lands in it |
+| --- | --- |
+| Regulars | Members with at least 5 stamps ever, or at least 100 points ever |
+| At Risk | Members whose last activity was more than 30 days ago |
+| New Members | Members who joined in the last 30 days |
+| Occasionals | Everyone left over after the other three are counted |
+
+<Frame caption="The Customer Segments donut on a bakery with four members. Regulars reads 75%, At Risk 50%, New Members 25%.">
+  <img src="/images/analytics/analytics-segments.png" alt="Customer Segments donut chart with slices for At Risk, New Members, Occasionals and Regulars" />
+</Frame>
+
+<Warning>
+A member can sit in more than one segment at once. Somebody who earned 6 stamps last year and has not been in since is counted as a Regular **and** as At Risk, so the four percentages often add up to well past 100%. Read each slice as its own answer to its own question, and do not try to make them sum.
+
+Occasionals is whatever is left after subtracting the other three from your member count, floored at zero. On a small or lopsided account it sits at 0 even though real occasional customers exist.
+</Warning>
+
+The thresholds are fixed and cannot be changed from the dashboard. They are also not the same rules the push notification audiences use, so a member the donut calls a Regular is not necessarily in the Regulars segment when you send a message. See [Audience segments explained](/merchants/notifications/segments) for those.
+
+The donut counts every member of your business, so the time period selector at the top of the page leaves it alone. It ignores the branch picker in the top bar too, and reads the same on every branch.
+
+## Peak Hours (stamp programs)
+
+A grid of seven days by the hours from 6am to 10pm. The darker a square, the busier that hour was. Shading is relative to the busiest square on screen, so the same shade can mean twenty visits one month and two the next. Hover a square for the day, hour and count.
+
+<Frame caption="Peak Hours on a cafe. One square carries every logged event in the period, so the rest of the grid sits empty.">
+  <img src="/images/analytics/analytics-peak-hours.png" alt="Peak Hours heatmap showing seven day rows from 6am to 10pm with a single dark square on Sunday around noon" />
+</Frame>
+
+<Warning>
+Peak Hours reads your activity log first and only falls back to the transaction ledger when the log has no rows at all for the period. A few logged events therefore outrank a much larger pile of counter activity: the cafe above took 29 transactions in 30 days and still shows one warm square, because two link opens were the only entries in its log. A grid that looks emptier than your shop felt is usually this. Read it as a rough shape of your week and go to the ledger when you need real counts.
+</Warning>
+
+Activity between 11pm and 6am is left out of the grid. Times follow the clock of whatever computer you are looking at, not the branch's local time, so check your machine's timezone before reading a late-night pattern into it. This card does follow the branch picker in the top bar.
+
+## Outstanding Points Liability (points programs)
+
+An area chart of your running points balance, one point per day across the period you picked. It starts from all points activity before the period began, then adds and subtracts day by day.
+
+<Frame caption="The Outstanding Points Liability chart. The line climbs and never falls, even across a day when a customer spent 50 points on a reward.">
+  <img src="/images/analytics/analytics-liability.png" alt="Outstanding Points Liability area chart rising from about 660 to about 750 over a month" />
+</Frame>
+
+<Warning>
+This line is currently too high, and it only ever climbs. Redemptions are added to the balance instead of taken off it, so every reward a customer cashes in pushes the chart up. On the bakery above, customers have earned 397 points and spent 350, leaving 47 outstanding, and the chart ends the month at 747.
+
+Expired points and staff adjustments are left out of the line altogether, as are bonus points, so a program with expiry switched on drifts further from the truth each month.
+
+Until this is corrected, use a member's own balance on their profile when you need a real figure, and read this chart only for the shape of your earning.
+</Warning>
+
+The **Outstanding Points** tile above the chart is a different number again: it adds up every point every member has ever earned, and never comes down when points are spent. Expect the tile and the chart to disagree.
+
+Like the donut, this chart ignores the branch picker and covers the whole business.
+
+## Who can see these charts
+
+Analytics is open to owners and managers by default. Staff have no analytics access unless an owner grants it. Each of these cards is also a tick box when you export from this page.
+
+<CardGroup cols={2}>
+  <Card title="Analytics Overview" href="/merchants/analytics/overview">
+    The headline figures above these charts, and the export tools.
+  </Card>
+  <Card title="Churn risk and best customers" href="/merchants/analytics/customer-lists">
+    The named member lists further down the same page.
+  </Card>
+</CardGroup>

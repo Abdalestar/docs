@@ -111,6 +111,7 @@
         "group": "Analytics",
         "pages": [
           "merchants/analytics/overview",
+          "merchants/analytics/charts",
           "merchants/analytics/customer-lists",
           "merchants/analytics/reports-hub",
           "merchants/analytics/location-comparison",
