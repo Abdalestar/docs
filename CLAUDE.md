@@ -20,6 +20,88 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-02 — The charts below your analytics numbers (gap discovery)
+
+**Article:** `merchants/analytics/charts.mdx` (new)
+**Branch:** `claude/busy-clarke-gg4gls`
+**PR:** https://github.com/Abdalestar/docs/pull/198
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 4 real annotated screenshots, validate-images 4/4 OK.
+One task this run: the board is fully triaged and there is still no backfill.
+
+### Task selection — the board is now ENTIRELY non-writing work
+`notion-query-data-sources` (SQL mode) returns 33 non-Done rows and **not one is a
+writable article**. They fall into three buckets, all previously verified: duplicates of
+on-main articles, features that do not exist (condition builder, push-frequency cap,
+A/B testing), and rows blocked on a demo account this routine cannot reach (cancel
+subscription, AI suite, MCP/AI). The newest ~7 rows are a fourth kind: **engineering-fix
+trackers filed by earlier runs** (dead member tags, the NFC stamp-card field, the Issue
+Stamp button, the staff phone layout). Those are not docs tasks and should not be picked up
+as one. Backfill is still the same four unworkable zero-PNG files on `main`.
+
+So this run did §14 gap discovery. **PRs #186-#197 are open and unmerged** (main is at the
+#185 merge), so diff every candidate against the open-PR list before writing.
+
+### The gap
+The **second row of cards on `/analytics`** had zero coverage anywhere in the docs, and it
+is program-type dependent, which was also undocumented. `app/(dashboard)/analytics/page.tsx`
+lines 173-180: a points org renders `PointsBalanceChart` (Outstanding Points Liability), a
+stamp org renders `PeakHoursHeatmap`, and `SegmentsDonutChart` sits beside either. So no
+single account ever shows all three, which is why route-diff gap discovery kept missing it.
+
+**Technique worth reusing:** extract every `<CardTitle>` string from `components/dashboard`
++ `app/(dashboard)` and grep each one against `merchants/ customer-app/ support/`. Titles
+with zero hits are the real gap list. It surfaced Outstanding Points Liability, Peak Hours
+and Customer Segments in one pass. (Run the grep from the docs repo root, not the app repo,
+or every title reads as undocumented.)
+
+### THREE FINDINGS, all verified live rather than read in source
+1. **The liability chart adds redemptions instead of subtracting them.**
+   `usePointsBalanceTrend` does `runningBalance -= tx.points` on a `redeem` row, but every
+   redeem row stores `points` NEGATIVE — 524 of 524 in the whole database, 2681/2681 earns
+   positive. So the line only ever climbs, including across a redemption. Golden Crust:
+   earn +397, redeem -350, true outstanding **47**, rendered chart ends at **747**.
+   Filed as a P1 engineering row.
+2. **Peak Hours falls back to `transactions` only when `analytics_events` is COMPLETELY
+   empty** (`if (events.length > 0)`), never when it is merely sparse. Brew & Bean has 29
+   transactions in 30 days and 2 events (both `join_link_open`), so the heatmap is built
+   from the 2 and shows one warm square at Sun 12:00. That is the shipped screenshot.
+3. **Customer Segments counts overlap.** A lapsed regular is both Regular and At Risk, so
+   the percentages sum past 100 — live on Golden Crust: 75 + 25 + 50 + 0 = **150%**.
+   Occasionals is a floored remainder and sits at 0 on small accounts.
+
+Also documented, not filed: the **Outstanding Points tile** is
+`sum(organization_members.total_points_earned)`, lifetime-earned and never decreasing (797),
+so one screen carries 797, 747 and a true 47. And **Points Redeemed renders -50** from the
+same sign bug (visible in the context screenshot).
+
+### How the 747 was proved (do this instead of inferring)
+recharts is v3 here, so **`.recharts-wrapper` / `.recharts-cartesian-axis-tick` no longer
+exist** and every tooltip/selector probe returns empty. What works: read the card's `<svg>`
+directly, take the Y-axis tick `text` nodes with their `y` coordinates to calibrate the
+scale (0→y265, 200→y200, so 0.325px per unit; the top tick is shifted, do not use it), then
+back out values from the area `path`'s `d`. Three sampled points (662 / 687 / 747) matched
+the code's arithmetic exactly.
+
+### Screenshots (read-only, nothing changed)
+`.routine/flows/analytics-charts.json` (points, Golden Crust) + `analytics-charts-stamp.json`
+(stamp, Brew & Bean). Only the cookie **Decline** was clicked. No customer PII: these are
+aggregate charts. The context shot includes the Top Performing Staff names (the merchant's
+own team, same treatment as the published staff articles).
+
+### Gotchas for future runs
+- **Card crop selector that works on `/analytics`:**
+  `div.rounded-xl:has(> div > div.font-semibold:has-text('<Card Title>'))`. The direct-child
+  chain matters; without it `:has-text` matches an ancestor and `clipTo` grabs the page.
+- Row 2 sits at y≈712-1102, so set `"viewport": {"width":1440,"height":1500}`. The cards
+  need ~18-20s to settle; at 8s they are still skeletons.
+- **A points org has no Peak Hours card and a stamp org has no liability chart.** A probe
+  looking for both on one account will always report one missing. That is correct behaviour.
+- Heatmap cells carry a `title` attribute (`Sun 12:00 - 2 activities`), which is both the
+  cheapest way to read the data and a clean annotate target.
+- The TLS bridge was needed again and stayed up for the whole run.
+
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
