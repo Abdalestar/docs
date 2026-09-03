@@ -20,6 +20,96 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-03 — Reading a QR code's scan analytics
+
+**Article:** `merchants/qr-codes/scan-analytics.mdx` (new)
+**Branch:** `claude/busy-clarke-hlzpua`
+**PR:** https://github.com/Abdalestar/docs/pull/199
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 5 real annotated screenshots, validate-images 5/5 OK.
+One task this run.
+
+### THIS LOG WAS 13 RUNS STALE — read the board, not this file
+The entry below this one is 2026-08-20 (PR #185), but PRs #186 through #198 shipped
+daily since, one per day off `claude/busy-clarke-*` branches. Worse, **`main` has moved
+a long way**: it now carries 110 articles, including most of what older entries here call
+"open and unmerged". Do not re-derive the backlog from this file. Query the Notion data
+source and `list_pull_requests` first, then diff against `origin/main`.
+
+### Task selection — board fully triaged, backfill exhausted, so gap discovery
+Every non-Done row is a verified duplicate, a feature that was never shipped, blocked on
+a demo account this routine cannot reach, or one of the ~10 "NEEDS AN ENGINEERING FIX"
+tracker rows that PRs #191-#198 filed (those are not writing tasks). Backfill is empty:
+the zero-PNG scan of `origin/main` returns the same four non-workable files as every run
+since 2026-08-14.
+
+**The account blockers have NOT lifted** (re-verified read-only this run). `QTAP_EMAIL`
+and `QTAP_NAJMA_EMAIL` are still both `owner@goldencrust.qa`, so the third credential slot
+is still wasted, and both reachable orgs are growth/active with 0 AI credits and no
+`stripe_subscription_id`. Cancel Subscription, The AI Suite and MCP/AI stay blocked.
+
+**`Abdalestar/qtap` main has not moved since 2026-08-10** (`git fetch` confirms HEAD ==
+origin/main at 387c35b). So route-diff and new-feature gap discovery are both exhausted;
+the productive seam is still drift between shipped code and published prose, plus
+under-documented sub-surfaces of documented pages, which is what this run took.
+
+### What was written
+`components/dashboard/qr-codes/qr-analytics-section.tsx` (380 lines) +
+`lib/qr-analytics/insights.ts` (208 lines) render a full **Scan Analytics** panel below
+the 7-day chart on `/qr-codes/[id]`, and nothing in the docs mentioned it. Grepping
+`merchants/`, `support/`, `customer-app/` for "scan analytics", "identified scans",
+"anonymous scans", "device split", "browser breakdown", "repeat scanner" and "operating
+system" returned zero hits; published `qr-code-detail.mdx` stops at Recent Scans.
+
+Facts shipped: the four summary figures and the
+`${repeatScanners} returned · ~${estimatedUniqueScanners} unique scanners` sub-line
+(the estimate adds distinct anonymous IPs, so one person on two networks counts twice);
+`buildHighlights` capping at 4 lines with its two conditional lines (anonymous nudge needs
+>=5 scans and >=50% anonymous; repeat line needs >=3 unique members); `.limit(1000)` on the
+page's scan query, and why **Total Scans** can disagree with the panel; the
+`MemberIdentity` ghost and shortened-id fallback in Top repeat scanners, both visible live;
+access via `qr_batches !== 'none'`.
+
+### THE FINDING — device analytics have been dead since August 2026
+`qr_code_scans.user_agent` / `ip_address` feed Device split, Browser breakdown, Operating
+systems and the `~unique scanners` estimate. **Neither live scan door writes them:**
+- `Qtap_app/supabase/functions/process-qr-scan/index.ts:101` (in-app scan, called from
+  `src/hooks/useSubmitScan.ts`) inserts only `qr_code_id`, `member_id`, `location_id`.
+- `Qtap_app/supabase/functions/enroll-web/index.ts:659` does the same and says so in its
+  own comment: *"qr_code_scans has ip_address / user_agent columns that the app door leaves
+  null, and this door leaves them null too."*
+- The only writer that does set them, `qtap app/api/scan/route.ts:147`, has **no callers
+  left in either repo** (grepped). It is the legacy door.
+
+Confirmed read-only in production: every scan 2025-12 → 2026-07 carries a user agent
+(2438 of 2481 rows), and **all 38 scans in 2026-08 have `user_agent` NULL** — a clean
+cutover at the 2026-08-03 rework. So those three cards read "Unknown 100%" for everyone
+now. Shipped as a Warning plus the honest screenshot; a Notion row tracks the fix.
+**This is NOT a demo-seed artifact — do not re-diagnose it as one.**
+
+### Screenshots (read-only, nothing created or changed)
+`.routine/flows/qr-scan-analytics.json`, stamp demo (Brew & Bean, QR `CEO-STAMP-001`,
+24 scans / 5 members). Only the cookie banner was clicked. Customer names in Top repeat
+scanners redacted (the demo set includes the founder's own record).
+
+### Gotchas for future runs
+- **The panel starts at y≈669 and the page is 3166px tall.** Set
+  `"viewport": {"width":1440,"height":3300}` and every `clipTo` resolves with no scrolling
+  and no hovers. Much simpler than the hover-to-scroll dance earlier runs used.
+- shadcn **`CardTitle` is a `div.font-semibold`, not an `h3`**, so the card selector that
+  works is `div.rounded-xl:has(div.font-semibold:has-text('<title>'))`. The four summary
+  cards are `div.rounded-xl.min-w-0 >> nth=N`; the summary grid is
+  `div.grid.min-w-0.grid-cols-2`.
+- Device split + Browser breakdown share a generic grid wrapper with Hour/Day, so `clipTo`
+  cannot isolate a pair. Explicit clips at 1440 width: `{x:272,y:1100,w:768,h:390}` for the
+  device pair, `{x:272,y:1668,w:768,h:366}` for the timing pair.
+- **Numbered badges covered the summary labels** ("Identified" rendered as "dentified").
+  Plain boxes plus an ordered `<Frame caption>` is the readable version, the same lesson
+  the notification-stats run recorded. Re-shoot a single step with a `node -e` filter into
+  a temp one-step flow.
+- Run node from `/home/user/docs`; a probe written to `/tmp` fails `ERR_MODULE_NOT_FOUND`
+  for playwright.
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
