@@ -1,0 +1,82 @@
+---
+title: "Reading a QR code's scan analytics"
+sidebarTitle: "Scan analytics"
+description: "The Scan Analytics panel on a QR code: identified and anonymous scans, unique members, the busiest hour and day, and who scans the code most."
+---
+
+Every QR code's detail page carries a Scan Analytics panel below the 7-day activity chart. It answers questions the scan count on its own cannot: how many of those scans belong to a real member, how many separate people that adds up to, when they scan, and who scans the most.
+
+Open **QR Codes**, click a code to open it, then scroll past the Scan Activity chart. See [QR code details and scans](/merchants/qr-codes/qr-code-detail) for the rest of that page.
+
+## The four figures at the top
+
+<Frame caption="Identified scans, Anonymous scans, Unique members, and Top device. The gold card is the one to read with care.">
+  <img src="/images/merchants/qr-codes/scan-analytics-summary.png" alt="Four summary cards showing 24 identified scans, 0 anonymous, 5 unique members, and Unknown as the top device" />
+</Frame>
+
+**Identified scans** are the scans Qtap could tie to a customer account, with their share of the total underneath. **Anonymous scans** are the rest. A scan lands in the anonymous column when nobody was signed in behind it.
+
+**Unique members** counts the separate people behind the identified scans, so 24 scans from 5 members reads as 5. The line under it splits that further: how many of those members came back for a second scan, and a rough count of everyone who scanned, members plus separate anonymous visitors. That second number is an estimate. Anonymous visitors are counted by their network address, so one person on their phone and again on the café wifi can count twice.
+
+**Top device** is the device type behind the largest share of scans. Read the warning below before you trust it.
+
+## What Qtap picks out for you
+
+<Frame caption="The Insights card writes up to four plain-language lines from the same scans.">
+  <img src="/images/merchants/qr-codes/scan-analytics-insights.png" alt="Insights card listing the busiest hour, the busiest day, the device share, and the identified share" />
+</Frame>
+
+The Insights card restates the numbers below it in plain language. It names the busiest hour and the busiest day, the share coming from one device type, and how much of your traffic is tied to a known member. Two lines only appear when they have something to say: one suggests a sign-in nudge when more than half your scans are anonymous, and another flags repeat usage once at least three members have scanned. You get at most four lines.
+
+## When people scan
+
+<Frame caption="Hour of day and Day of week, both counted from the scans this code has collected.">
+  <img src="/images/merchants/qr-codes/scan-analytics-timing.png" alt="Two bar charts, one for hour of day and one for day of week" />
+</Frame>
+
+These two charts are the practical part of the panel. A table code that only gets scanned at 6 PM tells you when to keep staff on the floor, and a quiet Wednesday is a reason to run a campaign midweek. Both count every scan the panel holds.
+
+<Note>
+Hour of day is drawn from the clock on the computer you are viewing it from, which is what "your local time" in the card means. If you check your dashboard from a laptop still set to another country's timezone, the peak shifts with it.
+</Note>
+
+## Who scans it most
+
+<Frame caption="Up to five members, most scans first. Each name links to that customer's profile.">
+  <img src="/images/merchants/qr-codes/scan-analytics-repeat.png" alt="Top repeat scanners list with five rows and their scan counts, customer names covered" />
+</Frame>
+
+Top repeat scanners lists up to five members with their scan count. Click a name to open that customer's profile. A customer who has deleted their Qtap account shows as **Deleted member** with a Deleted badge instead of a name, and a scan whose customer record cannot be found falls back to a shortened ID.
+
+## The device breakdown is mostly empty, and that is not your fault
+
+<Warning>
+**Device split, Browser breakdown, and Operating systems read "Unknown" for any scan recorded since August 2026.** The two ways customers actually scan, from inside the Qtap app and from a plain phone camera, do not record which phone or browser was used, so these cards have nothing to sort. Older scans still show their real devices, so an established account can see a mix of real names and Unknown.
+
+The same gap is why the "unique scanners" estimate never counts anonymous visitors separately. Everything else here is unaffected: the scan and member figures are real, and so are both timing charts.
+</Warning>
+
+<Frame caption="With no device recorded, both cards collapse to a single Unknown value.">
+  <img src="/images/merchants/qr-codes/scan-analytics-devices.png" alt="Device split donut and Browser breakdown bar chart, each showing only Unknown" />
+</Frame>
+
+This is a known gap and the Qtap team is aware of it. Until it is closed, read those cards as blank rather than as a finding about your customers.
+
+## Two limits worth knowing
+
+The panel reads the 1,000 most recent scans for a code. The Insights card says which number it used ("based on the last 24 scans"). On a busy printed code that has passed 1,000 scans, the **Total Scans** figure at the top of the page still counts every scan ever, so the two can disagree. That is expected.
+
+A code with no scans yet shows the panel with "Device, browser, and timing breakdowns will appear here after the first scan." Nothing is broken; give it a scan.
+
+<Info>
+Owners and managers can open QR code detail pages and see this panel. Staff members do not have access to the QR Codes section by default. See [Roles and permissions](/merchants/staff/roles-permissions).
+</Info>
+
+<CardGroup cols={2}>
+  <Card title="Code details & scans" href="/merchants/qr-codes/qr-code-detail">
+    The rest of the detail page: stats, editing, and deleting.
+  </Card>
+  <Card title="Where to put your codes" href="/merchants/qr-codes/placement-ideas">
+    Use the timing charts to decide where a code earns its place.
+  </Card>
+</CardGroup>
