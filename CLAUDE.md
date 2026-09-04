@@ -20,6 +20,88 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-04 — What a phone without the app sees when it taps a tag (correction)
+
+**Article:** `merchants/nfc-tags/what-is-nfc.mdx` (correction, not a new article)
+**Branch:** `claude/busy-clarke-0rb1g2`
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 1 new real annotated screenshot + 2 redrawn
+SVG rows, validate-images 4/4 OK. One task this run: **no backfill exists** (the zero-PNG
+scan on `origin/main` returns the same four non-workable files as every run since 08-14).
+
+### Task selection — the board is fully triaged again, read this first
+`notion-query-data-sources` (SQL mode) returns 37 non-Done rows and every P1/P2 is a
+verified duplicate, a not-shipped feature, a capture blocker, or an **engineering-fix
+tracking row** written by a recent run (`Needs Screenshots = NO`, "NEEDS AN ENGINEERING
+FIX, not a docs change"). Those tracking rows are new since 08-26 and are NOT work: PRs
+#191-#199 already ship the honest Warning each one describes. Do not pick one up.
+
+The one genuinely actionable row was the P3 **"A phone without the app does see something
+when it taps a tag (the /t/ landing page)"**, auto-discovered 2026-09-03 by the
+scan-analytics run. It is a published-prose error with a capturable surface and no
+conflicting PR.
+
+**Conflict check matters here.** PRs #190 and #191 both touch NFC files (`nfc-tags.mdx`,
+`detail.mdx`, `tap-and-earn.mdx`, `placement-ideas.mdx`). I diffed all 12 recent open-PR
+branches against `origin/main`: **none touches `what-is-nfc.mdx`**, which is why the
+correction went there and not into `tap-and-earn.mdx`, where the row's note also suggested
+it. Do the same diff before editing any NFC page.
+
+### What was wrong, and what replaced it
+Published prose on main said: *"A tap only works from inside the Qtap app ... a phone
+without the app gets nothing from an NFC tag."* The earning half is right; the rest is not.
+- `Qtap_app/app/t/[token]/page.tsx` is a real web fallback for the tag URL. It renders
+  **You tapped a Qtap tag**, "Open the Qtap app and tap the tag again...", and a **Get the
+  Qtap app** button. Deliberately static and data-free (its own comment): it must not leak
+  whether a token exists or which merchant owns it.
+- `process-nfc-tap`'s header: the tag carries ONE NDEF URI record,
+  `https://c.qtap.qa/t/{token}`; `scan-code.ts` `TAG_URL_BASE` agrees.
+- The page writes nothing, so the tap never reaches `nfc_tags.tap_count`.
+
+### TWO MORE STALE CLAIMS FOUND IN THE SAME FILE — both fixed
+Verified against the **deployed** edge function (`get_edge_function` on
+`process-nfc-tap`, version 15 ACTIVE), not just the repo:
+1. **Points multipliers DO apply to taps.** The article's `<Note>` said a tap "always
+   awards the flat points value ... with no multiplier". `process-nfc-tap` calls the shared
+   `runEarn`, and its points branch calls `activeMultiplier()` and passes `p_multiplier`
+   into `process_points_scan`. `process-qr-scan` and `enroll-web` call the same `runEarn`,
+   so all three surfaces share one rulebook. PR #190 corrects the same fact in
+   `tap-and-earn.mdx`; this keeps the two pages consistent.
+2. **The real tap-only rule is the daily stamp cap.** `_shared/earn.ts` runs its
+   one-stamp-per-card-per-member-per-day query only when `source.kind === 'nfc'`
+   (QR and typed codes are deliberately uncapped, "product decision, 2 Aug"), and it is
+   computed in the edge runtime's UTC day, not the merchant's.
+So `nfc-vs-qr-comparison.svg` had two wrong rows. Redrew "Anonymous use" (the QR half
+still described the dead pre-web-enrollment behaviour, contradicting the article's own
+prose four paragraphs below) and replaced the "Points multiplier" row with "Daily stamp
+cap", which is the difference that actually exists. Alt text and caption updated to match.
+
+### Screenshot (read-only, nothing written)
+`.routine/flows/nfc-tap-no-app.json`, 390x844, one step: `/t/TQTAPDEMO2345` with the
+heading and the app button boxed. Loading the page is a pure render, no auth, no writes,
+and the token is ignored entirely, so any value works and no real tag was touched.
+
+### Gotchas for future runs
+- **`c.qtap.qa` is still unreachable from this sandbox** (`curl` returns 000; the agent
+  proxy allowlist covers `dashboard.qtap.qa` and `*.supabase.co`). `dashboard.qtap.qa/t/<anything>`
+  serves the same page, which is what the capture used. Do NOT report the unreachable
+  domain as an outage, and do not conclude anything about whether Universal Links are
+  configured there.
+- **Do not claim a background tap opens the app.** `Qtap_app/app/t/[token].tsx` says in its
+  own header that the route is "inert until `c.qtap.qa` DNS points at the dashboard and the
+  AASA / assetlinks files are served". The dashboard's own AASA endpoint returns 200 with a
+  real team id and a `/t/*` component, but that is a different host from the one tags
+  encode, and this sandbox cannot check the tag host. The article stays on what is true
+  either way: if the phone cannot hand the address to the app, the browser opens it.
+- The `/t/` page **does** show the dashboard cookie banner. Click **Decline** as the first
+  action or it sits at the bottom of a 390px shot.
+- A 390x844 shot of that near-empty page is 21KB, comfortably over the 5KB
+  `validate-images` floor. Annotations add most of the bytes.
+- The board's newest rows are a different species from the old ones: seven of them are
+  engineering-fix trackers with `Needs Screenshots = NO` whose docs half already shipped.
+  Filter on that flag before triaging, or you will re-read seven rows that are not tasks.
+
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
