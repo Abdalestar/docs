@@ -20,6 +20,101 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-05 — Your public link (the /m/ slug)
+
+**Article:** `merchants/merchant-page/public-link.mdx` (new)
+**Branch:** `claude/busy-clarke-5r3gam`
+**PR:** https://github.com/Abdalestar/docs/pull/201
+**Status:** Done. SMOKE_OK (TLS bridge); 4 real annotated screenshots, validate-images 4/4 OK.
+One task this run: backfill is still exhausted.
+
+### THIS FILE WAS 15 RUNS STALE — read the board and the PR list, not the log
+The log above stops at 2026-08-20 / PR #185, but **PRs #186 through #200 all shipped
+since** (win-back, campaign analytics, deleted members, the two "without the app"
+articles merged, NFC placement + Add Tag correction, rating and hours, redemption type
+strip, members correction, card preview at the counter, phone layout, dashboard stats,
+analytics charts, scan analytics, NFC claims). `origin/main` now carries #185; **#186-#200
+are open and unmerged**, so main lacks all of it. Diff every open PR branch before
+claiming a topic is uncovered:
+`for b in <branches>; do git diff --name-status origin/main...origin/$b -- '*.mdx'; done`
+
+### Environment
+- **The preinstalled Chromium no longer matches `npm i playwright`.** The smoke test failed
+  `playwright_launch: Executable doesn't exist at /opt/pw-browsers/chromium_headless_shell-1243`
+  (the image ships 1234). `npx playwright install chromium` downloads the matching build in
+  ~1 min and fixes it. The old "install is a no-op, just run the scripts" note is out of date.
+- TLS bridge still required (§6a). It stayed up for the whole run.
+- `QTAP_EMAIL` is still `owner@goldencrust.qa`.
+
+### Task selection — the board is all trackers now, not writing work
+`notion-query-data-sources` (SQL) returns 36 non-Done rows and **not one is writable**:
+the old P1s are still DUPLICATE or BLOCKED (cancel-subscription, condition builder,
+push frequency, four duplicates), and the newer rows are almost all **engineering-fix
+trackers filed by recent runs** (Outstanding Points Liability sign bug, Peak Hours
+fallback, scans missing user agent, member tags nothing writes, NFC stamp-card unsettable,
+merchant-page hours branch mismatch, dashboard Issue Points button, staff phone layout,
+plans.mdx promising SMS/API). Those exist to track a code fix; there is nothing to write.
+So this run did §14 gap discovery, created the row, and worked it in the same run.
+
+The qtap app repo is **frozen at 2026-08-10** (`387c35b`), so no new feature has shipped
+to document. Gap discovery now means finding old surfaces nobody wrote up.
+
+### What was written
+The **Public link** card, the first card on `/merchant-page`, above Merchant Profile.
+Zero hits for "public link" / "Copy link" / "Share your page" across every
+`merchants/*.mdx` on main **and all 18 open PR branches**. Grounded in:
+- `components/dashboard/merchant-page/public-link-card.tsx` — copy button (2s green tick,
+  toast fallback when the browser blocks the clipboard), pencil, 400ms debounced
+  availability check, the confirm dialog.
+- `lib/slug.ts` — `validateSlug` (3-48 chars, `^[a-z0-9]+(-[a-z0-9]+)*$`, `RESERVED_SLUGS`)
+  and `generateUniqueSlug` (business name, then `-2`, `-3`).
+- `api/auth/signup` + `api/auth/callback` — where the slug is born.
+- `api/merchant-page/slug` — GET is the availability check, PATCH writes and logs a
+  `slug_changed` analytics event; both owner-or-manager, 403 otherwise.
+- `permissions.ts` (`role === 'manager'` for `/merchant-page`) + `sidebar.tsx` (no entry
+  for it, and `/merchants` which leads there is owner-only, so a manager has no in-app route).
+
+### The bit worth keeping: what a slug change does NOT break
+The confirm dialog claims printed QR codes are unaffected. Verified, and push survives too:
+- QR encodes `c.qtap.qa/scan/<code>`, NFC `c.qtap.qa/t/<token>` (`lib/utils/codes.ts`,
+  `app/t/[token]/page.tsx`). Neither carries the slug.
+- `buildPushData` (`lib/notifications/push-payload.ts`) runs **at send time** with the
+  current slug, and the mobile contract routes on `organization_id` with the slug only as a
+  newer-build fallback. So a renamed merchant does not break its own notifications.
+Only already-printed/posted `/m/<old-slug>` links die. That is the article's one Warning.
+
+### Screenshots (nothing changed on the account)
+`.routine/flows/public-link.json`, points demo. The availability check is a **GET**, and the
+confirm dialog was opened for the shot with **Change link never clicked**. All four refusal
+states confirmed live: Available / This name is reserved (`settings`) / Must be 3-48
+characters (`ab`) / Only lowercase letters, numbers and single hyphens (`brew--bean`).
+
+### GAP FOUND BUT BLOCKED — the points receipt (new Notion row)
+`points-operations` has a full **success screen** ("Points Awarded!", Print Receipt / Award
+More) and a printable **Points Receipt** slip, and `merchants/points/*.mdx` has ZERO hits for
+"receipt" or "print". It is uncapturable under this routine: both dialogs are gated on
+`lastTransaction`, set only after a successful POST to `/api/points/award`, so a screenshot
+needs a **real award plus a real push to a real customer** — exactly what §8b forbids. Row
+filed with the full component reading and four gotchas already established (popup blockers
+kill Print silently with no error; the receipt cannot be reopened once closed; Adjust/Deduct
+gets no receipt; stamp-operations has no receipt at all). Unblocking needs either sign-off
+for one token award to a push-disabled demo member, or a demo-mode guard on the award path.
+
+### Gotchas for future runs
+- The Public link `CardTitle` renders as a **div**, so `h3:has-text('Public link')` resolves
+  nothing. Use `div.rounded-xl:has(button[aria-label='Copy link'])` at rest and
+  `div.rounded-xl:has(input[placeholder='your-business-name'])` in edit mode; the status line
+  is that card's `p.text-xs`. An unscoped `p.text-xs` grabs the merchant-name field instead.
+- `/merchant-page` needs ~9s to settle before the card renders.
+- `step.waitFor` still runs AFTER the actions loop, so a step that clicks the pencil logs
+  "waitFor not found: button[aria-label='Edit link']" and captures the right thing anyway.
+- A numbered badge on a short status line ("This name is reserved") covers the first letter.
+  Plain box plus a `<Frame caption>` reads better; re-shoot one step via the `/tmp/one.json`
+  filter trick rather than re-running the whole flow.
+- Run node from `/home/user/docs`; `node_modules` is there and a probe in the scratchpad dir
+  dies with `ERR_MODULE_NOT_FOUND`.
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
