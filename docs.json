@@ -164,6 +164,7 @@
           "merchants/settings/merchant-page",
           "merchants/merchant-page/business-overview",
           "merchants/settings/merchant-page-editor",
+          "merchants/merchant-page/public-link",
           "merchants/merchant-page/public-view",
           "merchants/settings/security",
           "merchants/settings/password-reset"
