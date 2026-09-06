@@ -20,6 +20,107 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-06 — The points panels on your analytics page
+
+**Article:** `merchants/analytics/points-panels.mdx` (new) + a correction to `analytics/overview.mdx`
+**Branch:** `claude/busy-clarke-p5dxsl`
+**PR:** https://github.com/Abdalestar/docs/pull/202
+**Status:** Done. SMOKE_OK (TLS bridge); 4 real annotated screenshots, validate-images 4/4 OK.
+One task this run: no screenshot backfill exists and no board row is workable.
+
+### READ THIS FIRST — the smoke test now fails on a Playwright version mismatch
+`npm install playwright` pulls **1.63.0**, which wants chromium build **1243**, but this
+sandbox ships **1234** at `/opt/pw-browsers`. The smoke test dies with
+`SMOKE_FAIL: playwright_launch - Executable doesn't exist ... chromium_headless_shell-1243`.
+Do **not** run `npx playwright install` (the environment forbids it, and it is not needed).
+The fix is one command: `npm install playwright@1.62.0` — that release maps to chromium
+1234. Version-to-build for the next time it drifts: 1.56→1194, 1.59→1217, 1.60→1223,
+1.61→1228, **1.62→1234**, 1.63→1243. Check with
+`node -e "console.log(require('./node_modules/playwright-core/browsers.json').browsers.find(b=>b.name==='chromium').revision)"`.
+Note `/opt/pw-browsers/chromium` is a **broken symlink** to a 1194 directory that does not
+exist, so the `executablePath` fallback in the environment notes does not work either.
+
+### Second gotcha: hand-rolled probes need `ignoreHTTPSErrors`
+The TLS bridge (§6a) was required again. `flow-capture.mjs` and `smoke-test.mjs` already
+pass `ignoreHTTPSErrors: true`, but a throwaway probe that omits it dies on
+`ERR_CERT_AUTHORITY_INVALID` at `/login`, which reads like a dead bridge and is not.
+
+### Task selection — the board is exhausted, and now mostly not even docs work
+Queried the board with `notion-query-data-sources` (SQL mode). 37 non-Done rows, and
+**none is workable**: the P1/P2/P3 rows are verified duplicates, blocked captures, or
+non-features, and a growing share (9 rows now) are **engineering-fix trackers** filed by
+earlier runs, not articles to write. Two rows worth naming:
+- **The success screen and printable receipt after you award points** (P2, added
+  2026-09-05) is a genuine gap but is blocked by the routine's own read-only rule: both
+  dialogs are gated on `lastTransaction`, which is only set after a real POST to
+  `/api/points/award`. Capturing it means awarding real points and firing a real push.
+  Its note asks for explicit sign-off first. **No human is watching a scheduled run, so
+  do not take it** until someone answers.
+- **Maintenance mode / announcements** stays blocked (turning either on hits every merchant).
+
+Backfill is still exhausted: the zero-PNG scan on `origin/main` returns the same four
+non-workable files as every run since 2026-08-14.
+
+`main` is at PR #185 and **PRs #186-#201 are open and unmerged**, so main lacks 16 articles.
+Diff every open-PR branch before claiming a gap; I did, and none touched this row.
+
+### The gap
+`app/(dashboard)/analytics/page.tsx` renders a **points-only row of three cards** below the
+charts (`{isPoints && (...)}`, after Charts Row 2, before Insights): Points Expiry Forecast,
+Top Points Earners, Reward Popularity. `analytics/overview.mdx` gave each one a single
+bullet and no screenshot. Stamp accounts never see the row.
+
+### THE FINDING — Reward Popularity is dead for every merchant
+`useRewardPopularity` runs `.from('points_transactions').select('points, metadata')`, but
+**`points_transactions` has no `metadata` column**. PostgREST answers
+`400 {"code":"42703","message":"column points_transactions.metadata does not exist"}`, the
+hook ignores `error`, and the card renders "No redemption data yet" on every account.
+Captured from the browser network log on Golden Crust, which has 6 redeem rows; Najma has
+511 and would read the same. **Demo mode masks it**: `demoRewardPopularity` supplies 7
+sample rows, so the card looks healthy whenever demo mode is on. Filed as a P1 engineering row.
+
+### Two more verified facts the article carries
+- **The 30/60/90 rows are cumulative, not slices.** The loop adds a transaction to every
+  bucket its `expires_at` falls inside, so Next 90 days contains Next 30 days. They cannot
+  be summed. All three read `0 pts` when `points_expire = false`, which is the default
+  (Golden Crust's "Baker's Rewards" has it off, so 0/0/0 is the honest representative shot).
+- **"Total Outstanding" is lifetime earned**, summed from
+  `organization_members.total_points_earned`, which never subtracts spending. Live: 797
+  shown vs 565 really held; Najma 1,704,649 vs 1,261,585. The real number is
+  `member_points.current_balance`. `organization_members` has no balance column at all.
+- **Top Points Earners ranks on lifetime earned**, not balance. Live proof on Golden Crust:
+  ranks 2 and 3 both hold 380 points today but have lifetime totals of 252 and 135.
+- None of the three hooks receive `period` or `locationId`, so the time period selector and
+  the branch switcher do not touch this row. Verified in `analytics/page.tsx` lines 75-77.
+
+### Also corrected
+`analytics/overview.mdx` said "**Reward popularity** — which rewards members are redeeming
+most". That is now demonstrably false, so the bullet was fixed, the Top points earners
+bullet now says "over their whole history", and a Note links the new page. No other prose
+touched.
+
+### Screenshots (read-only, nothing issued or redeemed)
+`.routine/flows/points-panels.json`, points demo (Golden Crust). The only click in the whole
+flow is the cookie banner's Decline. Member names **and avatars** redacted (the demo set
+includes the founder's own record).
+
+### Gotchas for future runs
+- **The row sits at page y=1126, height 315, below any normal fold.** Set
+  `"viewport": {"width":1440,"height":1600}` and use page-coordinate clips; no scrolling or
+  `hover` is needed at that height. The cards are at x=280 / 666.65 / 1053.33, each ~362 wide.
+- The card selector that works is `div.rounded-xl:has(> div:has-text('<Card Title>'))` — note
+  the **direct-child** `>`. Without it the selector climbs to the grid wrapper.
+- **Measure before you redact.** The points values start at x=940.3 and the member names at
+  x=779.65, so a redact rect wider than 203px eats the first digit of "400 pts". My first pass
+  shipped "00 pts"; always Read the PNG back and look at it.
+- `/analytics` needs ~16s to settle. At less, the three cards are still skeletons.
+- `text=No redemption data yet` resolves cleanly as a box target (exact-text engine), unlike
+  `span:has-text(...)` on shadcn components.
+- Board hygiene worth a human's time: 9 of the 37 open rows are engineering-fix trackers
+  with no article to write, and 4 P1s are long-verified duplicates. They sort to the top of
+  every run and get re-rejected. Closing or re-labelling them would give every run its time back.
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
