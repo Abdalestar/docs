@@ -20,6 +20,102 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-07 — Points multiplier campaigns (gap-discovery article)
+
+**Article:** `merchants/campaigns/points-multiplier.mdx` (new)
+**Branch:** `claude/busy-clarke-igfiwu`
+**PR:** https://github.com/Abdalestar/docs/pull/203
+**Status:** Done. SMOKE_OK (TLS bridge); 5 real annotated screenshots, validate-images 5/5 OK.
+One task this run: the board has no workable row and no backfill left.
+
+### PLAYWRIGHT VERSION TRAP — read this first, it costs a run otherwise
+`npm install playwright` now pulls **1.63**, which wants chromium build **1243**, but this
+sandbox ships build **1234** at `/opt/pw-browsers`, so the smoke test dies with
+"Executable doesn't exist ... chrome-headless-shell". Do **not** run `npx playwright
+install`. Pin the matching version instead:
+
+```
+npm install playwright@1.62.0     # browsers.json revision 1234 = the preinstalled build
+```
+
+Then the usual TLS bridge (§6a) and `PLAYWRIGHT_PROXY=http://127.0.0.1:38443`.
+
+### Task selection — the board is still fully triaged, and now so is the route map
+Every non-Done row is DUPLICATE, BLOCKED, or an engineering-fix tracker that explicitly
+says "not a docs change" (the 2026-09-01..06 runs added several of those). PRs #186-#202
+are open and unmerged, so `main` lacks all of them; I diffed every open-PR branch against
+`origin/main` before writing to be sure the topic was free. Backfill is exhausted: the
+zero-PNG scan on `main` returns the same four non-workable files as always.
+
+So this was §14 gap discovery. **The productive seam now is campaign types**, not routes:
+of the seven types in the wizard, birthday / win_back / welcome / milestone had their own
+article and **points_multiplier, flash_sale and time_based did not**. Took the first and
+filed a row for the other two.
+
+### What was written, and why it needed the earn engine
+The wizard alone would have produced a wrong article. The facts that matter live in the
+**mobile** repo:
+- `supabase/functions/_shared/earn.ts` `activeMultiplier()` picks the **highest** active
+  `points_multiplier` campaign and passes it to the `process_points_scan` RPC, whose live
+  body is `v_earned := p_points_value * p_multiplier`. `process-qr-scan` and
+  `process-nfc-tap` both call the same `runEarn`, so an in-app scan **and** an NFC tap are
+  multiplied, applied to the points value on that code or tag.
+- `app/api/points/award/route.ts` calls `staff_award_points`, which has **no multiplier**
+  (checked the live `pg_get_functiondef`). So a till-side award during a 3x weekend is not
+  tripled. That is the article's first Warning and the thing most likely to cause an
+  argument at the counter.
+- Customer-visible strings: `🎯 N points earned! (3x bonus!)`, the `3x <campaign name>`
+  badge in `ScanResultModal.tsx`, and the ledger description
+  `60 points (3x — <name>)` in place of the usual `20 points at <org>`.
+- Stamps are never multiplied (points branch only); multipliers do not stack.
+
+### THE FINDING — an active multiplier ignores its end date (new P1 row)
+The wizard writes Start/End Date and the optional times into **`trigger_config`**, and
+`campaigns/new/page.tsx` never sends the `campaigns.start_date` / `end_date` **columns**
+(nullable, no default — confirmed in `information_schema`). `activeMultiplier` filters on
+those columns with null-tolerant bounds, so a wizard-created multiplier is **open-ended**
+and keeps multiplying until someone hits Pause. Only the notification path reads what the
+merchant typed (`execute/route.ts` reads `pmConfig.start_date/end_date/days/start_time/
+end_time`). The article ships this as a Warning; the fix is filed as a P1 row.
+
+Two smaller flags on the same row, neither documented as working:
+- The wizard offers **1.5x** but `process_points_scan` takes `p_multiplier integer`. I did
+  not test it on the wire (that would have written real points to a real member), so the
+  article only recommends a round multiplier. `1.5::integer` is 2 in Postgres but the JSON
+  text `"1.5"` fails a text cast, so the outcome depends on PostgREST's coercion path.
+- The dashboard's own `app/api/scan/route.ts` holds a **second, older** copy of the
+  multiplier logic that DOES read the trigger_config dates/days/times. Nothing in either
+  repo calls that route (grepped both), so no merchant-visible effect, but they disagree.
+
+### Screenshots (nothing was created)
+`.routine/flows/points-multiplier.json`, points demo (Golden Crust, 2 of 3 active campaigns
+so `/campaigns/new` renders; Brew & Bean is at 4 and shows Campaign Limit Reached). Type
+step, Trigger step filled with 3x + dates + times, the multiplier dropdown, Review, and the
+active multiplier row on `/campaigns`. **Activate Campaign / Save as Draft never clicked**,
+and **Pause was never clicked** on the existing campaign. No customer PII.
+
+### Gotchas for future runs
+- `:nth-match(input[type='date'], 2)` works in both `fill` and `annotate` targets, which is
+  the only way to reach the second of a pair of unlabelled wizard inputs (the Trigger step's
+  fields have no id or name).
+- **A `[role=listbox]` crop of a 5-item Radix select is ~3.7KB and fails the 5KB
+  `validate-images` floor.** An explicit `clip` around the field plus the open list
+  (`{x:288,y:296,width:460,height:300}` at 1440x1000) came in at 9KB and reads better anyway.
+- The Review step prints **"Custom trigger"** for a points multiplier and never restates the
+  multiplier or the dates (`getTriggerSummary` has no case for it), so a merchant cannot
+  double-check the promotion from Review. Said plainly in the article.
+- Demo data worth knowing: Golden Crust's seeded `Double Points Weekend` has
+  `trigger_config {multiplier:2}` with the date **columns** set to April 2026, so it is
+  correctly out of range for the earn engine today. Najma has real multiplied
+  `points_transactions` rows ("150 points (3x — Tuesday Triple Stars)"), but Najma is still
+  unreachable: `QTAP_NAJMA_EMAIL` is **still** a duplicate of `QTAP_EMAIL`
+  (owner@goldencrust.qa). Golden Crust's own multiplied rows are April `transactions` only,
+  and 19 newer rows push them out of the 10-row Recent Activity feed, so the multiplier
+  ledger line is prose, not a screenshot.
+- The campaign card's grey line ("2x points on every scan — active now") is the merchant's
+  own `description` column, not computed. Don't caption it as live state.
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
