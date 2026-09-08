@@ -20,6 +20,94 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-08 — Flash Sale and Time-Based Promotion campaigns
+
+**Article:** `merchants/campaigns/flash-sale.mdx` (new)
+**Branch:** `claude/busy-clarke-hrdke0`
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 5 real annotated screenshots, validate-images 5/5 OK.
+One task this run: no screenshot backfill exists on `main` (see below).
+
+### Task selection
+Took the newest genuinely-open row, **"Flash Sale and Time-Based Promotion campaign types
+have no article"** (P2, auto-discovered 2026-09-07 by the PR #203 run). Every P1 is either a
+verified duplicate, a reality-flagged non-feature, or one of the four **engineering-fix
+tracker rows** the recent runs added (outstanding-points liability, reward popularity,
+points-multiplier end date, plus the older cancel-subscription blocker). Those tracker rows
+are NOT docs work — their articles already ship the honest Warning; do not pick one up
+expecting to write anything. The remaining P2/P3 rows are blocked the same ways as before
+(MCP/AI and AI Suite need Elite/Franchise, points/receipt needs a write the routine may not
+make, maintenance mode would hit every merchant).
+
+### PLAYWRIGHT BROWSER MISMATCH — new failure mode, read this first
+`npm install playwright` in the repo pulled **1.63.0**, which wants chromium build **1243**,
+but the sandbox image ships **1234** at `/opt/pw-browsers`. The smoke test failed at step 1
+with `SMOKE_FAIL: playwright_launch - Executable doesn't exist at .../chromium_headless_shell-1243`.
+That is NOT a credentials or network problem. Fix, and it works from inside the proxy:
+`npx playwright install chromium chromium-headless-shell` (downloads ~114 MB into
+`/opt/pw-browsers`). Then the usual TLS bridge, which was needed again.
+
+### What was written
+The two clock-driven campaign types, which had only one-line entries in `campaigns/overview.mdx`.
+Grounded in `Abdalestar/qtap`:
+- `steps/trigger-config.tsx` — time_based: Active days checkboxes (`#day-0`..`#day-6`), Start
+  time / End time (`input[type=time]`), Notify customers (30/60/120 min). flash_sale: Sale Type,
+  Value, Start Time (`datetime-local`), Duration, Max Redemptions.
+- `execute/route.ts` `isWithinTimeWindow` — `configuredDays` accepts `days`, `days_of_week` or
+  `day_of_week` and treats "no days" as every day; **a missing start_time or end_time returns
+  false**, deliberately (its own comment records the "Weekend Double Stars" incident where
+  treating an absent window as unrestricted pushed to 132 members on one run).
+- Same file, `hasAlreadyReceived` — neither type is in the birthday/win_back exceptions, so it
+  is **one send per member ever**. A weekly happy hour never re-reaches the same regulars.
+
+### THREE FINDINGS, all verified in source and live on the deployment
+1. **Nothing on the Trigger step is saved unless you change it.** Every field renders
+   `value={config.x || <default>}` and only writes on `onChange`, and switching type does not
+   reset `trigger_config` (it starts as the birthday default `{days_before: 3}`, which is also
+   why `canProceed` case 1 passes). Walked a time-based campaign to Review touching nothing:
+   **Review printed "Trigger 14:00 - 17:00"** from its own fallback while the saved config held
+   no window at all. Shipped as the article's main Warning.
+2. **A flash sale built in the wizard never fires.** `isFlashSaleLive` returns false on line 1
+   when `campaign.start_date` is null. `campaigns/new/page.tsx` -> `createCampaign` ->
+   `POST /api/campaigns` never sends `start_date`; the column has no DB default (checked);
+   the only writers anywhere are the **offer** form (`campaigns/offers/new` + `[id]`); the
+   campaign detail page has no date field. member-eligible's own reason string is literally
+   "Flash sale has no start date configured". Confirmed in data too: the only 4 flash_sale /
+   time_based rows in Supabase are seeds carrying `start_at`/`end_at`/`days_of_week` shapes the
+   wizard never writes, so no wizard-made one has ever run.
+3. **`sale_type`, `value` and `notify_before_minutes` are collected, validated, and never read**
+   by any engine code (grep returns only trigger-config.tsx and lib/validations/campaign.ts).
+   So the Flash Sale discount/bonus is not what the member gets — the Reward step decides — and
+   no advance reminder is sent for a happy hour.
+
+Also honest in the article, not softened: `isWithinTimeWindow` uses `new Date()` (the server
+clock) and the campaign engine never reads `organizations.settings.timezone`, so the Qatar
+timezone in Business Settings does not move the window. I did not assert a specific offset
+because the runtime TZ is not verifiable from here; the article tells merchants to watch the
+first send instead.
+
+### Screenshots (nothing was created)
+`.routine/flows/flash-sale.json`, points demo (Golden Crust Bakery, growth, 2 of 3 active
+campaigns so `/campaigns/new` renders). Both wizards filled and walked to Review; **Activate
+Campaign and Save as Draft were never clicked**, so no campaign exists. No PII (wizard screens).
+
+### Gotchas for future runs
+- **The Message step blocks a walk-through.** `canProceed` case 4 requires a title and body for
+  a private campaign, so a probe that just clicks Next eight times dies on a disabled button.
+  Click **Use Template** on the Message step, then continue. Step order is Type, Trigger,
+  Reward, Audience, Message, Conditions, A/B, Review: 3 Nexts, template, 3 Nexts.
+- `label[for='time_based']` / `label[for='flash_sale']` are the type tiles (RadioGroupItem id =
+  the type value). Duration and Sale Type are Radix combos: click
+  `[role=combobox]:has-text('4 hours')` then `[role=option]:has-text('2 hours')`.
+- The two `input[type=time]` need `:nth-match(input[type='time'], N)`; Value is the first
+  `input[type='number'][min='1']` and Max Redemptions is `input[placeholder='Unlimited']`.
+- `/campaigns/[id]` `typeLabels` has no flash_sale or points_multiplier entry, so the detail
+  page falls back to the raw `campaign_type` string. Cosmetic; not documented.
+- Board drift to fix in a prose pass some day: `campaigns/overview.mdx` line 34 tells merchants
+  "You define the discount or bonus" for a flash sale, and `campaigns/milestone.mdx` still says
+  the wizard has seven steps. Left alone (different articles, out of scope).
+
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
