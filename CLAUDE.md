@@ -20,6 +20,134 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-09 — Creating your Qtap account (gap-discovery article)
+
+**Article:** `merchants/getting-started/creating-your-account.mdx` (new)
+**Branch:** `claude/busy-clarke-w4cdox`
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 5 real annotated screenshots, validate-images 5/5 OK.
+One task this run: no screenshot backfill exists (same four non-workable files as every
+run since 2026-08-14).
+
+### READ THIS FIRST — the run log below is 19 PRs stale
+`origin/main` is still at the PR #185 merge, but **PRs #186 to #204 are open and
+unmerged** (one per day, 08-21 through 09-08). None of the entries below this one
+mention them. Do not re-derive coverage from this file: `list_pull_requests` and diff
+each open branch against `origin/main` before picking anything. Between them they
+already ship deleted-members, NFC placement + three NFC corrections, the merchant-page
+rating/hours strip, the redemption type strip and card preview, phone layout, dashboard
+home corrections, analytics charts, QR scan analytics, the public /m/ link, the points
+panels, points-multiplier, and flash-sale/time-based campaigns.
+
+The **qtap app repo has not changed since 2026-08-10**, so there are no newly shipped
+features to document. Route-diff gap discovery is exhausted (every `app/(dashboard)`
+route maps to an article or a board row). The productive veins left are component-level
+surfaces and code-vs-prose drift.
+
+### Task selection — the board is all trackers, duplicates and blockers
+`notion-query-data-sources` (SQL mode) returns 42 non-Done rows and **not one is
+workable docs writing**:
+- **Eleven are engineering-fix trackers**, filed by the runs that already shipped the
+  honest Warning: outstanding-points-liability, reward-popularity, multiplier-past-end-date,
+  flash-sale-can-never-go-live, wizard-trigger-defaults, member tags, NFC stamp card,
+  hours-branch mismatch, Issue Points button, Peak Hours fallback, scan user agent.
+  Their own Notes say "NEEDS AN ENGINEERING FIX, not a docs change". Leave them.
+- **Duplicates** (verified on main by earlier runs): redeeming by code vs lookup, redeem
+  campaign code, stamp card rewards, campaigns overview, staff permissions, member
+  profile, NFC registering, seat limits, detailed reports, alert preferences, managing QR
+  codes, manage invites, duplicate-and-status, hours/social, exporting analytics.
+- **Not shipped features**: condition builder, push frequency, A/B testing.
+- **Blocked on the demo accounts** (unchanged, still worth one env fix): cancel
+  subscription and MCP/AI need a live `stripe_subscription_id` or Elite/Franchise; AI
+  Suite needs credits; maintenance mode would hit every merchant.
+- **"The success screen and printable receipt after you award points"** (P2) is a genuine
+  gap but blocked by this routine's own read-only rule: the receipt only renders after a
+  real points award. Demo mode does not help, because the sample member ids are
+  fabricated and the POST fails. Someone has to decide whether that one write is allowed.
+
+So this run did §14 gap discovery, created the row, locked it, and wrote it in the same run.
+
+### The gap: nobody documented signing up
+Account creation is step one of the merchant journey and had **zero coverage**. Grep over
+`merchants/`, `support/` and `index.mdx` on `origin/main`: no hits for "Create Account",
+"verify your email" or "Verify Email", and every single "Sign Up" hit is the loyalty
+**Sign-Up reward**, an unrelated feature. `onboarding-wizard.mdx` starts after the account
+exists; `settings/password-reset.mdx` covers only recovery. So the docs began one step
+too late.
+
+### PIPELINE FIX — `"anonymous": true` in flow-capture.mjs
+This is why the gap survived. `flow-capture.mjs` always logged in, and `/login` and
+`/signup` are in the middleware's `AUTH_PATHS`, so a signed-in context is redirected away
+from both. The 2026-06-14 password-reset run recorded this as "needs a logged-out capture
+(the flow engine can't skip login)" and moved on. Added a one-flag skip of the login
+block; `lib/supabase/middleware.ts` protects only dashboard routes, so an anonymous
+context reaches `/signup`, `/verify-email` and `/login` cleanly. Any future logged-out
+capture gets it for free.
+
+### What was written (all grounded, read-only)
+- `app/(auth)/signup/page.tsx` — "Create your account" / "Start your free 14-day trial";
+  Business Name, Business Email, Password with the eye toggle and its
+  "Must be 8+ characters with uppercase, lowercase, and number" hint, the Terms checkbox,
+  **Start Free Trial**.
+- `lib/validations/auth.ts` `signupSchema` — 8 chars + uppercase + lowercase + number,
+  business name min 2, `acceptTerms` must be true. Note `loginSchema` password is
+  `min(1)`, so the rules bind at signup only.
+- `app/api/auth/signup/route.ts` — `generateLink({type:'signup'})`, then the
+  `organizations` insert (name + `generateUniqueSlug(businessName)`), then the owner
+  `staff` row, then `sendAuthEmail`. **The account, the business and your owner access all
+  exist before you confirm**, and a failed email is swallowed on purpose
+  ("Account is created, just email failed"). That is the basis for the Warning.
+- `lib/email/templates/auth/signup-confirmation.tsx` — from **Qtap**, subject
+  **Confirm your Qtap account**, button **Confirm Email**, **link expires in 24 hours**.
+- `app/api/auth/confirm/route.ts` — `type=signup` redirects to `/onboarding`.
+- `app/api/auth/callback/route.ts` — the Google path: a first-time OAuth user gets an org
+  named **`<name>'s Organization`** plus an owner staff row and goes straight to
+  onboarding, with no confirmation email.
+- `app/api/onboarding/route.ts` — the Stripe trial subscription is created **here**, not at
+  signup. So the button reads Start Free Trial but the 14 days begin when onboarding ends.
+  Shipped as a Note; matches published `billing/trial.mdx`.
+
+### A claim I nearly shipped and killed
+I was about to write that the public page address is fixed at signup, because
+`generateUniqueSlug` is called only in the signup route and the OAuth callback. Wrong:
+`app/api/merchant-page/slug/route.ts` + `components/dashboard/merchant-page/public-link-card.tsx`
+let an owner or manager change it later (that surface is PR #201, still unmerged). The
+article says the business name builds the *first* version of the address and that it can
+be changed later. **Grep for the writer, not just the generator.**
+
+### The Google asymmetry (worth a product look)
+`Continue with Google` exists only on `/login`. The signup page has no Google button at
+all, even though the login button creates a full account on first use. A merchant who
+wants to sign up with Google has to guess that the Log in page is where you sign up. The
+article says so plainly.
+
+### Screenshots (nothing was submitted, no account created)
+`.routine/flows/create-account.json`, anonymous, 1440x1000, five cropped shots of the auth
+card: the empty form with the four fields numbered, the filled form with the password
+revealed and Start Free Trial boxed, the validation-error state, the Check Your Email
+screen, and the login page with Continue with Google boxed. **Start Free Trial and
+Continue with Google were never clicked.** Submitting would create a real account, a real
+organization and a real outbound email. The business name and address in the filled shot
+are invented (`Al Bahr Coffee House` / `owner@albahr.example`), so there is no PII.
+
+**The error shot is safe on purpose:** clicking Start Free Trial on an *empty* form is
+blocked client-side by `zodResolver`, so `onSubmit` never runs and no request is sent.
+That is the cheapest way to photograph the real validation copy without touching the API.
+
+### Gotchas for future runs
+- **`annotate` specs are `{"type": "box", ...}`, not `{"box": true, ...}`.** The wrong
+  shape draws nothing, fails silently, and the capture still reports "Saved". I lost a
+  capture round to it. Always open the PNGs and look.
+- A number badge on a checkbox (`input[type=checkbox]`) overlaps it, because the badge is
+  drawn above-left of a box that is only ~16px square. Readable, but box the label instead
+  if you want it clean.
+- `.shadow-lg` is the auth card on every `(auth)` page and crops all of them well.
+- `/verify-email` and `/accept-invite` are NOT in `AUTH_PATHS`, so they render for a
+  signed-in context too; only `/login` and `/signup` need the anonymous flag.
+- The bridge stayed up for the whole run this time. `PLAYWRIGHT_PROXY=http://127.0.0.1:38443`
+  after `BRIDGE_CERT_DIR=<dir> node .routine/tls-bridge.mjs` in Bash background mode.
+
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
