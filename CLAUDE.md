@@ -20,6 +20,99 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-10 — Designing your Wallet pass (the pass design studio)
+
+**Article:** `merchants/passes/pass-design-studio.mdx` (new) + new **Wallet Passes** nav group
+**Branch:** `claude/busy-clarke-j8rlxy`
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 7 real annotated screenshots, validate-images 7/7 OK.
+One task this run.
+
+### Task selection — the board has no workable row, and this is the reason
+`notion-query-data-sources` (SQL mode) returns 43 non-Done rows and **not one is a docs
+task**. They fall into three buckets, all previously verified:
+- **Duplicates** of on-main articles (Campaigns Overview, Redeeming by Code vs Lookup,
+  Stamp Card Rewards, Redeem Campaign Code, Staff Seat Limits, Managing QR Codes, NFC
+  Registering, Detailed Reports, Business Hours, Exporting Analytics, and more).
+- **Not shipped** (Custom Conditions / condition builder, Push Frequency, A/B Testing).
+- **Engineering-fix trackers**, which is now the biggest bucket: twelve rows added by the
+  2026-09-01..09 runs that exist to track a code fix, not to write anything. Their own
+  Notes say so ("NEEDS AN ENGINEERING FIX, not a docs change; PR #NNN already ships the
+  honest Warning"). **Do not pick these up as writing work.**
+Plus the long-standing capture blocks (Cancel Subscription, AI Suite, MCP/AI, all needing
+an Elite/Franchise or Stripe-subscribed org the routine cannot reach).
+
+### What was written and why it is not a duplicate
+The **Pass Design Studio** (`/cards/[id]/pass-design` and `/points/[id]/pass-design`,
+`components/dashboard/pass-studio/`, ~840 lines) is the largest merchant surface with zero
+coverage on `main`: grepping `origin/main` for "Pass design" or "pass-design" returns
+**nothing**, and only three articles mention a wallet pass in passing.
+
+Its Notion row reads **Done, PR #163**. That PR was **closed without merging** — I checked
+the merge commits on `main` and #163/#164/#165 are the three that never landed (162 and
+166-185 did). So the article has never existed on `main`. Same pattern as the old
+`points/expiry.mdx` case: a Done row whose PR never merged is real, unshipped work. The
+branch `claude/pass-studio` still exists on origin; this run wrote fresh against current
+code rather than reviving it, and kept the row's agreed path and nav group so the
+structure matches what the board expects.
+
+**I also diffed all 20 open PRs (#186-#205) against `origin/main`** before starting;
+none touches pass design. Do that check before any gap-discovery article, the board alone
+will not tell you.
+
+### Facts (all grounded, read-only)
+- `pass-design-studio.tsx` — Colors / Logo / Watermark logo / Strip artwork panels, the
+  **Default (no branding)** vs **Your design** preview pair, `Publish pass design`.
+  Preview numbers are samples: stamps use `min(3, target)`, points a hardcoded `250`.
+- `lib/pass-design/contrast.ts` — `MIN_LEGIBLE_CONTRAST = 3.0` (WCAG AA large text).
+  `pickForeground` returns `#FFFFFF` or `#0A0A0A`; the **foreground is never user-chosen**.
+  `legibleOrFallback` is what snaps the label colour, with the transient
+  **Adjusted for legibility** chip (`flashContrastNote`, 3200 ms).
+- `app/api/pass-design/route.ts` — re-runs the same sanitize server-side, so a bad stored
+  colour can never ship; `canEditPassDesign` needs `stamp_cards`/`points_programs` at
+  **edit or full** (owner full, manager edit by default, staff none).
+- `update-wallet-pass/index.ts` bulk mode — `updated` counts `wallet_passes` rows,
+  `pushed` counts registered devices, and bulk **bypasses** the 10 s burst debounce that
+  per-member balance pushes use.
+- Uploads: PNG/JPEG under 1 MB, into the `wallet-pass-assets` bucket. The **watermark is
+  not on the Wallet pass** (the component says so itself); strip art is generated.
+
+### Screenshots (nothing was published, nothing uploaded)
+`.routine/flows/pass-design.json` (stamp, Brew & Bean) + `pass-design-entry.json` +
+`pass-design-points.json` (points, Golden Crust). **Publish pass design was never clicked**
+and no file was uploaded, so `pass_design` is still NULL on both demo programmes and the
+3 + 3 issued passes were untouched. No customer PII (merchant's own branding only).
+
+### THE ONE GOTCHA THAT WILL BITE YOU — the page takes ~19 seconds
+`/cards/<id>/pass-design` renders its skeleton for about 19 s before the h1 appears. At
+11 s a probe sees an empty page and reads like a broken route or a failed guard. `step.waitFor`
+has a hard 10 s cap, so it cannot help: put `{"wait": 22000}` as the **first action** instead
+(actions run before waitFor/waitMs).
+
+### Seed-data blocker worth fixing (NOT a merchant-facing bug)
+`GET /api/pass-design?...` returns **400 "Invalid card ID"** on both reachable demo
+programmes, so the pre-publish count line is stuck on "Checking how many passes are already
+in customers' wallets…". Cause: the route's zod `.uuid()` rejects the seeded placeholder ids
+`b0000000-…` / `c0000000-…`, whose version nibble is `0` rather than a valid RFC 4122
+version. Real cards use `gen_random_uuid()` (4 of 5 `stamp_cards` rows are proper v4 and
+Najma's programme, which has a saved `pass_design`, is one), so **no real merchant hits
+this** and it is deliberately not in the article. It does mean the populated count sentence
+cannot be screenshotted from either demo org; it is prose instead, and the publish crop was
+dropped rather than ship a shot of a stuck state. Same class as the other placeholder-UUID
+seed problems earlier runs logged. Filed as a new P2 row.
+
+### Other gotchas
+- Selectors: `input.font-mono` (1st background, 2nd label), `div.rounded-xl:has(input.font-mono)`
+  for the Colors card, `div.grid.grid-cols-2.gap-3` for the preview pair,
+  `a[href$='/pass-design']` for the entry link on `/cards`.
+- To demo the contrast snap in one action: set the **background** to `#F0D793`. The default
+  gold label then fails against it and snaps to `#0A0A0A` on screen. Capture within ~3 s.
+- `clipTo` on the `/cards` row silently fell back to a full-page shot; an explicit
+  `clip {x:272,y:176,width:620,height:216}` works.
+- The TLS bridge was needed again and **does not survive a container restart** (the sandbox
+  restarted mid-run). Restart it with Bash background mode and re-run; the repo, node_modules
+  and the scratch cert all survived.
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
