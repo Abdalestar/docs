@@ -2,76 +2,136 @@
   "section": "merchants/passes",
   "account": "stamp",
   "defaultWaitMs": 2500,
-  "viewport": { "width": 1440, "height": 1000 },
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
   "steps": [
-    {
-      "name": "pass-design-entry",
-      "goto": "/cards",
-      "actions": [
-        { "wait": 3000 },
-        { "click": "button:has-text('Decline')" },
-        { "wait": 7000 },
-        { "hover": "a[href$='/pass-design']" }
-      ],
-      "waitMs": 2500,
-      "clipTo": "div.rounded-xl:has(a[href$='/pass-design'])",
-      "clipPadding": 16,
-      "annotate": [
-        { "type": "box", "target": "a[href$='/pass-design']", "number": 1, "color": "plum" }
-      ]
-    },
     {
       "name": "pass-design-studio",
       "goto": "/cards/b0000000-0000-0000-0000-000000000001/pass-design",
-      "actions": [{ "wait": 22000 }],
+      "actions": [
+        {
+          "wait": 22000
+        }
+      ],
       "waitMs": 2000,
-      "clip": { "x": 272, "y": 80, "width": 1160, "height": 940 },
+      "clip": {
+        "x": 272,
+        "y": 80,
+        "width": 1160,
+        "height": 940
+      },
       "annotate": [
-        { "type": "box", "target": "div.rounded-xl:has(input.font-mono)", "number": 1, "color": "plum" },
-        { "type": "box", "target": "div.grid.grid-cols-2.gap-3", "number": 2, "color": "gold" },
-        { "type": "box", "target": "div.rounded-xl:has(> div > p:has-text('Strip artwork'))", "number": 3, "color": "charcoal" }
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(input.font-mono)",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.grid.grid-cols-2.gap-3",
+          "number": 2,
+          "color": "gold"
+        },
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(> div > p:has-text('Strip artwork'))",
+          "number": 3,
+          "color": "charcoal"
+        }
       ]
     },
     {
       "name": "pass-design-colors",
       "goto": "/cards/b0000000-0000-0000-0000-000000000001/pass-design",
       "actions": [
-        { "wait": 22000 },
-        { "fill": ["input.font-mono", "#4A2C1D"] },
-        { "wait": 1200 },
-        { "hover": "h1" }
+        {
+          "wait": 22000
+        },
+        {
+          "fill": [
+            "input.font-mono",
+            "#4A2C1D"
+          ]
+        },
+        {
+          "wait": 1200
+        },
+        {
+          "hover": "h1"
+        }
       ],
       "waitMs": 2000,
       "clipTo": "div.rounded-xl:has(input.font-mono)",
       "clipPadding": 14,
       "annotate": [
-        { "type": "box", "target": "input.font-mono", "number": 1, "color": "plum" },
-        { "type": "box", "target": ":nth-match(input.font-mono, 2)", "number": 2, "color": "gold" }
+        {
+          "type": "box",
+          "target": "input.font-mono",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": ":nth-match(input.font-mono, 2)",
+          "number": 2,
+          "color": "gold"
+        }
       ]
     },
     {
       "name": "pass-design-contrast",
       "goto": "/cards/b0000000-0000-0000-0000-000000000001/pass-design",
       "actions": [
-        { "wait": 22000 },
-        { "fill": ["input.font-mono", "#F0D793"] },
-        { "wait": 800 }
+        {
+          "wait": 22000
+        },
+        {
+          "fill": [
+            "input.font-mono",
+            "#F0D793"
+          ]
+        },
+        {
+          "wait": 800
+        }
       ],
       "waitMs": 1200,
       "clipTo": "div.rounded-xl:has(input.font-mono)",
       "clipPadding": 14,
       "annotate": [
-        { "type": "box", "target": "span:has-text('Adjusted for legibility')", "number": 1, "color": "plum" },
-        { "type": "box", "target": ":nth-match(input.font-mono, 2)", "number": 2, "color": "gold" }
+        {
+          "type": "box",
+          "target": "span:has-text('Adjusted for legibility')",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": ":nth-match(input.font-mono, 2)",
+          "number": 2,
+          "color": "gold"
+        }
       ]
     },
     {
       "name": "pass-design-preview-pair",
       "goto": "/cards/b0000000-0000-0000-0000-000000000001/pass-design",
       "actions": [
-        { "wait": 22000 },
-        { "fill": ["input.font-mono", "#4A2C1D"] },
-        { "wait": 1500 }
+        {
+          "wait": 22000
+        },
+        {
+          "fill": [
+            "input.font-mono",
+            "#4A2C1D"
+          ]
+        },
+        {
+          "wait": 1500
+        }
       ],
       "waitMs": 2000,
       "clipTo": "div.grid.grid-cols-2.gap-3",
@@ -81,30 +141,29 @@
       "name": "pass-design-logo",
       "goto": "/cards/b0000000-0000-0000-0000-000000000001/pass-design",
       "actions": [
-        { "wait": 22000 },
-        { "hover": "div.rounded-xl:has(> div > p:has-text('Strip artwork'))" },
-        { "wait": 1000 }
+        {
+          "wait": 22000
+        },
+        {
+          "hover": "div.rounded-xl:has(> div > p:has-text('Strip artwork'))"
+        },
+        {
+          "wait": 1000
+        }
       ],
       "waitMs": 2000,
-      "clip": { "x": 272, "y": 495, "width": 580, "height": 530 },
+      "clip": {
+        "x": 272,
+        "y": 495,
+        "width": 580,
+        "height": 530
+      },
       "annotate": [
-        { "type": "box", "target": "p:has-text(\"Strip artwork updates automatically\")", "color": "charcoal" }
-      ]
-    },
-    {
-      "name": "pass-design-publish",
-      "goto": "/cards/b0000000-0000-0000-0000-000000000001/pass-design",
-      "actions": [
-        { "wait": 22000 },
-        { "fill": ["input.font-mono", "#4A2C1D"] },
-        { "wait": 1500 },
-        { "hover": "button:has-text('Publish pass design')" }
-      ],
-      "waitMs": 2000,
-      "clipTo": "button:has-text('Publish pass design')",
-      "clipPadding": 22,
-      "annotate": [
-        { "type": "box", "target": "button:has-text('Publish pass design')", "color": "plum" }
+        {
+          "type": "box",
+          "target": "p:has-text(\"Strip artwork updates automatically\")",
+          "color": "charcoal"
+        }
       ]
     }
   ]
