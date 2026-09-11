@@ -20,6 +20,125 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-11 — The Insights panel on your analytics page
+
+**Article:** `merchants/analytics/insights.mdx` (new), `merchants/analytics/overview.mdx` (one-Note correction)
+**Branch:** `claude/busy-clarke-h4lo1q`
+**PR:** https://github.com/Abdalestar/docs/pull/207
+**Status:** Done. SMOKE_OK (TLS bridge); 3 real annotated screenshots, validate-images 3/3 OK.
+One task this run: no screenshot backfill exists (same four unworkable zero-PNG files on
+`main` as every run since 2026-08-14).
+
+### THIS FILE IS THREE WEEKS STALE — read the board and the open PRs first
+`CLAUDE.md` stops at 2026-08-20 / PR #185, but PRs **#186 through #206 shipped since**
+and are all still **open and unmerged**, so `main` lacks every one of them. Before
+picking anything, do both of these:
+
+1. `SELECT "Article Title","Status","Priority","MDX Path",substr("Notes",1,300) FROM
+   "collection://5aecc4c4-389b-458c-a114-43e5ee3704b6" WHERE "Status" != 'Done'`
+   via `notion-query-data-sources` (SQL mode).
+2. `mcp__github__list_pull_requests` + `git diff --name-only origin/main...origin/<head>`
+   for each open PR, to see which MDX paths are already taken. Twenty-one branches are
+   in flight; re-deriving a taken topic is the main way to waste a run now.
+
+**The board has changed character.** Of the 44 non-Done rows, most are no longer docs
+work at all: they are **engineering-fix trackers** filed by earlier runs whose article
+already shipped the honest Warning (Outstanding Points Liability, Reward Popularity,
+points-multiplier end date, Flash Sale, wizard trigger defaults, member tags, NFC stamp
+card, opening hours, dashboard Issue Stamp button, Peak Hours fallback, scan user agent,
+plans.mdx SMS/API teasers, Google sign-up, pass-studio seed ids). Do not take those as
+writing tasks; they are waiting on engineering. The rest are the same verified
+DUPLICATE / BLOCKED rows the 2026-08 runs triaged.
+
+So this run did **§14 gap discovery**. The productive method now is not route-diffing
+(every `app/(dashboard)` route maps to an article or a row) but **component-diffing**:
+list `components/dashboard/**` and the component tree of a page, then grep the docs for
+each one. That is how this gap surfaced.
+
+### The gap
+`/analytics` mounts **two** insight cards, and the docs knew about one of them:
+
+- `components/dashboard/analytics/insights-panel.tsx`, CardTitle **Insights**, mounted
+  at `app/(dashboard)/analytics/page.tsx:192`. Rule-based, every plan, no setup.
+- `components/dashboard/analytics/ai-insights-panel.tsx`, **AI Insights**, line 195.
+  `app/api/ai/insights/route.ts` 403s unless `entitledPlan` is Elite/Franchise AND
+  `ai_insight_credits > 0`, and the panel `return null`s on no data.
+
+The only mention of either anywhere on `main` or in any open PR was one Note in
+`analytics/overview.mdx` calling the first one "the AI Insights panel". Corrected it in
+the same PR (PR #202 edits the list immediately above that Note; adjacent hunks, both
+should be taken).
+
+### What was written (all grounded, read-only)
+`useInsights` in `hooks/use-analytics.ts:522` runs three counts over
+`organization_members` and builds at most three lines:
+- **warning** — `.lt('last_activity_at', now-30d)`, only when the count is > 0.
+- **opportunity** — regulars share, only when `> 10%`. Threshold is
+  `STAMPS_REGULAR_THRESHOLD = 5` / `POINTS_REGULAR_THRESHOLD = 100` from
+  `lib/constants/analytics.ts`, whose own comment says it is shared with the Customer
+  Segments donut so the two cannot drift.
+- **recommendation** — total member count, whenever there is at least one member.
+With none of those, it pushes "Start collecting data to see personalized insights about
+your loyalty program.", so the component's own empty state string ("Insights will appear
+here as you collect more data") is effectively unreachable. `insightIcons` maps five
+types but the generator only ever emits three; `performance` and `trend` are dead.
+
+Honest gotchas shipped:
+- **It ignores the time period picker.** `useInsights` takes no period at all and the
+  30-day window is hardcoded, so Today vs This year changes nothing on the card.
+- **It ignores the branch switcher.** `useInsights(locationId)` puts `locationId` in the
+  SWR key only; all three queries filter on `organization_id` alone. (Same class as the
+  segments/points-chart finding in the 2026-08-19 branch-switcher run.)
+- **A NULL `last_activity_at` is not "quiet".** `.lt(...)` drops NULLs and the column is
+  nullable with no default, so a member who joined and never returned is outside that
+  count. Churn Risk picks them up (`churn-prediction/route.ts:55` falls back to
+  `joined_at`), which is the cross-link.
+
+### Verified live rather than assumed
+Both orgs render all three lines and match Supabase read-only counts exactly:
+Golden Crust 4 members / 4 quiet / 3 regulars → "4 customers", "75%", "4 total members";
+Brew & Bean 7 / 3 / 4 → "3 customers", "57% ... 5+ stamps", "7 total members".
+
+### Screenshots (read-only)
+`.routine/flows/analytics-insights.json` (points) + `analytics-insights-stamp.json`
+(stamp). Only the cookie **Decline** and a hover were clicked. Nothing issued, saved or
+redeemed.
+
+### Gotchas for future runs
+- **The Insights card selector is `div.rounded-xl:has(svg.lucide-lightbulb)`** and it
+  resolves to exactly 1 on `/analytics` (the row icons are inside it, and the rows are
+  `div.rounded-lg`). The three rows are cleanly addressable by their own text:
+  `div.rounded-lg:has-text("30+ days")`, `:has-text("are regulars with")`,
+  `:has-text("total member")` — one match each, no `nth` chaining needed.
+- **Do not use a fixed page-coordinate `clip` on `/analytics`.** The card's page `y`
+  moved 1548 → 1465 between two reads of the same load while the points panels settled,
+  and it sits ~300px lower on a points org than a stamp org. The reliable recipe is a
+  normal **1440x900** viewport plus a `hover` on the card (scrollIntoViewIfNeeded parks
+  it against the bottom edge deterministically), then either `clipTo` the card or a
+  *viewport*-relative `clip`.
+- **PII trap on the context shot.** Scrolled to the Insights card, the same viewport
+  shows Top Points Earners, Churn Risk and Best Customers, i.e. ~11 member names and real
+  avatars including the founder's own record. Rather than redacting three cards, clip to
+  `{x:0, y:296, width:1440, height:300}` after the hover: that band holds only the card
+  and the sidebar, with ~100px of drift tolerance before any name enters frame.
+- `/analytics` needs **~16-18s** to settle. At 8s the lower cards are still skeletons.
+- Node probes still have to live in the repo root (`node_modules` is there); a probe
+  written to the scratchpad dies with `ERR_MODULE_NOT_FOUND: playwright`.
+- The TLS bridge (§6a) was needed again and stayed up for the whole run.
+
+### Gap discovery (2 rows added, both engineering)
+- **P2:** `staff-permissions-dialog.tsx` `ROLE_DEFAULT_IDS` ticks `analytics.view` for the
+  **staff** role, but `DEFAULT_PERMISSIONS.staff.analytics` is `'none'` and
+  `canAccessRoute` gates `/analytics` on `analytics !== 'none'`. An owner reading Edit
+  Permissions is told their cashier can see analytics; the cashier gets AccessDenied. The
+  tick is not cosmetic — turning custom permissions on pre-fills from that list, so
+  saving really would grant it.
+- **P3:** `useInsights` opens with a read of **`analytics_insights`, a table that does not
+  exist** (confirmed read-only) and that nothing in the repo writes. The error is
+  discarded, so the hook always falls through to generating. One dead PostgREST call per
+  analytics load, and a 5-insight cache path that can never fire.
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
