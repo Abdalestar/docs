@@ -20,6 +20,118 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-13 — The redemption code is 8 digits, not 6 characters (correction)
+
+**Article:** `merchants/redemptions.mdx` (correction + recapture)
+**Branch:** `claude/busy-clarke-fwcm1v`
+**PR:** https://github.com/Abdalestar/docs/pull/209
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 5 real annotated screenshots (2 recaptured,
+3 new), validate-images 9/9 OK. One task this run.
+
+### Task selection — the board is now a wall of engineering-fix trackers
+`notion-query-data-sources` (SQL mode) returns ~48 non-Done rows and **not one is
+workable.** They fall into three buckets: the old duplicates and capture blockers
+(cancel/Stripe, AI Suite, MCP/AI, condition builder, push frequency), and a newer and
+much larger bucket — **rows filed by runs #191-#208 that track an engineering fix, not
+a docs task** ("Outstanding Points Liability adds redemptions", "Reward Popularity
+queries a column that does not exist", "A Flash Sale campaign can never go live",
+"Member tags are displayed but nothing can write them", and a dozen more). Those are
+correctly filed and should not be picked up as writing work. Read the Notes before
+sorting by Priority: the P1 block at the top is almost entirely trackers now.
+
+**Route coverage really is exhausted** (re-verified against `find app -name page.tsx`).
+The only two uncovered routes left are `app/t/[token]` (the NFC web fallback, covered by
+PRs #190/#200) and `app/oauth/consent` (part of the blocked MCP/AI feature). So this run
+did **drift discovery**, which the 2026-08-19 run correctly named as the productive
+source of work from here on.
+
+### The drift — and it was already on the record
+The 2026-08-10 run wrote this line and moved on, correctly, because that run was a
+screenshot backfill and the no-prose-edit rule applied:
+
+> Live label drift left alone per the no-prose-edit rule: published `redemptions.mdx`
+> says "6-character code"; the live field says 8-digit.
+
+Three years of counter staff would have read it. `merchants/redemptions.mdx` is the
+article a cashier opens mid-transaction, and its central instruction was wrong:
+"Qtap gives them a **6-character** code" / "The field auto-capitalizes, so lowercase
+works fine". Live and in source:
+- `redemptions/page.tsx:921` — "Enter the **8-digit** code shown on the customer's
+  phone", placeholder `e.g. 48271593`, `inputMode="numeric"`, `maxLength={12}`.
+- `lib/utils/codes.ts` — `VALUE_CODE_LENGTH = 8`; its header is the canonical contract
+  and explains *why* (one numeric keypad, no case, no O-vs-0). Migration
+  `035_canonical_codes.sql` is where the format changed.
+- **Look Up is disabled below 6 characters**, which is what keeps legacy codes working.
+
+Two more wrong labels fixed in the same pass:
+- **Qtap ID example `Q7K4M9`.** `generate_qtap_id()` mints `Q` + **6 digits**
+  (`QTAP_ID_DIGITS = 6`). Every live id is `Q102812`-shaped (plus legacy `QTAP-TT024`).
+- The lookup step said click **Confirm**; the dialog's button is **Confirm Redemption**
+  (`page.tsx:1429`). Same text as the voucher's own button, so scope selectors.
+
+### What was added (none of it was covered)
+- **One box, three kinds of code.** `lookupCode()` falls through `pending_rewards` →
+  `campaign_rewards` (claimed offers) → `reward_redemptions` (via
+  `/api/rewards/redeem-code`, because the staff-read RLS policy on that table exists
+  only in the live DB). The code's own comment: "Staff should never have to know which
+  system a code came from."
+- Legacy hyphenated codes still match — `normalizeCode` uppercases and strips spaces but
+  **keeps hyphens** on purpose. `BREW-R101` resolved live.
+- **Another merchant's code does not resolve.** The campaign branch gates on
+  `campaign?.organization_id === organization?.id`. Verified live: `60683655` (Golden
+  Crust) returns the "No reward found with this code" toast on Brew & Bean.
+- **History tab caveat.** It queries `transactions` where `type = 'redeem'`, but
+  `campaigns/rewards/[code]/redeem` books bonus_stamps as `stamp` and bonus_points as
+  `points_earn` (deliberately, see its comment about inflating earn analytics). So those
+  redemptions never appear in History. Discount / free_item / BOGO do.
+
+### REALITY FLAG — expired voucher, Ready badge, live button (new Notion row)
+`components/ui/reward-voucher.tsx` derives the badge from status alone
+(`isRedeemable = status === 'pending_redemption' || 'available'`) while
+`getTimeRemaining()` renders "Expired" independently. Nothing reconciles them, so an
+expired voucher shows **Ready**, a red **Expired** line, and a live **Confirm
+Redemption** button. The server is correct and 410s it (both redeem routes check
+`expires_at` and flip the row to `expired`), so this costs a failed interaction in front
+of a customer, not a wrongly-issued reward. Shipped as a Warning; filed as a P2 row.
+
+### Screenshots (read-only; Confirm Redemption never clicked)
+`.routine/flows/redemption-codes.json`, stamp demo (Brew & Bean), 1440x1100. Looking a
+code up is a SELECT, so the whole flow writes nothing. **Real codes that cover all four
+states on Brew & Bean** (verified read-only first, keep these):
+| code | state |
+|---|---|
+| `53686496` | card reward, available, member **App Reviewer has no email** (no redaction needed) |
+| `BREW-R101` | legacy hyphenated, still resolves |
+| `21628649` | claimed offer, Ready **and** Expired (the teaching shot) |
+| `42759113` | already redeemed |
+| `60683655` | another org's code → not-found toast |
+| `99999999` | nonexistent → not-found toast |
+
+### Gotchas for future runs
+- **The code lookup needs ~10s, not 3-4.** It falls through up to three tables plus an
+  API round trip; at 3.5s the button still read "Looking up..." and the step captured
+  nothing. A step that comes back with no voucher is usually a short wait, not a bad code.
+- Crop target for the voucher is `div.min-w-0.space-y-2` (it wraps the type strip **and**
+  the voucher, ~1086x385). `div.rounded-xl:has(input[placeholder='e.g. 48271593'])` crops
+  the Enter Redemption Code card.
+- `button:text-is('Look Up')` is still required — `:has-text` matches **Look Up Customer**
+  first (same trap the 2026-08-19 run logged).
+- **Pick a member without an email.** `QTAP-TT024` is the founder's own record
+  (`abdalestar@gmail.com`) and shows on the voucher; `Q173600` ("App Reviewer") has none,
+  so the cleanest shots need no redaction at all.
+- The `/redemptions` page did not raise a cookie banner this run; the `Decline` click in
+  step 1 is harmless either way.
+- Full-page `/redemptions` is mostly empty below y≈470. Use an explicit
+  `clip {x:255,y:0,width:1185,height:470}` or the shot is two-thirds whitespace. The clip
+  drops the bottom `caption` bar, so let the `<Frame caption>` carry it.
+
+### Board note
+PRs **#186-#208 are all open and unmerged** (one per day since 2026-08-21), plus the older
+#163-#165. `main` is at #185. This PR touches only `merchants/redemptions.mdx` and
+`images/redemptions/`, which no open PR modifies — checked by diffing every open-PR branch
+against `origin/main`. The docs backlog remains a **merge** problem.
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
