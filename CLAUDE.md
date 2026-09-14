@@ -20,6 +20,105 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-14 — Notifications settings: six switches that send nothing
+
+**Article:** `merchants/settings/notifications.mdx` (correction + expansion)
+**Branch:** `claude/busy-clarke-8ohe1d`
+**PR:** https://github.com/Abdalestar/docs/pull/210
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 4 real annotated screenshots, validate-images
+4/4 OK. One task this run: no screenshot backfill exists (same four unworkable zero-image
+files on `main` as every run since 2026-08-14).
+
+### READ THIS FIRST — the run log below is a month stale, and so is `main`
+This file's previous entry is 2026-08-20 / PR #185, and `origin/main` is still exactly
+there. **PRs #186 through #209 are all open and unmerged**, one per day, so `main` lacks
+every article they carry. Do not re-derive coverage from `main` alone: `git diff
+origin/main...origin/<pr-branch> -- '*.mdx'` over the open PR list before picking
+anything. The in-flight set is charts, insights, points-panels, campaigns/analytics,
+flash-sale, points-multiplier, creating-your-account, on-a-phone, deleted-members,
+public-link, rating-and-hours, scan-analytics, image-and-link, card-preview,
+reward-types, pass-design-studio, nfc-tags/*, plus corrections to dashboard-overview,
+members/overview, redemptions, winback and stats.
+
+### Task selection — the board is now a bug tracker, not a backlog
+`notion-query-data-sources` (SQL mode) returns 48 non-Done rows. Roughly half are
+**engineering-fix trackers** filed by the daily runs (`Needs Screenshots = NO`, Notes
+opening "NEEDS AN ENGINEERING FIX/DECISION, not a docs change"). Those are not tasks.
+The rest are the same verified DUPLICATE / BLOCKED rows the 2026-08 runs triaged. The
+one genuine unblocked gap left, "The success screen and printable receipt after you
+award points", is blocked by the routine's own read-only rule because capturing it means
+really awarding points to a real member.
+
+`Abdalestar/qtap` main has not moved since 2026-08-10 (`387c35b`), so there is no new
+app drift to mine either. So this run did §14 gap discovery against published prose.
+
+### The finding
+`merchants/settings/notifications.mdx` is live and tells merchants each of the six
+switches delivers something: an email per new member, an email per redemption, a weekly
+summary, and push "in your browser or on your phone". **None of it happens.**
+
+- `settings.notification_preferences` is written by
+  `app/(dashboard)/settings/notifications/page.tsx` and **read by nothing else**. Grep
+  the object key and all six field names across `qtap` and `Qtap_app`: one file, six
+  hits, all in that page.
+- **No merchant push exists at all.** Every `oneSignal.sendNotification` call site
+  (`campaigns/execute`, `notifications/send`, `notifications/process-scheduled`) targets
+  a member device id. `components/providers/onesignal-provider.tsx` does init the
+  OneSignal web SDK on the dashboard, so the browser can be prompted, but nothing ever
+  addresses that subscription.
+- **Rewards have no stock.** Outside that page the only "stock" hit in the repo is a word
+  inside an AI prompt. `push_low_stock` is a switch for a feature that was never built.
+- **Weekly Report is one key away from working.** `app/api/ai/weekly-digest/route.ts`
+  (cron Mon 09:00 UTC) skips an org only on `settings.weekly_digest_enabled === false`
+  and filters to `elite`/`franchise`. The switch writes
+  `notification_preferences.email_weekly_report`, a different key no cron reads.
+- **Defaults error:** the article said email New Member Sign-ups is "Off by default";
+  `defaultSettings` has `email_new_member: true`, and the live page renders it on. The
+  other five defaults in the old prose were right.
+- Supabase read-only: **zero of the 13 orgs** has `notification_preferences` or
+  `weekly_digest_enabled` set, so every merchant sees code defaults and every
+  Elite/Franchise org is receiving the digest.
+- Access: `canAccessRoute` gates `/settings` on `perms.settings === true`, false by
+  default for manager and staff, and `staff-permissions-dialog.tsx` has **no Settings
+  item**, so it is owner-only in practice. The old article said nothing about this.
+
+### What the article says now
+The Warning up front, corrected defaults, the plan gate and wrong-key behaviour on Weekly
+Report, the browser-permission Note deleted, and two new sections: a table of the emails a
+merchant **does** get (trial drip day 0/7/12, trial-ending, subscription confirmation,
+upgrade, plan change, cancellation, payment receipt, payment failed, add-on purchase,
+Elite/Franchise weekly digest — all subjects read from `trial-drip`, `trial-expiring`,
+`webhooks/stripe`, `weekly-digest`), and where to actually watch for joins and redemptions.
+
+**Deliberately not claimed:** `/api/billing/feature-spotlight` and
+`/api/billing/compute-engagement` both send email but are **not in `vercel.json` crons**,
+so nothing fires them. `grace-expiry`, `dunning-expiry`, `enforce-trials` and
+`reset-notifications` send no mail at all.
+
+### Screenshots (nothing was saved)
+`.routine/flows/notification-prefs.json`, points demo (Golden Crust). A switch was flipped
+to raise the unsaved-changes marker and **Save Preferences was never clicked**, so the
+account's stored preferences are unchanged.
+
+### Gotchas for future runs
+- `/settings/notifications` is clean to capture: two `div.rounded-xl` cards at x=560 w=856,
+  y=240 and y=564, both h=300, six `button[role="switch"]` at x=1355. `:nth-match(...)`
+  resolves fine as an annotate and `clipTo` target. Whole page fits 1440x1000.
+- **Do not put `number` badges on switches.** At this crop size the badge lands on the
+  switch and hides the on/off state, which was the entire point of the shot. Plain boxes
+  plus an ordered `<Frame caption>` reads correctly (same lesson as the 2026-08-19
+  notification-stats run).
+- The unsaved marker is `fixed bottom-4 right-4`, so a `caption` annotation on a full-page
+  shot covers it. Drop the caption on that step and let the `<Frame>` carry it.
+- The TLS bridge was needed again, and **the first login attempt failed with a
+  `waitForURL` timeout and the identical command succeeded on an immediate retry**. Retry
+  once before believing `login_failed - all credentials rejected`.
+- `QTAP_EMAIL` is still `owner@goldencrust.qa` (Golden Crust, points, growth) and
+  `QTAP_STAMP_EMAIL` still `owner@brewbean.qa`. The Elite/Franchise blockers from August
+  (cancel-subscription, MCP/AI, AI Suite) are all unchanged.
+
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
