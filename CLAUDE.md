@@ -20,6 +20,110 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-17 — Turning off Qtap's marketing emails (the new opt-out switch)
+
+**Article:** `merchants/settings/marketing-emails.mdx` (new)
+**Branch:** `claude/busy-clarke-63dl6f`
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 3 real annotated screenshots + 1 brand SVG,
+validate-images 4/4 OK. One task this run: no screenshot backfill exists.
+
+### THE SMOKE TEST FAILS BEFORE THE BRIDGE FOR A NEW REASON — read this
+The first `smoke-test.mjs` run reported `login_failed - all credentials rejected`, which
+reads like dead credentials and is not. Chromium reached both hosts, but **every
+`_next/static` chunk failed with `ERR_TOO_MANY_RETRIES`**, so React never hydrated and the
+login form submitted as a plain GET (the password lands in the query string). The fix is
+the same TLS bridge as always; the symptom is just disguised as an auth failure now.
+**Do not conclude the demo accounts are dead from `login_failed`.** Diagnose with a probe
+that logs `page.on('requestfailed')` first. With `PLAYWRIGHT_PROXY=http://127.0.0.1:38443`
+the same credentials logged in first try.
+
+Note a probe needs `ignoreHTTPSErrors: true` (the sandbox intercepts TLS, so a bare
+`page.goto` dies with `ERR_CERT_AUTHORITY_INVALID`), and it has to live in the repo root
+or `playwright` will not resolve.
+
+### Task selection — the board is now mostly an engineering-fix tracker
+`notion-query-data-sources` (SQL mode) returns ~50 non-Done rows, but the shape has
+changed since the 2026-08 runs: **most rows are now "NEEDS AN ENGINEERING FIX, not a docs
+change" trackers filed by earlier runs**, whose articles already shipped the honest
+Warning. Those are not writing tasks. Of what is left, the P1s are the same four
+duplicates plus the same blocked/non-existent features, and the genuinely open rows are
+blocked on capture (MCP/AI needs Elite, the points receipt needs a real write, maintenance
+mode would hit every merchant).
+
+**27 PRs (#186 to #212) are open and unmerged**, so `main` lacks all of it. I diffed every
+remote branch against `origin/main` to get the list of MDX files already claimed, and
+scanned every branch's MDX for "marketing email" / "unsubscribe" before writing. Nothing
+touches it.
+
+### The gap
+qtap commit `b585299` (2026-09-16, one day before this run) shipped **Marketing email
+opt-out: tokenized unsubscribe route and settings switch**. Zero coverage anywhere in the
+docs. Confirmed live on dashboard.qtap.qa before writing a line: the **Marketing emails**
+card renders on `/settings/notifications` with the switch **Send marketing emails**.
+
+This also dates a claim in open PR #210, which rewrites `settings/notifications.mdx` and
+says "none of it can be turned off from this page". That was true on 2026-09-14 and the
+switch landed on 09-16. I wrote a **separate** article rather than editing that file, so
+the two PRs do not conflict; the new article cross-links it.
+
+### What was written (all grounded, read-only)
+- `app/(dashboard)/settings/notifications/page.tsx` — the fourth card, its exact copy, and
+  `handleSave` as the only writer (toggling is client state until **Save Preferences**).
+- `supabase/migrations/059_marketing_emails.sql` — `marketing_emails_enabled BOOLEAN NOT
+  NULL DEFAULT true`, an **organizations** column, so the setting is per business and the
+  mail goes to the active owner's address (`getOwnerEmail`).
+- The three senders that honour it: `billing/trial-drip` (DRIP_SCHEDULE day 0 / 7 / 12,
+  cron `0 8 * * *`), `billing/feature-spotlight`, `ai/weekly-digest` (Elite and Franchise
+  only, cron `0 9 * * 1`). `billing/compute-engagement` suppresses only the celebration
+  email; **the trial extension is still granted**, which the article says.
+- `app/api/email/unsubscribe/route.ts` — GET verifies the HMAC and renders a confirm form
+  and writes nothing; only POST flips the column. The comment says why: mail clients and
+  scanners prefetch links. That two-step is the SVG.
+- `lib/email/components/EmailShell.tsx` — `footer: 'marketing'` is what adds the
+  "Manage email preferences or unsubscribe" line.
+- `lib/utils/permissions.ts` — owner returns true early; `/settings` otherwise needs
+  `perms.settings === true`, and `DEFAULT_PERMISSIONS` has it false for manager and staff.
+
+### THE HONEST GOTCHA (shipped as a Warning, and filed as a P2 row)
+`lib/email/templates/billing/trial-expiring.tsx` carries the **marketing footer**, so the
+"your trial ends in N days" email shows an unsubscribe link. Neither sender checks the
+flag: `app/api/billing/trial-expiring/route.ts` (cron `0 9 * * *`, trials ending within 3
+days) and the `trial-expiring` path in `app/api/webhooks/stripe/route.ts` both select on
+`subscription_status`/`trial_end` alone. So an unsubscribed merchant still gets a daily
+countdown carrying a link that will not stop it.
+
+### Screenshots (nothing was saved)
+`.routine/flows/marketing-emails.json`, points demo (Golden Crust): the page with the card
+boxed, the card cropped with the switch on, and the switch **off** with **Save
+Preferences** live. **Save Preferences was never clicked**, so `marketing_emails_enabled`
+is unchanged on the demo org. No customer PII (this page carries only the merchant's own
+preferences). The unsubscribe confirm page is NOT screenshotted: its token is an HMAC of
+the org id and I will not go looking for the production secret, and clicking the button
+would write. That is the §9 case for an SVG.
+
+### Gotchas for future runs
+- The marketing switch is `:nth-match(button[role='switch'], 4)` at 1440px (3 email
+  switches, then marketing, then 3 push). The card is uniquely
+  `div.rounded-xl:has-text('Marketing emails')`, and **Save Preferences** is
+  `button:has-text('Save Preferences')`, `disabled` until something changes, which makes it
+  a reliable "unsaved" tell in a screenshot.
+- `/settings/notifications` needs ~9s to settle; the cookie **Decline** click still has to
+  be the first action of the first step only, with a ~3s wait before it.
+- **The six notification switches still write to nothing.** I re-verified independently of
+  PR #210: `email_new_member`, `email_weekly_report` and the rest appear only in
+  `settings/notifications/page.tsx` and never in any sender. The marketing switch is the
+  one control on that page that changes what gets sent, which is why the article carries a
+  Note telling merchants not to confuse **Weekly Report** with the weekly digest.
+- **Feature spotlight has no cron.** `app/api/billing/feature-spotlight/route.ts` is not in
+  `vercel.json` and nothing else calls it, so that email never sends today even though the
+  live settings copy names it. Filed as a P2 row rather than written into the article; the
+  article describes what the switch covers without promising those emails arrive.
+- Backfill is still exhausted: the on-main zero-PNG scan returns the same four non-workable
+  files (`customer-app/settings-profile`, `index.mdx`, `support/faq.mdx`, and the
+  `campaigns/analytics` stub, which open PR #187 already replaces).
+
+---
+
 ## 2026-08-20 — Joining from a QR code without the app (web enrollment)
 
 **Article:** `merchants/members/joining-without-the-app.mdx` (new)
