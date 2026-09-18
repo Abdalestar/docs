@@ -1,0 +1,40 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/cards",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 1000 },
+  "steps": [
+    {
+      "name": "deleting-03-points-menu",
+      "goto": "/points",
+      "waitFor": "text=Points Programs",
+      "waitMs": 8000,
+      "actions": [
+        { "wait": 1500 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1200 },
+        { "click": "button:has(svg.lucide-ellipsis)" },
+        { "wait": 1200 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('Deactivate')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "[role=menuitem]:has-text('Delete')", "number": 2, "color": "red" },
+        { "type": "caption", "text": "The same menu on the Points Programs page. A points program deletes more than a stamp card does: the balances and the whole points ledger go with it." }
+      ]
+    },
+    {
+      "name": "deleting-04-confirm-points",
+      "actions": [
+        { "click": "[role=menuitem]:has-text('Delete')" },
+        { "wait": 1500 }
+      ],
+      "clipTo": "[role=alertdialog]",
+      "clipPadding": 18,
+      "annotate": [
+        { "type": "box", "target": "[role=alertdialog] p", "color": "plum" },
+        { "type": "box", "target": "[role=alertdialog] button:has-text('Delete')", "color": "red" }
+      ]
+    }
+  ]
+}
