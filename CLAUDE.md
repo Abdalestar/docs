@@ -103,6 +103,212 @@ is a different file and is still in use.
 - `QTAP_NAJMA_EMAIL` is **still** a duplicate of `QTAP_EMAIL` (`owner@goldencrust.qa`).
   That third credential slot has been wasted for ten days and is still the single
   cheapest unblock on the board (cancel-subscription, AI Suite, MCP/AI all need it).
+## 2026-08-28 — What kind of reward you are handing over (redemption type strip)
+
+**Article:** `merchants/redemptions/reward-types.mdx` (new)
+**Branch:** `claude/busy-clarke-ex5hem`
+**PR:** https://github.com/Abdalestar/docs/pull/193
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 8 real annotated screenshots, validate-images 8/8 OK.
+One task this run: the backfill queue is genuinely empty (see below).
+
+### Task selection — the board is still fully triaged, and the log above is stale
+The run log stopped at PR #185, but **PRs #186-#192 have shipped since** (win-back
+max_sends, campaign analytics + stats, deleted members, the two "without the app"
+articles merged, NFC placement, the NFC Add Tag correction, merchant-page rating and
+hours). All are open and unmerged, so `main` lacks them. Query the board and
+`list_pull_requests` before trusting this file.
+
+`notion-query-data-sources` in SQL mode gives the whole board in one call. Every
+`Not started` row is a verified duplicate, a feature that does not exist, or blocked on
+an account this routine cannot reach. Nothing changed there this run. The genuinely
+actionable rows left are all **small prose-drift corrections**, not new articles:
+- P3 "QR scan address drift: gallery and bulk exports encode c.qtap.qa" → a correction
+  to `qr-codes/customer-scan-flow.mdx`.
+- P3 "export-delete.mdx: note that a deleted member cannot be removed".
+- P3 "Update show-on-screen.mdx once the presenter width bug is fixed" (still blocked;
+  the bug is in the app, not the docs).
+Any of those three is a clean, cheap task for a future run.
+
+**Backfill is exhausted, re-verified this run.** The zero-image scan on `origin/main`
+returns the same four non-workable files as every run since 2026-08-14:
+`customer-app/settings-profile` (mobile), `index.mdx`, `support/faq.mdx`, and the
+`campaigns/analytics.mdx` stub (which open PR #187 already replaces).
+
+**`Abdalestar/qtap` main has not moved since 2026-08-10.** Three unmerged feature
+branches exist (`feat/merchant-mcp-v2`, `feat/voucher-redesign`,
+`fix/campaign-reward-balance-credit`) and are not live, so nothing there is documentable
+yet. Route-diff gap discovery stays exhausted; the productive vein is still
+component-level surfaces and drift.
+
+### The gap
+`components/dashboard/shared/redemption-type.tsx` is a 359-line staff-facing mapping
+that renders a type badge, a source label, the terms, the origin and a one-line counter
+note above every voucher on `/redemptions`. **Zero doc coverage on main**: grep found no
+hit for `Signup bonus`, `Campaign voucher`, `Loyalty reward`, `Take this off the bill`,
+`nothing to hand over`, `Already paid in the app` or `Buy 1 get 1`. I diffed all 15 open
+PR branches against `origin/main` to confirm none touches redemptions. New Notion row
+created and locked before writing.
+
+### What was written (all grounded, read-only)
+- `redemption-type.tsx` — the three loyalty tiers (`main` / `signup` / `interim`, shown
+  as Main reward / Signup bonus / **Milestone** reward), the eight campaign kinds with
+  their exact notes, `tierNote()`, `programOrigin()`, and the terms rules: `At N stamps`
+  for a stamp milestone, `Costs N pts` for a pay-at-the-till points reward, and **no
+  threshold on a stamp main reward** because it fires on card completion rather than at
+  `trigger_value`.
+- `describePrepaidRedemption()` — a voucher bought inside the app keeps its loyalty
+  badge and gains the "already paid" line.
+- `app/(dashboard)/redemptions/page.tsx` — four render sites: Enter Code result (983),
+  each held voucher on Look Up Customer (1116), the points-eligible list as a **badge
+  only** (1170), and the Confirm Redemption dialog (1393).
+- `app/api/rewards/redeem-code/route.ts` — the GET lookup fills `program_name` with the
+  literal placeholder `'Points reward'`, which the page deliberately maps to `null`.
+  That is why a prepaid voucher shows no origin line; the article says so rather than
+  inventing one. Note a stamps-bought voucher comes back with that same placeholder.
+- `lib/utils/offer-display.ts` `deriveTypedOfferColumns` — terms formatting for older
+  campaign rows that carry the value only in `reward_config`.
+- `lib/utils/permissions.ts` + `lib/validations/staff.ts` — `/redemptions` needs
+  `redeem`, `true` by default for manager **and** staff, so everyone at the counter sees it.
+
+Two gotchas shipped, both verified: a voucher with **no strip** means the type could not
+be read (both `describe*` helpers return null on an unrecognised type and the strip is
+dropped entirely), and the strip is a label only, since confirming behaves identically
+either way and Qtap never adjusts a bill. The article also makes the point that the
+wording comes from stored columns and never the reward's name, which the screenshots
+prove: a stamp reward named "10% Off Any Drink" is badged **Milestone reward**.
+
+### Screenshots (nothing redeemed, no code burned)
+Flows `reward-types.json` / `-member` / `-points` / `-mobile`. Stamp demo (Brew & Bean)
+for the strip in context, a member holding a main plus a milestone, discount, bogo and
+prepaid; points demo (Golden Crust) for the badge-only eligible list; 390x844 for the
+counter phone view (§8c). Every flow stops at the Confirm Redemption dialog and the
+dialog's own Confirm was never clicked.
+
+### Gotchas for future runs
+- **The strip selector is `div.rounded-lg.border.bg-muted\\/40`** (escape the slash in
+  JSON). It resolves cleanly and is unique per voucher, so `:nth-match(...)` numbers the
+  strips in a stacked list.
+- **Scope any dialog annotation to `[role=dialog] div.rounded-lg...`.** A bare selector
+  first-matches a strip on the page *behind* the scrim, and the box silently lands on
+  the dialog header instead. Cost one re-shoot.
+- **Member `Q102812` on Brew & Bean carries a deletion request**, so it renders as
+  "Deleted member" everywhere and is the PII-free way to shoot a member holding several
+  vouchers. It holds one main and three milestone rewards.
+- Read-only codes that render each variant on Brew & Bean: `43898886` (main),
+  `24083777` (milestone, At 4 stamps), `35555217` (discount -15%), `41460342` (bogo),
+  `58875222` (free item), `12078583` (prepaid, active until 2026-08-29). The campaign
+  vouchers are all long expired and **still render their strip**, because `issued` maps
+  to `available` and expiry only shows on the voucher itself. On Golden Crust, member
+  `Q086993` renders the points-eligible badge list.
+- **The first code lookup in a chained flow can silently return nothing.** One probe
+  filled four codes in a row and the third came back with no strip; the identical run a
+  minute later worked. Give each lookup ~5s and re-run before concluding a code is dead.
+- Cropping straight to the strip gives a 1138x131 sliver that still clears the 5KB
+  `validate-images` floor (~18KB), but the in-context crop showing the strip above its
+  voucher is the more useful image.
+
+### Product note raised (cosmetic, not documented)
+The stamp milestone terms line is not pluralised: a reward at one stamp renders
+**"At 1 stamps"** (`At ${triggerValue.toLocaleString()} stamps` in `redemption-type.tsx`).
+Raised on the Notion row and in the PR body.
+## 2026-08-27 — Your Google rating and opening hours (the merchant-page details strip)
+
+**Article:** `merchants/merchant-page/rating-and-hours.mdx` (new) + a four-claim correction to
+`merchants/settings/merchant-page-editor.mdx` and a recapture of its stale profile screenshot.
+**Branch:** `claude/busy-clarke-4zgqw2`
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 8 new real annotated screenshots + 1 recapture,
+validate-images 8/8 and 4/4 OK. One task this run.
+
+### Task selection — the board is still fully triaged, so this was gap discovery (§14)
+`notion-query-data-sources` (SQL) returns 29 non-Done rows and every one carries a dated
+DUPLICATE / BLOCKED / NOT-A-FEATURE verdict from an earlier run. The only genuinely actionable
+rows left are three small prose corrections queued by the 08-23/08-26 runs (export-delete
+deleted-member note, the `c.qtap.qa` scan-address drift, the 409 concurrency paragraph) plus
+one engineering-fix row (`nfc_tags.stamp_card_id`). None is a new article.
+
+**`main` has caught up.** PRs #163–#185 are merged; #186–#191 (win-back, campaign analytics,
+deleted members, the two "without the app" merges, NFC placement, NFC Add Tag) are open and
+unmerged, so do not re-do those six.
+
+### The gap: the merchant page grew a stat strip and nobody documented it
+qtap commit `ba5529e` (2026-07-26, "Merchant page stat strip: preview/public parity + merchant
+data editor") replaced the merchant page's meta-chip identity block with the customer app's
+**stat strip** (category / Google rating / distance / live Open-Closed) on both the editor's
+phone preview and the public `/m/[slug]` page, and gave the editor the three inputs that fill
+it. Zero docs coverage, and the published `settings/merchant-page-editor.mdx` (written
+2026-05-03) is now wrong on four counts. All four fixed this run:
+
+| Published claim | Reality |
+|---|---|
+| "Google Rating is a slider… It does not read from Google" | `GooglePlaceField` (Places Autocomplete) saves `merchant_page.googlePlaceId`; the slider is relabelled **Fallback rating** and only renders while nothing is linked |
+| "Category is one of eight" | `MERCHANT_CATEGORIES` in `lib/constants/categories.ts` has **eighteen**, with icons |
+| "Working Hours is a free text field" | structured 7-day `BusinessHoursEditor` bound to a location's `opening_hours` |
+| "Description is a short line" | `MERCHANT_DESCRIPTION = { min: 221, max: 350 }`; save is blocked under the minimum |
+
+### Facts the article is built on (all grounded, all confirmed live)
+- `components/dashboard/merchant-page/google-place-field.tsx` — autocomplete over
+  `types: ['establishment']`; a pasted `google.*/maps/place/<name>` URL is parsed for the name
+  and primed into the search box (share links carry no usable `place_id`); the linked card
+  shows name / rating / review count / **Unlink**.
+- `supabase/functions/google-places/index.ts` (mobile repo) — **the pinned `googlePlaceId` is
+  honoured only when `activeBranchCount <= 1`.** A multi-branch merchant gets each branch
+  resolved by Find Place from Text biased to that branch's own coordinates. `CACHE_TTL_MS`
+  is 24h; a pg_cron `refresh_stale` task tops up rows older than 7 days.
+- `app/api/merchant-page/route.ts` — a changed `googlePlaceId` **deletes** the org's
+  `google_place_cache` row, so a corrected listing takes effect immediately.
+- `app/m/[slug]/merchant-public-page.tsx` — `stripRating = placeCache?.rating ?? (googleRating
+  > 0 ? googleRating : null)`, and the cell's sub-label reads "Google rating" even when the
+  number is the merchant's own fallback. Documented honestly ("keep the number you set honest").
+- `lib/opening-hours.ts` — `close <= open` is treated as a past-midnight close, so 6 PM–2 AM
+  reads Open at 1 AM; `getOpenState` checks yesterday's interval first.
+- `reviews-sheet.tsx` / `hours-sheet.tsx` — "Ratings come from Google. Qtap does not collect
+  its own reviews." and "Hours are set by the merchant in their dashboard."
+
+### THE GOTCHA WORTH KEEPING (verified live, shipped as a Warning)
+Hours save against **a branch**, and two different code paths pick that branch:
+- the editor uses `locationsData[0]`, and `hooks/use-locations.ts` filters `is_active` and
+  **orders by name** → the alphabetically first active branch;
+- `app/m/[slug]/page.tsx` reads `locations … .eq('is_active', true).limit(1)` with **no order**.
+
+Golden Crust proves the split live: hours are saved on **The Pearl Branch**, the editor edits
+**Al Sadd Branch** (which has `opening_hours = NULL`, so the editor shows the 09:00–22:00
+defaults), and the public page picked Al Sadd too, so its strip renders with **no Open cell at
+all** (2-up: Bakery / Map). Najma, Tea Time and Dana all render the fuller strip.
+
+### Screenshots (nothing was saved)
+`.routine/flows/merchant-page-strip.json` (points demo, **1440x2900**),
+`merchant-page-strip-public.json` (430x1000, the public `/m/najma-coffee` page) and
+`merchant-page-profile-recapture.json`. A Google listing was searched and selected to capture
+the linked-listing card, but **Update Merchant was never clicked**, so `googlePlaceId` is still
+null on every org and nothing on the account changed. No customer PII (merchant-owned content
+and one public Google listing).
+
+### Gotchas for future runs
+- **Set `"viewport": {"width":1440,"height":2900}` for `/merchant-page`.** The page is 2862px
+  tall; at that height nothing scrolls, so page coordinates equal viewport coordinates and
+  explicit `clip` rects become deterministic. Useful rects at 1440 wide: Google Maps listing
+  block `y 1273 h 92`, Fallback rating `y 1381 h 52`, Category `y 1449 h 68`, Working Hours
+  `y 1883 h 412`, the whole Merchant Profile card `x 280 y 364 w 627 h 1178`.
+- **`fill` does trigger Google Places autocomplete** (the `.pac-container` appears ~3s later),
+  and `{"press":"ArrowDown"}` + `{"press":"Enter"}` selects the first suggestion and fires
+  `place_changed`. No need to simulate typing.
+- **`maps.googleapis.com` is reachable through the agent proxy / TLS bridge** and
+  `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` is set in production, so the autocomplete really runs.
+  Suggestions are **US-biased** (sandbox IP): "Golden Crust Bakery" returns Boston and Ohio.
+  Appending "Doha Qatar" to the query returns Qatari places if you need them.
+- `[role=combobox]` timed out on the first attempt; `button[role='combobox']` after a 14s
+  settle works. The category listbox crops cleanly with `clipTo: "[role=listbox]"`.
+- `div.space-y-2:has(> label:text-is('Description *'))` resolves nothing (the red asterisk is a
+  separate node inside the label). Box the `textarea` instead.
+- The public page strip is uniquely `div[class*='shadow-[0_4px_12px']`; its two tappable cells
+  are that selector plus ` button` (nth=0 rating, nth=1 open state). Both open a
+  `QtBottomSheet`; a full 430x1000 shot captures the sheet without any cropping.
+- No org in the project has a `googlePlaceId`, so `google_place_cache` is empty everywhere and
+  the **Reviews sheet cannot be captured with real reviews**. The captured sheet shows the
+  fallback rating and the Google attribution line, which the caption says plainly.
+- Category drift worth a cleanup: Dana stores `"Beauty & Spa"`, which matches nothing in the
+  eighteen labels, so its public page reads **Other**. Najma and Tea Time store `"Restaurants"`
+  and match via the label-plus-s rule.
 
 ---
 
