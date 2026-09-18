@@ -133,6 +133,7 @@
           "merchants/members/redemptions",
           "merchants/redemptions",
           "merchants/redemptions/scan-redemption",
+          "merchants/redemptions/card-preview",
           "merchants/redemptions/reward-types"
         ]
       },
