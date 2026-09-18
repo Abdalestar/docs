@@ -1,0 +1,25 @@
+{
+  "section": "merchants/analytics",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 900 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "insights-stamps",
+      "goto": "/analytics",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 14000 },
+        { "hover": "div.rounded-xl:has(svg.lucide-lightbulb)" },
+        { "wait": 1500 }
+      ],
+      "waitMs": 2500,
+      "clipTo": "div.rounded-xl:has(svg.lucide-lightbulb)",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "div.rounded-lg:has-text(\"are regulars with\")", "color": "plum" }
+      ]
+    }
+  ]
+}

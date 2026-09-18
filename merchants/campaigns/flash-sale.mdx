@@ -1,0 +1,71 @@
+---
+title: "Flash Sale and Time-Based Promotion campaigns"
+sidebarTitle: "Flash sale and happy hour"
+description: "Set up a recurring happy hour, and what to know before you pick Flash Sale."
+---
+
+Two of the seven campaign types in the wizard run on a clock rather than on something a member did. **Time-Based Promotion** is a happy hour: pick the days and the hours, and members hear from you while the window is open. **Flash Sale** is meant to be a one-off burst with a start time, a length, and a cap on redemptions.
+
+Both live in the same type list, and both are set up in the campaign wizard.
+
+<Frame caption="Flash Sale (1) and Time-Based Promotion (2) sit in the same type list. The name you type (3) becomes the headline on the voucher.">
+  <img src="/images/merchants/campaigns/flash-sale-01-type.png" alt="The campaign type step with Flash Sale and Time-Based Promotion highlighted" />
+</Frame>
+
+<Info>
+Owners and managers can create campaigns. Staff members have no access to the Campaigns page by default.
+</Info>
+
+## Setting up a happy hour
+
+Choose **Time-Based Promotion** on the type step, name it, then click **Next**. The Trigger step has three settings that matter and one that does not.
+
+<Frame caption="A Thursday to Saturday happy hour: tick the days (1), set the start time (2) and end time (3). The reminder setting (4) is not used when the campaign runs.">
+  <img src="/images/merchants/campaigns/time-based-01-trigger.png" alt="The Configure Trigger step for a time-based promotion, showing active days, start time, end time and the notify setting" />
+</Frame>
+
+**Active days** are the days of the week the window is open. **Start time** and **End time** are the window itself. Qtap checks your active campaigns about every 15 minutes, and a member becomes eligible on the first check that lands inside the window on one of your days.
+
+**Notify customers ... before start** is stored with the campaign but nothing reads it, so no advance reminder goes out. Ignore it and treat the start time as the moment members hear from you.
+
+<Warning>
+Change every field on this step yourself, even the ones that already show the value you want. The boxes display 14:00, 17:00 and Monday to Friday before anything is saved, and a value you never touched is not saved. A campaign with no start and end time saved never fires, and the Review step still shows you a window as though it had.
+</Warning>
+
+<Note>
+The window is compared against the clock on Qtap's servers. The timezone in your business settings has no effect on it, because the campaign engine never reads that setting. Watch when the first notification actually arrives before you build a promotion around a narrow window.
+</Note>
+
+Finish the remaining steps as usual: an optional reward, the audience, and the message. **Use Template** fills in "Happy Hour is Starting!" if you want a starting point. On Review, check the Trigger line reads the window you set.
+
+<Frame caption="Review shows the window back to you (1). Check it matches what you set before you activate (2).">
+  <img src="/images/merchants/campaigns/time-based-02-review.png" alt="The Review step of a time-based promotion showing the trigger window 15:00 to 18:00" />
+</Frame>
+
+<Warning>
+Each member receives a time-based campaign once and never again, so a weekly happy hour does not message the same regulars every week. Anyone who was already told stays quiet on later runs. To announce a recurring happy hour every week, send a [push notification](/merchants/campaigns/push-notifications) each time instead.
+</Warning>
+
+## Before you pick Flash Sale
+
+The Flash Sale trigger asks for a **Sale Type** (discount, bonus points, or bonus stamps), a **Value**, a **Start Time**, a **Duration**, and an optional **Max Redemptions**.
+
+<Frame caption="The Flash Sale trigger: Sale Type (1), Value (2), Start Time (3), Duration (4), and an optional cap on redemptions (5).">
+  <img src="/images/merchants/campaigns/flash-sale-02-trigger.png" alt="The Configure Trigger step for a flash sale, showing sale type, value, start time, duration and max redemptions" />
+</Frame>
+
+<Warning>
+A flash sale built in this wizard does not start. Qtap decides whether a flash sale is live from the campaign's own start date, and no screen in the dashboard writes that date, so the campaign stays dormant however you fill the trigger in. Nothing is sent and nobody is charged, but nothing reaches your customers either. Use a [public offer](/merchants/offers/overview) for a short-lived deal customers claim themselves, or a time-based promotion for a window you push.
+</Warning>
+
+Two smaller things are worth knowing if you set one up anyway. Sale Type and Value are saved but never applied, so what a member would receive is whatever you pick on the **Reward** step, not the discount or bonus you typed here. And the Review step has no summary for this type, so the Trigger line reads "Custom trigger" whatever you entered.
+
+<Frame caption="Review does not repeat the sale you set up. Every flash sale reads Custom trigger here, whatever you entered.">
+  <img src="/images/merchants/campaigns/flash-sale-03-review.png" alt="The Review step of a flash sale campaign showing Custom trigger on the trigger line" />
+</Frame>
+
+## Related
+
+- [The campaign wizard](/merchants/campaigns/wizard) walks through all eight steps.
+- [Campaign timing](/merchants/campaigns/timing) covers how often Qtap checks and why a member hears from a campaign once.
+- [Public offers](/merchants/offers/overview) are the claimable alternative to a pushed campaign.

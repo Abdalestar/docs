@@ -1,65 +1,87 @@
 ---
 title: "Notifications"
-description: "Choose which events trigger email and push notifications for your loyalty program."
+sidebarTitle: "Notifications"
+description: "What the six alert switches in Settings do today, and which emails Qtap really sends you."
 ---
 
-Qtap can notify you when members join, redeem rewards, or when stock is running low. You control which events send email notifications and which send push notifications separately.
+Settings → Notifications holds six switches that promise alerts about your own business, such as an email whenever a customer joins your program. Your choices save to your account, and nothing sends on the back of them yet. This page explains what the switches really do today and which emails you actually receive.
 
-<Frame caption="Settings → Notifications: separate email and push toggles, with Save Preferences in the top right.">
-  <img src="/images/settings/settings-notifications-overview.png" alt="The Notification Preferences page showing the Email Notifications and Push Notifications cards and the Save Preferences button" />
+<Frame caption="Settings → Notifications: an Email card (1), a Push card (2), and a Save Preferences button (3) that stays grey until you change a switch.">
+  <img src="/images/settings/settings-notifications-overview.png" alt="The Notification Preferences page showing the Email Notifications card, the Push Notifications card, and the Save Preferences button" />
 </Frame>
 
-Changes don't save automatically. Click **Save Preferences** after making changes. The button stays grayed out until you've changed something.
+<Warning>
+None of these six switches is wired to a sender. Qtap stores your choice and reads it back the next time you open the page, and no part of the product asks it whether to email or push you. Turning them all on will not bring you a single new-member alert, and turning them all off will not stop anything you are getting today. Watch **Recent Activity** on your dashboard home for joins and redemptions instead.
+</Warning>
 
-## Email notifications
+Only the owner reaches this page. Managers and teammates get **settings** access turned off by default, and nothing in the Edit Permissions dialog turns it on.
 
-Go to **Settings → Notifications** to find the Email Notifications section.
+## The email switches
 
-<Frame caption="The Email Notifications card with its three toggles.">
-  <img src="/images/settings/settings-notifications-email.png" alt="Email Notifications card showing New Member Sign-ups, Reward Redemptions, and Weekly Report toggles" />
+<Frame caption="The three email switches, showing the state a new account starts in: New Member Sign-ups on, Reward Redemptions off, Weekly Report on.">
+  <img src="/images/settings/settings-notifications-email.png" alt="Email Notifications card with the New Member Sign-ups, Reward Redemptions, and Weekly Report switches" />
 </Frame>
 
-There are three email toggles:
+**New Member Sign-ups** is on when you first open the page. **Reward Redemptions** is off. **Weekly Report** is on.
 
-**New Member Sign-ups** — sends an email each time a member joins your program. Off by default.
+The Weekly Report switch is the near miss of the three. Qtap does send a weekly insights email, on Monday mornings, but it reads a different setting than the one this switch writes, and it only goes to accounts on **Elite** or **Franchise**. So a Growth or Starter account can leave Weekly Report on forever and never get the email, and an Elite account gets it whether the switch is on or off. There is no screen that turns the real one off; ask support if you want it stopped.
 
-**Reward Redemptions** — sends an email when a member uses a reward. Off by default.
+## The push switches
 
-**Weekly Report** — sends a summary of your program's performance every week. On by default.
-
-## Push notifications
-
-Push notifications arrive in your browser or on your phone if you've allowed notifications for Qtap.
-
-<Frame caption="The Push Notifications card with its three toggles.">
-  <img src="/images/settings/settings-notifications-push.png" alt="Push Notifications card showing New Member Sign-ups, Reward Redemptions, and Low Stock Alerts toggles" />
+<Frame caption="The three push switches. Low Stock Alerts is the odd one: Qtap has no reward stock to run low.">
+  <img src="/images/settings/settings-notifications-push.png" alt="Push Notifications card with New Member Sign-ups, Reward Redemptions, and Low Stock Alerts switches" />
 </Frame>
 
-There are three push toggles:
+**New Member Sign-ups** starts off. **Reward Redemptions** and **Low Stock Alerts** start on.
 
-**New Member Sign-ups** — notifies you as members join. Off by default.
+Qtap never pushes a notification to you. Every push the platform sends goes to a customer's phone through the Qtap app, aimed at that customer's device. There is no merchant-side push, in a browser or anywhere else, so no browser permission prompt will help.
 
-**Reward Redemptions** — notifies you when a reward is redeemed. On by default.
+**Low Stock Alerts** goes a step further: rewards in Qtap have no stock count. You set what a reward is and what it costs in stamps or points, and nothing anywhere tracks how many are left. The switch is a leftover with no feature behind it.
 
-**Low Stock Alerts** — notifies you when a reward's stock is getting low. On by default.
+## Saving
 
-<Note>
-Your browser needs permission to show push notifications. If push alerts aren't arriving, check that you haven't blocked Qtap in your browser's notification settings.
-</Note>
+Changes do not save on their own. Flip a switch and **Save Preferences** wakes up in the top right, with a marker pinned to the bottom corner until you click it.
 
-## Save your preferences
-
-After changing any toggle, click **Save Preferences** in the top right. A small banner at the bottom of the screen appears while you have unsaved changes.
-
-<Frame caption="Changing a toggle activates Save Preferences and shows the unsaved-changes banner.">
-  <img src="/images/settings/settings-notifications-unsaved.png" alt="The page after a toggle change, with the Save Preferences button active and an unsaved-changes banner in the bottom right" />
+<Frame caption="Flipping any switch wakes up Save Preferences (1) and pins an unsaved-changes marker to the corner (2).">
+  <img src="/images/settings/settings-notifications-unsaved.png" alt="The page after a switch change, with Save Preferences active and an unsaved-changes marker in the bottom right corner" />
 </Frame>
+
+## What Qtap does email you
+
+Your account still gets mail, just not from these switches. All of it goes to the owner's login address, and none of it can be turned off from this page.
+
+| Email | When it arrives |
+| --- | --- |
+| Welcome to Qtap, here's how to get started | The day your trial starts |
+| Halfway through your trial | Day 7 of the trial |
+| Only 2 days left on your trial | Day 12 of the trial |
+| Your Qtap trial ends in N days | Daily near the end of a trial |
+| Welcome to Qtap *plan* | Your first paid subscription starts |
+| You've upgraded to Qtap *plan* | You move up a plan |
+| Your Qtap plan has been changed | You move down a plan |
+| Your Qtap subscription has been canceled | A subscription ends |
+| Qtap payment receipt | Every successful charge |
+| Action required: Qtap payment failed | A card is declined |
+| Qtap purchase confirmed | You buy an add-on |
+| Weekly Insights: *your business* | Monday mornings, Elite and Franchise only |
+
+Password resets and staff invitations arrive by email too. Those are covered in [Resetting a forgotten password](/merchants/settings/password-reset) and [Inviting a team member](/merchants/staff/inviting).
+
+## Where to watch your program instead
+
+Until the switches are connected, these screens are the honest answer to "did anyone join today?".
 
 <CardGroup cols={2}>
-  <Card title="Members" href="/merchants/members/overview">
-    See how members are joining and engaging with your program.
+  <Card title="Recent Activity" href="/merchants/getting-started/recent-activity">
+    The live feed on your dashboard home, refreshed about every 30 seconds.
   </Card>
-  <Card title="Campaigns" href="/merchants/campaigns/overview">
-    Send automated messages to members instead of waiting for notifications.
+  <Card title="Staff activity log" href="/merchants/staff/activity-logs">
+    Every stamp, point, and redemption your team recorded, with filters.
+  </Card>
+  <Card title="Analytics" href="/merchants/analytics/overview">
+    New members, stamps, points, and redemptions over any period.
+  </Card>
+  <Card title="Messages Qtap sends for you" href="/merchants/notifications/automatic">
+    The receipts your customers get automatically, which you never set up.
   </Card>
 </CardGroup>

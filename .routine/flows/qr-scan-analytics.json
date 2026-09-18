@@ -1,0 +1,62 @@
+{
+  "section": "merchants/qr-codes",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 3300 },
+  "defaultWaitMs": 13000,
+  "steps": [
+    {
+      "name": "scan-analytics-summary",
+      "goto": "/qr-codes/e0000000-0000-0000-0000-000000000001",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 9000 }
+      ],
+      "waitFor": "text=Identified scans",
+      "waitMs": 4000,
+      "clipTo": "div.grid.min-w-0.grid-cols-2",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl.min-w-0 >> nth=0", "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl.min-w-0 >> nth=1", "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl.min-w-0 >> nth=2", "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl.min-w-0 >> nth=3", "color": "gold" }
+      ]
+    },
+    {
+      "name": "scan-analytics-insights",
+      "goto": "/qr-codes/e0000000-0000-0000-0000-000000000001",
+      "waitFor": "text=Insights from scan data",
+      "waitMs": 14000,
+      "clipTo": "div.rounded-xl:has(div.font-semibold:has-text('Insights from scan data'))",
+      "clipPadding": 10
+    },
+    {
+      "name": "scan-analytics-devices",
+      "goto": "/qr-codes/e0000000-0000-0000-0000-000000000001",
+      "waitFor": "text=Device split",
+      "waitMs": 14000,
+      "clip": { "x": 272, "y": 1100, "width": 768, "height": 390 }
+    },
+    {
+      "name": "scan-analytics-timing",
+      "goto": "/qr-codes/e0000000-0000-0000-0000-000000000001",
+      "waitFor": "text=Hour of day",
+      "waitMs": 14000,
+      "clip": { "x": 272, "y": 1668, "width": 768, "height": 366 }
+    },
+    {
+      "name": "scan-analytics-repeat",
+      "goto": "/qr-codes/e0000000-0000-0000-0000-000000000001",
+      "waitFor": "text=Top repeat scanners",
+      "waitMs": 14000,
+      "clipTo": "div.rounded-xl:has(div.font-semibold:has-text('Top repeat scanners'))",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "redact", "target": "div.rounded-xl:has(div.font-semibold:has-text('Top repeat scanners')) a >> nth=0", "color": "charcoal" },
+        { "type": "redact", "target": "div.rounded-xl:has(div.font-semibold:has-text('Top repeat scanners')) a >> nth=3", "color": "charcoal" },
+        { "type": "redact", "target": "div.rounded-xl:has(div.font-semibold:has-text('Top repeat scanners')) a >> nth=4", "color": "charcoal" }
+      ]
+    }
+  ]
+}

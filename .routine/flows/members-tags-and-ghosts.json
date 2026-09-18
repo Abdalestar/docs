@@ -1,0 +1,66 @@
+{
+  "section": "merchants/members",
+  "account": "stamp",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "overview-sort-options",
+      "goto": "/members",
+      "waitFor": "button:has-text(\"Export CSV\")",
+      "waitMs": 9000,
+      "actions": [
+        { "wait": 2500 },
+        { "click": "button:has-text(\"Decline\")" },
+        { "wait": 1200 },
+        { "click": "button:has-text(\"Newest First\")" },
+        { "wait": 1200 }
+      ],
+      "clipTo": "[role=listbox]",
+      "clipPadding": 10
+    },
+    {
+      "name": "overview-row-menu",
+      "actions": [
+        { "press": "Escape" },
+        { "wait": 900 },
+        { "click": "table tbody tr:nth-child(2) td:last-child button" },
+        { "wait": 1200 }
+      ],
+      "clipTo": "[role=menu]",
+      "clipPadding": 8,
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text(\"Add Tag\")", "color": "plum" }
+      ]
+    },
+    {
+      "name": "overview-tags-menu",
+      "actions": [
+        { "press": "Escape" },
+        { "wait": 900 },
+        { "click": "table tbody tr:nth-child(2) td:first-child button[role=checkbox]" },
+        { "wait": 1500 },
+        { "click": "button:has-text(\"Tags\")" },
+        { "wait": 1200 }
+      ],
+      "clipTo": "[role=menu]",
+      "clipPadding": 8
+    },
+    {
+      "name": "export-delete-ghost-row",
+      "goto": "/members",
+      "waitFor": "button:has-text(\"Export CSV\")",
+      "waitMs": 9000,
+      "actions": [
+        { "click": "table tbody tr:nth-child(1) td:last-child button" },
+        { "wait": 1200 }
+      ],
+      "clip": { "x": 281, "y": 262, "width": 1140, "height": 258 },
+      "annotate": [
+        { "type": "redact", "rect": { "x": 329, "y": 376, "width": 292, "height": 64 }, "color": "charcoal" },
+        { "type": "redact", "rect": { "x": 621, "y": 319, "width": 199, "height": 121 }, "color": "charcoal" },
+        { "type": "box", "target": "table tbody tr:nth-child(1) td:first-child", "color": "plum" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "section": "merchants/notifications",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1400 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "_warmup",
+      "goto": "/notifications",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 2000 }
+      ],
+      "waitMs": 5000
+    },
+    {
+      "name": "notification-extras-controls",
+      "goto": "/notifications/new",
+      "waitFor": "#title",
+      "actions": [
+        { "wait": 6000 },
+        { "fill": ["#title", "Fresh bake at 4pm"] },
+        { "fill": ["#body", "Sourdough out of the oven this afternoon. Come by before it goes."] },
+        { "wait": 1500 }
+      ],
+      "waitMs": 2500,
+      "clipTo": "div.rounded-xl:has(#title)",
+      "clipPadding": 18,
+      "annotate": [
+        { "type": "box", "target": "div.space-y-2:has(input[type=\"url\"])", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-lg.border:has(#link-merchant-page)", "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "notification-extras-image-field",
+      "actions": [
+        { "fill": ["input[type=\"url\"]", "https://qeriqybbomqqkdqaylhl.supabase.co/storage/v1/object/public/location-logos/a0000000-0000-0000-0000-000000000002/cover-1.jpg?v=1784239007578"] },
+        { "wait": 4000 }
+      ],
+      "waitMs": 2000,
+      "clipTo": "div.space-y-2:has(input[type=\"url\"])",
+      "clipPadding": 20,
+      "annotate": [
+        { "type": "box", "target": "img[alt=\"Notification image preview\"]", "color": "plum" }
+      ]
+    },
+    {
+      "name": "notification-extras-preview",
+      "waitMs": 2500,
+      "clipTo": "div.w-\\[280px\\]",
+      "clipPadding": 24,
+      "annotate": [
+        { "type": "box", "target": "img[alt=\"Notification\"]", "color": "plum" }
+      ]
+    },
+    {
+      "name": "notification-extras-link-off",
+      "actions": [
+        { "click": "#link-merchant-page" },
+        { "wait": 2000 }
+      ],
+      "waitMs": 2000,
+      "clipTo": "div.rounded-lg.border:has(#link-merchant-page)",
+      "clipPadding": 44,
+      "annotate": [
+        { "type": "box", "target": "#link-merchant-page", "color": "plum" }
+      ]
+    }
+  ]
+}
