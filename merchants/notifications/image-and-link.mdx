@@ -1,0 +1,57 @@
+---
+title: "The image and link on a push notification"
+sidebarTitle: "Image and link"
+description: "The Rich Image field and the Link to my merchant page switch on the compose screen, and what each one does to your message."
+---
+
+When you write a push notification, two controls sit under the Title and Message boxes. One of them changes who is allowed to receive your message, which its label does not tell you. The other has no effect on your customers yet.
+
+## Where they are
+
+Click **Notifications** in the sidebar, then **New Notification**. Both controls are in the **Message** card, below the boxes where you type.
+
+<Frame caption="The Message card on the compose screen. The Rich Image field (1) and the merchant page switch (2) sit below your title and message.">
+  <img src="/images/merchants/notifications/notification-extras-controls.png" alt="The Message card showing Title and Message fields above a Rich Image URL field and a Link to my merchant page switch that is turned on" />
+</Frame>
+
+## Link to my merchant page
+
+This switch is already on every time you open the compose screen. Leave it on and a customer who taps your notification lands on your merchant page inside the Qtap app, where your cards and offers are. Turn it off and the tap opens their notifications list instead.
+
+If your business does not have a public link yet, the tap still reaches your page. Qtap opens it by account instead of by link.
+
+## The switch also decides who can receive the message
+
+Turning it on marks your message as a promotion. Qtap pushes promotions only to members who agreed to marketing messages and left that kind of message switched on. A member who has muted your business is left out as well.
+
+Everyone you targeted still gets the message in their Qtap app inbox. What they do not get is the alert on their lock screen. That matters when you read your figures afterwards: a silenced member counts towards **Sent** and never towards **Delivered**, so a promotion can report a much lower delivery rate than an automatic receipt for a stamp. [Reading your notification stats](/merchants/notifications/stats) covers the rest of that arithmetic.
+
+With the switch off, Qtap treats the message as a plain account message and skips that check, so it reaches more phones. Leave it on anyway for anything promotional. Almost everything written on this screen is a promotion, and sending one with the switch off puts it on the lock screen of someone who asked not to be marketed to.
+
+<Frame caption="The same row with the switch turned off. Taps then open the customer's notifications list, and the message skips the marketing check.">
+  <img src="/images/merchants/notifications/notification-extras-link-off.png" alt="The Link to my merchant page row with its switch in the off position" />
+</Frame>
+
+## Rich Image (optional)
+
+<Warning>
+The Rich Image field does not reach your customers today. The picture never appears on the phone's notification banner, and it does not appear in the Qtap app inbox either. The only place it shows up is the preview on this screen. Leave the field empty until Qtap confirms the picture is being delivered.
+</Warning>
+
+The field takes a web address for a picture rather than a file from your computer, so the image has to be hosted somewhere public before you can paste its link. Paste one and a thumbnail appears under the box.
+
+<Frame caption="A pasted image address draws a thumbnail under the field. The X on the right clears it.">
+  <img src="/images/merchants/notifications/notification-extras-image-field.png" alt="The Rich Image field with an image address pasted in and a photograph of a bakery counter shown as a thumbnail beneath it" />
+</Frame>
+
+The picture also lands in the phone preview on the right of the screen, which is what makes this field so easy to trust. The preview draws the message as a rich notification with your photograph under the text, and no customer receives that version.
+
+<Frame caption="The preview on the compose screen renders the image. This is the only place it appears: the notification that reaches your customer carries the title and message alone.">
+  <img src="/images/merchants/notifications/notification-extras-preview.png" alt="The phone preview showing a notification with title, message, and a bakery photograph beneath it" />
+</Frame>
+
+One thing to watch: a saved template can carry an image address of its own, so picking one with **Use Template** can put a link back into the field after you have cleared it.
+
+## Who can use this screen
+
+Owners and managers. A teammate on the Staff role cannot open Notifications unless an owner gives them campaign access. See [Roles and permissions](/merchants/staff/roles-permissions).
