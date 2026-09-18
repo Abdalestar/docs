@@ -20,6 +20,115 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-15 — The Staff role does not get what the dashboard says it gets
+
+**Article:** `merchants/staff/roles-permissions.mdx` (correction, not a new article)
+**Branch:** `claude/busy-clarke-uuc2x9`
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 2 new real annotated screenshots,
+validate-images 6/6 OK. One task this run: **no screenshot backfill exists** (the
+zero-PNG scan on `origin/main` still returns the same four non-workable files:
+`customer-app/settings-profile`, `index.mdx`, `support/faq.mdx`, and the
+`campaigns/analytics.mdx` stub).
+
+### Task selection — the board is now mostly ENGINEERING-TRACKER rows, not docs work
+`notion-query-data-sources` in SQL mode returns ~50 non-Done rows, and the shape of the
+board has changed since the 2026-08 runs. **Most open rows are no longer writable tasks:**
+runs #191-#210 filed a row per product bug they found, each one explicitly headed "NEEDS
+AN ENGINEERING FIX, not a docs change; PR #NNN already ships the honest Warning, so this
+row tracks the fix." Do not pick those up as articles. The rest are the long-standing
+duplicates (Redeeming a Reward, Stamp Card Rewards, Campaigns Overview, Redeem Campaign
+Code, NFC Registering, Seat Limits, Managing QR Codes, Hours/Social, Exporting Analytics)
+and the long-standing blocked-on-account rows (Cancel Subscription, AI Suite, MCP/AI, all
+still needing an Elite/Franchise org with a live `stripe_subscription_id`).
+
+So this run did §14 gap discovery. The productive vein is still **drift between shipped
+code and published prose**, exactly as the 2026-08-19 log predicted.
+
+### The finding — published prose contradicts both the code and its own siblings
+`merchants/staff/roles-permissions.mdx` on `main` says:
+
+> "Staff can view members, issue stamps and points, adjust a points balance, process
+> redemptions, **view QR codes**, and **view analytics**."
+
+Three of those seven are false against `lib/validations/staff.ts` `DEFAULT_PERMISSIONS.staff`:
+- `qr_batches: 'none'` and `canAccessRoute('/qr-codes')` requires `!== 'none'`, so a Staff
+  teammate cannot open QR Codes. (`/nfc-tags` additionally requires `role !== 'staff'`.)
+- `analytics: 'none'`, same rule, so Analytics is closed.
+- `adjust_points: true`, so `canAccess` passes in `app/api/points/adjust/route.ts` AND
+  `points-operations/page.tsx:120` renders the Adjust/Deduct tab — but I read the **live**
+  `public.staff_adjust_points` definition via Supabase and it still raises
+  `adjustment_not_allowed` for any role `NOT IN ('owner','manager')`. The staff member
+  fills the tab in, confirms, and PostgreSQL refuses. (Same two-layer disagreement the
+  2026-08-19 run logged; re-verified live this run, it has NOT been fixed.)
+
+The article also contradicted itself in consecutive sentences ("can view QR codes" then
+"cannot generate QR codes"), and contradicted **both** its siblings: `setup-recipes.mdx`
+already says a cashier "cannot open Analytics ... generate QR codes" and its comparison
+table reads `View analytics | No`, and `overview.mdx` says staff "might be able to issue
+stamps but not view analytics". roles-permissions.mdx was the only wrong one. Verified
+both siblings this run; neither needed a change, so the diff is one file.
+
+### WHERE THE WRONG CLAIM COMES FROM (two separate product bugs, both filed)
+1. `app/(dashboard)/staff/page.tsx` lines 322-326 — the **Role Permissions** card tells
+   every merchant that Staff "can issue stamps and points, view basic member info and
+   **limited analytics**". Staff have `analytics: 'none'`. That card is almost certainly
+   where the original article's sentence came from. Screenshotted.
+2. `components/dashboard/staff-permissions-dialog.tsx` has its **own**
+   `DEFAULT_PERMISSIONS`, and it disagrees with the enforcement one: its `staff` list
+   includes `qr.view` and `analytics.view`. So the Edit Permissions checklist renders
+   those two boxes **ticked** for a Staff teammate who cannot open either page. Verified
+   live: with the switch off, checkbox 11 (View QR codes) and 14 (View analytics) both
+   come back `data-state=checked`. The analytics half was already filed on 2026-09-11
+   against `permission-reference.mdx`; **the QR half was never filed** until this run.
+
+### What was written
+Rewrote the three role paragraphs to enforced reality, added a "What the Staff role does
+not get" section, and shipped the mismatch as a `<Warning>` that names the misleading card
+and the misleading checkboxes rather than pretending they are right. The honest nuance the
+article now carries: ticking **View QR codes** / **View analytics** by hand DOES work
+(`permissionIdsToEffectivePermissions` maps any `qr.*` to `qr_batches: 'generate'` and
+`analytics.view` to `analytics: 'basic'`), but **Adjust points** never works for a Staff
+teammate because the block is on the role in the database, not on the permission.
+
+Also corrected four UI labels to match the live dashboard (Edit Permissions, Use Custom
+Permissions, Save Changes, Resend Invite) and added the Manager facts the article omitted:
+manager `staff: 'view'` means they can open the Staff page and see the team, while the
+invite button and row menus only render for `isOwner`.
+
+### Screenshots (read-only, nothing saved)
+`.routine/flows/staff-role-reality.json`, points demo (Golden Crust Bakery):
+`roles-permissions-05-role-card.png` (the Role Permissions card cropped, Staff paragraph
+boxed) and `roles-permissions-06-staff-defaults.png` (the Edit Permissions checklist for
+the Staff-role teammate with the switch OFF, View QR codes (1) and View analytics (2)
+boxed). **Save Changes was never clicked**, so no staff row changed. The four existing
+images were kept and still validate. No customer PII (the Role Permissions card carries no
+names; staff names elsewhere are the merchant's own team, same treatment as the published
+staff-activity article).
+
+### Gotchas for future runs
+- **CRLF.** `merchants/staff/roles-permissions.mdx` on `main` uses **CRLF** line endings.
+  A Python rewrite with `open(p,'w')` silently converts the whole file to LF and the diff
+  comes back as "73 deletions, 99 insertions" instead of the real 8/34. Convert back
+  (`d.replace(b'\r\n',b'\n').replace(b'\n',b'\r\n')`) before committing, and check
+  `git diff --stat` looks proportionate to the edit. Worth checking other files too.
+- **Staff row menus start at button 4.** On `/staff` at 1440px the `button[aria-haspopup="menu"]`
+  order is: 1 demo/location, 2 theme, 3 account, then one per non-owner row. The Staff-role
+  teammate is row 0 on Golden Crust (Tariq Nasser), so `:nth-match(..., 4)`. The owner row
+  has no menu, and **no row has a menu unless you are the owner** (`staffMember.role !==
+  'owner' && isOwner`).
+- The Role Permissions card crops cleanly with
+  `div.rounded-xl:has(div:text-is("Role Permissions"))` and sits at y≈404 on a 1100-tall
+  viewport, so no scrolling is needed.
+- **Hovering Save Changes pins the dialog's bottom band**, which is what puts the QR & NFC,
+  Analytics and Notifications groups on screen in one shot (content is ~1934px in a ~900px
+  box). Confirms the 2026-08-19 note.
+- Both reachable demo orgs (Golden Crust, Brew & Bean) have an owner + manager + staff row
+  with `custom_permissions = {}`, so the dialog opens on pure role defaults. That is what
+  makes this mismatch capturable at all.
+- TLS bridge needed again: the bare smoke test failed `login_failed` with
+  `ERR_TOO_MANY_RETRIES` on `/login`, which reads like dead credentials and is not.
+  Scratch cert + `.routine/tls-bridge.mjs` in Bash background mode, then
+  `PLAYWRIGHT_PROXY=http://127.0.0.1:38443`, and login succeeded first try.
 ## 2026-09-14 — Notifications settings: six switches that send nothing
 
 **Article:** `merchants/settings/notifications.mdx` (correction + expansion)
