@@ -1,0 +1,73 @@
+{
+  "section": "merchants/merchant-page",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 2900 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "strip-google-field",
+      "goto": "/merchant-page",
+      "actions": [
+        { "wait": 3500 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1000 }
+      ],
+      "waitMs": 11000,
+      "clip": { "x": 289, "y": 1257, "width": 609, "height": 200 },
+      "annotate": [
+        { "type": "box", "target": "input[placeholder*='Search your business on Google Maps']", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.space-y-2:has(> label:text-is('Fallback rating (used until a Google listing is linked)'))", "number": 2, "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "strip-google-search",
+      "goto": "/merchant-page",
+      "actions": [
+        { "wait": 10000 },
+        { "fill": ["input[placeholder*='Search your business on Google Maps']", "Golden Crust Bakery"] },
+        { "wait": 4000 }
+      ],
+      "waitMs": 1500,
+      "clip": { "x": 289, "y": 1257, "width": 609, "height": 290 }
+    },
+    {
+      "name": "strip-google-linked",
+      "goto": "/merchant-page",
+      "actions": [
+        { "wait": 10000 },
+        { "fill": ["input[placeholder*='Search your business on Google Maps']", "Golden Crust Bakery"] },
+        { "wait": 4000 },
+        { "press": "ArrowDown" },
+        { "press": "Enter" },
+        { "wait": 2500 }
+      ],
+      "waitMs": 1500,
+      "clipTo": "div.space-y-2:has(> label:text-is('Google Maps listing'))",
+      "clipPadding": 40
+    },
+    {
+      "name": "strip-category",
+      "goto": "/merchant-page",
+      "actions": [
+        { "wait": 14000 },
+        { "click": "button[role='combobox']" },
+        { "wait": 2200 }
+      ],
+      "waitMs": 1200,
+      "clipTo": "[role=listbox]",
+      "clipPadding": 14
+    },
+    {
+      "name": "strip-hours",
+      "goto": "/merchant-page",
+      "actions": [
+        { "wait": 10000 },
+        { "hover": "label:text-is('Working Hours')" },
+        { "wait": 1200 }
+      ],
+      "waitMs": 1500,
+      "clipTo": "div.space-y-2:has(> label:text-is('Working Hours'))",
+      "clipPadding": 22
+    }
+  ]
+}
