@@ -1,0 +1,65 @@
+---
+title: "The points panels on your analytics page"
+sidebarTitle: "Points panels"
+description: "What the three cards under your points charts count, and which one you cannot trust yet."
+---
+
+A points program's analytics page carries an extra row of three cards below the charts. Stamp card accounts never see them: the whole row only renders when your account runs on points.
+
+<Frame caption="The three points cards on the analytics page: Points Expiry Forecast (1), Top Points Earners (2), and Reward Popularity (3). Customer names are covered here.">
+  <img src="/images/analytics/points-panels-row.png" alt="A row of three cards: Points Expiry Forecast, Top Points Earners, and Reward Popularity" />
+</Frame>
+
+## Points Expiry Forecast
+
+The card counts the points booked to expire in the next 30, 60, and 90 days, with a Total Outstanding figure under the line.
+
+<Frame caption="The three periods (1) stack rather than split, and Total Outstanding (2) is a lifetime figure.">
+  <img src="/images/analytics/points-panels-expiry.png" alt="Points Expiry Forecast card showing zero points expiring and a total outstanding balance" />
+</Frame>
+
+The three rows stack. A point that expires in three weeks is counted in all three of them, so Next 90 days always includes everything already shown in Next 30 days. Adding the rows together will double count.
+
+If your program does not expire points, all three rows read 0 pts and stay there no matter how many points you have issued. Expiry is switched off until you turn it on, so this is the normal reading for most accounts. See [Points expiry](/merchants/points/expiry) for how to set it up.
+
+<Warning>
+Total Outstanding adds up every point your members have ever earned. It does not subtract what they have already spent or what has expired, so it reads higher than what your members can actually spend today. Treat it as a lifetime total rather than a live balance.
+</Warning>
+
+## Top Points Earners
+
+Your ten biggest earners, with a medal on the first three and a plain rank number below that.
+
+<Frame caption="The list is ordered by the points figure on the right (1), which counts lifetime earnings.">
+  <img src="/images/analytics/points-panels-top-earners.png" alt="Top Points Earners card listing four members by points, with names covered" />
+</Frame>
+
+The order comes from points earned over a member's whole history, not from the balance they are holding now. Someone who earned 5,000 points and spent all of them still ranks above someone sitting on 900 unspent points. Two members further down your list can be holding the same balance today and still appear in different positions.
+
+So the card answers who has spent the most with you over time, which is what you want for a thank-you. It says nothing about who is close to cashing in a big reward. For that, open a member's profile and read the balance itself.
+
+With no points earned yet, the card reads "No data available yet".
+
+## Reward Popularity
+
+This card is meant to rank which of your rewards members redeem most, one bar per reward.
+
+<Frame caption="Reward Popularity on an account with six recorded redemptions. The card still reports no data.">
+  <img src="/images/analytics/points-panels-reward-popularity.png" alt="Reward Popularity card showing the message No redemption data yet" />
+</Frame>
+
+<Warning>
+The card never fills in. It asks the points ledger for a piece of information the ledger does not store, the request fails, and the card falls back to its empty state. Every points merchant sees "No redemption data yet" however many rewards they have handed over. This is a bug on our side, not something wrong with your account or your rewards.
+</Warning>
+
+Until it is fixed, count redemptions from the [Points Activity report](/merchants/analytics/points-activity) or the History tab on the [Redemptions page](/merchants/redemptions). Both read from the records that do carry the reward.
+
+Turning [demo mode](/merchants/getting-started/demo-mode) on fills this card with sample rewards, which makes it look like it works. Those rows are sample data, not yours.
+
+## What this row ignores
+
+The time period selector and the branch picker at the top of the page do not reach these three cards. They read your whole account, for all time, whichever branch you have chosen. Switching the period from Last 30 days to This year leaves all three unchanged, and so does [switching branches](/merchants/settings/branch-switcher).
+
+## Who can see them
+
+The analytics page is open to owners and managers. Staff have no analytics access by default, so a teammate on the Staff role cannot open the page at all. You can grant it per person in [Roles and permissions](/merchants/staff/roles-permissions).

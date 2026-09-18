@@ -1,0 +1,97 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/campaigns",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1000 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "points-multiplier-01-type",
+      "goto": "/campaigns/new",
+      "waitFor": "text=Choose Campaign Type",
+      "waitMs": 6000,
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 600 },
+        { "click": "label[for='points_multiplier']" },
+        { "wait": 600 },
+        { "fill": ["#name", "National Day Double Points"] },
+        { "wait": 800 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "label[for='points_multiplier']", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#name", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Step 1 of the wizard: pick Points Multiplier (1) and name the campaign (2). Customers see this name on the bonus." }
+      ]
+    },
+    {
+      "name": "points-multiplier-02-trigger",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 1600 },
+        { "click": "button[role=combobox]" },
+        { "wait": 900 },
+        { "click": "[role=option]:has-text('3x')" },
+        { "wait": 900 },
+        { "fill": ["input[type='date']", "2026-09-11"] },
+        { "wait": 400 },
+        { "fill": [":nth-match(input[type='date'], 2)", "2026-09-13"] },
+        { "wait": 400 },
+        { "fill": ["input[type='time']", "17:00"] },
+        { "wait": 400 },
+        { "fill": [":nth-match(input[type='time'], 2)", "21:00"] },
+        { "wait": 900 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "button[role=combobox]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "input[type='date']", "number": 2, "color": "plum" },
+        { "type": "box", "target": ":nth-match(input[type='date'], 2)", "number": 3, "color": "plum" },
+        { "type": "box", "target": "input[type='time']", "number": 4, "color": "charcoal" },
+        { "type": "box", "target": ":nth-match(input[type='time'], 2)", "number": 5, "color": "charcoal" },
+        { "type": "caption", "text": "Step 2: the multiplier (1) and the dates (2, 3). The times (4, 5) are optional." }
+      ]
+    },
+    {
+      "name": "points-multiplier-03-options",
+      "actions": [
+        { "click": "button[role=combobox]" },
+        { "wait": 1100 }
+      ],
+      "clip": { "x": 288, "y": 296, "width": 460, "height": 300 }
+    },
+    {
+      "name": "points-multiplier-04-review",
+      "actions": [
+        { "press": "Escape" },
+        { "wait": 700 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1400 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1400 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1400 },
+        { "fill": ["#notification-title", "Triple points this weekend"] },
+        { "wait": 400 },
+        { "fill": ["#notification-body", "Scan at the counter Friday to Sunday and every point counts three times."] },
+        { "wait": 600 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1400 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1400 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 2200 }
+      ]
+    },
+    {
+      "name": "points-multiplier-05-card",
+      "goto": "/campaigns",
+      "waitFor": "text=Double Points Weekend",
+      "waitMs": 8000,
+      "clipTo": "div.rounded-xl:has(h3:has-text('Double Points Weekend'))",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(h3:has-text('Double Points Weekend')) >> text=Active", "color": "plum" }
+      ]
+    }
+  ]
+}

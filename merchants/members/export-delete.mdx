@@ -22,8 +22,12 @@ The file opens in Excel, Numbers, or Google Sheets. Each member is one row, with
 | Email, Phone | Their contact details |
 | Birthday | Used for birthday campaigns |
 | Join Date | When they first joined your program |
-| Total Stamps, Total Points | Lifetime totals earned with you |
+| Total Stamps | Lifetime stamps earned with you |
+| Current Points Balance | What the member can spend right now |
+| Lifetime Points Earned | Everything they have ever earned, spent points included |
 | Visit Count, Last Visit | Counted from the member's scan and reward history |
+
+The two points columns answer different questions, so read them together. A regular who redeems often can sit near zero on the balance column while the lifetime column runs into the thousands.
 
 Only owners and managers can export. A team member on the Staff role does not see the Export button.
 
@@ -55,3 +59,17 @@ What you remove is the member's place on *your* program and their loyalty histor
 <Warning>
 Deleting a member cannot be undone. There is no trash or restore. If you might want the record later, export the member first. Owners can always delete; managers can too. A team member on the Staff role cannot delete members unless you give them full member access.
 </Warning>
+
+## Members you cannot remove
+
+One kind of member sits outside all of this. When a customer asks Qtap to delete their account from inside the app, their row on your list changes: the name becomes **Deleted member**, a grey **Deleted** badge appears next to it, and the contact column goes blank.
+
+Those rows are locked. The checkbox at the start of the row is greyed out, so you cannot tick it on its own and the header checkbox skips it when you select the page. Their three-dot menu carries **View Profile** and nothing else, so there is no **Delete Member** to click either.
+
+<Frame caption="A deleted member's row. The checkbox is greyed out and the row menu offers only View Profile. The row below is covered here for privacy.">
+  <img src="/images/merchants/members/export-delete-ghost-row.png" alt="Members table with a Deleted member row whose checkbox is disabled and whose menu shows only View Profile" />
+</Frame>
+
+This is deliberate. The customer has already asked for their details to go, and Qtap handles that on its own timetable, so nothing is left for you to clean up.
+
+Their business with you is still counted. Their stamps, points, visits, and redemptions stay in your totals and reports, and they still appear in the CSV export. In the file, First Name reads "Deleted member" and the Last Name, Email, Phone, and Birthday columns are empty; join date, balances, and visit history come through as normal.

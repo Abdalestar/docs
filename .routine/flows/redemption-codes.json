@@ -1,0 +1,79 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "redemptions",
+  "account": "stamp",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 1100 },
+  "steps": [
+    {
+      "name": "redeem-overview",
+      "goto": "/redemptions",
+      "waitFor": "text=Enter Redemption Code",
+      "waitMs": 9000,
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1200 }
+      ],
+      "clip": { "x": 255, "y": 0, "width": 1185, "height": 470 },
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Enter Code')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:text-is('Look Up Customer')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Scan')", "number": 3, "color": "gold" },
+        { "type": "caption", "text": "The Redemptions page opens on the Redeem tab: type the customer's code (1), search for them by name (2), or scan (3)." }
+      ]
+    },
+    {
+      "name": "enter-code",
+      "actions": [
+        { "fill": ["input[placeholder='e.g. 48271593']", "53686496"] },
+        { "wait": 900 }
+      ],
+      "clipTo": "div.rounded-xl:has(input[placeholder='e.g. 48271593'])",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "input[placeholder='e.g. 48271593']", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:text-is('Look Up')", "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "code-voucher",
+      "actions": [
+        { "click": "button:text-is('Look Up')" },
+        { "wait": 10000 }
+      ],
+      "clipTo": "div.min-w-0.space-y-2",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "div.min-w-0.space-y-2 span.data-mono", "color": "gold" }
+      ]
+    },
+    {
+      "name": "code-offer",
+      "actions": [
+        { "fill": ["input[placeholder='e.g. 48271593']", ""] },
+        { "fill": ["input[placeholder='e.g. 48271593']", "21628649"] },
+        { "click": "button:text-is('Look Up')" },
+        { "wait": 10000 }
+      ],
+      "clipTo": "div.min-w-0.space-y-2",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "redact", "target": "text=test@test.qa", "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "code-redeemed",
+      "actions": [
+        { "fill": ["input[placeholder='e.g. 48271593']", ""] },
+        { "fill": ["input[placeholder='e.g. 48271593']", "42759113"] },
+        { "click": "button:text-is('Look Up')" },
+        { "wait": 10000 }
+      ],
+      "clipTo": "div.min-w-0.space-y-2",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "redact", "target": "text=test@test.qa", "color": "charcoal" }
+      ]
+    }
+  ]
+}
