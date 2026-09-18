@@ -92,6 +92,7 @@
           "merchants/campaigns/winback",
           "merchants/campaigns/welcome",
           "merchants/campaigns/milestone",
+          "merchants/campaigns/flash-sale",
           "merchants/campaigns/points-multiplier",
           "merchants/campaigns/rewards",
           "merchants/campaigns/analytics",
