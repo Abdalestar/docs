@@ -16,6 +16,7 @@
         "pages": [
           "merchants/what-is-qtap",
           "merchants/welcome",
+          "merchants/getting-started/creating-your-account",
           "merchants/onboarding-wizard",
           "merchants/dashboard-overview",
           "merchants/getting-started/recent-activity",
