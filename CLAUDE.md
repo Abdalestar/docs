@@ -20,6 +20,93 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-12 — The image and link on a push notification (gap discovery)
+
+**Article:** `merchants/notifications/image-and-link.mdx` (new)
+**Branch:** `claude/busy-clarke-i49o20`
+**PR:** https://github.com/Abdalestar/docs/pull/208
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 4 real annotated screenshots, validate-images 4/4 OK.
+One task this run: no backfill exists and no board row is workable.
+
+### THE DEMO ORG IS ON FRANCHISE NOW — re-check the plan-blocked rows
+`QTAP_EMAIL` / Golden Crust Bakery renders **Franchise** in the billing card, not `growth`.
+Several rows that earlier runs closed as "blocked on plan entitlement" (**The AI Suite**,
+**Settings > MCP / AI**) may now be capturable. I did not take one because I had already
+locked this row, but the next run should check before assuming they are still blocked.
+
+### Task selection — the board is now mostly bug trackers, not docs work
+`notion-query-data-sources` SQL mode still works. Of the ~45 non-Done rows, the great
+majority are **engineering-fix tracking rows** auto-discovered by runs #191-#207, each
+saying in its own Notes "NEEDS AN ENGINEERING FIX, not a docs change". The rest are the
+long-standing duplicates and capture-blocked rows. Backfill is still exhausted: the
+zero-PNG scan on `origin/main` returns the same four non-workable files. So §14 gap
+discovery again; new row created and locked before writing.
+
+**Main is behind again.** `origin/main` is at the PR #185 merge and **PRs #186-#207 are
+open and unmerged**. Before claiming a gap, diff every open PR branch against main:
+`git diff --name-only origin/main origin/claude/<branch> -- '*.mdx'`. That set plus the
+on-main list is the real "already covered" universe. Twenty-two open PRs is once more a
+merge problem, not a writing problem.
+
+### The gap
+`/notifications/new` has two controls under Title and Message that **no article on main
+and no open PR branch has ever mentioned** (grepped every ref in the repo for "Rich Image"
+and "Link to my merchant page": zero hits, ever).
+
+**1. "Link to my merchant page" is the consent gate, and its label does not say so.**
+The switch (`#link-merchant-page`, **on by default**) writes `data.link_merchant_page`;
+`lib/notifications/push-payload.ts` `buildPushData` swaps it at send time for
+`{type:'campaign', organization_id, slug, src:'push'}`, and the app
+(`src/utils/onesignal.ts` case `'campaign'`) routes a tap to `/m/<slug>`, falling back to
+`/merchant-details?id=<org>` when the org has no slug. That much matches the label. It
+also **reclassifies the message**: deployed `send-push-notification` v21 computes
+`categoryFor('campaign') = 'behavioral'`, so `requiresMarketingConsent` is true and the
+push is suppressed unless the member has `communication_opt_in = true` AND
+`notification_prefs.behavioral = true`, and has not muted the business. Switch off means
+no `data.type`, `categoryFor(undefined)` returns `transactional`, and the whole preference
+block is skipped. `notifyMember` maps that skip to status `suppressed`, which counts
+toward **Sent** and never toward **Delivered** — the delivery-rate gap `notifications/stats.mdx`
+does not currently explain.
+The article documents this and tells merchants to **leave the switch on** for promotions
+rather than presenting "off" as a way to reach more phones. Turning it off to dodge the
+check would push marketing at people who declined marketing, which `design.md` §10 rules
+out. Do not soften that in a future edit.
+
+**2. "Rich Image (optional)" is a verified no-op, and the preview hides it.**
+`image-upload.tsx` is a URL field, not an uploader. The image reaches the customer nowhere:
+the deployed OneSignal payload is `{app_id, include_subscription_ids, target_channel,
+headings, contents, data}` with no `big_picture`/`ios_attachments`, and
+`useNotificationsStore.ts` reads `data.image_url` in exactly one place (line 207, the
+**reward** branch) while a composed push takes the campaign branch (switch on) or the
+generic reminder branch (switch off). `base` does not carry it either. Meanwhile
+`notification-preview.tsx` renders `{imageUrl}` in the phone mockup, so the dashboard shows
+the merchant a rich notification nobody receives. Shipped as a `<Warning>`.
+
+### Screenshots (nothing sent, scheduled or saved)
+`.routine/flows/notification-image-link.json`, points demo, **1440x1400** viewport (the
+Message card and the Preview card both run below a 900px fold). Message card with both
+controls boxed; the Rich Image field filled with its thumbnail; the phone preview rendering
+the picture; the link row with the switch off. **Send Now / Save as Draft / Schedule were
+never clicked.** No customer PII (merchant's own copy only).
+
+### Gotchas for future runs
+- **`/notifications/new` redirects to `/` if you navigate straight there after login.**
+  The route guard resolves before the auth store does. The flow works around it with a
+  throwaway first step that gotos `/notifications`, clicks the cookie **Decline**, and
+  settles ~5s; the real steps then goto `/notifications/new` and pass. I captured that
+  warm-up step as `_warmup.png` and deleted it before committing, so the flow file has one
+  more step than the article has images.
+- **Use the org's own Supabase asset for the image field.** An arbitrary external image URL
+  will not load through the agent proxy and the preview silently hides it (`onError` sets
+  `display:none`). Golden Crust's `cover_image_url` on `*.supabase.co` is reachable and
+  renders, so both image shots are genuine rather than mocked.
+- Stable selectors on the compose page: Message card `div.rounded-xl:has(#title)`; image
+  block `div.space-y-2:has(input[type="url"])`; link row
+  `div.rounded-lg.border:has(#link-merchant-page)`; phone mockup `div.w-\\[280px\\]`;
+  the two preview images are `img[alt="Notification image preview"]` (inline thumbnail) and
+  `img[alt="Notification"]` (inside the mockup). All resolve to exactly one node.
+- A 594x158 crop came in at 14.9KB, so the 5KB `validate-images` floor is only a risk on
+  near-blank strips. `clipPadding: 44` on the one-row crop was enough.
 ## 2026-09-11 — The Insights panel on your analytics page
 
 **Article:** `merchants/analytics/insights.mdx` (new), `merchants/analytics/overview.mdx` (one-Note correction)
