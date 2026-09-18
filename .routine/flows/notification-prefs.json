@@ -1,0 +1,136 @@
+{
+  "section": "settings",
+  "account": "points",
+  "defaultWaitMs": 4000,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "steps": [
+    {
+      "name": "settings-notifications-overview",
+      "goto": "/settings/notifications",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text(\"Decline\")"
+        },
+        {
+          "wait": 1500
+        }
+      ],
+      "waitFor": "h2:has-text(\"Notification Preferences\")",
+      "waitMs": 8000,
+      "annotate": [
+        {
+          "type": "box",
+          "target": ":nth-match(div.rounded-xl, 1)",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": ":nth-match(div.rounded-xl, 2)",
+          "number": 2,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "button:has-text(\"Save Preferences\")",
+          "number": 3,
+          "color": "charcoal"
+        },
+        {
+          "type": "caption",
+          "text": "Settings > Notifications: an Email card (1), a Push card (2) and a Save Preferences button (3) that stays grey until you change a switch."
+        }
+      ]
+    },
+    {
+      "name": "settings-notifications-email",
+      "goto": "/settings/notifications",
+      "waitFor": "h2:has-text(\"Notification Preferences\")",
+      "waitMs": 8000,
+      "actions": [
+        {
+          "hover": "label:has-text(\"Weekly Report\")"
+        },
+        {
+          "wait": 800
+        }
+      ],
+      "clipTo": ":nth-match(div.rounded-xl, 1)",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": ":nth-match(button[role=\"switch\"], 1)",
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": ":nth-match(button[role=\"switch\"], 2)",
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": ":nth-match(button[role=\"switch\"], 3)",
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "settings-notifications-push",
+      "goto": "/settings/notifications",
+      "waitFor": "h2:has-text(\"Notification Preferences\")",
+      "waitMs": 8000,
+      "actions": [
+        {
+          "hover": "label:has-text(\"Low Stock Alerts\")"
+        },
+        {
+          "wait": 800
+        }
+      ],
+      "clipTo": ":nth-match(div.rounded-xl, 2)",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "label:has-text(\"Low Stock Alerts\")",
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "settings-notifications-unsaved",
+      "goto": "/settings/notifications",
+      "waitFor": "h2:has-text(\"Notification Preferences\")",
+      "waitMs": 8000,
+      "actions": [
+        {
+          "click": ":nth-match(button[role=\"switch\"], 2)"
+        },
+        {
+          "wait": 1200
+        }
+      ],
+      "annotate": [
+        {
+          "type": "box",
+          "target": "button:has-text(\"Save Preferences\")",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.fixed:has-text(\"You have unsaved changes\")",
+          "number": 2,
+          "color": "plum"
+        }
+      ]
+    }
+  ]
+}
