@@ -39,6 +39,7 @@
           "merchants/stamp-cards/rewards",
           "merchants/stamp-cards/advanced-settings",
           "merchants/cards/card-terms",
+          "merchants/cards/deleting",
           "merchants/stamp-cards/manual-stamps"
         ]
       },
@@ -54,7 +55,8 @@
           "merchants/points/expiry",
           "merchants/points/awarding",
           "merchants/points/adjusting",
-          "merchants/redemptions/points-rewards"
+          "merchants/redemptions/points-rewards",
+          "merchants/cards/deleting"
         ]
       },
       {

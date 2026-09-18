@@ -20,6 +20,99 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-16 — Deleting a card or a points program (gap-discovery article)
+
+**Article:** `merchants/cards/deleting.mdx` (new)
+**Branch:** `claude/busy-clarke-b8yye9`
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 4 real annotated screenshots + 1 brand SVG,
+validate-images 5/5 OK. One task this run: **no screenshot backfill exists** (the zero-PNG
+scan on `origin/main` still returns the same four non-workable files).
+
+### Task selection — the board is all tracking rows now, not writing rows
+`notion-query-data-sources` (SQL mode) returned 51 non-Done rows and **not one is a
+writing task**. They fall into three buckets: verified DUPLICATE of an on-main article,
+BLOCKED on an account this routine cannot reach, and (the new majority, ~20 rows added
+between 2026-09-01 and 2026-09-15) **engineering-fix trackers filed by earlier runs** whose
+own Notes say "NEEDS AN ENGINEERING FIX, not a docs change" because the PR that found the
+bug already shipped the honest Warning. Do not pick those up as articles.
+
+Re-verified live via Supabase this run: the three long-standing blockers all still hold.
+`QTAP_EMAIL` and `QTAP_NAJMA_EMAIL` are still **both** `owner@goldencrust.qa` and
+`QTAP_STAMP_EMAIL` is `owner@brewbean.qa`, so the only two reachable orgs are Golden Crust
+(growth / active / 0 AI credits / no `stripe_subscription_id`) and Brew & Bean (identical).
+Cancel Subscription, the AI Suite and Settings > MCP stay uncapturable. **Pointing
+`QTAP_NAJMA_EMAIL` at Najma Coffee (elite, 78 credits) or Dana Salon (franchise, 84, real
+subscription) is still the single highest-value environment fix**; it has been asked for in
+every run log since 2026-08-19 and the third credential slot is still a duplicate.
+
+**PRs #186 to #211 are all open and unmerged** (main is at the #185 merge), so 26 articles
+are not on main. I diffed every open branch against `origin/main` before choosing, and also
+the four older ones (#158, #163, #164, #165). Gap discovery had to clear all of that.
+
+### How the gap was found (repeatable, worth reusing)
+Route-diff gap discovery is exhausted, so I extracted user-visible strings from the app and
+diffed them against a **combined docs corpus** (all on-main `.mdx` plus every `.mdx` from
+all 30 open PR branches, materialised into one scratch dir with `git show`):
+
+```
+grep -rhoE '<(DialogTitle|AlertDialogTitle|CardTitle|h1|h2|h3)[^>]*>[^<{]{6,50}</...>' components app
+```
+
+then `grep -rqiF` each string against the corpus. That surfaced 68 strings no article
+mentions, including `Delete Stamp Card?` and `Delete Points Program?`.
+
+### The gap
+**Nothing anywhere says what Delete destroys.** `stamp-cards/overview.mdx` names Delete only
+in a screenshot's alt text; `points/editing.mdx` gives it half a sentence. The app's own
+confirm dialog says exactly "all associated data" and nothing else. Grounded entirely in the
+live FK delete rules (read-only `information_schema` query, not migrations):
+
+| Parent | CASCADE | SET NULL |
+|---|---|---|
+| `stamp_cards` | `member_stamps`, `pending_rewards`, `rewards` | `qr_codes`, `nfc_tags`, `transactions`, `analytics_events` |
+| `points_programs` | `member_points`, `points_transactions`, `pending_rewards`, `rewards` | `qr_codes`, `nfc_tags`, `analytics_events` |
+
+The asymmetry is the whole article: stamp history survives in `transactions` (SET NULL) but
+the **entire points ledger is deleted** (`points_transactions` CASCADE), and both
+`usePointsActivity` and `useRevenueImpact` read that table (`hooks/use-reports.ts:50` and
+`:92`), so deleting a points program empties two reports. `pending_rewards` is what
+`/redemptions` reads, so banked unredeemed vouchers vanish on both sides.
+
+### Two more verified facts the article carries
+- **A stamp QR breaks, a points QR does not.** `app/api/scan/route.ts:211` requires
+  `qrCode.stamp_card_id` and answers "This QR code is not linked to a stamp card"; the
+  points branch (line ~305) never reads `qrCode.points_program_id` at all, it looks up the
+  org's `is_active` program, so the code keeps working against whatever program is active
+  next. With no active program the `if (pointsProgram)` guard means the points land nowhere.
+- **Member rollups survive.** `/members` and `/members/[id]` read
+  `organization_members.total_stamps_earned` / `total_points_earned`, which have no FK to the
+  card, so the Members page still shows a lifetime total for a card that no longer exists.
+
+### Who can delete
+RLS is wide open here: `Staff can manage their org stamp cards` is `ALL` for any org staff.
+The only real gate is `canAccessRoute` (`stamp_cards`/`points_programs !== 'none'`), which is
+`edit` for manager and `none` for staff by default. There is no delete on `/cards/[id]` or
+`/points/[id]`, so the row menu is the only entry point.
+
+### Screenshots (nothing was deleted)
+`.routine/flows/deleting-card.json` (stamp demo) + `deleting-program.json` (points demo):
+the row menu with Deactivate/Delete boxed, and both confirm dialogs cropped. The Delete menu
+item only calls `setDeleteId`, which is pure client state, so opening the dialog is safe.
+**The red Delete in the dialog was never clicked.** That mattered here: Brew & Bean's single
+card carries 7 member_stamps rows and **14 available banked rewards**, and Golden Crust's
+program carries 5 balances and a 15-row ledger. Plus one brand SVG comparing the two deletes.
+
+### Gotchas for future runs
+- `button:has(svg.lucide-ellipsis)` resolves to **exactly one** element on both `/cards` and
+  `/points` (the card menu). `button[aria-haspopup="menu"]` does not: it first-matches the
+  header location switcher, and there are 3 on `/cards` and 4 on `/points`.
+- The confirm is a Radix **`[role=alertdialog]`**, 512x178 at 1440px, and `clipTo` on it
+  crops cleanly. A `label` annotation on a target near the crop edge still spills outside the
+  crop (2026-06-12 note confirmed again): box only, let the `<Frame caption>` carry the words.
+- Both pages need ~8s plus the cookie **Decline** click as the first action of the first step.
+- Placing an article that covers both loyalty types: `merchants/cards/` already exists for
+  exactly this (`card-terms.mdx`), and the page was added to **both** the Stamp Cards and the
+  Points Programs nav groups in `docs.json`. Mintlify accepts the same path in two groups.
 ## 2026-09-15 — The Staff role does not get what the dashboard says it gets
 
 **Article:** `merchants/staff/roles-permissions.mdx` (correction, not a new article)
