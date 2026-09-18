@@ -1,0 +1,55 @@
+{
+  "section": "merchants/merchant-page",
+  "account": "points",
+  "viewport": {
+    "width": 1440,
+    "height": 2900
+  },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "merchant-page-profile",
+      "goto": "/merchant-page",
+      "actions": [
+        {
+          "wait": 3500
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 11000
+        }
+      ],
+      "waitMs": 2000,
+      "clipTo": "div:has(> div > div:text-is('Merchant Profile'))",
+      "clipPadding": 12,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "label:text-is('Cover Photos')",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "textarea",
+          "number": 2,
+          "color": "charcoal"
+        },
+        {
+          "type": "box",
+          "target": "div.space-y-2:has(> label:text-is('Google Maps listing'))",
+          "number": 3,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.space-y-2:has(> label:text-is('Category'))",
+          "number": 4,
+          "color": "charcoal"
+        }
+      ]
+    }
+  ]
+}
