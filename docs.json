@@ -122,6 +122,7 @@
         "group": "Analytics",
         "pages": [
           "merchants/analytics/overview",
+          "merchants/analytics/insights",
           "merchants/analytics/points-panels",
           "merchants/analytics/charts",
           "merchants/analytics/customer-lists",
