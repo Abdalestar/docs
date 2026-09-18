@@ -21,6 +21,7 @@
           "merchants/getting-started/recent-activity",
           "merchants/getting-started/demo-mode",
           "merchants/getting-started/top-bar",
+          "merchants/getting-started/on-a-phone",
           "merchants/getting-started/checklist",
           "merchants/first-loyalty-program"
         ]
@@ -133,7 +134,9 @@
           "merchants/members/export-delete",
           "merchants/members/redemptions",
           "merchants/redemptions",
-          "merchants/redemptions/scan-redemption"
+          "merchants/redemptions/scan-redemption",
+          "merchants/redemptions/card-preview",
+          "merchants/redemptions/reward-types"
         ]
       },
       {
@@ -165,6 +168,7 @@
           "merchants/settings/merchant-page",
           "merchants/merchant-page/business-overview",
           "merchants/settings/merchant-page-editor",
+          "merchants/merchant-page/rating-and-hours",
           "merchants/merchant-page/public-view",
           "merchants/settings/security",
           "merchants/settings/password-reset"

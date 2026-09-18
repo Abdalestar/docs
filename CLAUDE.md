@@ -99,6 +99,584 @@ own team, same treatment as the published staff articles).
 - Heatmap cells carry a `title` attribute (`Sun 12:00 - 2 activities`), which is both the
   cheapest way to read the data and a clean annotate target.
 - The TLS bridge was needed again and stayed up for the whole run.
+## 2026-09-01 — Dashboard home: lifetime stat cards, and an Issue button that issues nothing
+
+**Article:** `merchants/dashboard-overview.mdx` (correction + full recapture)
+**Branch:** `claude/busy-clarke-podasg`
+**PR:** https://github.com/Abdalestar/docs/pull/197
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 7 real annotated screenshots, validate-images 7/7 OK.
+One task this run.
+
+### Task selection — the board is still fully triaged, and main has caught up
+`notion-query-data-sources` in SQL mode returned 32 non-Done rows and **every one is a
+verified DUPLICATE, a BLOCKED-on-capture row, or an engineering-fix tracker that explicitly
+says "not a docs change"**. Nothing workable. So §14 gap discovery again, seventh run running.
+
+Two things changed since the last log entry and are worth knowing:
+- **`origin/main` is now at the PR #185 merge**, so #163-#185 have landed. The long-standing
+  "main is 20 PRs behind" note is out of date.
+- **PRs #186-#196 are open and unmerged** (one per day, 08-21 to 08-31): winback max_sends,
+  campaign analytics stub, deleted members, the two "without the app" articles merged, NFC
+  placement, NFC Add Tag correction, merchant-page rating/hours, redemption type strip,
+  Members page correction, card at the counter, phone layout. Do not re-derive any of those.
+- **The `qtap` clone is stale** (last commit 2026-08-10). It still matched the live build
+  everywhere I checked this run, but probe live before trusting it.
+
+### The gap: the busiest page in the dashboard has been wrong since June
+`merchants/dashboard-overview.mdx` (2026-06-08, untouched since) carried two false claims and
+four generic reused hero images. Both claims verified in source AND live before writing.
+
+**1. The stat cards are LIFETIME totals, not "this period".** `useDashboardStats`
+(`hooks/use-supabase-query.ts`) sums the `organization_members` rollups
+(`total_stamps_earned` / `total_points_earned` / `total_redemptions`) with no date filter.
+Only the badge is time-bound: `calculateChange` compares transaction COUNTS in the last 30
+days against the 30 before. Live on Golden Crust: **Points Issued 797 with a red 20% down
+badge**. Supabase read-only: `sum(total_points_earned) = 797`, 4 `points_earn` rows in the
+last 30d vs 5 in the 30 before = exactly -20%. A lifetime total cannot fall, so a red badge
+beside a climbing number is normal, and that pairing is the most confusing thing on the page.
+`calculateChange` also returns 100 when the earlier window was empty, and the badge is hidden
+at 0. The Total Members badge measures **new sign-ups**, not the total.
+
+**2. The Issue Stamp / Issue Points button is a dead end.** The article said it "takes you to
+the Members page with that member's record pulled up so you can issue from there". Neither
+half is true:
+- `app/(dashboard)/page.tsx` `handleSearchMember` runs a 500 ms **fake** spinner (its own
+  comment: "In a real implementation, this would search for the member") then
+  `window.location.href = /members?search=<query>`.
+- `app/(dashboard)/members/page.tsx` **never reads `searchParams`** (grep: zero
+  `useSearchParams` hits in that file). Its `searchQuery` is local `useState`, so the param
+  is dropped.
+- `/members` has no issue action at all. Row menu: View Profile / Send Notification / Add Tag
+  / Delete Member.
+Confirmed live: typing the real member code `Q086993` and pressing Enter landed on
+`/members?search=Q086993` with the **search box empty and all 4 members listed**. Shipped as
+a Warning plus that screenshot, pointing staff at Stamp/Points Operations. Filed as a P2
+engineering-fix row (same class as the dead top-bar search in `top-bar.mdx`).
+
+### Smaller corrections, all verified
+- **The points chart draws redemptions BELOW the zero line.** `usePointsOverTime` sums
+  `points_transactions.points`, and every `redeem` row is negative (Supabase: 524 rows,
+  min -3000, max -50). The stamp chart is different: `useStampsOverTime` draws two positive
+  COUNTS. Do not describe the two loyalty types as drawing the same chart.
+- The chart covers `earn` and `redeem` only, so `bonus` (212 rows) and `adjust` never appear.
+- Quick Actions **Invite Staff Member** links to `/staff`, it does not open the invite dialog.
+- **Active Members** is `last_activity_at` within 30 days, and a **check-in scan** updates it
+  (`app/api/scan/route.ts:416`), so it is wider than the old "earned or redeemed" wording.
+- Added the branch-scope note (the page prints "Showing activity for X. Member counts are
+  across all branches.") and cross-links to recent-activity, branch-switcher, manual-stamps
+  and awarding.
+
+### Screenshots (read-only, nothing issued)
+`.routine/flows/dashboard-home.json` (points, Golden Crust, 6 shots) +
+`dashboard-home-stamp.json` (stamp, Brew & Bean, the "Stamps Issued 38" tile row). The only
+clicks were the cookie Decline, the Issue dialog, and its search. Customer names and contacts
+redacted on the Members landing shot with an explicit rect.
+
+### Gotchas for future runs
+- **The dashboard home needs a 1500px-tall viewport for `clipTo`.** `[data-tour="charts"]` is
+  stretched by the grid to the height of the right column (1044px at 1440 wide), so a
+  `clipTo` on it returns a mostly-empty card. Use an explicit clip for the chart
+  (`{x:272,y:312,w:572,h:412}` at 1440) and `clipTo` only for `[data-tour="metrics"]` (128px)
+  and `[data-tour="quick-actions"]` (294px).
+- Stable selectors on the home page: `[data-tour="metrics"] > div:nth-child(N)` for the four
+  tiles (col x = 280/568/856/1144, y168, 272x128), the tile value is
+  `... span.data-mono` and its badge is `... div.text-xs`. **Do not target the badge by
+  `[class*="bg-green"]`**: it is red on a decrease, and a class probe timed out on it.
+- **Numbered badges crowd the tiles crop.** The badge for box 1 sat on top of "797". Plain
+  boxes plus an ordered `<Frame caption>` is the readable version, same finding as the
+  notification-stats run.
+- Members table geometry at 1440x900 is unchanged by the recent phone-layout work: search box
+  y193, thead y279, tbody y319, rows 77px. Redact `{x:329,y:319,w:467,h:248}` to cover the
+  Member and Contact columns for 4 rows.
+- **Preserve CRLF when editing an older article.** `dashboard-overview.mdx` was CRLF; writing
+  it back as LF turned the PR diff into a 105-line full-file replacement. Converting back to
+  CRLF and amending gave a real 55/35 diff. Newer articles (recent-activity) are LF, so check
+  with `file` before writing.
+- The TLS bridge was needed again and dropped exactly one login mid-run
+  (`ALL_CREDENTIALS_FAILED` on the stamp flow); the identical command succeeded on an
+  immediate retry. Retry once before touching the bridge.
+- Golden Crust member codes for a safe, real-data capture: `Q056329`, `Q086993`,
+  `QTAP-TT024`, `QTAP-TT026`. `QTAP-TT024` is the founder's own record, so prefer `Q086993`.
+## 2026-08-31 — Using the dashboard on a phone (gap-discovery article)
+
+**Article:** `merchants/getting-started/on-a-phone.mdx` (new)
+**Branch:** `claude/busy-clarke-9wdp3l`
+**PR:** https://github.com/Abdalestar/docs/pull/196
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 5 real annotated mobile screenshots,
+validate-images 5/5 OK. One task this run.
+
+### READ THIS FIRST — main caught up, but 18 PRs are open again
+`origin/main` has absorbed #163-#185 **except** #163 (pass design studio), #164
+(voucher design) and #165 (editing a live offer), which are **still open**. Those three
+topics are taken; do not rewrite them, even though `main` has no `merchants/passes/`
+article and the run log above claims #163 shipped. Open now: #137, #145, #148, #154,
+#158, #163, #164, #165, and #186-#195. I diffed every one of them against `origin/main`
+before picking, which is the only reliable way to avoid a duplicate.
+
+### Task selection — board still fully blocked, backfill still exhausted
+`notion-query-data-sources` (SQL mode) returns 30 non-Done rows and **every one** carries
+a dated BLOCKED / DUPLICATE / NOT-A-FEATURE verdict from an earlier run. Nothing has
+changed on the three account-blocked rows (Cancel Subscription, AI Suite, MCP/AI); they
+still need an Elite/Franchise login with a live Stripe subscription, which this routine
+cannot reach. Four newer rows (#191, #192, #194 follow-ups) are explicitly engineering
+tickets, not docs work, and say so in their own Notes.
+
+Zero-PNG scan on `origin/main` returns the same four non-workable files as every run
+since 2026-08-14: `customer-app/settings-profile` (mobile), `index.mdx`, `support/faq.mdx`,
+and the `campaigns/analytics.mdx` stub — and that stub is now **taken by open PR #187**.
+So: no backfill exists, and this was a §14 gap-discovery run. New row created and locked
+before writing.
+
+### The gap
+qtap commit **`0850cef`** (2026-07-30, "Make members and QR codes work on the phone staff
+actually hold") rebuilt `/members` and `/qr-codes` for phone widths, and **`2c568d4`**
+moved the operations grids back to `lg` so tablets get the two-up change and laptops do
+not. **Zero docs coverage** of any of it: grepping `main` for "on your phone" / "mobile
+browser" / "phone at the counter" returns only incidental hits in three unrelated
+articles, and none of the 18 open PRs touches the topic. ROUTINE §8c and §8d both assume
+staff work these pages on a phone at the counter, so the docs were assuming a surface
+they never described.
+
+### What was written (all grounded, read-only)
+- `components/layout/sidebar.tsx:265-285` — below `md`/768 the sidebar is a Radix `Sheet`
+  (`side="left"`, `w-64`) behind `button[aria-label='Open navigation menu']`, and
+  `onNavigate` closes it, so tapping a page needs no separate close.
+- `app/(dashboard)/members/page.tsx:490-600` — Contact / Stamps / Points Balance / Push are
+  `hidden sm:table-cell`, Joined / Last Active are `hidden lg:table-cell`, and a
+  `lg:hidden` block reprints every hidden field as a labelled stack under the name. So the
+  fold is **two-stage**: below 640 the stack holds email, phone, stamps, points and push;
+  between 640 and 1024 it holds only Joined and Last active.
+- `app/(dashboard)/qr-codes/page.tsx:401-690` — **three-stage** fold (Type below `sm`,
+  Action + Scans below `md`, Location + Created below `lg`); the status badge moves next to
+  the name below `sm`; the five filter selects collapse behind one **Filters** button
+  carrying `activeFilterCount`; search gets its own row; the stat labels shorten to
+  Total / Active / Scans and the CTA to **Generate**.
+- `h-11 … sm:h-9` throughout both pages — a 44px touch floor below `sm`, desktop heights
+  back at `sm`. Matches design.md §7's 44x44 rule.
+- `points-operations/page.tsx:483` + `stamp-operations/page.tsx:478` — `grid-cols-1
+  lg:grid-cols-2`, so a portrait tablet gets the single-column counter layout.
+- `redemptions/page.tsx:1269-1310` — the history table folds the same way (sm + xl).
+- `qr-code-gallery.tsx:67` — card menus are `opacity-100 … sm:opacity-0`, because a phone
+  has no hover. (Noted, not documented; it needs no merchant action.)
+
+### THREE HONEST LIMITS (do not soften these in a future edit)
+1. **Only Members and QR Codes got the phone pass.** `staff/page.tsx:204-212` keeps four
+   columns with no folding inside an `overflow-x-auto` Card. Measured live at 390px: the
+   row is **523px wide and the row-menu button sits at x=496**, past the right edge, so
+   Status, Joined and the menu need a sideways swipe. Shipped as a `<Warning>` with the
+   screenshot. Worth the same treatment as the other two pages.
+2. **The QR presenter still clips on a phone** (flat 640px canvas, PR #169's finding).
+   Cross-linked `qr-codes/show-on-screen.mdx` rather than restating it.
+3. **There is still NO "best experienced on a larger screen" notice**, despite design.md
+   §2.7 describing one. Third separate run to confirm this by grep over `app/` and
+   `components/`. Shipped as a `<Note>` so a cramped page does not read as an error.
+   **Do not reintroduce that claim from design.md.**
+
+### Screenshots (read-only; nothing created, issued or deleted)
+`.routine/flows/on-a-phone.json` (points, Golden Crust) + `on-a-phone-qr.json` (stamp,
+Brew & Bean, which has named codes and a real Active badge), both 390x844. Only the cookie
+Decline, the nav menu button and the Filters toggle were clicked. Customer name + phone
+redacted on the members shot (the demo set still includes the founder's own record,
+`Abdalle` / `+974…`); all three staff emails redacted on the Staff shot.
+
+### Gotchas for future runs
+- **Live geometry at 390px, reusable for any mobile capture.** Members row 0 is at
+  `17,407 356x203`; its folded stack lines are 20px apart starting at the Email line
+  (`x 65, w 240`), so explicit `rect` redaction lands cleanly on the name (`110,412
+  120x26`) and the phone value (`103,502 155x20`). Staff rows are 57px apart with the
+  email at `y 294 / 351 / 408`. A first pass redacted only two of three staff rows: at a
+  200px crop you get **three** rows, not two, so count them in the shot before shipping.
+- **Probe scripts must live in the repo root.** `node_modules` is at `/home/user/docs`, so
+  a probe written to the scratchpad dies with `ERR_MODULE_NOT_FOUND` for `playwright`.
+  Write it as `/home/user/docs/.probe.mjs` and delete it before staging (this run staged
+  explicit paths only, so it never risked being committed).
+- The hamburger is `button[aria-label='Open navigation menu']`, which is stable and much
+  better than the positional `:nth-match(header button, N)` the top-bar run had to use.
+- Brew & Bean renders only **three** of the five QR filter selects (one location, no
+  batches), so do not annotate by expecting five. The article says "the dropdowns that
+  apply to your account".
+- The TLS bridge was needed again and stayed up for the whole run. Generate a scratch
+  cert, start `.routine/tls-bridge.mjs` in Bash **background mode**, then
+  `PLAYWRIGHT_PROXY=http://127.0.0.1:38443` on every capture.
+
+### Board note
+The docs backlog remains a **merge** problem. 18 PRs are open, three of them (#137, #145,
+#148) are triplicate "Editing a Stamp Card" PRs from June that should just be closed, and
+#158 is a human-authored Marketing & Resources PR. A human spending an hour on that queue
+would unblock more than any single run can write.
+## 2026-08-30 — The customer's card at the counter (card preview + staff summary line)
+
+**Article:** `merchants/redemptions/card-preview.mdx` (new)
+**Branch:** `claude/busy-clarke-cb01on`
+**PR:** https://github.com/Abdalestar/docs/pull/195
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 7 real annotated screenshots, desktop +
+mobile, validate-images 7/7 OK. One task this run: no backfill exists (same four
+unworkable zero-PNG files on `main` as every run since 2026-08-14).
+
+### This log was ten days stale — read the board and the open PRs, not this file
+The newest entry above is 2026-08-20, but PRs **#186 to #194** have shipped since
+(win-back max_sends, campaign analytics, deleted members, the two "without the app"
+articles merged, NFC placement, the NFC Add Tag correction, merchant-page rating and
+hours, redemption reward types, the Members page correction). All are open and
+unmerged. Diff every open `claude/busy-clarke-*` branch against `origin/main` before
+picking anything, or you will re-derive work that already exists on a branch.
+
+### Task selection — the board is still fully triaged, nothing workable
+`notion-query-data-sources` (SQL mode) returns 30 open rows and every one carries a
+dated DUPLICATE / BLOCKED / NOT-A-FEATURE verdict from an earlier run. The P1 shelf is
+unchanged (cancel-subscription needs a `stripe_subscription_id`; condition builder and
+push frequency do not exist; four duplicates). Three newer P2 rows are engineering
+tickets, not writing tasks (NFC `stamp_card_id` unsettable, opening hours read from two
+different branches, member tags written by nothing) and each already ships its caveat in
+an open PR. So this run did §14 gap discovery, created the row, locked it, and wrote it.
+
+### The gap
+`components/dashboard/member-loyalty-card-preview.tsx` (qtap commits `da7ff22` and
+`6d958fc`, 2026-07-28) renders the customer's real loyalty card plus a one-line staff
+readout on **all three counter pages**, and nothing on `main` or in any open PR mentions
+it. Confirmed live on both demo orgs this run.
+
+- `stamp-operations/page.tsx:740` passes `previewLabel` + `projectionInsight` and **no
+  member and no `onChangeMember`**, so its strip is the `AFTER THIS ISSUE · 5 OF 5` tag
+  over `Now: 2 of 5 stamps · completes card · unlocks Free Drink`, with no name and no
+  Change button. The card itself renders the **projected** stamp count.
+- `points-operations/page.tsx:559` (Award) and `:830` (Adjust/Deduct) pass
+  `pointsStaffInsight` plus the member, so those strips carry the name and a **Change**
+  button and no tag.
+- `redemptions/page.tsx:1046` picks `pointsStaffInsight` or `stampsStaffInsight` off
+  `memberLoyaltyState.type`.
+Do not describe the three as one identical component; the halves differ.
+
+### Verified live rather than assumed (every string was read back off the dashboard)
+`AFTER THIS ISSUE · 5 OF 5`, `Now: 2 of 5 stamps · completes card · unlocks Free Drink`,
+`10 pts · next: Free Pastry at 50 pts (40 to go) · top reward at 100 pts`,
+`400 pts · all active rewards earned · top reward at 100 pts`,
+`2 of 5 stamps · next: Free Drink at 3 · card completes at 5`.
+
+### TWO FINDINGS (shipped honestly; neither is claimed as broken)
+1. **The points progress bar and its caption measure different things.** The bar fills
+   toward `pointsProgressTarget`, which the page sets to `getTopPointsReward` (the
+   LARGEST reward), while the caption inside the card uses `nextRewardTrigger` (the NEXT
+   unearned one). On Golden Crust (50 and 100 pts) a member holding 10 pts gets a
+   near-empty bar beside "Next reward at 50 pts". Shipped as a Warning pointing merchants
+   at the summary line. Worth an engineering look.
+2. **`activeRewards` filters on `is_active !== false` AND `trigger_value > 0`**, so a
+   paused reward silently leaves the summary line while staying on the card.
+
+### Screenshots (read-only; nothing issued, awarded or redeemed)
+Issue Stamps / Award / Confirm Redemption were never clicked. Customer names **and the
+avatar photo** are redacted on every shot that carries one: the demo member set includes
+the founder's own record (`abdalestar@gmail.com`).
+
+### Gotchas for future runs
+- **The member search does not match a bare prefix.** `Q` returns zero results on
+  `/stamp-operations`; the full `qtap_id` (`QTAP-TT024`, `Q056329`) matches. A probe that
+  types one letter looks exactly like an RLS failure and is not one.
+- Stable selectors for this component: wrapper
+  `div.space-y-2:has(> div.max-w-\\[366px\\])` (card + strip, ~506x238 at 1440), insight
+  `p[class*="leading-4"]`, name `span[class*="truncate"]` (scope both through the
+  wrapper), tag `span:has-text('AFTER THIS ISSUE')`, and `button:text-is('Change')`.
+  Pending Rewards crops cleanly with
+  `div.space-y-2:has(> div.text-sm:has-text('Pending Rewards'))`.
+- **On mobile the page renders a second `MemberIdentity` line above the card**
+  (`className="xl:hidden"`), so a `clipPadding` of 20 on the wrapper pulls the customer's
+  name into the crop. Drop it to 2.
+- `clipPadding` under ~30 clips the numbered badges on the left edge of a cropped shot.
+- Useful capture data: Brew & Bean `QTAP-TT024` sits at 2 of 5 on Coffee Lovers Card
+  (interims at 1, 3 and 4, main at 5) and holds 4 available vouchers, which is what makes
+  the richest projection line reachable at quantity 3. Golden Crust `Q056329` (10 pts) is
+  the next-reward line and `QTAP-TT026` (400 pts) is the all-earned edge case.
+- `organization_members` has no `qtap_id` or balance columns; join `members` for
+  `qtap_id` and read `member_org_view` for `current_points_balance`.
+## 2026-08-29 — The Members page: dead tag controls and three wrong labels
+
+**Articles:** `merchants/members/overview.mdx` + `merchants/members/export-delete.mdx` (both corrections)
+**Branch:** `claude/busy-clarke-76o9of`
+**PR:** https://github.com/Abdalestar/docs/pull/194
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 4 new real annotated screenshots,
+validate-images 5/5 and 4/4 OK. One task this run.
+
+### Task selection — the board still has no workable new-article row
+30 non-Done rows, every P1 and P2 still DUPLICATE, BLOCKED, or "needs an engineering
+fix, not a docs change". Two P3 correction rows added on 2026-08-23 are the only
+genuinely actionable ones left. I took **"export-delete.mdx: note that a deleted member
+cannot be removed"**, and while verifying it found much worse drift one file over, so I
+opened a row for that too and worked both in the same PR.
+
+Route-diff gap discovery stays exhausted (every `app/(dashboard)` route maps to an
+article). As the 2026-08-19 run predicted, **drift between shipped code and published
+prose is now the productive source of work.** Reading a page's source next to its
+published article finds more in ten minutes than another pass over the board.
+
+### THE FINDING: `/members` ships two controls that do nothing
+`app/(dashboard)/members/page.tsx` has exactly **eight** `onClick` handlers (367, 380,
+391, 424, 669, 700, 713, 738) and none is on a tag control:
+- Row menu **Add Tag** (~line 659) is a bare `DropdownMenuItem`.
+- Bulk toolbar **Tags** menu (412-416): `Add Tag: VIP`, `Add Tag: Regular`,
+  `Add Tag: Inactive`, `Remove All Tags`. All four bare.
+
+Nothing in either repo writes `organization_members.tags` (the only tag write in
+`Qtap_app` is OneSignal segmentation in `useWalletStore.ts`, unrelated). Tags render
+read-only on the profile. Supabase confirms the column is seed-only: Najma 180/182,
+Dana 122/125, Tea Time 22/23 tagged, and **both reachable demo orgs have zero**.
+Published prose said "Add Tag — attach a label to the member for your own reference".
+Filed as a P2 engineering row. Same class as the top-bar search and `/cards/design`.
+
+### Everything else corrected (all verified in code AND live before editing)
+`overview.mdx`: **Mute Notifications does not exist** (menu is View Profile / Send
+Notification, disabled as `Push not enabled` / Add Tag / Delete Member); the header
+button is **Export CSV** not Download; the profile button is **Complete Profile** not
+Edit Info, and only renders for owner-or-manager while phone or birthday is empty; sort
+is Newest First / Recent Activity / Most Stamps / **Highest Points Balance** with **no
+name sort**; managers *can* delete by default (`canDeleteMembers` = owner OR effective
+`members === 'full'`, and manager defaults to `full`); the bulk bar also has Export
+Selected and Send Notification; the member name is **not** a link and the row has no
+`onClick`.
+
+`export-delete.mdx`: the CSV is **eleven** columns, not ten (`Total Points` split into
+**Current Points Balance** and **Lifetime Points Earned**, headers identical at lines
+204 and 293), plus the new "Members you cannot remove" section.
+
+### ENVIRONMENT CHANGE — a ghost member exists now, that blocker is gone
+Every run from 2026-08-19 on recorded "no member in any org carries
+`deletion_requested_at`". **Brew & Bean now has one** (`Q102812`, joined 2026-08-22,
+the newest row so it sorts first under the default `joined_at` desc). Verified live:
+name renders `Deleted member` with a grey `Deleted` badge, checkbox carries `disabled`
++ `aria-label="Deleted member cannot be selected"`, `toggleSelectAll` filters ghosts
+out, and the row menu contains **only View Profile**. Anything that needed the ghost
+state is capturable now, including the still-open PR #188.
+
+### Screenshots (read-only; no tag clicked, nothing exported, deleted or sent)
+`.routine/flows/members-tags-and-ghosts.json` + `members-tags-menu.json`, stamp demo.
+Deleted two stale images that showed the old UI (`02-sort-options.png` had the old
+"Most Points" label, `03-row-menu.png` predates Send Notification); neither was
+referenced elsewhere. Checked with grep first — `images/merchants/**staff**/03-row-menu.png`
+is a different file and is still in use.
+
+### Gotchas for future runs
+- **A `[role=menu]` crop of a 4-item Radix menu came in at 4.4KB and failed the 5KB
+  `validate-images` floor.** Widening to an explicit `clip` that includes the button
+  that opened it (522x226, 15.7KB) both passed and made a better screenshot. Prefer
+  "the control plus its open menu" over a bare menu crop.
+- **Geometry moves with the cookie banner.** With the banner up the members table sits
+  at y=361; after Decline it is at y=279. Measure in the same state you capture in.
+  Selecting a row inserts the bulk bar and pushes `tbody` from y=319 to y=401.
+- Members table columns at 1440: checkbox x281 w48, Member x329 w292, Contact x621
+  w199, then Stamps / Points Balance / Joined / Last Active / Push / menu.
+- `notion-create-pages` rejects a **Section** value outside the existing select list.
+  There is no "Members" option; the members rows use **Dashboard**.
+- The probe-from-repo-root rule still bites: `node_modules` lives in `/home/user/docs`,
+  so a probe written to the scratchpad dies with `ERR_MODULE_NOT_FOUND`. Copy it into
+  the repo, run it, delete it.
+- `QTAP_NAJMA_EMAIL` is **still** a duplicate of `QTAP_EMAIL` (`owner@goldencrust.qa`).
+  That third credential slot has been wasted for ten days and is still the single
+  cheapest unblock on the board (cancel-subscription, AI Suite, MCP/AI all need it).
+## 2026-08-28 — What kind of reward you are handing over (redemption type strip)
+
+**Article:** `merchants/redemptions/reward-types.mdx` (new)
+**Branch:** `claude/busy-clarke-ex5hem`
+**PR:** https://github.com/Abdalestar/docs/pull/193
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 8 real annotated screenshots, validate-images 8/8 OK.
+One task this run: the backfill queue is genuinely empty (see below).
+
+### Task selection — the board is still fully triaged, and the log above is stale
+The run log stopped at PR #185, but **PRs #186-#192 have shipped since** (win-back
+max_sends, campaign analytics + stats, deleted members, the two "without the app"
+articles merged, NFC placement, the NFC Add Tag correction, merchant-page rating and
+hours). All are open and unmerged, so `main` lacks them. Query the board and
+`list_pull_requests` before trusting this file.
+
+`notion-query-data-sources` in SQL mode gives the whole board in one call. Every
+`Not started` row is a verified duplicate, a feature that does not exist, or blocked on
+an account this routine cannot reach. Nothing changed there this run. The genuinely
+actionable rows left are all **small prose-drift corrections**, not new articles:
+- P3 "QR scan address drift: gallery and bulk exports encode c.qtap.qa" → a correction
+  to `qr-codes/customer-scan-flow.mdx`.
+- P3 "export-delete.mdx: note that a deleted member cannot be removed".
+- P3 "Update show-on-screen.mdx once the presenter width bug is fixed" (still blocked;
+  the bug is in the app, not the docs).
+Any of those three is a clean, cheap task for a future run.
+
+**Backfill is exhausted, re-verified this run.** The zero-image scan on `origin/main`
+returns the same four non-workable files as every run since 2026-08-14:
+`customer-app/settings-profile` (mobile), `index.mdx`, `support/faq.mdx`, and the
+`campaigns/analytics.mdx` stub (which open PR #187 already replaces).
+
+**`Abdalestar/qtap` main has not moved since 2026-08-10.** Three unmerged feature
+branches exist (`feat/merchant-mcp-v2`, `feat/voucher-redesign`,
+`fix/campaign-reward-balance-credit`) and are not live, so nothing there is documentable
+yet. Route-diff gap discovery stays exhausted; the productive vein is still
+component-level surfaces and drift.
+
+### The gap
+`components/dashboard/shared/redemption-type.tsx` is a 359-line staff-facing mapping
+that renders a type badge, a source label, the terms, the origin and a one-line counter
+note above every voucher on `/redemptions`. **Zero doc coverage on main**: grep found no
+hit for `Signup bonus`, `Campaign voucher`, `Loyalty reward`, `Take this off the bill`,
+`nothing to hand over`, `Already paid in the app` or `Buy 1 get 1`. I diffed all 15 open
+PR branches against `origin/main` to confirm none touches redemptions. New Notion row
+created and locked before writing.
+
+### What was written (all grounded, read-only)
+- `redemption-type.tsx` — the three loyalty tiers (`main` / `signup` / `interim`, shown
+  as Main reward / Signup bonus / **Milestone** reward), the eight campaign kinds with
+  their exact notes, `tierNote()`, `programOrigin()`, and the terms rules: `At N stamps`
+  for a stamp milestone, `Costs N pts` for a pay-at-the-till points reward, and **no
+  threshold on a stamp main reward** because it fires on card completion rather than at
+  `trigger_value`.
+- `describePrepaidRedemption()` — a voucher bought inside the app keeps its loyalty
+  badge and gains the "already paid" line.
+- `app/(dashboard)/redemptions/page.tsx` — four render sites: Enter Code result (983),
+  each held voucher on Look Up Customer (1116), the points-eligible list as a **badge
+  only** (1170), and the Confirm Redemption dialog (1393).
+- `app/api/rewards/redeem-code/route.ts` — the GET lookup fills `program_name` with the
+  literal placeholder `'Points reward'`, which the page deliberately maps to `null`.
+  That is why a prepaid voucher shows no origin line; the article says so rather than
+  inventing one. Note a stamps-bought voucher comes back with that same placeholder.
+- `lib/utils/offer-display.ts` `deriveTypedOfferColumns` — terms formatting for older
+  campaign rows that carry the value only in `reward_config`.
+- `lib/utils/permissions.ts` + `lib/validations/staff.ts` — `/redemptions` needs
+  `redeem`, `true` by default for manager **and** staff, so everyone at the counter sees it.
+
+Two gotchas shipped, both verified: a voucher with **no strip** means the type could not
+be read (both `describe*` helpers return null on an unrecognised type and the strip is
+dropped entirely), and the strip is a label only, since confirming behaves identically
+either way and Qtap never adjusts a bill. The article also makes the point that the
+wording comes from stored columns and never the reward's name, which the screenshots
+prove: a stamp reward named "10% Off Any Drink" is badged **Milestone reward**.
+
+### Screenshots (nothing redeemed, no code burned)
+Flows `reward-types.json` / `-member` / `-points` / `-mobile`. Stamp demo (Brew & Bean)
+for the strip in context, a member holding a main plus a milestone, discount, bogo and
+prepaid; points demo (Golden Crust) for the badge-only eligible list; 390x844 for the
+counter phone view (§8c). Every flow stops at the Confirm Redemption dialog and the
+dialog's own Confirm was never clicked.
+
+### Gotchas for future runs
+- **The strip selector is `div.rounded-lg.border.bg-muted\\/40`** (escape the slash in
+  JSON). It resolves cleanly and is unique per voucher, so `:nth-match(...)` numbers the
+  strips in a stacked list.
+- **Scope any dialog annotation to `[role=dialog] div.rounded-lg...`.** A bare selector
+  first-matches a strip on the page *behind* the scrim, and the box silently lands on
+  the dialog header instead. Cost one re-shoot.
+- **Member `Q102812` on Brew & Bean carries a deletion request**, so it renders as
+  "Deleted member" everywhere and is the PII-free way to shoot a member holding several
+  vouchers. It holds one main and three milestone rewards.
+- Read-only codes that render each variant on Brew & Bean: `43898886` (main),
+  `24083777` (milestone, At 4 stamps), `35555217` (discount -15%), `41460342` (bogo),
+  `58875222` (free item), `12078583` (prepaid, active until 2026-08-29). The campaign
+  vouchers are all long expired and **still render their strip**, because `issued` maps
+  to `available` and expiry only shows on the voucher itself. On Golden Crust, member
+  `Q086993` renders the points-eligible badge list.
+- **The first code lookup in a chained flow can silently return nothing.** One probe
+  filled four codes in a row and the third came back with no strip; the identical run a
+  minute later worked. Give each lookup ~5s and re-run before concluding a code is dead.
+- Cropping straight to the strip gives a 1138x131 sliver that still clears the 5KB
+  `validate-images` floor (~18KB), but the in-context crop showing the strip above its
+  voucher is the more useful image.
+
+### Product note raised (cosmetic, not documented)
+The stamp milestone terms line is not pluralised: a reward at one stamp renders
+**"At 1 stamps"** (`At ${triggerValue.toLocaleString()} stamps` in `redemption-type.tsx`).
+Raised on the Notion row and in the PR body.
+## 2026-08-27 — Your Google rating and opening hours (the merchant-page details strip)
+
+**Article:** `merchants/merchant-page/rating-and-hours.mdx` (new) + a four-claim correction to
+`merchants/settings/merchant-page-editor.mdx` and a recapture of its stale profile screenshot.
+**Branch:** `claude/busy-clarke-4zgqw2`
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 8 new real annotated screenshots + 1 recapture,
+validate-images 8/8 and 4/4 OK. One task this run.
+
+### Task selection — the board is still fully triaged, so this was gap discovery (§14)
+`notion-query-data-sources` (SQL) returns 29 non-Done rows and every one carries a dated
+DUPLICATE / BLOCKED / NOT-A-FEATURE verdict from an earlier run. The only genuinely actionable
+rows left are three small prose corrections queued by the 08-23/08-26 runs (export-delete
+deleted-member note, the `c.qtap.qa` scan-address drift, the 409 concurrency paragraph) plus
+one engineering-fix row (`nfc_tags.stamp_card_id`). None is a new article.
+
+**`main` has caught up.** PRs #163–#185 are merged; #186–#191 (win-back, campaign analytics,
+deleted members, the two "without the app" merges, NFC placement, NFC Add Tag) are open and
+unmerged, so do not re-do those six.
+
+### The gap: the merchant page grew a stat strip and nobody documented it
+qtap commit `ba5529e` (2026-07-26, "Merchant page stat strip: preview/public parity + merchant
+data editor") replaced the merchant page's meta-chip identity block with the customer app's
+**stat strip** (category / Google rating / distance / live Open-Closed) on both the editor's
+phone preview and the public `/m/[slug]` page, and gave the editor the three inputs that fill
+it. Zero docs coverage, and the published `settings/merchant-page-editor.mdx` (written
+2026-05-03) is now wrong on four counts. All four fixed this run:
+
+| Published claim | Reality |
+|---|---|
+| "Google Rating is a slider… It does not read from Google" | `GooglePlaceField` (Places Autocomplete) saves `merchant_page.googlePlaceId`; the slider is relabelled **Fallback rating** and only renders while nothing is linked |
+| "Category is one of eight" | `MERCHANT_CATEGORIES` in `lib/constants/categories.ts` has **eighteen**, with icons |
+| "Working Hours is a free text field" | structured 7-day `BusinessHoursEditor` bound to a location's `opening_hours` |
+| "Description is a short line" | `MERCHANT_DESCRIPTION = { min: 221, max: 350 }`; save is blocked under the minimum |
+
+### Facts the article is built on (all grounded, all confirmed live)
+- `components/dashboard/merchant-page/google-place-field.tsx` — autocomplete over
+  `types: ['establishment']`; a pasted `google.*/maps/place/<name>` URL is parsed for the name
+  and primed into the search box (share links carry no usable `place_id`); the linked card
+  shows name / rating / review count / **Unlink**.
+- `supabase/functions/google-places/index.ts` (mobile repo) — **the pinned `googlePlaceId` is
+  honoured only when `activeBranchCount <= 1`.** A multi-branch merchant gets each branch
+  resolved by Find Place from Text biased to that branch's own coordinates. `CACHE_TTL_MS`
+  is 24h; a pg_cron `refresh_stale` task tops up rows older than 7 days.
+- `app/api/merchant-page/route.ts` — a changed `googlePlaceId` **deletes** the org's
+  `google_place_cache` row, so a corrected listing takes effect immediately.
+- `app/m/[slug]/merchant-public-page.tsx` — `stripRating = placeCache?.rating ?? (googleRating
+  > 0 ? googleRating : null)`, and the cell's sub-label reads "Google rating" even when the
+  number is the merchant's own fallback. Documented honestly ("keep the number you set honest").
+- `lib/opening-hours.ts` — `close <= open` is treated as a past-midnight close, so 6 PM–2 AM
+  reads Open at 1 AM; `getOpenState` checks yesterday's interval first.
+- `reviews-sheet.tsx` / `hours-sheet.tsx` — "Ratings come from Google. Qtap does not collect
+  its own reviews." and "Hours are set by the merchant in their dashboard."
+
+### THE GOTCHA WORTH KEEPING (verified live, shipped as a Warning)
+Hours save against **a branch**, and two different code paths pick that branch:
+- the editor uses `locationsData[0]`, and `hooks/use-locations.ts` filters `is_active` and
+  **orders by name** → the alphabetically first active branch;
+- `app/m/[slug]/page.tsx` reads `locations … .eq('is_active', true).limit(1)` with **no order**.
+
+Golden Crust proves the split live: hours are saved on **The Pearl Branch**, the editor edits
+**Al Sadd Branch** (which has `opening_hours = NULL`, so the editor shows the 09:00–22:00
+defaults), and the public page picked Al Sadd too, so its strip renders with **no Open cell at
+all** (2-up: Bakery / Map). Najma, Tea Time and Dana all render the fuller strip.
+
+### Screenshots (nothing was saved)
+`.routine/flows/merchant-page-strip.json` (points demo, **1440x2900**),
+`merchant-page-strip-public.json` (430x1000, the public `/m/najma-coffee` page) and
+`merchant-page-profile-recapture.json`. A Google listing was searched and selected to capture
+the linked-listing card, but **Update Merchant was never clicked**, so `googlePlaceId` is still
+null on every org and nothing on the account changed. No customer PII (merchant-owned content
+and one public Google listing).
+
+### Gotchas for future runs
+- **Set `"viewport": {"width":1440,"height":2900}` for `/merchant-page`.** The page is 2862px
+  tall; at that height nothing scrolls, so page coordinates equal viewport coordinates and
+  explicit `clip` rects become deterministic. Useful rects at 1440 wide: Google Maps listing
+  block `y 1273 h 92`, Fallback rating `y 1381 h 52`, Category `y 1449 h 68`, Working Hours
+  `y 1883 h 412`, the whole Merchant Profile card `x 280 y 364 w 627 h 1178`.
+- **`fill` does trigger Google Places autocomplete** (the `.pac-container` appears ~3s later),
+  and `{"press":"ArrowDown"}` + `{"press":"Enter"}` selects the first suggestion and fires
+  `place_changed`. No need to simulate typing.
+- **`maps.googleapis.com` is reachable through the agent proxy / TLS bridge** and
+  `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` is set in production, so the autocomplete really runs.
+  Suggestions are **US-biased** (sandbox IP): "Golden Crust Bakery" returns Boston and Ohio.
+  Appending "Doha Qatar" to the query returns Qatari places if you need them.
+- `[role=combobox]` timed out on the first attempt; `button[role='combobox']` after a 14s
+  settle works. The category listbox crops cleanly with `clipTo: "[role=listbox]"`.
+- `div.space-y-2:has(> label:text-is('Description *'))` resolves nothing (the red asterisk is a
+  separate node inside the label). Box the `textarea` instead.
+- The public page strip is uniquely `div[class*='shadow-[0_4px_12px']`; its two tappable cells
+  are that selector plus ` button` (nth=0 rating, nth=1 open state). Both open a
+  `QtBottomSheet`; a full 430x1000 shot captures the sheet without any cropping.
+- No org in the project has a `googlePlaceId`, so `google_place_cache` is empty everywhere and
+  the **Reviews sheet cannot be captured with real reviews**. The captured sheet shows the
+  fallback rating and the Google attribution line, which the caption says plainly.
+- Category drift worth a cleanup: Dana stores `"Beauty & Spa"`, which matches nothing in the
+  eighteen labels, so its public page reads **Other**. Najma and Tea Time store `"Restaurants"`
+  and match via the label-plus-s rule.
 
 ---
 
