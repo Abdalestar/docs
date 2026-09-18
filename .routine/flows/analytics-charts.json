@@ -1,0 +1,43 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "analytics",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1500 },
+  "defaultWaitMs": 4000,
+  "steps": [
+    {
+      "name": "analytics-charts-context",
+      "goto": "/analytics",
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 800 }
+      ],
+      "waitFor": "div.font-semibold:has-text('Customer Segments')",
+      "waitMs": 20000,
+      "clip": { "x": 0, "y": 0, "width": 1440, "height": 1160 },
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(> div > div.font-semibold:has-text('Outstanding Points Liability'))", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has(> div > div.font-semibold:has-text('Customer Segments'))", "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "analytics-liability",
+      "goto": "/analytics",
+      "waitFor": "div.font-semibold:has-text('Outstanding Points Liability')",
+      "waitMs": 20000,
+      "clipTo": "div.rounded-xl:has(> div > div.font-semibold:has-text('Outstanding Points Liability'))",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "label", "target": "div.font-semibold:has-text('Outstanding Points Liability')", "text": "Points only", "color": "plum" }
+      ]
+    },
+    {
+      "name": "analytics-segments",
+      "goto": "/analytics",
+      "waitFor": "div.font-semibold:has-text('Customer Segments')",
+      "waitMs": 20000,
+      "clipTo": "div.rounded-xl:has(> div > div.font-semibold:has-text('Customer Segments'))",
+      "clipPadding": 10
+    }
+  ]
+}
