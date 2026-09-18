@@ -1,0 +1,23 @@
+{
+  "section": "merchants/passes",
+  "account": "stamp",
+  "defaultWaitMs": 2500,
+  "viewport": { "width": 1440, "height": 1000 },
+  "steps": [
+    {
+      "name": "pass-design-entry",
+      "goto": "/cards",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 8000 },
+        { "hover": "a[href$='/pass-design']" }
+      ],
+      "waitMs": 2500,
+      "clip": { "x": 272, "y": 176, "width": 620, "height": 216 },
+      "annotate": [
+        { "type": "box", "target": "a[href$='/pass-design']", "color": "plum" }
+      ]
+    }
+  ]
+}
