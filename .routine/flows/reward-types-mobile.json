@@ -1,0 +1,28 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/redemptions",
+  "account": "stamp",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 390, "height": 844 },
+  "steps": [
+    {
+      "name": "reward-types-09-mobile",
+      "goto": "/redemptions",
+      "waitFor": "text=Enter Redemption Code",
+      "actions": [
+        { "wait": 4500 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1500 },
+        { "fill": ["input[placeholder*='e.g.']", "41460342"] },
+        { "click": "button:text-is('Look Up')" },
+        { "wait": 6000 },
+        { "hover": "div.rounded-lg.border.bg-muted\\/40" },
+        { "wait": 800 }
+      ],
+      "clip": { "x": 0, "y": 120, "width": 390, "height": 560 },
+      "annotate": [
+        { "type": "box", "target": "div.rounded-lg.border.bg-muted\\/40", "color": "plum" }
+      ]
+    }
+  ]
+}
