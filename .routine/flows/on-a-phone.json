@@ -1,0 +1,49 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/getting-started",
+  "account": "points",
+  "viewport": { "width": 390, "height": 844 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "on-a-phone-nav",
+      "goto": "/",
+      "waitFor": "header",
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 2000 },
+        { "click": "button[aria-label='Open navigation menu']" },
+        { "wait": 2000 }
+      ],
+      "waitMs": 4000,
+      "annotate": [
+        { "type": "label", "rect": { "x": 20, "y": 700, "width": 240, "height": 20 }, "text": "Tap a page and the menu closes itself", "color": "plum" }
+      ]
+    },
+    {
+      "name": "on-a-phone-members",
+      "goto": "/members",
+      "waitFor": "table",
+      "waitMs": 10000,
+      "clip": { "x": 0, "y": 196, "width": 390, "height": 418 },
+      "annotate": [
+        { "type": "redact", "rect": { "x": 110, "y": 412, "width": 120, "height": 26 }, "color": "charcoal" },
+        { "type": "redact", "rect": { "x": 103, "y": 502, "width": 155, "height": 20 }, "color": "charcoal" },
+        { "type": "box", "rect": { "x": 62, "y": 481, "width": 250, "height": 122 }, "number": 1, "color": "plum" },
+        { "type": "box", "rect": { "x": 39, "y": 223, "width": 312, "height": 48 }, "number": 2, "color": "gold" }
+      ]
+    },
+    {
+      "name": "on-a-phone-staff",
+      "goto": "/staff",
+      "waitFor": "table",
+      "waitMs": 9000,
+      "clip": { "x": 0, "y": 222, "width": 390, "height": 200 },
+      "annotate": [
+        { "type": "redact", "rect": { "x": 60, "y": 294, "width": 190, "height": 18 }, "color": "charcoal" },
+        { "type": "redact", "rect": { "x": 60, "y": 351, "width": 190, "height": 18 }, "color": "charcoal" },
+        { "type": "redact", "rect": { "x": 60, "y": 408, "width": 190, "height": 18 }, "color": "charcoal" }
+      ]
+    }
+  ]
+}

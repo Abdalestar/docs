@@ -1,0 +1,175 @@
+{
+  "section": "merchants/merchant-page",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "steps": [
+    {
+      "name": "public-link-card",
+      "goto": "/merchant-page",
+      "waitFor": "button[aria-label='Copy link']",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 6000
+        }
+      ],
+      "waitMs": 2000,
+      "clipTo": "div.rounded-xl:has(button[aria-label='Copy link'])",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(button[aria-label='Copy link']) code",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "button[aria-label='Copy link']",
+          "number": 2,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "button[aria-label='Edit link']",
+          "number": 3,
+          "color": "gold"
+        }
+      ]
+    },
+    {
+      "name": "public-link-available",
+      "goto": "/merchant-page",
+      "waitFor": "button[aria-label='Edit link']",
+      "actions": [
+        {
+          "wait": 8000
+        },
+        {
+          "click": "button[aria-label='Edit link']"
+        },
+        {
+          "wait": 600
+        },
+        {
+          "fill": [
+            "input[placeholder='your-business-name']",
+            "golden-crust-doha"
+          ]
+        },
+        {
+          "wait": 2600
+        }
+      ],
+      "waitMs": 1200,
+      "clipTo": "div.rounded-xl:has(input[placeholder='your-business-name'])",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "input[placeholder='your-business-name']",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(input[placeholder='your-business-name']) p.text-xs",
+          "number": 2,
+          "color": "gold"
+        },
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(input[placeholder='your-business-name']) button:has-text('Save')",
+          "number": 3,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "public-link-reserved",
+      "goto": "/merchant-page",
+      "waitFor": "button[aria-label='Edit link']",
+      "actions": [
+        {
+          "wait": 8000
+        },
+        {
+          "click": "button[aria-label='Edit link']"
+        },
+        {
+          "wait": 600
+        },
+        {
+          "fill": [
+            "input[placeholder='your-business-name']",
+            "settings"
+          ]
+        },
+        {
+          "wait": 2600
+        }
+      ],
+      "waitMs": 1200,
+      "clipTo": "div.rounded-xl:has(input[placeholder='your-business-name'])",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(input[placeholder='your-business-name']) p.text-xs",
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "public-link-confirm",
+      "goto": "/merchant-page",
+      "waitFor": "button[aria-label='Edit link']",
+      "actions": [
+        {
+          "wait": 8000
+        },
+        {
+          "click": "button[aria-label='Edit link']"
+        },
+        {
+          "wait": 600
+        },
+        {
+          "fill": [
+            "input[placeholder='your-business-name']",
+            "golden-crust-doha"
+          ]
+        },
+        {
+          "wait": 2600
+        },
+        {
+          "click": "div.rounded-xl:has(input[placeholder='your-business-name']) button:has-text('Save')"
+        },
+        {
+          "wait": 1200
+        }
+      ],
+      "waitMs": 1000,
+      "clipTo": "[role=alertdialog]",
+      "clipPadding": 12,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "[role=alertdialog] button:has-text('Cancel')",
+          "number": 1,
+          "color": "plum"
+        }
+      ]
+    }
+  ]
+}
