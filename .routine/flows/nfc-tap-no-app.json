@@ -1,0 +1,41 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/nfc-tags",
+  "account": "points",
+  "defaultWaitMs": 4000,
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "steps": [
+    {
+      "name": "nfc-tap-no-app",
+      "goto": "/t/TQTAPDEMO2345",
+      "waitFor": "h1:has-text('You tapped a Qtap tag')",
+      "waitMs": 4000,
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 800
+        }
+      ],
+      "annotate": [
+        {
+          "type": "box",
+          "target": "h1:has-text('You tapped a Qtap tag')",
+          "number": 1
+        },
+        {
+          "type": "box",
+          "target": "a:has-text('Get the Qtap app')",
+          "number": 2
+        }
+      ]
+    }
+  ]
+}
