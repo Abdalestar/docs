@@ -20,6 +20,133 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-19 — Every email subject line in the docs was wrong (correction)
+
+**Article:** `merchants/settings/notifications.mdx` (correction)
+**Branch:** `claude/busy-clarke-1454zh`
+**PR:** https://github.com/Abdalestar/docs/pull/215
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 1 recaptured annotated screenshot,
+validate-images 4/4 OK. One task this run: no screenshot backfill exists.
+
+### THREE STALE NOTES IN THIS FILE, CORRECTED — read before trusting the log
+1. **The sandbox ships chromium 1243 now, not 1234.** The 2026-09-06 and 2026-09-07
+   entries tell you to pin `playwright@1.62.0`. That is now the broken choice.
+   `npm install sharp playwright@1.63.0` matches the preinstalled build. Check with
+   `node -e "console.log(require('./node_modules/playwright-core/browsers.json').browsers.find(b=>b.name==='chromium').revision)"`
+   and compare against `ls /opt/pw-browsers/`. Do not pin blind from this log.
+2. **`main` has caught up.** Every entry since 2026-09-11 opens by saying 20-27 PRs
+   are open and `main` is stuck at #185. Both are false now: `main` is at the **#213
+   merge** and only **15 PRs are open**, of which the newest is #214 (payment-failed)
+   and the rest are the long-stale #137/#145/#148/#154/#158/#163/#164/#165 plus
+   #186-#191. The docs backlog is no longer a merge problem.
+3. **Golden Crust is NOT on Franchise.** The 2026-09-12 entry opens with "THE DEMO ORG
+   IS ON FRANCHISE NOW — re-check the plan-blocked rows". I re-checked read-only:
+   Golden Crust is `growth` / `active` / **0 AI credits** / no `stripe_subscription_id`,
+   and Brew & Bean is identical. The AI Suite and Settings > MCP rows stay blocked, and
+   the third credential slot is still a duplicate of the first. Nobody should spend
+   another run re-testing that claim.
+
+### Task selection
+The board has 56 non-Done rows and almost none is a writing task: the P1 block is the
+same four duplicates, two non-features, and seven engineering-fix trackers, and most of
+P2 is trackers too. **The newest row was the workable one** and it had empty Notes:
+"settings/notifications.mdx email table is missing the emails added in the 2026-09-16
+redesign" (P3). Also note **PR #214 already took `billing/payment-failed.mdx`**, and the
+two null-Notes P2 dunning rows are its trackers, so do not pick those up.
+
+### The gap was much bigger than the row title said
+qtap shipped an email redesign on 2026-09-16 (`6d6da49`..`4d622e4`, 19 templates,
+1285 insertions). It did not just add emails. **It rewrote every subject line the
+published table listed.** A merchant searching their inbox for the documented
+"Action required: Qtap payment failed" finds nothing, because the email now reads
+**"Your card was declined"**. All twelve rows were wrong.
+
+Subjects are **not** in the template bodies; they come from exported `*Subject()`
+builders in each `lib/email/templates/**` file and are passed at the call site. Read
+those, not the JSX:
+
+| Published | Actual now |
+|---|---|
+| Welcome to Qtap, here's how to get started | `Your {plan} trial is live` |
+| Halfway through your trial | `Seven days left, and the counter is empty` **or** `{N} customers in seven days` |
+| Only 2 days left on your trial | `Two days left, {org}` |
+| Your Qtap trial ends in N days | `Three days left on your trial` / `One day left...` |
+| Welcome to Qtap *plan* | `You are on Qtap {plan}` |
+| You've upgraded to Qtap *plan* | `You are on {plan}` |
+| Your Qtap plan has been changed | `Your plan is now {plan}` |
+| Your Qtap subscription has been canceled | `Your {plan} plan is canceled` |
+| Qtap payment receipt | `Receipt · ${amount} for Qtap {plan}` |
+| Action required: Qtap payment failed | `Your card was declined` |
+| Qtap purchase confirmed | `{add-on label} added` |
+| Weekly Insights: *your business* | `Your week: {N} members, {N} rewards` |
+
+`trialMidpointSubject` genuinely has two branches (zero members vs some), so the table
+carries both rows rather than picking one.
+
+**Three emails were missing entirely** and were added: `trial-extended`
+("You earned three more days", from `billing/compute-engagement`, EXTENSION_DAYS = 3),
+and the two MCP ones — `mcp-paused` ("AI access to your data is paused", fired from
+`lib/mcp/lifecycle.ts` when an org drops below Elite) and `mcp-reauth-reminder`
+("Your AI keys reset on {date}", from the daily `cron/mcp-expiry` job at `0 3 * * *`,
+~7 days before a key expires or an OAuth connection hits its 60-day point).
+
+### The false claim that mattered most
+The article said "none of it can be turned off from this page". The **Marketing emails**
+card renders on that very page. Replaced with a new **"Stopped by Marketing emails"**
+column, verified against the **senders**, not the footers, because the two disagree:
+
+- Honour the flag: `billing/trial-drip` (`.eq('marketing_emails_enabled', true)`),
+  `ai/weekly-digest`, `billing/feature-spotlight`, and `billing/compute-engagement`
+  (which checks `org.marketing_emails_enabled === false` in JS rather than in the query).
+- **Does not**: `billing/trial-expiring` selects on `subscription_status` and
+  `trial_ends_at` alone. It still carries the marketing footer and its unsubscribe link,
+  so that one row reads **No** and ships a Warning. Already filed by PR #213; not re-filed.
+
+Grep `marketing_emails_enabled` across `app/api/` and you get the whole picture in one call.
+
+### CORRECTION TO THE 2026-09-17 ENTRY — the card is second, not fourth
+That entry says the Marketing emails card is "the fourth card". Measured live at 1440px,
+`/settings/notifications` has **three** `div.rounded-xl` cards in this order:
+Email Notifications (y 240, h 300), **Marketing emails (y 564, h 164)**, Push
+Notifications (y 752, h 300). The *switch* is the 4th `button[role=switch]` (y 671),
+which is what that note actually measured. The distinction matters because the old
+`notification-prefs.json` flow boxed `:nth-match(div.rounded-xl, 2)` as "Push" and that
+selector is now the Marketing card.
+
+### Screenshot (read-only, nothing saved)
+Recaptured `settings-notifications-overview.png` via
+`.routine/flows/notification-prefs-overview.json`. The published image predated the
+Marketing emails card entirely and boxed Push as number 2, so it no longer matched the
+page. New shot: 1440x1200 viewport, `clip {x:260,y:60,width:1180,height:1010}` fits the
+whole page with no scrolling (content ends ~y1052), all three cards boxed 1/2/3 with the
+Marketing card in gold. **Save Preferences was never clicked**; the only click in the
+flow is the cookie Decline. No customer PII on this page.
+
+### Gotchas for future runs
+- The page settles in ~11s. Default switch states on Golden Crust: email New Member
+  **on**, Reward Redemptions **off**, Weekly Report **on**; marketing **on**; push New
+  Member **off**, Reward Redemptions **on**, Low Stock **on**.
+- `div.rounded-xl:has-text('Marketing emails')` resolves to exactly one node and is the
+  stable handle; positional `:nth-match(div.rounded-xl, N)` is not, and will drift again
+  the next time a card is inserted.
+- `merchants/settings/notifications.mdx` is **LF**, not CRLF, so the 2026-09-15 CRLF
+  warning does not apply to this file. Check with `file` before editing any older one.
+- `feature-spotlight` was deliberately left out of the table: it honours the flag but is
+  still not in `vercel.json` crons, so it never sends. Its own row tracks that.
+
+### Gap discovery (1 row added, and it is a DOCS fix, not an engineering one)
+**"Every email link now opens a confirm page first, and three articles still describe the
+old one-click behaviour"** (P2). qtap `39ea7f9` rebuilt `app/api/auth/confirm/route.ts`
+so a GET renders a one-button page and reads nothing, and only the button's POST spends
+the token. Its header explains why: mail clients and security scanners prefetch links,
+which used to burn single-use tokens. So the email button no longer signs you in.
+`creating-your-account.mdx` still says "press **Confirm Email**. That takes you straight
+into onboarding" — the label is now **Confirm my email** and it lands on a confirm page
+first. `password-reset.mdx` (now "Choose a new password") and `staff/inviting.mdx` (now
+"Accept the invitation") have the same drift. **Capturable and safe**: the GET consumes
+nothing, so the interstitial can be screenshotted with any token value, like the `/t/`
+NFC page. Use `"anonymous": true` in the flow.
+
 ## 2026-09-17 — Turning off Qtap's marketing emails (the new opt-out switch)
 
 **Article:** `merchants/settings/marketing-emails.mdx` (new)
