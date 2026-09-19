@@ -4,10 +4,10 @@ sidebarTitle: "Notifications"
 description: "What the six alert switches in Settings do today, and which emails Qtap really sends you."
 ---
 
-Settings → Notifications holds six switches that promise alerts about your own business, such as an email whenever a customer joins your program. Your choices save to your account, and nothing sends on the back of them yet. This page explains what the switches really do today and which emails you actually receive.
+Settings → Notifications holds six switches that promise alerts about your own business, such as an email whenever a customer joins your program. Your choices save to your account, and nothing sends on the back of them yet. A seventh switch on the same page, **Send marketing emails**, is the one control here that changes what Qtap sends you. This page explains what the six really do today and which emails you actually receive.
 
-<Frame caption="Settings → Notifications: an Email card (1), a Push card (2), and a Save Preferences button (3) that stays grey until you change a switch.">
-  <img src="/images/settings/settings-notifications-overview.png" alt="The Notification Preferences page showing the Email Notifications card, the Push Notifications card, and the Save Preferences button" />
+<Frame caption="Settings → Notifications: the Email card (1), the Marketing emails card (2), and the Push card (3). Save Preferences stays grey until you change a switch.">
+  <img src="/images/settings/settings-notifications-overview.png" alt="The Notification Preferences page showing the Email Notifications card, the Marketing emails card, and the Push Notifications card" />
 </Frame>
 
 <Warning>
@@ -48,22 +48,34 @@ Changes do not save on their own. Flip a switch and **Save Preferences** wakes u
 
 ## What Qtap does email you
 
-Your account still gets mail, just not from these switches. All of it goes to the owner's login address, and none of it can be turned off from this page.
+Your account still gets mail, just not from those six switches. All of it goes to the owner's login address. One card on this page does change what arrives: **Marketing emails**, sitting between the two switch cards. Turning it off stops the trial sequence, feature spotlights, and the weekly digest. [Turning off Qtap's marketing emails](/merchants/settings/marketing-emails) walks through it. Everything else keeps coming whatever you do here.
 
-| Email | When it arrives |
-| --- | --- |
-| Welcome to Qtap, here's how to get started | The day your trial starts |
-| Halfway through your trial | Day 7 of the trial |
-| Only 2 days left on your trial | Day 12 of the trial |
-| Your Qtap trial ends in N days | Daily near the end of a trial |
-| Welcome to Qtap *plan* | Your first paid subscription starts |
-| You've upgraded to Qtap *plan* | You move up a plan |
-| Your Qtap plan has been changed | You move down a plan |
-| Your Qtap subscription has been canceled | A subscription ends |
-| Qtap payment receipt | Every successful charge |
-| Action required: Qtap payment failed | A card is declined |
-| Qtap purchase confirmed | You buy an add-on |
-| Weekly Insights: *your business* | Monday mornings, Elite and Franchise only |
+Qtap rewrote every one of these subject lines in September 2026, so older mail in your inbox reads differently.
+
+| Email | When it arrives | Stopped by Marketing emails |
+| --- | --- | --- |
+| Your *plan* trial is live | The day your trial starts | Yes |
+| Seven days left, and the counter is empty | Day 7, when nobody has joined yet | Yes |
+| *N* customers in seven days | Day 7, once members have joined | Yes |
+| Two days left, *your business* | Day 12 of the trial | Yes |
+| Three days left on your trial | Each of the last three days of a trial | No |
+| You earned three more days | Qtap adds days to your trial | Yes |
+| You are on Qtap *plan* | Your first paid subscription starts | No |
+| You are on *plan* | You move up a plan | No |
+| Your plan is now *plan* | You move down a plan | No |
+| Your *plan* plan is canceled | A subscription ends | No |
+| Receipt · $49.00 for Qtap *plan* | Every successful charge | No |
+| Your card was declined | A card is declined | No |
+| *Add-on name* added | You buy an add-on | No |
+| Your week: *N* members, *N* rewards | Monday mornings, Elite and Franchise only | Yes |
+| AI access to your data is paused | Your plan drops below Elite while Claude or ChatGPT is connected | No |
+| Your AI keys reset on *date* | About a week before a connected AI tool needs signing in again | No |
+
+<Warning>
+  **Three days left on your trial** shows an unsubscribe link, and that link does not stop it. The email runs on its own daily schedule and never reads the Marketing emails switch, so it keeps arriving until the trial ends. Watch your trial end date in [Billing](/merchants/settings/billing) instead.
+</Warning>
+
+The last two rows only reach accounts that have connected Claude or ChatGPT to their analytics.
 
 Password resets and staff invitations arrive by email too. Those are covered in [Resetting a forgotten password](/merchants/settings/password-reset) and [Inviting a team member](/merchants/staff/inviting).
 
