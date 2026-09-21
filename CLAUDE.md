@@ -20,6 +20,103 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-21 — The app's NFC reader was removed in 1.0, so "open the app and tap" is dead
+
+**Article:** `merchants/nfc-tags/how-customers-tap.mdx` (new) + one-line corrections to
+`merchants/nfc-tags/what-is-nfc.mdx` and `merchants/nfc-tags/tap-and-earn.mdx`
+**Branch:** `claude/busy-clarke-oqfiq4`
+**Status:** Done. SMOKE_OK (TLS bridge, §6a, first try); 3 real annotated screenshots + 1 brand
+SVG, validate-images 4/4 OK. One task this run: no screenshot backfill exists.
+
+### ENVIRONMENT: the Playwright/Chromium mismatch is GONE
+`/opt/pw-browsers` now ships **chromium-1243**, which is what plain `npm install playwright`
+(1.63.0) wants. The pin-to-1.62 advice in the 2026-09-06/07 entries is **out of date**; do not
+follow it. `npm install sharp playwright` and run. The TLS bridge is still required and worked
+on the first attempt.
+
+### Task selection — the board is unchanged, but MAIN HAS CAUGHT UP
+`origin/main` is at the **PR #213** merge, so #186 through #213 have all landed. The
+"main is 27 PRs behind" refrain in the entries below is over. Open PRs are now only
+**#214, #215, #216** (the 09-18/19/20 runs: payment-failed, the email table, email links)
+plus the old stragglers #186-#191, #163-#165, #158, #154, #148, #145, #137.
+
+`notion-query-data-sources` (SQL) returns ~55 non-Done rows and not one is a writing task:
+the same verified duplicates, the same blocked-on-account rows, and a still-growing pile of
+**engineering-fix trackers** filed by earlier runs. Backfill is exhausted (the on-main
+zero-PNG scan returns the same four non-workable files as every run since 2026-08-14).
+So §14 gap discovery; row created and locked before writing.
+
+### THE FINDING — the customer-side instruction in two published articles is impossible
+`Abdalestar/Qtap_app` commit **`8e5ce6a` (2026-09-06, on main)** removed the in-app Core NFC
+reader for the 1.0 App Store submission. App Review demanded a hardware demo video for the
+Core NFC entitlement and the founder decided NFC was not needed for 1.0, so `NFCModal.tsx`,
+`react-native-nfc-manager`, the `nfc.readersession` entitlement, `NFCReaderUsageDescription`
+and the Android NFC permission were all deleted. Verified today: **zero NFC mentions in
+`app.json`**, no reader code anywhere. Commit `be0fc5c` keeps the Plus tab's **Scan NFC**
+button as a placeholder that alerts *"Coming soon. Tap-to-earn with Qtap NFC stickers is on
+the way. For now, scan the merchant's QR code or enter your code above."*
+
+So both of these, live on main, describe something a customer cannot do:
+- `what-is-nfc.mdx`: "A customer opens the Qtap app and holds their phone close to it."
+- `tap-and-earn.mdx`: "A customer taps with the Qtap app open."
+
+The surviving path is the **OS background tag read**: the tag's single NDEF record is
+`https://c.qtap.qa/t/{token}`, the phone hands that URL to the app as a Universal Link / App
+Link, and `Qtap_app/app/t/[token].tsx` previews the tap (`process-nfc-tap` with
+`preview: true`, deployed v15, strictly no writes) before a **Confirm** / **Not now** screen
+commits it. The preview strings are `describeAction`: "Collect a stamp" / "Earn N points" /
+"Check in". The preview-then-confirm is deliberate, per the route's own header: a phone can
+brush a tag by accident on a counter.
+
+### THE 2026-09-04 BLOCKER NOTE IS STALE — the domain half has landed
+That entry says "do not claim a background tap opens the app" because `app/t/[token].tsx`
+calls itself "inert until `c.qtap.qa` DNS points at the dashboard and the AASA / assetlinks
+files are served". **That comment is now out of date and I verified why:**
+- `c.qtap.qa` resolves in public DNS to Vercel (216.150.16.129, `vercel-dns-017.com`).
+- `list_project_domains` on project `prj_rOcnefEKNQiblg7cu4gwl89LgpAp` shows **c.qtap.qa and
+  dashboard.qtap.qa are the same project**, both `verified: true`, `redirect: null`.
+  c.qtap.qa was added 2026-08-03 and last updated 2026-08-06.
+- `dashboard.qtap.qa/.well-known/apple-app-site-association` returns 200 with appID
+  `2MSD7LA29V.com.qtaployalty.app` and a `/t/*` component commented "NFC tag taps
+  (background tap-to-open)", and `/.well-known/assetlinks.json` returns 200 for
+  `com.qtaployalty.app`. Same project, so c.qtap.qa serves both files at the same paths.
+
+**What I still could NOT verify, and did not claim:** the sandbox proxy returns
+`CONNECT tunnel failed, response 403` for `c.qtap.qa` itself, so I could not fetch those
+files from the host tags actually encode, and I cannot test a real phone. The article
+therefore states what is certain (the in-app reader is gone, the Scan NFC button says
+Coming soon, the confirm screen is the path) and tells merchants to **tap one tag with
+their own phone and watch the Taps count move before printing signage**. Do not soften
+that into a flat "background taps work" in a future edit without a real device test.
+
+### Screenshots (read-only, nothing tapped or written)
+`.routine/flows/how-customers-tap.json` + `how-customers-tap-phone.json`, **stamp demo**
+(Brew & Bean, the only reachable org with NFC tags: 3 tags, 5 total taps, real Last Tapped
+dates). The NFC Tags list with Total Taps / Taps / Last Tapped boxed, a tag's detail page,
+and the `/t/` web fallback at 390x844 with its stale "Open the Qtap app and tap the tag
+again" line boxed. Plus one brand SVG of the four-step phone journey, which is the §9 case:
+the customer side is the mobile app and cannot be captured with Playwright.
+
+### Gotchas for future runs
+- **Golden Crust has zero NFC tags.** The old `nfc-tap-and-earn.json` flow is stale: it is
+  `"account": "points"` and targets a tag named "West Bay", which belongs to **Najma**, still
+  unreachable. Any NFC capture has to use the **stamp** account.
+- Brew & Bean tag tokens, all active and safe to load read-only: `TUWQ39D294ZLZ`
+  ("Test Tag 1 — Stamp", 2 taps, last Sep 2 2026), `TT7B4ECQTDVJC`, `TTAVD6BBTJK55`.
+- `th:has-text('Taps')` resolves to exactly 1 on `/nfc-tags` (Last Tapped contains "Tapped",
+  not "Taps"). The detail page fits 1440x900 with no scrolling: stat cards y148 h103,
+  Details card y275 h186. Clip `{x:255,y:0,w:1185,h:500}`.
+- A `number` badge on the Details card's "Last Tapped" row covers the first letter. Plain
+  box on an explicit `rect` covering label **and** value (`{x:300,y:390,w:300,h:54}`) reads
+  correctly; let the `<Frame caption>` carry the order. Same lesson as five earlier runs.
+- The `/t/` page still raises the dashboard cookie banner; click **Decline** first.
+- **Conflict check:** open PR #190 edits `tap-and-earn.mdx`, but only its intro line, the Add
+  Stamp bullet and the "How a tap differs" Warning. My edit is in the untouched
+  "A tap always belongs to a customer" section, and no open PR touches `what-is-nfc.mdx`.
+  Diff every open NFC branch before editing these files.
+- `QTAP_NAJMA_EMAIL` is **still** a duplicate of `QTAP_EMAIL` (`owner@goldencrust.qa`).
+  Asked for in every run log since 2026-08-19; still the cheapest unblock on the board.
+
 ## 2026-09-17 — Turning off Qtap's marketing emails (the new opt-out switch)
 
 **Article:** `merchants/settings/marketing-emails.mdx` (new)
