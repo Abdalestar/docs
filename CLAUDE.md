@@ -20,6 +20,128 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-06 — The four plan-limit walls (and the Campaigns meter that disagrees with one)
+
+**Article:** `merchants/billing/limit-reached.mdx` (new) + a five-claim correction to
+`merchants/billing/usage-meters.mdx`
+**Branch:** `claude/busy-clarke-a3czc7`
+**Status:** Done. SMOKE_OK **with no TLS bridge** (see below); 6 real annotated screenshots,
+validate-images 6/6 and 3/3 OK. One task this run: no screenshot backfill exists.
+
+### THE ENVIRONMENT GOT EASIER — two long-standing workarounds are no longer needed
+- **The TLS bridge (§6a) was NOT required.** `node .routine/smoke-test.mjs` printed
+  `SMOKE_OK` on the first try with no `PLAYWRIGHT_PROXY` at all. Every run since 2026-08-10
+  needed the bridge. Try the bare smoke test first and only reach for `tls-bridge.mjs` if it
+  fails; starting the bridge unnecessarily costs several minutes.
+- **The Playwright version to pin is 1.63.0.** `/opt/pw-browsers` now ships **both** 1194 and
+  **1243**, and 1.63 maps to 1243, so `npm install playwright@1.63.0` just works. The
+  2026-09-02 note pinning 1.62.0 is out of date.
+
+### MAIN HAS CAUGHT UP — the backlog was a merge problem and someone merged it
+`origin/main` is at the **PR #213** merge and carries **127 MDX files**. PRs #192 through
+#213 all landed. Still open and unmerged: **#186-#191** (win-back, campaign analytics,
+deleted members, the two "without the app" articles, NFC placement, NFC Add Tag), **#214-#217**
+(payment-failed, the email-table correction, email confirm links, NFC how-customers-tap),
+plus the old **#163-#165**, **#158**, **#154** and the triplicate #137/#145/#148. Diff those
+before claiming a topic; everything else on the board is now genuinely on main.
+
+### Task selection — the board is still 100% non-writing work
+`notion-query-data-sources` (SQL mode) returns 59 non-Done rows and not one is a writing
+task: the same verified duplicates, the same three capture blockers, and a now-very-large
+bucket of **engineering-fix trackers filed by earlier runs**. `Abdalestar/qtap` main has not
+moved since **2026-09-16** (`4d622e4`, the email redesign), so there is no new feature to
+document either. So §14 gap discovery again; row created and locked before writing.
+
+**The account blockers have NOT lifted.** `QTAP_NAJMA_EMAIL` is *still* `owner@goldencrust.qa`,
+a duplicate of `QTAP_EMAIL`, for the eighth week running. Najma (elite, 77 credits) and Dana
+(franchise, 84 credits, live subscription) stay unreachable, so **Cancel Subscription, the AI
+Suite and Settings > MCP / AI stay blocked**. Pointing that third credential slot at Najma or
+Dana is still the single highest-value environment fix on this project.
+
+### How the gap was found
+Component-string diff, the technique the 2026-09-16 run recorded, against a corpus of all 127
+on-main MDX **plus** every MDX on all 13 open PR branches:
+
+```
+grep -rhoE '<(DialogTitle|AlertDialogTitle|CardTitle|SheetTitle|h1|h2|h3)[^>]*>[^<{]{8,55}</...>' components app
+```
+
+68 strings had zero hits. **"Campaign Limit Reached" and "Loyalty Card Limit Reached" have
+never appeared in any Qtap doc**, and neither has "Location Limit" or "Staff Limit".
+
+### The gap: four create gates, four different counting rules
+Nothing documented what a merchant sees when a plan limit actually stops them. All four are
+`canCreate()` from `hooks/use-plan-limits.ts`, and each counts something different:
+
+| Gate | Where | Counts |
+|---|---|---|
+| `loyaltyCards` | full-page block on `/cards/new` + `/points/new` | active `stamp_cards` + active `points_programs` |
+| `campaigns` | full-page block on `/campaigns/new` | **only `status='active'`** campaigns |
+| `locations` | Add Location relabels to `Location Limit (N)`, disabled | active `locations` |
+| `staff` | Invite Staff relabels to `Staff Limit (N)`, disabled | **every** `staff` row (`staffList.length`, no filter) |
+
+Growth = 2 / 5 / 3 / 3 (`PLAN_TIERS` in `lib/stripe/config.ts`).
+
+### TWO FINDINGS, both live on the reachable demo orgs
+1. **The Billing Campaigns meter and the campaign wall count differently.** The meter
+   (`settings/billing/page.tsx`, the `campaignsRes` query) counts **every** campaign row with
+   no status filter; the wall counts active only. Golden Crust renders **Campaigns 5 of 3 used
+   in red** while `/campaigns/new` opens the full wizard. Published `usage-meters.mdx` said
+   "you cannot start a new one until you are back under the limit", which is simply wrong, and
+   it told merchants to **delete** a campaign when **pausing** is enough. Both corrected.
+2. **Public offers spend the campaign allowance but are hidden from the Campaigns page.**
+   `useCampaigns` filters `.neq('campaign_type','offer')`, while the wall counts every active
+   campaign row including offers. Brew & Bean's four campaigns are **all offers**, so the
+   account shows **"No campaigns yet"** and **"Campaign Limit Reached"** at the same time, with
+   nothing on the Campaigns page to pause. That pair is the article's centrepiece.
+
+### Other facts the article carries (all read, not assumed)
+- `lib/billing/enforce-limits.ts` `checkResourceLimit` is the server-side gate, and the
+  dashboard barely uses it: the stamp-card wizard and the points-program form **insert directly
+  via the client Supabase**, and `/api/stamp-cards`, `/api/points-programs` and `/api/locations`
+  have **no callers in the UI at all**. `POST /api/campaigns` has no limit check of any kind.
+  So the client-side wall is the gate a merchant actually meets; the article describes that and
+  claims no server enforcement.
+- A **pending invite holds a seat** (`/api/staff/invite` inserts `is_active: true`), and there
+  is no way to deactivate a teammate: `/api/staff/delete` is a hard `.delete()`, owner-only,
+  and refuses to delete an owner.
+- **The Push Notifications meter never moves.** `push_notifications_used_this_month` is read by
+  the Billing page and set to 0 by the `reset-notifications` cron, and **nothing anywhere
+  increments it** (grepped the whole repo). Both demo orgs read 0. The old prose claimed it
+  counted sends; corrected.
+- Add-ons exist for an extra location and an extra loyalty card, but **not for campaigns or
+  staff seats**, so those two are pause-or-upgrade.
+
+**Deliberately not claimed:** `usePlanLimits` reads `subscription_plan` raw while
+`checkResourceLimit` runs it through `entitledPlan()` (non-paying statuses drop to starter), so
+the two can disagree during a failed payment. That is PR #214's territory and its article is
+not on main yet, so the link was left out rather than pointing at a 404.
+
+### Screenshots (read-only; nothing created, paused or deleted)
+`.routine/flows/plan-limits.json` (points demo, 1440x1100) and `plan-limits-wall.json` (stamp
+demo, 1440x1000). The only clicks in either flow are the cookie **Decline**. **Pause, Upgrade
+Plan and Create Campaign were never clicked**, so no campaign, offer or plan changed. No
+customer PII (billing meters, plan walls and the merchant's own offer names).
+
+### Gotchas for future runs
+- **Both walls need the right org.** The campaign wall is only reachable on **Brew & Bean**
+  (4 active campaigns of 3); the meter-vs-wall mismatch and the `Location Limit (2)` button are
+  only reachable on **Golden Crust** (5 rows / 2 active, and 2 of 2 branches). The **loyalty
+  card** wall is NOT reachable on either (both sit at 1 of 3), so it is prose only.
+- **`h2:has-text('Choose Campaign Type')` resolves nothing** and the box is dropped silently;
+  shadcn renders it as a `div`. `text="Choose Campaign Type"` (exact-text engine) works. Always
+  open the PNG and look for the box.
+- There are **two** `Upgrade Plan` buttons on the blocked page (one in the sidebar footer).
+  Scope it: `div.text-center button:has-text('Upgrade Plan')`.
+- The billing usage card sits at `{x:560, y:212, w:856, h:435}` at 1440x1100 and needs **~13 s**
+  to settle; a meter row is `div.flex.justify-between.text-sm:has-text('<Label>')`, which boxes
+  cleanly. `/campaigns/offers` needs ~12 s.
+- A full-width `box` on a block-level heading draws edge to edge and looks odd. On
+  `Campaign Limit Reached` I dropped the box and tightened the clip to `{x:580,y:180,w:600,h:230}`
+  instead, which reads much better at 10.8 KB.
+- One login attempt died with a `waitForURL` timeout and the identical command worked on an
+  immediate retry. Retry once before suspecting the credentials.
+
 ## 2026-09-17 — Turning off Qtap's marketing emails (the new opt-out switch)
 
 **Article:** `merchants/settings/marketing-emails.mdx` (new)
