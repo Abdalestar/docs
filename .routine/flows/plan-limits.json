@@ -24,14 +24,14 @@
       "actions": [ { "wait": 11000 } ],
       "clip": { "x": 256, "y": 60, "width": 1184, "height": 520 },
       "annotate": [
-        { "type": "box", "target": "h2:has-text('Choose Campaign Type')", "color": "plum" }
+        { "type": "box", "target": "text=\"Choose Campaign Type\"", "color": "plum" }
       ]
     },
     {
       "name": "limit-03-location-limit",
       "goto": "/settings/locations",
       "actions": [ { "wait": 11000 } ],
-      "clip": { "x": 556, "y": 180, "width": 864, "height": 300 },
+      "clip": { "x": 556, "y": 166, "width": 864, "height": 312 },
       "annotate": [
         { "type": "box", "target": "button:has-text('Location Limit')", "color": "plum" }
       ]
