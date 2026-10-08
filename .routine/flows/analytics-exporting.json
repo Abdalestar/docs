@@ -21,8 +21,10 @@
     },
     {
       "name": "exporting-02-dialog-points",
+      "goto": "/analytics",
       "actions": [
-        { "wait": 6000 },
+        { "wait": 3000 },
+        { "wait": 22000 },
         { "click": "button:has-text('Export')" },
         { "wait": 2500 }
       ],
@@ -30,8 +32,8 @@
       "clipTo": "[role=dialog]",
       "clipPadding": 16,
       "annotate": [
-        { "type": "box", "target": "[role=dialog] div.flex.gap-4", "number": 1, "color": "plum" },
-        { "type": "box", "target": "[role=dialog] button#points_overview", "number": 2, "color": "plum" }
+        { "type": "box", "target": "[role=dialog] div.flex.gap-4", "color": "plum" },
+        { "type": "box", "target": "[role=dialog] div.space-y-2:has(button#points_overview)", "color": "plum" }
       ]
     }
   ]
