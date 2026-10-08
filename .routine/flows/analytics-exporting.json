@@ -1,0 +1,38 @@
+{
+  "section": "merchants/analytics",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1000 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "exporting-01-button",
+      "goto": "/analytics",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 20000 }
+      ],
+      "waitMs": 2000,
+      "clip": { "x": 256, "y": 0, "width": 1184, "height": 330 },
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Export')", "color": "plum" },
+        { "type": "box", "target": "button:has-text('Last 30 days')", "number": 1, "color": "charcoal" }
+      ]
+    },
+    {
+      "name": "exporting-02-dialog-points",
+      "actions": [
+        { "wait": 6000 },
+        { "click": "button:has-text('Export')" },
+        { "wait": 2500 }
+      ],
+      "waitMs": 1500,
+      "clipTo": "[role=dialog]",
+      "clipPadding": 16,
+      "annotate": [
+        { "type": "box", "target": "[role=dialog] div.flex.gap-4", "number": 1, "color": "plum" },
+        { "type": "box", "target": "[role=dialog] button#points_overview", "number": 2, "color": "plum" }
+      ]
+    }
+  ]
+}

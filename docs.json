@@ -129,6 +129,7 @@
           "merchants/analytics/points-panels",
           "merchants/analytics/charts",
           "merchants/analytics/customer-lists",
+          "merchants/analytics/exporting",
           "merchants/analytics/reports-hub",
           "merchants/analytics/location-comparison",
           "merchants/analytics/points-activity",
