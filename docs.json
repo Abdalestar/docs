@@ -145,6 +145,7 @@
           "merchants/members/joined-without-the-app",
           "merchants/members/joining-without-the-app",
           "merchants/members/profiles",
+          "merchants/members/push-status",
           "merchants/members/complete-profile",
           "merchants/members/export-delete",
           "merchants/members/redemptions",

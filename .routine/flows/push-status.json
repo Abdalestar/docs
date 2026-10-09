@@ -1,0 +1,78 @@
+{
+  "section": "merchants/members",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 1000 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "push-status-01-list",
+      "goto": "/members",
+      "actions": [
+        { "wait": 3500 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 5500 }
+      ],
+      "waitFor": "th:text-is('Push')",
+      "waitMs": 2000,
+      "annotate": [
+        { "type": "redact", "rect": { "x": 329, "y": 319, "width": 492, "height": 440 }, "color": "charcoal" },
+        { "type": "box", "target": "th:text-is('Push')", "number": 1, "color": "plum" },
+        { "type": "box", "rect": { "x": 1299, "y": 376, "width": 64, "height": 57 }, "number": 2, "color": "plum" },
+        { "type": "box", "rect": { "x": 1299, "y": 510, "width": 64, "height": 77 }, "number": 3, "color": "plum" },
+        { "type": "box", "rect": { "x": 1299, "y": 319, "width": 64, "height": 57 }, "number": 4, "color": "gold" }
+      ]
+    },
+    {
+      "name": "push-status-02-row-menu",
+      "goto": "/members",
+      "actions": [
+        { "wait": 8500 },
+        { "click": "tbody tr:nth-child(4) button[aria-haspopup='menu']" },
+        { "wait": 1500 }
+      ],
+      "clip": { "x": 900, "y": 495, "width": 530, "height": 235 },
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('Push not enabled')", "color": "plum" }
+      ]
+    },
+    {
+      "name": "push-status-03-enabled",
+      "goto": "/members/d0128194-5872-4d5c-836e-4d0a4392892e",
+      "waitFor": "text=Push Notifications Enabled",
+      "waitMs": 9500,
+      "clip": { "x": 262, "y": 150, "width": 404, "height": 664 },
+      "annotate": [
+        { "type": "redact", "rect": { "x": 350, "y": 302, "width": 226, "height": 38 }, "color": "charcoal" },
+        { "type": "redact", "rect": { "x": 344, "y": 461, "width": 152, "height": 30 }, "color": "charcoal" },
+        { "type": "box", "target": "div[title='Push notifications enabled']", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has-text('Push Notifications')", "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "push-status-04-disabled",
+      "goto": "/members/a4058ff8-3118-46f9-9a69-0ae17b1ab496",
+      "waitFor": "text=Push Notifications Disabled",
+      "waitMs": 9500,
+      "clip": { "x": 262, "y": 150, "width": 404, "height": 664 },
+      "annotate": [
+        { "type": "redact", "rect": { "x": 350, "y": 302, "width": 226, "height": 38 }, "color": "charcoal" },
+        { "type": "redact", "rect": { "x": 344, "y": 461, "width": 152, "height": 30 }, "color": "charcoal" },
+        { "type": "box", "target": "div.rounded-xl:has-text('Push Notifications')", "color": "plum" }
+      ]
+    },
+    {
+      "name": "push-status-05-send-blocked",
+      "goto": "/members/a4058ff8-3118-46f9-9a69-0ae17b1ab496",
+      "waitFor": "text=Push Notifications Disabled",
+      "waitMs": 9500,
+      "actions": [
+        { "hover": "span.block:has(button:has-text('Send Notification'))" },
+        { "wait": 1500 }
+      ],
+      "clip": { "x": 700, "y": 46, "width": 740, "height": 150 },
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Send Notification')", "color": "plum" }
+      ]
+    }
+  ]
+}
