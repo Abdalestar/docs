@@ -16,8 +16,8 @@
   <rect x="46" y="86" width="214" height="46" rx="6" fill="#F8F5F2" stroke="#8E4A63" stroke-width="1.5"/>
   <text class="t n" x="56" y="104">One per customer.</text>
   <text class="t n" x="56" y="121">Check their ID first.</text>
-  <text class="t cap" x="46" y="152">“This note is only visible to</text>
-  <text class="t cap" x="46" y="167">staff, not customers.”</text>
+  <text class="t cap" x="46" y="152">"This note is only visible to</text>
+  <text class="t cap" x="46" y="167">staff, not customers."</text>
 
   <!-- column -->
   <path d="M286 114 H334" stroke="#423F4C" stroke-width="1.5"/>
