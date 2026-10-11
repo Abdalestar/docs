@@ -1,0 +1,62 @@
+<svg viewBox="0 0 900 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The staff note is saved as the reward description and shown to customers in the Qtap app">
+  <style>
+    .t { font-family: system-ui, -apple-system, sans-serif; }
+    .h { font-size: 15px; font-weight: 600; fill: #423F4C; }
+    .s { font-size: 12.5px; fill: #6B6770; }
+    .n { font-size: 12.5px; fill: #423F4C; }
+    .cap { font-size: 11.5px; fill: #6B6770; font-style: italic; }
+    .tag { font-size: 11px; font-weight: 600; fill: #8E4A63; letter-spacing: .4px; }
+  </style>
+  <rect width="900" height="430" fill="#F8F5F2"/>
+
+  <!-- dashboard side -->
+  <text class="t tag" x="28" y="34">WHAT YOU TYPE</text>
+  <rect x="28" y="48" width="250" height="132" rx="10" fill="#FFFFFF" stroke="#423F4C" stroke-width="1.5"/>
+  <text class="t h" x="46" y="74">Staff note (internal)</text>
+  <rect x="46" y="86" width="214" height="46" rx="6" fill="#F8F5F2" stroke="#8E4A63" stroke-width="1.5"/>
+  <text class="t n" x="56" y="104">One per customer.</text>
+  <text class="t n" x="56" y="121">Check their ID first.</text>
+  <text class="t cap" x="46" y="152">“This note is only visible to</text>
+  <text class="t cap" x="46" y="167">staff, not customers.”</text>
+
+  <!-- column -->
+  <path d="M286 114 H334" stroke="#423F4C" stroke-width="1.5"/>
+  <path d="M328 109 l8 5 -8 5 z" fill="#423F4C"/>
+  <rect x="338" y="92" width="196" height="44" rx="8" fill="#F0D793" stroke="#423F4C" stroke-width="1.5"/>
+  <text class="t h" x="356" y="112">saved as</text>
+  <text class="t n" x="356" y="128">rewards.description</text>
+
+  <!-- split -->
+  <path d="M542 114 H586" stroke="#423F4C" stroke-width="1.5"/>
+  <path d="M586 114 V74 H622" stroke="#423F4C" stroke-width="1.5" fill="none"/>
+  <path d="M586 114 V266 H622" stroke="#423F4C" stroke-width="1.5" fill="none"/>
+  <path d="M616 69 l8 5 -8 5 z" fill="#423F4C"/>
+  <path d="M616 261 l8 5 -8 5 z" fill="#423F4C"/>
+
+  <!-- app screen 1 -->
+  <text class="t tag" x="628" y="34">WHAT THE CUSTOMER READS</text>
+  <rect x="628" y="48" width="244" height="96" rx="10" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
+  <text class="t h" x="646" y="72">Available Rewards</text>
+  <circle cx="658" cy="102" r="12" fill="#F0D793"/>
+  <text class="t n" x="680" y="99">Free Pastry</text>
+  <text class="t s" x="680" y="116">One per customer. Check</text>
+  <text class="t s" x="680" y="131">their ID first.</text>
+  <text class="t cap" x="628" y="162">Their own card, in the Qtap app</text>
+
+  <!-- app screen 2 -->
+  <rect x="628" y="214" width="244" height="86" rx="10" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
+  <text class="t h" x="646" y="244">Free Pastry</text>
+  <text class="t s" x="646" y="265">One per customer. Check</text>
+  <text class="t s" x="646" y="280">their ID first.</text>
+  <text class="t cap" x="628" y="318">Your reward screen, when a customer</text>
+  <text class="t cap" x="628" y="333">browses your business</text>
+
+  <!-- counter side -->
+  <rect x="28" y="236" width="506" height="110" rx="10" fill="#FFFFFF" stroke="#6B6770" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text class="t h" x="46" y="262">Where it does not appear</text>
+  <text class="t s" x="46" y="285">Redemptions, Stamp Operations and Points Operations never print it,</text>
+  <text class="t s" x="46" y="303">and neither does the reward list in the editor on a stamp card.</text>
+  <text class="t s" x="46" y="326">Your team will not read it at the counter.</text>
+
+  <text class="t cap" x="28" y="396">One text box, two audiences: the label says staff, the Qtap app shows it to the customer.</text>
+</svg>
