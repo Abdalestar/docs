@@ -20,6 +20,131 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-12 — The Card Designer carries your design into the wizard now (correction)
+
+**Article:** `merchants/stamp-cards/card-designer.mdx` (correction + full recapture)
+**Branch:** `claude/busy-clarke-ke8xm8`
+**Status:** Done. SMOKE_OK on the first try, **no TLS bridge needed this run**; 8 real
+annotated screenshots (6 recaptured/new on the designer, 2 new on the wizard),
+validate-images 8/8 OK. One task this run: no screenshot backfill exists.
+
+### MAIN HAS CAUGHT UP — the long merge backlog is gone
+`origin/main` is now at the **PR #213 merge**, so everything from #192 to #213 has
+landed. The "main is 20+ PRs behind" note that every log since 2026-08 repeats is out of
+date. Still open and unmerged: **#186-#191** and **#214-#223**, plus the old #137, #145,
+#148, #154, #158, #163, #164, #165. I diffed all 24 open branches against `origin/main`
+before picking, which is still the only reliable way to avoid a duplicate.
+
+### PLAYWRIGHT VERSION TRAP, new numbers
+The image now ships chromium **1243** and **1194** at `/opt/pw-browsers`. A plain
+`npm install playwright` pulls **1.64**, which wants **1248**, so it fails. Pin
+`npm install playwright@1.63.0`, which maps to 1243. Running map: 1.56→1194, 1.59→1217,
+1.60→1223, 1.61→1228, 1.62→1234, **1.63→1243**, 1.64→1248. Check with
+`node -e "console.log(require('./node_modules/playwright-core/browsers.json').browsers.find(b=>b.name==='chromium').revision)"`.
+With the right pin the smoke test passed directly, with no proxy and no TLS bridge.
+
+### Task selection — the board is still trackers, duplicates and blockers
+`notion-query-data-sources` (SQL) returns ~70 non-Done rows and the shape is unchanged:
+engineering-fix trackers filed by earlier runs, verified duplicates, and rows blocked on
+an account this routine cannot reach. Backfill is still exhausted (the zero-PNG scan on
+main returns the same four non-workable files: `customer-app/settings-profile`,
+`index.mdx`, `support/faq.mdx`, and the `campaigns/analytics.mdx` stub, which open PR
+#187 still claims).
+
+**The demo-account blocker is unchanged and is still the cheapest fix on the board.**
+`QTAP_NAJMA_EMAIL` is **still** a duplicate of `QTAP_EMAIL` (`owner@goldencrust.qa`), so
+only Golden Crust (points, growth, 0 AI credits) and Brew & Bean (stamps, growth, 0
+credits) are reachable. Najma Coffee (elite, active, **77 AI credits**, 182 members) and
+Dana Salon (franchise, 84 credits) exist and are what the AI Suite, MCP/AI and
+cancel-subscription rows need. Pointing the third slot at Najma has been asked for in
+every run log since 2026-08-19.
+
+### How the gap was found
+Extracted every `DialogTitle` / `AlertDialogTitle` / `CardTitle` / `SheetTitle` string
+from `components` + `app` and grepped each against a **combined corpus** (all 127 on-main
+`.mdx` plus every `.mdx` from all 24 open PR branches, materialised with `git show`).
+That returned 33 zero-hit strings. Most were known blockers (Points Receipt, MCP/AI,
+maintenance mode, cancel subscription). **"Start from Template", "Card Settings" and
+"Stamp Icon" were the tell**: they belong to a page that already has a published
+article, which meant the article was describing a UI that no longer exists.
+
+### The finding — a published article that went stale three months ago
+qtap commit **`e87da9e` (2026-07-17, "logo asset pipeline + real Card Designer
+persistence")** rebuilt `/cards/design`. The published article (PR #141, 2026-06-13) was
+never updated, so `main` was wrong on the one thing a reader cares about:
+
+> "The design you make here does not carry into the wizard. Save & Continue opens the
+> new-card wizard, but the wizard starts fresh..."
+
+**That is false now, and I proved it live, not just in source.** Picking the Pizza Place
+template and clicking Save & Continue lands on `/cards/new` with `#stamps` = **8**, the
+preview card red (`#D32F2F`) and the stamps rendered as 🍕 — all three from the template.
+
+Four more sections were wrong, all verified live:
+| Published claim | Reality |
+|---|---|
+| Colors tab sets **three** colors (Background, Text, Accent) | **One** "Card Color" (1 `input.font-mono`), picker + 8 presets |
+| A **Layout** tab with Card Type, Stamp Layout, Font | The tab is **Settings**, CardTitle **"Card Settings"**, and it holds only Stamps to Collect + Reward Text |
+| Icons "grouped into Food & Drinks, Services, Shopping, Entertainment, Symbols" | A flat 6-column grid of the 12 `STAMP_ICONS`, CardTitle **"Stamp Icon"** |
+| (not mentioned) | The designer's **Reward Text becomes the card's main reward** |
+
+`types/card-design.ts` says the removals were deliberate: decorative options with no
+storage column and no mobile rendering (layout, accent/text color, fonts, logo position,
+tagline) were deleted. Do not re-add them to the article.
+
+### What the article now carries (all grounded)
+- `app/(dashboard)/cards/design/page.tsx` `handleSave` writes `CARD_DESIGN_STORAGE_KEY`
+  to sessionStorage, toasts **Design applied**, routes to `/cards/new`.
+- `app/(dashboard)/cards/new/page.tsx:30` reads that key **once on mount and removes
+  it**, validates the shape, and passes `designPrefill` into `StampCardWizard`.
+- `stamp-card-wizard.tsx:75` — `prefill` is `mode === 'create' && !initialData`, so a
+  design never applies to a card you are editing. It seeds `stamps_required`,
+  `card_color`, `stamp_icon`, and builds `rewards[0] = {name: reward_text,
+  reward_type: 'main', trigger_value: stamps_count}`.
+- `use-card-design.ts` `applyTemplate` does `setDesign(template.design)`, a full
+  **replace**, so picking a template wipes edits you already made. Shipped as a Warning.
+- Six templates (Coffee Shop, Pizza Place, Salon & Spa, Retail Store, Gaming Cafe,
+  Blank) and the "no sidebar or Cards-page link" line were both still correct; a grep for
+  `cards/design` across `app`/`components`/`lib` returns only two code comments.
+
+### The access rule the old article missed
+`canAccessRoute` runs `requiredLoyaltyType` **before the owner bypass**, and `/cards`
+requires `stamps`. Verified live on Golden Crust (points): the owner gets the full
+**Access Denied** page, and the sidebar reads Points in place of Cards. So the designer
+cannot be captured on the points account at all.
+
+### Screenshots (nothing was created or published)
+`.routine/flows/card-designer.json` (1440x1000, 6 steps) + the new
+`card-designer-handoff.json` (1440x1100, 2 steps), both on the **stamp** demo
+(Brew & Bean). Save & Continue only writes sessionStorage and navigates, so it is safe to
+click; **Publish Card and Save Draft were never clicked**, so no card exists. Deleted the
+stale `card-designer-layout.png` (that tab is gone; grep confirmed nothing else
+referenced it). No customer PII on any shot.
+
+### Gotchas for future runs
+- **Geometry at 1440x1000 is stable and entirely above the fold**, no scrolling or hover
+  needed: tablist `x280 y168 w556 h36`, Save & Continue `x1235 y98 w181 h36`, every
+  panel card `x280 y220 w556` (templates h423, colors h186, icons h250, settings h274),
+  preview card `x860 y168 w556 h450`.
+- Crop selectors that resolve to exactly one node:
+  `div.rounded-xl:has(div:text-is('Start from Template'))`,
+  `div.rounded-xl:has(input.font-mono)` (colors),
+  `div.rounded-xl:has(div.grid.grid-cols-6)` (icons),
+  `div.rounded-xl:has(input[placeholder='Get a FREE reward!'])` (settings),
+  `div.rounded-xl:has(div:text-is('Preview'))`,
+  `div.rounded-xl:has-text('Loyalty rewards')` (wizard rewards step).
+- **Tabs are `[role=tab]:text-is('Colors'|'Icons'|'Settings')`.** Template tiles are
+  `button:has(span:text-is('Pizza Place'))`.
+- **The wizard step indicator is NOT `button:text-is('Rewards')`** (the button wraps
+  nested nodes, so text-is resolves nothing and the click times out at 30s). Use
+  `button:has-text('Rewards')`. The four steps sit at y164, 192px apart from x280.
+- The colors picker is a Radix portal that opens **below** the card at `y361 w246 h258`,
+  so `clipTo` on the card cuts it off. An explicit `clip {x:264,y:150,width:612,height:500}`
+  catches the tabs, the card and the open picker with its 8 presets.
+- `/cards/design` needs ~9s to settle, `/cards/new` ~14s.
+- Brew & Bean renders a **Franchise** badge in the sidebar while its DB row says
+  `growth`; it has 1 active card, so `/cards/new` renders rather than the limit wall.
+
 ## 2026-09-17 — Turning off Qtap's marketing emails (the new opt-out switch)
 
 **Article:** `merchants/settings/marketing-emails.mdx` (new)
