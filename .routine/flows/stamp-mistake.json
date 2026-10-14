@@ -1,0 +1,209 @@
+{
+  "section": "stamp-cards",
+  "account": "stamp",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "defaultWaitMs": 3000,
+  "_notes": [
+    "READ-ONLY. Confirm is never clicked, so no stamp is issued and no reward is minted.",
+    "Member Q173600 (App Reviewer) sits at 3 of 5 on Brew & Bean's Coffee Lovers Card and has no email, so no redaction is needed on the dialog.",
+    "The Issue button label is dynamic: 'Issue Stamp' at quantity 1, 'Issue 2 Stamps' at quantity 2. Selecting it by the static text fails.",
+    "Member search needs the full qtap_id; a bare 'Q' prefix returns nothing.",
+    "Number badges cover the text on these tight crops, so the boxes are plain and the Frame caption carries the order."
+  ],
+  "steps": [
+    {
+      "name": "stamp-mistake-quantity",
+      "goto": "/stamp-operations",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 6000
+        },
+        {
+          "fill": [
+            "input[placeholder='Search members...']",
+            "Q173600"
+          ]
+        },
+        {
+          "wait": 3500
+        },
+        {
+          "click": ".divide-y button"
+        },
+        {
+          "wait": 4000
+        },
+        {
+          "fill": [
+            "#stamps-qty",
+            "2"
+          ]
+        },
+        {
+          "wait": 1500
+        }
+      ],
+      "clipTo": "div.rounded-xl:has(#stamps-qty)",
+      "clipPadding": 30,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "#stamps-qty"
+        },
+        {
+          "type": "box",
+          "target": "p:has-text('Issue multiple stamps at once')"
+        }
+      ]
+    },
+    {
+      "name": "stamp-mistake-confirm",
+      "goto": "/stamp-operations",
+      "actions": [
+        {
+          "wait": 7000
+        },
+        {
+          "fill": [
+            "input[placeholder='Search members...']",
+            "Q173600"
+          ]
+        },
+        {
+          "wait": 3500
+        },
+        {
+          "click": ".divide-y button"
+        },
+        {
+          "wait": 4000
+        },
+        {
+          "fill": [
+            "#stamps-qty",
+            "2"
+          ]
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "click": "button.w-full:has-text('Issue 2 Stamps')"
+        },
+        {
+          "wait": 2500
+        }
+      ],
+      "clipTo": "[role=dialog]",
+      "clipPadding": 24,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "[role=dialog] p:has-text('Current:')"
+        },
+        {
+          "type": "box",
+          "target": "[role=dialog] p:has-text('This will complete the card')"
+        }
+      ]
+    },
+    {
+      "name": "stamp-mistake-history",
+      "goto": "/stamp-operations",
+      "actions": [
+        {
+          "wait": 7000
+        },
+        {
+          "click": "[role=tab]:has-text('Recent Activity')"
+        },
+        {
+          "wait": 3500
+        }
+      ],
+      "clipTo": "div.rounded-xl:has(table)",
+      "clipPadding": 20,
+      "annotate": [
+        {
+          "type": "redact",
+          "target": "table tbody tr:nth-child(1) td:first-child",
+          "color": "charcoal"
+        },
+        {
+          "type": "redact",
+          "target": "table tbody tr:nth-child(2) td:first-child",
+          "color": "charcoal"
+        },
+        {
+          "type": "redact",
+          "target": "table tbody tr:nth-child(3) td:first-child",
+          "color": "charcoal"
+        },
+        {
+          "type": "redact",
+          "target": "table tbody tr:nth-child(4) td:first-child",
+          "color": "charcoal"
+        },
+        {
+          "type": "redact",
+          "target": "table tbody tr:nth-child(5) td:first-child",
+          "color": "charcoal"
+        },
+        {
+          "type": "redact",
+          "target": "table tbody tr:nth-child(6) td:first-child",
+          "color": "charcoal"
+        },
+        {
+          "type": "redact",
+          "target": "table tbody tr:nth-child(7) td:first-child",
+          "color": "charcoal"
+        },
+        {
+          "type": "redact",
+          "target": "table tbody tr:nth-child(8) td:first-child",
+          "color": "charcoal"
+        },
+        {
+          "type": "redact",
+          "target": "table tbody tr:nth-child(9) td:first-child",
+          "color": "charcoal"
+        },
+        {
+          "type": "redact",
+          "target": "table tbody tr:nth-child(10) td:first-child",
+          "color": "charcoal"
+        },
+        {
+          "type": "redact",
+          "target": "table tbody tr:nth-child(11) td:first-child",
+          "color": "charcoal"
+        },
+        {
+          "type": "redact",
+          "target": "table tbody tr:nth-child(12) td:first-child",
+          "color": "charcoal"
+        },
+        {
+          "type": "redact",
+          "target": "table tbody tr:nth-child(13) td:first-child",
+          "color": "charcoal"
+        },
+        {
+          "type": "redact",
+          "target": "table tbody tr:nth-child(14) td:first-child",
+          "color": "charcoal"
+        }
+      ]
+    }
+  ]
+}
