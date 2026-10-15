@@ -20,6 +20,136 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-15 — What a repeat customer earns on their second card
+
+**Article:** `merchants/stamp-cards/repeat-cards.mdx` (new)
+**Branch:** `claude/busy-clarke-o1x8bt`
+**PR:** https://github.com/Abdalestar/docs/pull/227
+**Status:** Done. SMOKE_OK **first try, no TLS bridge needed**; 3 real annotated
+screenshots + 1 brand SVG, validate-images 4/4 OK. One task this run: the screenshot
+backfill queue is genuinely empty (re-verified two ways, see below).
+
+### ENVIRONMENT: two long-standing traps are gone this run
+- **No TLS bridge.** `node .routine/smoke-test.mjs` printed SMOKE_OK on the first
+  attempt with no proxy flag at all. Every run log since 2026-08-10 says the bridge is
+  required. Try the bare smoke test first now; only reach for §6a if it fails.
+- **Playwright pins itself.** `/opt/pw-browsers` now ships chromium **1248** (and 1194),
+  and a plain `npm install sharp playwright` pulls **1.64.1**, which wants exactly 1248.
+  No version pinning needed. The 1.62.0 / build-1234 advice in the 2026-09-06 entry is
+  out of date. Re-check with
+  `node -e "console.log(require('./node_modules/playwright-core/browsers.json').browsers.find(b=>b.name==='chromium').revision)"`.
+
+### Task selection — one writable row, and it was flagged as such
+`notion-query-data-sources` (SQL mode) returns ~75 non-Done rows and the shape is
+unchanged: almost all are **engineering-fix trackers** filed by earlier runs, plus the
+same verified duplicates and capture blockers. The single exception was the row yesterday's
+run filed and explicitly marked **"A GENUINE DOCS GAP (writable and capturable)"**:
+*A milestone reward fires once per member per card, ever, while the main reward fires on
+every completion.* Took it.
+
+**Main has moved.** `origin/main` is at the PR #213 merge; **PRs #214-#226 are open and
+unmerged**, so main lacks 13 articles. I diffed every open branch's MDX list before
+writing. PR #223 edits `stamp-cards/rewards.mdx`, so this went in as a **sibling article**
+exactly as the row advised, not as an edit to that file.
+
+### The finding, verified independently rather than taken from the row
+Both rulebooks live in `lib/stamps/issue-stamp.ts`:
+- **Interim (milestone), the loop at :383** — checks `pending_rewards` on
+  `member_id + reward_id + stamp_card_id` with **no status filter and no cycle filter**.
+  Once issued, never again, even after the member redeems it.
+- **Main, the completion block at :423** — finds the active main reward and inserts with
+  **no existence check at all**. Fires on every completion.
+- **Signup (:256)** — same once-ever check as interim, and additionally skipped from the
+  till entirely, because `/api/stamps/issue` passes `skip_rules: true` and the signup
+  block is gated on `isNewEnrollment && !skip_rules`.
+
+### TWO THINGS THE ROW MISSED — both are now the best part of the article
+1. **The counter preview promises the milestone anyway.**
+   `stamp-operations/page.tsx:451` computes `projectedInterimReward` from the stamp count
+   alone and never reads `pending_rewards`, so `projectionInsight` renders
+   `unlocks <reward>` for a reward the issue will not produce. This is screenshottable in
+   one frame and became the article's centrepiece.
+2. **A blocked main-reward voucher is reported as issued.** The live DB carries
+   `idx_unique_available_reward`, a UNIQUE index on `(member_id, reward_id) WHERE
+   status = 'available'` (confirmed read-only). The `:423` insert **does not capture its
+   error**, so a second completion while the first voucher is unredeemed fails silently
+   while `rewardsEarned` still names the reward. `stamp-operations/page.tsx:948` renders
+   that array as "Rewards Earned:", and `app/api/stamps/issue/route.ts` feeds the same
+   array into `cardCompletedPayload`, so the **till screen and the customer's push both
+   name a voucher that was never created**.
+
+### THE CAPTURE DATA — reuse this, it is perfect for the topic
+**Brew & Bean Cafe** (`QTAP_STAMP_EMAIL`), Coffee Lovers Card (5 stamps, interim at 1/3/4,
+main at 5). Member **`Q173600` ("App Reviewer")**: `cards_completed = 3`, `current_stamps = 3`,
+**no email on record** so only the phone needs redaction. With Number of Stamps set to 1 the
+strip reads `Now: 3 of 5 stamps · unlocks 10% Off Any Drink` while Pending Rewards directly
+below already lists **10% Off Any Drink, Available, code 24083777**. One frame, whole article.
+
+Read-only corroboration across the card's four repeat customers: all three milestones and the
+main reward were issued **exactly once** to `Q173600` across three completions. `QTAP-TT024`
+(`cards_completed = 2`) is the one case where a milestone repeated, and only after the first
+copy was redeemed, which is the app-scan rulebook, not the till's.
+
+### SCOPE LIMIT — do not tighten this without re-checking
+`Qtap_app/supabase/functions/_shared/earn.ts` `grantReward` blocks only on
+`status = 'available'`, so the app-scan door and the till door genuinely disagree. But the
+deployed `process-qr-scan` is **version 27 from 2026-08-02** while the repo's `earn.ts` last
+changed **2026-08-09**, so the deployed behaviour could not be confirmed from here. The
+article therefore states the till rule exactly and carries only a `<Note>` saying app scans
+run through a separate rulebook and the till rule is the stricter one. Verify the deployment
+before making that Note specific.
+
+### An open question left open
+The row said to get a human to confirm the once-ever interim rule is intended before writing.
+No human is watching a scheduled run, so the article documents the shipped behaviour and its
+consequence honestly **without claiming it is by design**, and the PR body says so. If
+engineering changes the rule, this article needs a rewrite.
+
+### Backfill is exhausted, checked two ways
+1. The zero-PNG scan on `origin/main` returns the same four non-workable files as every run
+   since 2026-08-14: `customer-app/settings-profile` (mobile), `index.mdx`, `support/faq.mdx`,
+   and the 6-line `campaigns/analytics.mdx` stub.
+2. **New check worth repeating:** I also looked for articles whose images are all *reused*
+   from another article (the generic-hero problem the 2026-06-14 run found). Across every
+   on-main MDX, exactly **one** image is referenced twice and **no article** is built entirely
+   from reused images. So no hidden backfill is lurking.
+
+`campaigns/analytics.mdx` is still blocked and the 2026-10-07 root cause still holds:
+`app/api/analytics/campaigns/[id]/performance/route.ts:71` selects `type`, and
+`information_schema` confirms the column is **`campaign_type`**. One-word fix, still unfixed.
+
+### Gotchas for future runs
+- **Number badges on the projection line cover its first character.** `p:has-text('Now:')`
+  is only 16px tall, so the badge lands on the "N". Box the containing band instead:
+  `div.space-y-2:has(> div.max-w-\\[366px\\]) > div.border` (506x62). Same lesson for the
+  reward rows on the card editor: box `div.rounded-lg.border:has-text('<reward name>')`
+  (718x66) rather than the name text, or the badge eats the first digit of "10% Off".
+- Clipping `/stamp-operations` to the **right column** (`{x:856,y:222,width:570,height:960}`
+  at 1440x1400) captures the card preview, the projection strip, Pending Rewards and the
+  Issue Stamp button with **zero customer PII**, because the member identity lives in the
+  left column. Left column is `{x:280,y:222,width:560,height:292}`; the phone redacts at
+  `{x:378,y:361,width:134,height:27}`.
+- The member search needs the **full** `qtap_id`; a bare prefix returns nothing. A
+  `.divide-y button` count taken immediately after `fill` reads 0 because results land later,
+  but Playwright's auto-wait on the click handles it.
+- `/cards/<id>` needs ~8s plus the cookie **Decline** before `button:has-text('Rewards')`
+  resolves. The Rewards step card crops cleanly with `div.rounded-xl:has-text('Rewards')`.
+- `cards_completed` is incremented by the engine and **rendered nowhere** in the dashboard.
+  Both `/members/[id]` and `/stamp-operations` select it and never display it, so there is no
+  screenshot of a completion count to be had. The article says so and points at lifetime
+  Total Stamps instead, which is itself approximate (`Q173600` reads 16 where 3x5+3 = 18).
+- `qtap` main has not moved since **2026-09-16** (`4d622e4`), so there is still no newly
+  shipped dashboard feature to document. Drift and under-documented sub-surfaces remain the
+  productive vein.
+
+### Gap discovery (3 added, all engineering)
+- **P2** the counter preview promises a milestone the member already holds (finding 1 above).
+- **P2** a blocked second main-reward voucher is reported as issued to staff and customer
+  (finding 2 above).
+- **P3** Stamp Operations renders `organization_members.total_redemptions` under the heading
+  **Rewards Earned**, so a member holding four unredeemed vouchers reads 0. Visible in this
+  run's own screenshot, so the article notes it in one line.
+
 ## 2026-09-17 — Turning off Qtap's marketing emails (the new opt-out switch)
 
 **Article:** `merchants/settings/marketing-emails.mdx` (new)
