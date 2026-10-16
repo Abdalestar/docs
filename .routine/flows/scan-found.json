@@ -1,0 +1,26 @@
+{
+  "section": "merchants/cards",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 1000 },
+  "fakeCamera": { "qr": "Q173600", "aim": "locked", "qrPx": 340 },
+  "steps": [
+    {
+      "name": "scan-03-found",
+      "goto": "/stamp-operations",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 6500 },
+        { "click": "button:has(svg.lucide-scan-line)" },
+        { "wait": 7000 }
+      ],
+      "waitMs": 2000,
+      "clip": { "x": 280, "y": 150, "width": 580, "height": 310 },
+      "annotate": [
+        { "type": "redact", "target": ".divide-y button p.break-words", "color": "charcoal" },
+        { "type": "box", "target": "input[placeholder='Search members...']", "number": 1 },
+        { "type": "box", "target": ".divide-y button", "number": 2 }
+      ]
+    }
+  ]
+}
