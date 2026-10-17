@@ -96,6 +96,7 @@
           "merchants/campaigns/audience",
           "merchants/campaigns/messages",
           "merchants/campaigns/timing",
+          "merchants/campaigns/stopping-a-campaign",
           "merchants/campaigns/stats",
           "merchants/campaigns/birthday",
           "merchants/campaigns/winback",
