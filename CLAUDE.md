@@ -20,6 +20,77 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-20 — RUN STOPPED: SMOKE_FAIL, the sandbox can no longer reach Qtap's Supabase
+
+**Articles:** none. **Branch:** `claude/busy-clarke-l1uza5`
+**Status:** Stopped at ROUTINE §6 before touching any task row. No article, no backfill.
+Shipped one surgical tooling fix (below) so the next run gets a legible failure.
+
+### The blocker, diagnosed to the bottom
+`smoke-test.mjs` reports `SMOKE_FAIL: login_failed - all credentials rejected`. **That is
+not what is wrong.** Chromium reached `dashboard.qtap.qa` fine and the login form rendered;
+the page printed **"Failed to fetch"** because the one request that matters died:
+
+```
+https://amaucrgpsulnykvyrlzq.supabase.co/auth/v1/token?grant_type=password
+    :: net::ERR_CONNECTION_CLOSED
+```
+
+The agent proxy answers **403 to CONNECT** for that host (`curl -v` shows
+`CONNECT tunnel failed, response 403`, and `$HTTPS_PROXY/__agentproxy/status`
+lists it under `recentRelayFailures` as
+`connect_rejected - gateway answered 403 to CONNECT (policy denial or upstream failure)`).
+So **the environment's network allowlist no longer covers the Supabase host the dashboard
+depends on.** Nothing in this repo can fix it.
+
+### What it is NOT (all four ruled out, do not re-derive)
+- **Not dead credentials.** Read-only `auth.users` on the live project: both
+  `owner@goldencrust.qa` and `owner@brewbean.qa` exist, are confirmed, and **both have
+  `last_sign_in_at = 2026-10-17`**. They worked three days ago and are untouched.
+- **Not a Supabase outage.** `list_projects` returns exactly one project,
+  `amaucrgpsulnykvyrlzq` ("qtap", ap-northeast-2), status **ACTIVE_HEALTHY**.
+- **Not the dashboard.** `dashboard.qtap.qa` serves 200 and the marketing + login page
+  render normally.
+- **Not the TLS bridge (§6a).** The bridge came up on 38443 and was used; its own upstream
+  CONNECT is denied with the same 403. The bridge cannot help with a policy denial —
+  it only fixes handshake resets on hosts the policy already allows.
+- **Not a Playwright/browser mismatch.** `npm install playwright` pulls **1.64.1**, which
+  wants chromium **1248**, and this image ships 1248 at `/opt/pw-browsers`. No version
+  pinning was needed this run (the 1.62/1234 note from 2026-09-06 is now obsolete).
+
+### THE ONE FIX, and it is an environment change
+Add **`amaucrgpsulnykvyrlzq.supabase.co`** (better: `*.supabase.co`) to the network policy
+of the Claude Code on the web environment this routine runs in. Until then **every run will
+stop here**, because screenshots are mandatory (founder decision, 2026-08-08) and no
+screenshot can be captured without a login.
+
+### Why no run caught this earlier — a real bug in our own smoke test
+`smoke-test.mjs` step [2/5] probed a **hardcoded, stale project ref**,
+`qeriqybbomqqkdqaylhl.supabase.co`, which is **not on the Qtap account at all** (the only
+project is `amaucrgpsulnykvyrlzq`). That dead host happens to answer 401 from this sandbox,
+which the corrected smoke test treats as "reachable" — so step 2 printed a **false pass**
+and the run face-planted later at `login_failed`, which reads exactly like dead credentials.
+Three separate run logs (2026-09-14, 09-15, 09-17) record chasing that phantom.
+
+Fixed this run, in two lines: the constant in `.routine/smoke-test.mjs` and the project ref
+in `ROUTINE.md` §1 now name the real project. Re-running then fails honestly and early:
+
+```
+SMOKE_FAIL: supabase_unreachable - net::ERR_CONNECTION_CLOSED
+  at https://amaucrgpsulnykvyrlzq.supabase.co/auth/v1/health
+```
+
+**If a future run sees `login_failed` again, the credentials are the LAST thing to suspect.**
+Probe with `page.on('requestfailed')` and read `$HTTPS_PROXY/__agentproxy/status` first.
+
+### Board untouched, deliberately
+No Notion row was locked, edited or closed (§6: exit without touching any task row). A dated
+note went on the parent page instead. For the next run, nothing about the backlog has changed
+since 2026-09-17: the board is still mostly engineering-fix trackers, the same four P1
+duplicates, and the same capture-blocked rows; backfill is still exhausted.
+
+---
+
 ## 2026-09-17 — Turning off Qtap's marketing emails (the new opt-out switch)
 
 **Article:** `merchants/settings/marketing-emails.mdx` (new)
