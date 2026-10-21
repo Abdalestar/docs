@@ -1,0 +1,125 @@
+{
+  "section": "merchants/settings",
+  "account": "points",
+  "viewport": {
+    "width": 1440,
+    "height": 1400
+  },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "business-logo-01-upload",
+      "goto": "/settings",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 7000
+        }
+      ],
+      "waitMs": 1500,
+      "clipTo": "div.rounded-xl:has(label[for='logo-upload'])",
+      "clipPadding": 16,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "label[for='logo-upload']",
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "text=Recommended: 400x400px, PNG or JPG",
+          "color": "gold"
+        }
+      ]
+    },
+    {
+      "name": "business-logo-02-derived",
+      "goto": "/points/c0000000-0000-0000-0000-000000000001/pass-design",
+      "actions": [
+        {
+          "wait": 24000
+        }
+      ],
+      "waitMs": 2000,
+      "clip": {
+        "x": 248,
+        "y": 480,
+        "width": 616,
+        "height": 434
+      },
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(img[src*='logo-trimmed'])",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(img[src*='logo-watermark'])",
+          "number": 2,
+          "color": "gold"
+        }
+      ]
+    },
+    {
+      "name": "business-logo-03-wallet-pass",
+      "goto": "/points/c0000000-0000-0000-0000-000000000001/pass-design",
+      "actions": [
+        {
+          "wait": 24000
+        }
+      ],
+      "waitMs": 2000,
+      "clipTo": "div.grid.grid-cols-2.gap-3",
+      "clipPadding": 28,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "img[src*='logo-trimmed'] >> nth=1",
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "img[src*='logo-trimmed'] >> nth=2",
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "business-logo-04-two-slots",
+      "goto": "/merchant-page",
+      "actions": [
+        {
+          "wait": 13000
+        }
+      ],
+      "waitMs": 1500,
+      "clip": {
+        "x": 272,
+        "y": 760,
+        "width": 624,
+        "height": 326
+      },
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.space-y-2:has(> label:text-is('Merchant Logo'))",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.space-y-2:has(> label:text-is('Merchant Logo (Transparent PNG)'))",
+          "number": 2,
+          "color": "gold"
+        }
+      ]
+    }
+  ]
+}

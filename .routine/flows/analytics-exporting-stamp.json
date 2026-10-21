@@ -1,0 +1,42 @@
+{
+  "section": "merchants/analytics",
+  "account": "stamp",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "exporting-03-dialog-stamp",
+      "goto": "/analytics",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 22000
+        },
+        {
+          "click": "button:has-text('Export')"
+        },
+        {
+          "wait": 2500
+        }
+      ],
+      "waitMs": 1500,
+      "clipTo": "[role=dialog]",
+      "clipPadding": 16,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "[role=dialog] div.space-y-2:has(button#overview)",
+          "color": "plum"
+        }
+      ]
+    }
+  ]
+}
