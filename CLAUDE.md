@@ -20,6 +20,132 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-09 — Why a customer is not getting your messages (push status)
+
+**Article:** `merchants/members/push-status.mdx` (new) + a correction to `support/faq.mdx`
+and a cross-link in `merchants/members/profiles.mdx`
+**Branch:** `claude/busy-clarke-qp1gh4`
+**Status:** Done. SMOKE_OK first try (TLS bridge, §6a); 5 real annotated screenshots + 1 brand
+SVG, validate-images 6/6 OK. One task this run: no screenshot backfill exists.
+
+### ENVIRONMENT: playwright 1.63 is the pin now, and the smoke test passed first try
+`/opt/pw-browsers` ships chromium **1243** and **1194** today. `npm install playwright` pulls
+**1.64**, which wants **1248** and fails to launch. `npm install playwright@1.63.0` matches 1243
+and works. The version-to-build table from earlier runs still holds: 1.56→1194, 1.59→1217,
+1.60→1223, 1.61→1228, 1.62→1234, **1.63→1243**, 1.64→1248. The TLS bridge was still required and
+stayed up for the whole run.
+
+### Task selection — the board has no workable row, and `main` has caught up
+`origin/main` is now at the **PR #213** merge (127 MDX files), so the long-running "main is 20+
+PRs behind" note is finally out of date. **21 PRs are open**: #137, #145, #148, #154, #158,
+#163-#165, #186-#191, #214-#220. I diffed every one against `origin/main` before writing; the
+claimed MDX paths are analytics/exporting+overview, billing/limit-reached+usage-meters+
+invoices-payment+payment-failed, nfc-tags/*, getting-started/creating-your-account,
+settings/password-reset, staff/inviting, settings/notifications, members/how-members-join+
+joined/joining-without-the-app+deleted-members, qr-codes/customer-scan-flow,
+campaigns/analytics+stats+winback, offers/editing+voucher-design, passes/pass-design-studio,
+resources/*, stamp-cards/editing.
+
+`notion-query-data-sources` (SQL) returns ~70 non-Done rows and **not one is writable**: verified
+duplicates, not-shipped features, capture-blocked rows, and the now-dominant bucket of
+**engineering-fix trackers** filed by earlier runs. So this run did §14 gap discovery, created the
+row, locked it, and wrote it.
+
+**`Abdalestar/qtap` is frozen at 2026-09-16** (`4d622e4`), and every commit since 2026-08-10 is the
+email redesign plus the marketing opt-out, which PRs #213/#215/#216 already cover. The **mobile**
+repo has moved (2026-10-05 and 10-07: every dialing region in the country picker, a 30 s OTP resend
+cooldown, Google Wallet behind an app_config flag, explore/map unreachable state). None of it is
+Playwright-capturable, so it cannot carry a screenshot article.
+
+### How the gap was found
+Extracted every `placeholder=` string and every `<CardTitle|DialogTitle|h1..h3>` from the dashboard
+and grepped each against a **combined corpus** (all 127 on-main `.mdx` plus every `.mdx` from all 21
+open PR branches, materialised with `git show`). That surfaced `/api/members/[id]/mute-status`,
+which is called from `app/(dashboard)/members/[id]/page.tsx:178` and has no doc coverage at all.
+
+### The gap
+qtap commit **`4abddf9`** (2026-07-28, "Surface per-merchant mute state on the member profile") plus
+`edd451f` added a **Push Notification Status Banner** to the member profile, a bell badge on the
+avatar, an amber **Muted your notifications** chip, and the org-scoped `mute-status` route that reads
+`member_merchant_mutes` with the service role (that table's RLS only admits the member's own JWT).
+Published `members/profiles.mdx` was written **2026-06-12**, before all of it, and gives push a single
+clause in a bullet list. "Mute" appears in 8 on-main articles, always as a cause of non-delivery,
+never as something a merchant can see.
+
+### THE FINDING — the green banner reads one switch and promises four
+The banner says *This customer will receive notifications from your campaigns*, but a campaign push
+is `behavioral` and the deployed `send-push-notification` (**v21**, read via Supabase, matches the
+mobile repo copy) suppresses it unless **all** of these hold: `push_enabled`, an
+`onesignal_player_id`, `communication_opt_in === true`, `notification_prefs.behavioral === true`, and
+no `member_merchant_mutes` row. The banner checks only `push_enabled`.
+
+`TOGGLEABLE_CATEGORIES` in `Qtap_app/src/features/notifications/registry.ts` sets the customer-facing
+switch **"Suggestions & offers"** (*Nudges and merchant campaigns*) to `defaultEnabled: false`, and
+`useAuthStore.ts:539` writes `notification_prefs: { behavioral: false }` at registration. Read-only
+counts across the project: **343 members, 254 with the green banner, only 144 of those with a
+registered device, and exactly 1 member campaign-reachable.** The article says this qualitatively
+("most of your customers will not get a campaign on their phone until they turn it on") rather than
+publishing platform-wide numbers into merchant docs.
+
+### Also corrected
+`support/faq.mdx` told merchants *"Use **Mute Notifications** instead if you only want to stop
+sending them campaigns."* **There is no such control.** The row menu is View Profile / Send
+Notification (or a disabled **Push not enabled**) / Add Tag / Delete Member, and `member_merchant_mutes`
+is written only by the customer in the app (`app/account/settings.tsx` `handleUnmute`). Replaced with
+the honest advice and a cross-link.
+
+### Screenshots (read-only; nothing sent, saved or deleted)
+`.routine/flows/push-status.json`, stamp demo (Brew & Bean), 1440x1000. Only the cookie **Decline**,
+a row menu and a hover were clicked. Member names and contact columns redacted on every shot that
+carries one.
+
+| member | state | why it was chosen |
+|---|---|---|
+| `Q173600` "App Reviewer" (`d0128194-…`) | push on, device, `notification_prefs = {}` | **no email on the record**, and it is the live proof of the finding: green banner, campaign push would be suppressed |
+| `Q721848` "Foreman Smoke Test" (`a4058ff8-…`) | push off, no device | no email; gives the amber banner, the disabled button and the disabled menu item |
+| `Q102812` | ghost (deletion requested) | renders the `—` in the Push column |
+
+**The muted state could not be captured:** `member_merchant_mutes` has **0 rows project-wide**, and
+seeding is forbidden. That half is prose plus the §9 SVG.
+
+### Gotchas for future runs
+- **Do not place numbered boxes down a single narrow table column.** Four numbered boxes in the 64px
+  Push column collided with each other and with the badges. Selector-targeted plain boxes plus an
+  ordered `<Frame caption>` is the readable version (same lesson as the notification-stats run).
+- **Pixel rects on `/members` drift between runs.** My probe measured `tbody` at y=319 with rows at
+  319/376/433…, and the capture rendered ~20px lower, so rect-based boxes landed between rows.
+  Selector targets (`tbody tr:nth-child(2) svg.lucide-bell`, `th:text-is('Push')`) are stable.
+  `svg.lucide-bell` does **not** match `lucide-bell-off`, so the two states address cleanly.
+- **A disabled button still shows its tooltip** if you hover the wrapper, not the button:
+  `span.block:has(button:has-text('Send Notification'))`. `[role=tooltip]` resolves to a degenerate
+  1x1 box, so do not try to annotate the tooltip itself; clip around it instead
+  (`{x:760, y:47, w:680, h:150}` at 1440x1000) and box the button.
+- Member profile geometry at 1440x1000, identical on both members: avatar `{413,196,96x96}`, bell dot
+  `{489,272,24x24}`, name y308, Qtap ID y352, phone y467, banner `{280,709,362x86}`. A clip of
+  `{262,150,404x664}` holds the whole left column; redact `{350,302,226x38}` (name) and
+  `{344,461,152x30}` (phone).
+- `/members/[id]` needs ~9.5s to settle before the banner renders.
+- **`profiles.mdx` is CRLF.** Convert back before writing or the diff comes back as a full-file
+  replacement (the 2026-09-15 lesson, hit again).
+
+### Blockers re-verified this run (all unchanged)
+- `QTAP_NAJMA_EMAIL` is **still** a byte-for-byte duplicate of `QTAP_EMAIL` (`owner@goldencrust.qa`).
+  Seven weeks of run logs have asked for this. Najma Coffee is elite with **77** AI credits and Dana
+  Salon franchise with **84**; pointing that third slot at either one unblocks the AI Suite, MCP/AI
+  and cancel-subscription rows in one change.
+- Both reachable orgs are **growth / 0 AI credits**, so `/api/ai/insights` 403s and the whole
+  **AI Insights** panel (Recommendations / Trends / Next 7 days / Worth a look, 345 lines, zero doc
+  coverage) returns null. It is the largest uncovered dashboard surface left.
+
+### Gap discovery (2 rows added)
+- **P2:** `regional_benchmarks` is **empty project-wide** (0 rows, every region and business type), so
+  `components/dashboard/analytics/regional-benchmarks.tsx` renders null for every merchant on every
+  plan. The route has no plan gate, so this is a data gap, not an entitlement one, and it is the one
+  piece of the blocked "AI Suite" row a growth account could otherwise show.
+- **P2:** the member-profile push banner over-promises (the finding above). Filed against
+  `merchants/members/push-status.mdx` so the Warning can come out once the dashboard reads the other
+  three conditions.
+
 ## 2026-10-08 — Exporting your analytics (the three formats and what they really contain)
 
 **Article:** `merchants/analytics/exporting.mdx` (new) + a label correction to `analytics/overview.mdx`
