@@ -20,6 +20,121 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-11 — The reward "Staff note (internal)" is what the customer reads
+
+**Articles:** `merchants/stamp-cards/rewards.mdx` + `merchants/points/rewards.mdx` (both corrections)
+**Branch:** `claude/busy-clarke-sfl9j5`
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 4 new real annotated screenshots + 1 brand SVG,
+validate-images 7/7 and 6/6 OK. One task this run: no screenshot backfill exists.
+
+### Environment
+- `main` is at the PR #213 merge. Open now: **#214-#222** (one per day since 09-18), plus the
+  older #163-#165, #186-#191, #137/#145/#148, #154, #158. Twenty-three open PRs; I diffed every
+  one against `origin/main` before picking, and neither reward article is touched by any of them
+  (`stamp-cards/editing.mdx` is claimed three times over, `rewards.mdx` is not).
+- **`playwright@1.63.0` is still the right pin** (chromium 1243, which ships at `/opt/pw-browsers`).
+  A bare `npm install playwright` pulls 1.64 and wants 1248. The 2026-10-10 note holds.
+- TLS bridge required again and stayed up for the whole run.
+- `QTAP_NAJMA_EMAIL` is **still** a duplicate of `QTAP_EMAIL`. Unchanged since 2026-08-19.
+- `Abdalestar/qtap` has not moved since 2026-09-16. **`Abdalestar/Qtap_app` has** (2026-10-05/07:
+  Google Wallet behind an app_config flag, the full dialing-region country picker, a 30 s OTP
+  resend cooldown). All of it is customer-app surface, so none of it is Playwright-capturable.
+
+### Task selection — the board is still all trackers, duplicates and blockers
+~70 non-Done rows and not one is writable: engineering-fix trackers filed by earlier runs,
+verified duplicates, or blocked on an Elite/Franchise account. The one In-progress row
+(Campaign Analytics) says in its own Notes not to write it, because open PR #187 already
+carries the article and only needs a human to resolve its conflict. Backfill is exhausted:
+the zero-PNG scan on `origin/main` returns the same four non-workable files.
+
+### How the gap was found
+Same combined-corpus method as the 2026-10-10 run, pointed at a different string set. All
+on-main `.mdx` plus every `.mdx` from the 20 open PR branches went into one scratch dir
+(166 files), then every `placeholder="..."` and `label="..."` string of 14-60 chars from
+`components/` and `app/` was grepped against it. **"Instructions for staff on how to fulfill
+this reward..."** had never appeared in the docs, in any branch, ever. That tooltip is the
+thread this article pulls.
+
+### THE FINDING — the box labelled internal is the customer-facing description
+Both reward editors offer one textarea labelled **Staff note (internal)**, with the helper
+line *"This note is only visible to staff, not customers."* underneath and, on the stamp card,
+a tooltip repeating *"(not visible to customers)"*. Both save it to **`rewards.description`**:
+- `components/dashboard/stamp-card/tabs/rewards-tab.tsx:195` (the dialog the create wizard and
+  the edit page both mount), read back at `:116`
+- `components/dashboard/points-program-form.tsx:279` (`id="staffNote"`), read back at `:235`
+
+The live `rewards` table has exactly one text column for this and **no `staff_note` column**
+(checked `information_schema`, not the migrations).
+
+**Customers read it.** `Qtap_app` `src/store/useWalletStore.ts` fetches
+`from('rewards').select('*')` into `cardRewards`, and `CardDetailsScreen.tsx:147` prints
+`reward.description` under the reward name in the **Available Rewards** section of the
+customer's own card. `MerchantRewardScreen.tsx:62,116` uses it as the reward **subtitle** when
+a customer browses the business, replacing the default "Collect N stamps and unlock free coffee."
+
+**Staff do not.** `/redemptions` renders no reward description anywhere, and neither
+`components/ui/reward-voucher.tsx` nor `components/dashboard/shared/redemption-type.tsx`
+contains the word at all. `/stamp-operations` and `/points-operations` both
+`.select('*, rewards(*)')` and render none of it. The stamp reward list in the editor shows
+name, type badge and trigger only. So **both halves** of the published claim were false.
+
+The seeded data settles the column's real identity: every non-null description in the project
+is customer-facing copy ("A pastry on us to get you started.", "Enjoy a complimentary blowout,
+any length, any style.", "Redeem 100 stars for a fresh cookie or a stuffed Medjool date.").
+Nobody has ever typed a staff instruction into it.
+
+### What was corrected
+- `stamp-cards/rewards.mdx` said *"**Staff Note** — optional internal note shown to staff at the
+  point of redemption"*. Replaced, plus a new section with the Warning, the two screenshots and
+  the SVG, and a "What to write instead" that points staff instructions at the reward **name**
+  (`reward-voucher.tsx:97` does render the name, so staff really do see it) or the card's terms.
+  Also fixed two labels I verified live: the buttons are **Add reward** and **Save reward**,
+  not Add Reward / Save Reward.
+- `points/rewards.mdx` said *"**Staff note**: a note your team reads at the counter. Customers
+  never see it."* and captioned a Frame *"The staff note stays internal."* Both replaced.
+
+### Screenshots (read-only; nothing was saved to either account)
+`.routine/flows/reward-staff-note.json` (stamp, Brew & Bean) and
+`reward-staff-note-points.json` (points, Golden Crust). The money shot is the stamp one: the
+**Edit reward** dialog for Free Pastry, its Staff note box holding the real seeded line "A pastry
+on us to get you started.", boxed in plum, directly above the red-boxed claim that customers
+cannot see it. **Publish Card / Save & Activate / Save as Draft were never clicked**, so no card
+or program changed. No customer PII (merchant's own reward copy only).
+
+### Gotchas for future runs
+- **The reward dialog's Save reward button writes nothing to the database.** Both
+  `handleSave` (rewards-tab) and `saveRewardFromDialog` (points form) only `setRewards(...)` in
+  client state; the DB write happens on the form's Save & Activate / Publish. That makes it safe
+  to type into a reward, save the dialog, and capture the list line, which is how the points
+  list-line shot was taken without touching the account.
+- Card edit URLs for the two reachable demos: `/cards/b0000000-0000-0000-0000-000000000001`
+  (Brew & Bean, Coffee Lovers Card, 5 stamps, 4 rewards) and
+  `/points/c0000000-0000-0000-0000-000000000001` (Golden Crust, Baker's Rewards, 2 rewards).
+  The card edit page lands on **Card Design**; `button:has-text('Rewards')` on the step
+  indicator jumps straight to the Rewards step with no validation gate. It needs ~14 s first.
+- Reward rows on the stamp side are `div.p-3.border.rounded-lg` (exactly 4, 718x66 at x=305);
+  Free Pastry and 10% Off Any Drink are **the only two with a description**, at nth=2 and nth=3.
+  On the points side the card is `div.rounded-xl:has(button:text-is('Add Reward'))` and its rows
+  are its `div.rounded-lg` children. Note the page has **both** `Add Reward` (header) and
+  `Add reward` (footer) buttons, so `:text-is` is required.
+- **`clipTo: "[role=dialog]"` on the points reward dialog pulls in a broken reward-image
+  placeholder** (the seeded `image_url` 404s), which eats a third of the crop. An explicit
+  `clip {x:452,y:752,width:540,height:212}` at 1440x1300 frames just the label, the textarea,
+  the helper line and the Save button, and still comes in at 11 KB.
+- **The repo uses straight quotes everywhere**: zero `.mdx` on `main` contains a curly
+  apostrophe. `.writing-rules/content-patterns` says so explicitly and it is easy to miss when
+  drafting. Convert before committing.
+- `stamp-cards/rewards.mdx` is **CRLF**; `points/rewards.mdx` is LF. Edit the first in binary or
+  the diff becomes a whole-file replacement.
+
+### Gap discovery (1 row added)
+- **P1:** the app-side copy fix for the finding above. Relabel the field and drop the two false
+  helper lines plus the tooltip; a genuinely private per-reward note would need a new column and
+  a staff surface to show it on, and neither exists today. Filed as an engineering row rather
+  than written into an article, since the docs half shipped here.
+
+---
+
 ## 2026-10-10 — Your business logo (gap-discovery article)
 
 **Article:** `merchants/settings/business-logo.mdx` (new) + a two-line correction to
