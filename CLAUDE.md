@@ -20,6 +20,161 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-17 — Pausing or deleting a campaign (gap-discovery article)
+
+**Article:** `merchants/campaigns/stopping-a-campaign.mdx` (new)
+**Branch:** `claude/busy-clarke-dzckg8`
+**Status:** Done. SMOKE_OK (**no TLS bridge needed this run**, see below); 5 real annotated
+screenshots + 1 brand SVG, validate-images 6/6 OK. One task this run: backfill is still
+exhausted, re-verified independently (the zero-image scan on `origin/main` returns the same
+four non-workable files: `customer-app/settings-profile`, `index.mdx`, `support/faq.mdx`,
+and the `campaigns/analytics.mdx` stub, which open PR #187 already claims).
+
+### ENVIRONMENT — three changes, read these before you lose an hour
+- **The bare smoke test passed first try.** No scratch cert, no `tls-bridge.mjs`, no
+  `PLAYWRIGHT_PROXY`. The 2026-10-16 entry says the bridge was needed again. It was not this
+  run. Try bare first; it is one command and it either works or it does not.
+- **Playwright self-pins correctly now.** `/opt/pw-browsers` ships chromium **1248** (and
+  1194), and a plain `npm install sharp playwright` pulls 1.64.1, which wants 1248. No
+  version pinning, no `npx playwright install`.
+- **THE SUPABASE MCP CANNOT REACH PRODUCTION.** `list_projects` returns exactly one project,
+  `amaucrgpsulnykvyrlzq`, and `execute_sql` against it works. That is **not** the production
+  project: its orgs are Brew House Qatar / Glow Spa / Juice Cafe / tester, none of which is a
+  demo account, and `.env.example` names the real one as **`eqjqbxdgpwvhpyyjnbqo`**
+  (`qeriqybbomqqkdqaylhl`, the ref ROUTINE.md §1 still prints, appears once in the repo and is
+  also not it). Both of those ids return `You do not have permission to perform this action`.
+  So **the usual read-only production verification was unavailable** and every fact below is
+  grounded in source code plus the live dashboard instead. Do not report the demo data as
+  changed on the strength of that other project; it is a different dataset.
+
+### Task selection — the board is still not a writing queue
+`notion-query-data-sources` (SQL mode) returns ~80 non-Done rows and the shape is unchanged:
+almost all are **engineering-fix trackers** filed by earlier runs whose article already ships
+the honest Warning, plus the long-standing verified duplicates and capture blockers (cancel
+subscription, AI Suite, MCP/AI, the points receipt). So §14 gap discovery; the row was created
+and locked before a line was written.
+
+**Read the newest open branch's CLAUDE.md, not this file's top entry.** `origin/main` is at
+the **PR #213** merge, and **PRs #214-#228 are open and unmerged**, so their run-log entries
+exist only on their own branches (`git show origin/claude/busy-clarke-z6omgo:CLAUDE.md`).
+`qtap` (dashboard) main has not moved since 2026-09-16; `Qtap_app` is at 2026-10-07 but
+mobile-only, so not capturable.
+
+### How the gap was found
+Built a corpus of **3,179 MDX** (127 on-main plus every file from all 26 open PR branches,
+materialised with `git archive`), then extracted user-visible strings from every file under
+`components/dashboard` and `app/(dashboard)` (JSX text nodes plus `label`/`title`/
+`placeholder`/`description` literals) and scored each file by how many of its strings the
+corpus never mentions. `app/(dashboard)/campaigns/page.tsx` came back **7 of 7 uncovered**.
+
+### THE TRAP I ALMOST FELL INTO — pause/resume is NOT uncovered
+Nine published articles already describe Pause and Resume (`overview`, `timing`, `stats`,
+`birthday`, `winback`, `welcome`, `milestone`, `points-multiplier`, `wizard`), and `stats.mdx`
+has a whole **"Pause or delete from the stats page"** section. A general "how to stop a
+campaign" article would have been a duplicate. What no article anywhere answers is the
+**consequence** half, which is the merchant's real question, so that is the whole article.
+Same shape as the published `merchants/cards/deleting.mdx`, which exists even though
+`stamp-cards/overview.mdx` already names Delete.
+
+### The two uncovered facts
+1. **Pausing does not stop redemption of vouchers already issued.**
+   `app/api/campaigns/rewards/[code]/redeem/route.ts` validates `campaign_rewards.status`
+   and `expires_at` and reads the campaign row only for `organization_id`, `reward_type` and
+   `reward_config`. `grep campaign.status app/api/campaigns/rewards/` returns **nothing**.
+   The counter agrees: `redemptions/page.tsx:307` selects
+   `campaign:campaigns(name, organization_id, reward_type, offer_label, discount_label,
+   discount_value, reward_config, cover_url)` and **does not select `status` at all**, so
+   staff cannot see that the campaign is paused even if they look. Shipped as the first
+   Warning.
+   What pausing *does* stop is verified the same way: the engine is `.eq('status','active')`
+   (`execute/route.ts:1000`, cron `*/15` in `vercel.json`), the public page filters active
+   (`app/m/[slug]/page.tsx:104/134/141`), `member-eligible` filters active (`:360`), and
+   `activeMultiplier()` in `Qtap_app/supabase/functions/_shared/earn.ts:304-306` filters
+   active, so a paused multiplier really does stop multiplying (consistent with the published
+   `points-multiplier.mdx`, which was worth checking rather than assuming).
+2. **"All its data" in the Delete dialog includes the customer's vouchers.** The dialog says
+   only *"permanently remove the campaign and all its data"*, exactly the same vagueness the
+   stamp-card Delete dialog had. `DELETE /api/campaigns/[id]` is a hard delete on `campaigns`,
+   and `campaign_rewards.campaign_id` is **NOT NULL ON DELETE CASCADE**, so every voucher the
+   campaign ever issued goes with it, unredeemed ones included.
+   `Qtap_app/src/store/useVouchersStore.ts:151` reads `campaign_rewards` for the customer's
+   wallet, so the voucher disappears from their phone with no notice. Published `stats.mdx`
+   says only "Its stats go with it", which understates it.
+
+### HOW THE CASCADE WAS VERIFIED WITHOUT PRODUCTION SUPABASE
+Three independent sources agree, which is why this shipped as a claim rather than a hedge:
+the app repo's own `DATABASE_SCHEMA.md` line 326 (`campaign_id` NOT NULL FK → `campaigns(id)`
+ON DELETE CASCADE); migrations `001`/`002`, which define `campaign_executions` and
+`member_campaign_interactions` as CASCADE and match that doc exactly; and an
+`information_schema` read of the one reachable Supabase project, which returns
+`campaign_rewards` CASCADE, `member_campaign_interactions` CASCADE, `campaign_executions`
+CASCADE, `analytics_events` SET NULL, `push_notifications` SET NULL. **NOT NULL also makes
+SET NULL impossible.** Nothing was written about the `notifications` (NO ACTION) or
+`campaign_push_sends` rows in that listing: the dashboard never queries either table
+(`grep "from('notifications')"` returns zero hits), so they cannot be confirmed in production
+and have no merchant-facing effect.
+
+### A CLAIM I CUT BEFORE COMMITTING
+I had written that deleting a campaign forgets the one-send-per-member memory, so re-creating
+it would message everyone again. That is true but **misleading**: a re-created campaign has a
+new `campaign_id`, so `hasAlreadyReceived` (`execute/route.ts:338`) would return false for
+everyone regardless of the cascade. The article says what the cascade really costs, which is
+the send history and the record of who received it.
+Also corrected before commit: the first draft called birthday the only repeat-send exception.
+`hasAlreadyReceived` has **two** — birthday after 365 days, and win-back via
+`winBackResendBlocked`. Fixed without duplicating open PR #186, which owns `winback.mdx`.
+
+### Screenshots (read-only; nothing paused, resumed or deleted)
+`.routine/flows/stopping-a-campaign.json`, points demo (Golden Crust), 1440x1000, five shots:
+the list with all three statuses, the active card's two controls, the row menu, the Delete
+confirm dialog cropped with its warning sentence boxed, and the paused card. Plus one brand
+SVG comparing what pause stops against what delete removes (§9: the consequence comparison is
+exactly what a screenshot cannot show).
+**Pause, Resume and the dialog's red Delete were never clicked.** Opening the dialog is safe
+for the same reason the card-deleting run found: the menu item only calls `setCampaignToDelete`
++ `setDeleteDialogOpen`, which is pure client state. No customer PII (campaign names and
+copy are the merchant's own).
+
+### THE DEMO DATA MADE THIS CAPTURABLE — and it has changed
+Golden Crust now carries exactly one campaign in each state: **Double Points Weekend**
+(Active, Pause button), **Welcome Bonus** (Draft), **Birthday Bonus** (Paused, Resume button).
+All three badges in one 1168x452 crop, so **nothing had to be paused to photograph a paused
+card.** Check this before planning any campaign capture: **Brew & Bean now has ZERO campaigns**
+(tabs read All / Active (0) / Paused (0) / Drafts (0)). Earlier logs say it was at the
+3-campaign Growth limit, so its campaigns were deleted at some point since 2026-09-08. The
+stamp account is no longer usable for anything campaign-shaped.
+
+### Gotchas for future runs
+- **`button:has-text('Pause')` matches the "Paused (1)" TAB first**, not the card button.
+  `button:text-is('Pause')` resolves to exactly one element. Same family as the Look Up /
+  Look Up Customer trap.
+- The status badge is a **`div`**, not a span, so `div.rounded-xl:has-text('<name>')
+  div:text-is('Paused')` works and the `span:text-is(...)` version silently draws nothing.
+  Third separate run to record this shadcn Badge trap; assume `div` first.
+- `button[aria-haspopup='menu']` resolves to **6** elements on `/campaigns` and the first is
+  the header location switcher. Scope it:
+  `div.rounded-xl:has-text('<campaign name>') button[aria-haspopup='menu']` is exactly one.
+- Geometry at 1440x1000 after the cookie **Decline** (first action of the first step only):
+  tablist `280,168 319x36`; the three cards are `1136x110` at y228 / y354 / y480; Pause
+  `1264,247`; card menu button `1363,245`; the Paused badge `478,498`; the alertdialog
+  `464,401 512x198` and its description paragraph `[role=alertdialog] p`.
+- **Do not `clipTo` the open row menu**: it is only 128x74 and would land near the 5 KB
+  `validate-images` floor. An explicit clip holding the card *and* its open menu
+  (`{x:272,y:196,width:1168,height:186}`) came in at 17.9 KB and reads better anyway.
+- Give each step its own `goto` so the dialog state does not leak into the next capture.
+- The detail page `/campaigns/[id]` deletes behind a native `confirm()`, which Playwright
+  auto-dismisses, so that path is not screenshottable. The article points merchants at the
+  card menu instead, which is also the safer control because it names the campaign.
+
+### Gap discovery (2 rows added, both engineering)
+- **P3** Nothing in the dashboard sets a campaign to **Ended**. The badge and the status both
+  exist, and the only writer is the flash-sale auto-end at `execute/route.ts:767`. Published
+  `wizard.mdx` still tells merchants to "Pause or end an active campaign to free up a slot".
+- **P3** The campaign detail page deletes behind a bare browser `confirm()` that does not name
+  the campaign, while the list page uses the styled dialog that does.
+
+---
+
 ## 2026-10-16 — Scanning a customer's code at the till (gap-discovery article)
 
 **Article:** `merchants/cards/scan-to-find-a-customer.mdx` (new) + both nav groups
