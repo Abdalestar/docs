@@ -1,0 +1,39 @@
+{
+  "section": "merchants/cards",
+  "account": "stamp",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "fakeCamera": {
+    "qr": "Q173600",
+    "aim": "partial",
+    "qrPx": 200
+  },
+  "steps": [
+    {
+      "name": "scan-07-mobile",
+      "goto": "/stamp-operations",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 7000
+        }
+      ],
+      "waitFor": "input[placeholder='Search members...']",
+      "waitMs": 2500,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "button:has(svg.lucide-scan-line)",
+          "number": 1
+        }
+      ]
+    }
+  ]
+}

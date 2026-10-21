@@ -20,6 +20,137 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-16 — Scanning a customer's code at the till (gap-discovery article)
+
+**Article:** `merchants/cards/scan-to-find-a-customer.mdx` (new) + both nav groups
+**Branch:** `claude/busy-clarke-z6omgo`
+**Status:** Done. SMOKE_OK (TLS bridge needed again, §6a); 7 real annotated screenshots,
+desktop + mobile, validate-images 7/7 OK. One task this run: backfill is still exhausted.
+
+### ENVIRONMENT — read this before trusting the previous entry
+- **The TLS bridge IS needed again.** The 2026-10-15 entry says the bare smoke test passed
+  with no proxy. It did not this run: `smoke-test.mjs` returned `login_failed - all
+  credentials rejected`, which is the disguised TLS symptom the 2026-09-17 entry describes,
+  not dead credentials. Scratch cert + `.routine/tls-bridge.mjs` in Bash background mode,
+  then `PLAYWRIGHT_PROXY=http://127.0.0.1:38443`, and login worked first try. Try bare, then
+  bridge; never conclude the accounts are dead from `login_failed`.
+- **Playwright still self-pins.** `/opt/pw-browsers` ships chromium **1248** and 1194, and a
+  plain `npm install sharp playwright` pulls 1.64.1, which wants 1248. No pinning needed.
+- `npm install qrcode` is required for any `fakeCamera` flow; it is not in the repo deps.
+
+### MAIN HAS CAUGHT UP A LONG WAY
+`origin/main` is at the **PR #213** merge (it was #185 for most of September). PRs
+**#214-#227 are open and unmerged**, plus the older #137-#191 set. The CLAUDE.md run log on
+`main` therefore stops at 2026-09-17 while runs have continued daily: **entries for
+#214-#227 exist only on their own branches.** Read the newest branch's CLAUDE.md
+(`git show origin/<newest-branch>:CLAUDE.md`) before trusting this file's top entry.
+
+### Task selection — the board is still not a writing queue
+`notion-query-data-sources` (SQL mode) returns ~75 non-Done rows, unchanged in shape: almost
+all are **engineering-fix trackers** filed by earlier runs whose article already shipped the
+honest Warning, plus the same verified duplicates and capture blockers. Backfill was
+re-verified exhausted by the 2026-10-15 run two ways and nothing has landed since. So this
+was §14 gap discovery; the row was created and locked before writing.
+
+**`qtap` (dashboard) main has not moved since 2026-09-16** (`4d622e4`). `Qtap_app` HAS moved
+(to 2026-10-07: OTP resend cooldown, country picker, Google Wallet behind an off flag), but
+every one of those is mobile-only and **not Playwright-capturable**, so they stay blocked
+under the screenshots-are-mandatory rule. Drift and under-documented sub-surfaces remain the
+only productive vein on the dashboard.
+
+### How the gap was found (a vein earlier runs had not mined)
+Route-diff, CardTitle-diff and dialog-title-diff are all exhausted. What worked this run:
+extract **toast `title:` / `description:` string literals** from `app/` and `components/`
+and grep each against a combined corpus (127 on-main MDX + **1914 MDX from every open PR
+branch**, materialised with `git archive`). 191 of 222 toast strings have zero coverage;
+reading the cluster is what surfaced this.
+
+### The gap
+`components/dashboard/qr-scanner.tsx` `ScanButton` is mounted on **three** pages, not one:
+`redemptions/page.tsx:942` (documented by `redemptions/scan-redemption.mdx`),
+`stamp-operations/page.tsx:598`, and `points-operations/page.tsx` at **both** `:598` (Award
+Points) and `:869` (Adjust/Deduct). Nothing on main and nothing on any of the 28 open
+branches mentions the two operations pages. Confirmed live on both reachable demo orgs: the
+button renders at x=710 y=323 beside the `Search members...` box.
+
+### A CLAIM I ALMOST SHIPPED AND KILLED — check the comparison, do not infer it
+I was going to write that Redemptions resolves the member for you while the operations pages
+only fill the search box. **Wrong.** `redemptions/page.tsx:957` also just does
+`setRedeemTab('lookup')` + `setSearchQuery(resolved.qtapId)`; the only differences are a
+`Customer scanned` toast and the `isRedemptionCodeShape` tie-break for legacy Q-leading
+vouchers. All three pages leave the row to be tapped. The article says that plainly and draws
+no contrast. (Published `scan-redemption.mdx` says "with the member already found", which is
+loose but defensible.)
+
+### THE FINDING — Points Operations has no Earning QR branch
+`grep -c earn_qr`: stamp-operations **1**, redemptions **1**, points-operations **0**. So a
+printed earning poster scanned on either points tab falls through to the destructive red
+**"Not recognized — This QR is not a Qtap customer code"** instead of the stamp page's
+gentler **"Earning QR — That QR is for customers to scan with their app, not the counter
+camera."** Shipped as the article's Warning; filed as a P2 engineering row.
+
+### Second finding (filed, not written as a merchant-facing claim)
+`resolveScan` recognises only the canonical scan-code shape (`Q` + 11, `lib/utils/codes.ts`).
+Read-only count over `qr_codes` project-wide: **6 of 96** match it; the other 90 are legacy
+hand-named seeds (`CEO-STAMP-001`, `CLAUDE-JOIN-COUNTER`) that classify as `unknown`. Every
+code a merchant generates through `/qr-codes/generate` or the batch API **is** canonical
+(`generateScanCode()`), so this is a seed-data artefact, not a merchant-facing bug. It does
+mean the `Earning QR` branch cannot be screenshotted from either reachable demo org, so the
+article states that message in prose and the red screenshot is captioned honestly as an
+older-format code.
+
+### Verification worth repeating
+Ran the real `lib/utils/resolve-scan.ts` in node against real codes rather than reading the
+regexes: `Q173600`→member, `https://c.qtap.qa/scan/CEO-STAMP-001`→**unknown**,
+`https://c.qtap.qa/scan/Q4F5PRC52YWB`→earn_qr, `24083777`→code, `BREW-R101`→**unknown**
+(the slug rule is `{4}-{6}`, so legacy 4-4 voucher codes do not match either).
+`members.qr_code` does not exist in the live schema, so `QRDetailModal`'s
+`profile?.qr_code || profile?.qtap_id` always falls through to the Qtap ID.
+
+### Screenshots (read-only; nothing issued, awarded or redeemed)
+Scanning writes nothing: `resolveScan` is pure, the member branch only fills a text input,
+and every other branch only raises a toast. **Issue Stamp / Award were never clicked.**
+Flows: `scan-find-customer`, `scan-found`, `scan-reward-code`, `scan-not-recognized`,
+`scan-points-tab`, `scan-mobile`. Stamp demo (Brew & Bean) for six, points demo (Golden
+Crust) for the Adjust/Deduct tab. Member `Q173600` ("App Reviewer", no email on record) so
+only the phone needed redaction; real Brew & Bean reward code `24083777`.
+
+### Gotchas for future runs
+- **`.routine/fake-camera.mjs` works perfectly and is the whole reason this was capturable.**
+  `aim: "locked"` decodes in under 2.5 s (too fast to photograph the dialog); `aim:
+  "partial"` keeps the viewfinder open with a live `<video>` and no camera error. One
+  `fakeCamera` per flow file, so **one flow per QR payload**.
+- **Toasts close after ~5 s.** `TOAST_REMOVE_DELAY` is 1000000 in `hooks/use-toast.ts`, which
+  reads like "never", but Radix `ToastProvider`'s own default `duration` closes them at 5 s.
+  A capture 6.2 s after the click came back with no toast at all. Click, wait ~2.5 s, capture.
+- **Do not crop a toast with padding.** `clipTo` + `clipPadding: 64` on a toast produced a
+  **4.8 KB** file that FAILS the 5 KB `validate-images` floor, because flat white padding adds
+  no bytes. The fix that works: set the flow `viewport` to **1440x720** so the bottom-right
+  toast sits just under the page cards, then clip `{x:280,y:150,width:1160,height:570}`. Same
+  shot, 31 KB, and it shows where the message appears.
+- **`flow-capture.mjs` falls back to the points account when the stamp login fails**, and says
+  so only in one `Logged in as` line. It happened once this run and silently captured
+  `/stamp-operations` on a points org (a blocked page). **Always grep the output for
+  `Logged in as` and delete any image captured on the wrong account.** An immediate retry
+  worked, as did a retry after one `ALL_CREDENTIALS_FAILED`.
+- Selectors: `button:has(svg.lucide-scan-line)` resolves to exactly one Scan button on each
+  operations page (`button:has-text('Scan')` is fine too). The toast is `li[data-state=open]`.
+  The search-result row is `.divide-y button` and its contact line is `p.break-words`, which
+  is the clean redact target.
+- `/stamp-operations` and `/points-operations` both need ~9 s plus the cookie **Decline** as
+  the first action of the first step.
+- Placement: `merchants/cards/` is the established home for an article covering both loyalty
+  types, and `merchants/cards/deleting` was already listed in **both** the Stamp Cards and
+  Points Programs nav groups. Added the same way. Deliberately did **not** edit
+  `stamp-cards/manual-stamps.mdx` (open PR #226 touches it, and its "without a QR scan or NFC
+  tap" line is still defensible: the scan finds the member, it does not issue the stamp).
+
+### Gap discovery (2 rows added, both engineering)
+- **P2** Points Operations has no `earn_qr` branch, so a merchant's own printed poster reads
+  as a broken code on both points tabs.
+- **P3** 90 of 96 `qr_codes` rows carry legacy hand-named codes that `resolveScan` cannot
+  classify. Seed-data cleanup; no merchant-facing effect today.
+
 ## 2026-10-15 — What a repeat customer earns on their second card
 
 **Article:** `merchants/stamp-cards/repeat-cards.mdx` (new)
