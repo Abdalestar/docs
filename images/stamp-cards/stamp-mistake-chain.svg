@@ -1,0 +1,64 @@
+<svg viewBox="0 0 880 440" xmlns="http://www.w3.org/2000/svg" role="img"
+     aria-label="One confirmed stamp sets off four changes, none of which the dashboard can reverse">
+  <style>
+    .t { font-family: system-ui, -apple-system, sans-serif; }
+    .h { font-size: 15px; font-weight: 600; fill: #423F4C; }
+    .b { font-size: 13px; fill: #6B6770; }
+    .k { font-size: 13px; font-weight: 600; fill: #FFFFFF; }
+    .n { font-size: 11px; font-weight: 600; fill: #8E4A63; letter-spacing: .06em; }
+  </style>
+
+  <rect x="0" y="0" width="880" height="440" fill="#F8F5F2"/>
+
+  <!-- trigger -->
+  <rect x="24" y="150" width="166" height="86" rx="14" fill="#8E4A63"/>
+  <text class="t k" x="107" y="184" text-anchor="middle">You click Confirm</text>
+  <text class="t" x="107" y="208" text-anchor="middle" font-size="12" fill="#F0D793">on the stamp dialog</text>
+
+  <path d="M190 193 H 236" stroke="#8E4A63" stroke-width="2.5" fill="none"/>
+  <path d="M232 187 L 244 193 L 232 199 Z" fill="#8E4A63"/>
+
+  <!-- four outcomes -->
+  <g>
+    <rect x="250" y="28" width="300" height="78" rx="12" fill="#FFFFFF" stroke="#E3DBD5"/>
+    <text class="t n" x="268" y="52">1 &#183; THE BALANCE</text>
+    <text class="t h" x="268" y="74">The stamps land on the card</text>
+    <text class="t b" x="268" y="94">3 of 5 becomes 5 of 5.</text>
+  </g>
+  <g>
+    <rect x="250" y="116" width="300" height="78" rx="12" fill="#FFFFFF" stroke="#E3DBD5"/>
+    <text class="t n" x="268" y="140">2 &#183; THE CARD</text>
+    <text class="t h" x="268" y="162">The card completes and resets</text>
+    <text class="t b" x="268" y="182">Back to 0 of 5, card count up by one.</text>
+  </g>
+  <g>
+    <rect x="250" y="204" width="300" height="78" rx="12" fill="#F0D793" stroke="#D9BE72"/>
+    <text class="t n" x="268" y="228">3 &#183; THE REWARD</text>
+    <text class="t h" x="268" y="250">The main reward is issued</text>
+    <text class="t b" x="268" y="270" fill="#5C5560">A live code lands in their wallet.</text>
+  </g>
+  <g>
+    <rect x="250" y="292" width="300" height="78" rx="12" fill="#FFFFFF" stroke="#E3DBD5"/>
+    <text class="t n" x="268" y="316">4 &#183; THE RECORD</text>
+    <text class="t h" x="268" y="338">Lifetime stamps go up</text>
+    <text class="t b" x="268" y="358">Reports and member totals follow.</text>
+  </g>
+
+  <!-- connectors -->
+  <path d="M244 193 V 67 H 250" stroke="#C9BEB6" stroke-width="2" fill="none"/>
+  <path d="M244 193 H 250" stroke="#C9BEB6" stroke-width="2" fill="none"/>
+  <path d="M244 193 V 155 H 250" stroke="#C9BEB6" stroke-width="2" fill="none"/>
+  <path d="M244 193 V 243 H 250" stroke="#C9BEB6" stroke-width="2" fill="none"/>
+  <path d="M244 193 V 331 H 250" stroke="#C9BEB6" stroke-width="2" fill="none"/>
+
+  <!-- the point -->
+  <rect x="586" y="116" width="270" height="166" rx="14" fill="#423F4C"/>
+  <text class="t" x="610" y="152" font-size="11" font-weight="600" fill="#F0D793" letter-spacing=".06em">AND THEN</text>
+  <text class="t" x="610" y="184" font-size="17" font-weight="600" fill="#FFFFFF">None of it can be</text>
+  <text class="t" x="610" y="208" font-size="17" font-weight="600" fill="#FFFFFF">undone from the</text>
+  <text class="t" x="610" y="232" font-size="17" font-weight="600" fill="#FFFFFF">dashboard.</text>
+  <text class="t" x="610" y="258" font-size="12.5" fill="#C9BEB6">Check the dialog before you click.</text>
+
+  <path d="M550 193 H 578" stroke="#423F4C" stroke-width="2.5" fill="none"/>
+  <path d="M574 187 L 586 193 L 574 199 Z" fill="#423F4C"/>
+</svg>

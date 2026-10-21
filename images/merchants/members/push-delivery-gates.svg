@@ -1,0 +1,60 @@
+<svg viewBox="0 0 880 430" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif" role="img" aria-label="The four checks a push has to clear before a customer's phone rings, and which of them a receipt skips">
+  <rect width="880" height="430" fill="#F8F5F2"/>
+
+  <text x="40" y="38" font-size="17" font-weight="600" fill="#423F4C">What has to line up before a phone rings</text>
+
+  <!-- gate columns -->
+  <g font-size="12.5" fill="#423F4C">
+    <!-- gate 1 -->
+    <rect x="40" y="62" width="168" height="80" rx="12" fill="#FFFFFF" stroke="#8E4A63" stroke-width="2"/>
+    <text x="56" y="86" font-size="12" font-weight="700" fill="#8E4A63">1. A registered phone</text>
+    <text x="56" y="106">The Qtap app is installed</text>
+    <text x="56" y="124">and signed in on a device.</text>
+
+    <!-- gate 2 -->
+    <rect x="228" y="62" width="168" height="80" rx="12" fill="#FFFFFF" stroke="#8E4A63" stroke-width="2"/>
+    <text x="244" y="86" font-size="12" font-weight="700" fill="#8E4A63">2. Push switched on</text>
+    <text x="244" y="106">The only one your</text>
+    <text x="244" y="124">dashboard shows you.</text>
+
+    <!-- gate 3 -->
+    <rect x="416" y="62" width="168" height="80" rx="12" fill="#FFFFFF" stroke="#6B6770" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="432" y="86" font-size="12" font-weight="700" fill="#6B6770">3. Suggestions &amp; offers</text>
+    <text x="432" y="106">A switch in the customer's</text>
+    <text x="432" y="124">app. It starts off.</text>
+
+    <!-- gate 4 -->
+    <rect x="604" y="62" width="168" height="80" rx="12" fill="#FFFFFF" stroke="#6B6770" stroke-width="2" stroke-dasharray="5 4"/>
+    <text x="620" y="86" font-size="12" font-weight="700" fill="#6B6770">4. You are not muted</text>
+    <text x="620" y="106">The customer can mute</text>
+    <text x="620" y="124">one business at a time.</text>
+  </g>
+
+  <!-- arrows between gates -->
+  <g stroke="#8E4A63" stroke-width="2" fill="none">
+    <path d="M208 102 H228"/><path d="M396 102 H416"/><path d="M584 102 H604"/>
+  </g>
+  <g fill="#8E4A63">
+    <polygon points="228,102 220,98 220,106"/>
+    <polygon points="416,102 408,98 408,106"/>
+    <polygon points="604,102 596,98 596,106"/>
+  </g>
+
+  <!-- campaign lane -->
+  <rect x="40" y="186" width="800" height="72" rx="12" fill="#FFFFFF" stroke="#8E4A63" stroke-width="2"/>
+  <text x="58" y="212" font-size="13" font-weight="700" fill="#8E4A63">A campaign or a one-off push</text>
+  <text x="58" y="234" font-size="12.5" fill="#423F4C">Has to clear all four. Miss any one of them and the phone stays quiet.</text>
+  <rect x="640" y="200" width="182" height="44" rx="10" fill="#F0D793"/>
+  <text x="668" y="228" font-size="12.5" font-weight="600" fill="#423F4C">All four, or no buzz</text>
+
+  <!-- receipt lane -->
+  <rect x="40" y="274" width="800" height="72" rx="12" fill="#FFFFFF" stroke="#6B6770" stroke-width="2"/>
+  <text x="58" y="300" font-size="13" font-weight="700" fill="#423F4C">A receipt: stamp earned, points earned, reward redeemed, card finished</text>
+  <text x="58" y="322" font-size="12.5" fill="#423F4C">Checks 1 and 2 only. Preferences and mutes never silence a receipt.</text>
+  <rect x="640" y="288" width="182" height="44" rx="10" fill="#F0D793"/>
+  <text x="684" y="316" font-size="12.5" font-weight="600" fill="#423F4C">1 and 2 only</text>
+
+  <!-- footer -->
+  <rect x="40" y="362" width="800" height="44" rx="10" fill="#423F4C"/>
+  <text x="58" y="389" font-size="12.5" fill="#F8F5F2">Either way the message is written to the customer's in-app inbox. A quiet phone is not a lost message.</text>
+</svg>
