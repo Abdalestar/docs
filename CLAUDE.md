@@ -20,6 +20,111 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-20 — Every email link now opens a confirm page first (3-article correction)
+
+**Articles:** `merchants/getting-started/creating-your-account.mdx`,
+`merchants/settings/password-reset.mdx`, `merchants/staff/inviting.mdx` (all corrections)
+**Branch:** `claude/busy-clarke-mtdww1`
+**PR:** https://github.com/Abdalestar/docs/pull/216
+**Status:** Done. SMOKE_OK first try (TLS bridge, §6a); 3 new real annotated screenshots,
+validate-images 6/6, 4/4 and 4/4 OK. One task this run: **backfill is still exhausted**
+(the zero-PNG scan on `origin/main` returns the same four non-workable files as every run
+since 2026-08-14, and `campaigns/analytics.mdx` is still taken by open PR #187).
+
+### THE BOARD HAS A WORKABLE DOCS ROW AGAIN — read the Notes, not the Priority
+For the first time in about three weeks the board had a genuine writing task, and it did
+**not** sort to the top. Every P1 is still a verified duplicate, a non-feature, or an
+engineering-fix tracker; the workable row was a **P2**, "Every email link now opens a
+confirm page first, and three articles still describe the old one-click behaviour",
+auto-discovered 2026-09-19 by the PR #215 run. Its own Notes said "This is a DOCS FIX, not
+an engineering one" and listed the three wrong articles. Sort by Notes content, not Priority.
+
+Also new: two P2 rows about `merchants/billing/payment-failed.mdx` carry **null Notes**
+(filed by the PR #214 run). They are engineering trackers, not tasks, but a future run
+cannot tell that from the board alone. Read the PR before triaging them.
+
+### MAIN HAS CAUGHT UP — the long "main is 27 PRs behind" note is finally out of date
+`origin/main` is at the **PR #213** merge. The daily backlog cleared. Still open: #214,
+#215 (the two runs before this one) plus the old stuck set (#137, #145, #148, #154, #158,
+#163-#165, #186-#191). I diffed all sixteen against `origin/main`; none touches the three
+auth articles, so this PR conflicts with nothing.
+
+### What was wrong
+qtap commit `39ea7f9` (2026-09-16) rebuilt `app/api/auth/confirm/route.ts`. Its header says
+why: the token is single-use and mail clients and security scanners prefetch links while
+rendering a message, so a **GET must never consume one**. GET now renders a one-button page
+and reads nothing from Supabase; only the button's POST calls `verifyOtp`, sets cookies and
+redirects. Same two-step shape as the unsubscribe route from PR #213.
+
+**Verify the deployed build, do not trust the repo.** One `curl` per type returns the exact
+`COPY` block, and all four matched source:
+
+| `type` | Heading | Button | After the POST |
+|---|---|---|---|
+| `signup` / `email` | Confirm your email address. | Confirm my email | `/onboarding` |
+| `recovery` | Reset your password. | Choose a new password | `/reset-password` |
+| `invite` | Accept your invitation. | Accept the invitation | `/accept-invite` |
+| `magiclink` | Accept your invitation. | **Continue to Qtap** | `/accept-invite` |
+
+The page also carries "The link works once. If the button does not work, ask for a new link."
+
+### Corrected beyond what the row listed
+- **Both subject lines were also stale.** `app/api/auth/signup/route.ts` always passes
+  `businessName`, so `signupConfirmationSubject` returns **"Confirm your email to open
+  &lt;business&gt;"**, never the "Confirm your Qtap account" the article claimed (a wrong
+  claim this log itself recorded on 2026-09-09). `staffInviteSubject` is
+  `<inviter> invited you to <org> on Qtap`, falling back to `You are invited to <org> on
+  Qtap` when the inviter has no first or last name.
+- **Password-reset expiry sharpened** from "a limited time" to the **one hour** the
+  `password-reset.tsx` template states. Signup stays 24 hours.
+
+### A CLAIM I NEARLY SHIPPED AND KILLED
+I wrote that an invitee who already has a Qtap account "goes straight in with the password
+they already have", reasoning from the `email_exists` branch that swaps `invite` for
+`magiclink`. **Wrong.** The magiclink POST still redirects to `/accept-invite`, and
+`app/(auth)/accept-invite/page.tsx` renders the Create Password form **unconditionally** and
+calls `updateUser({ password })` on submit, so an existing user's password is overwritten.
+The only thing that differs for them is the confirm-page button label. Read the destination
+page, not just the redirect target.
+
+### THE FINDING — an expired link now fails silently (new P2 row)
+The POST's failure path redirects to `/login?error=confirmation_failed&error_description=…`,
+and `missing_token` goes to the same place. But `app/(auth)/login/page.tsx` maps exactly
+three values: `setup_failed`, `auth_error`, `no_organization`. Neither new one is in the
+chain and `error_description` is never read, so the merchant lands on the ordinary
+"Welcome back" card with **no message at all**. Confirmed with a headless probe, not just
+source.
+
+This is a regression in what the merchant is told: before the rework an expired invite at
+least reached `/accept-invite`, which rendered "Invalid or expired invitation link." All
+three articles now say plainly that a login page in place of the expected screen means the
+link is stale, and the row notes that prose can be dropped once the login page explains
+itself.
+
+### Screenshots (nothing was written, no token spent)
+`.routine/flows/email-confirm-{signup,recovery,invite}.json`, **anonymous**, 900x620. The
+GET handler reads nothing and spends nothing, so loading a confirm URL with the throwaway
+token `DOCSCAPTURE` is a pure render, exactly like the `/t/` NFC landing page. **No button
+was pressed on any real token** — the POST is what spends it.
+
+### Gotchas for future runs
+- **The confirm page is a bare `Response`, not part of the Next app shell**, so there is no
+  cookie consent banner and no hydration wait. It settles instantly; 2.5s is generous.
+- Its card is uniquely `div[style*="max-width:480px"]` (escape the quotes in JSON) and
+  measures **544x238 at 900px wide**. `clipTo` on it with `clipPadding: 26` gives a 596x290
+  crop at ~18KB, comfortably over the 5KB floor. The button is plain `button[type=submit]`,
+  the only one on the page.
+- **The 1243 chromium mismatch is gone.** The sandbox now ships build **1243** at
+  `/opt/pw-browsers`, which is what a plain `npm install playwright` (1.63) wants. Do not
+  pin `playwright@1.62.0` any more, and do not run `npx playwright install`. Check with
+  `node -e "console.log(require('./node_modules/playwright-core/browsers.json').browsers.find(b=>b.name==='chromium').revision)"`.
+- The TLS bridge was still needed and stayed up for the whole run. SMOKE_OK on the first
+  attempt, no retry.
+- `notion-update-page` with `command: update_content` edits the page **body**, not the
+  Notes property. To fix a typo in Notes you have to resend the whole Notes string through
+  `update_properties`.
+- `QTAP_NAJMA_EMAIL` is **still** a duplicate of `QTAP_EMAIL` (`owner@goldencrust.qa`).
+  Thirteen run logs have now asked for that third credential slot to point somewhere useful.
 ## 2026-09-19 — Every email subject line in the docs was wrong (correction)
 
 **Article:** `merchants/settings/notifications.mdx` (correction)
