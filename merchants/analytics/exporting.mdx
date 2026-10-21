@@ -1,0 +1,148 @@
+---
+title: "Exporting your analytics"
+sidebarTitle: "Exporting"
+description: "Download your analytics as a PDF report, a CSV, or an Instagram Story image, and what each file actually holds."
+---
+
+The **Export** button sits at the top right of **Analytics**, next to the time period
+picker. It opens a small window called **Export Analytics Report** where you pick one
+format and tick the sections you want.
+
+<Frame caption="Export sits beside the time period picker (1). The period you have chosen is the period the file covers.">
+  <img src="/images/merchants/analytics/exporting-01-button.png" alt="The top of the Analytics page with the time period picker and the Export button outlined" />
+</Frame>
+
+Every format is built inside your browser, so nothing is emailed to you and the file
+never leaves your device on its way to your downloads folder.
+
+## The three formats
+
+<Frame caption="The export window on a points account: format on top, sections underneath.">
+  <img src="/images/merchants/analytics/exporting-02-dialog-points.png" alt="The Export Analytics Report window showing PDF Report, CSV Data and Story PNG, with six section checkboxes" />
+</Frame>
+
+- **PDF Report** is the default. A cover page with your business name and a written
+  summary, a contents list, then a page or two of charts and tables. This is the one to
+  send to a partner or print for a meeting.
+- **CSV Data** is the raw numbers, day by day, for a spreadsheet.
+- **Story PNG** is a 1080 by 1920 image with your logo and your headline numbers,
+  sized for an Instagram or WhatsApp story.
+
+PDF and CSV both download as `qtap-analytics-report-` followed by the date and time.
+The image downloads as `qtap-story-` and the same stamp.
+
+## Choosing sections
+
+Every box starts ticked, and **Export** is greyed out if you untick all of them. The
+list you see depends on the kind of loyalty program you run. A points account gets
+Points Overview, Points Earned Over Time, Outstanding Points Liability, Staff
+Performance, Customer Segments and Insights.
+
+<Frame caption="The same window on a stamp card account. Peak Hours replaces the points sections.">
+  <img src="/images/merchants/analytics/exporting-03-dialog-stamp.png" alt="The export window on a stamp card account listing Overview Metrics, Stamps Over Time, Staff Performance, Customer Segments, Peak Hours and Insights" />
+</Frame>
+
+<Warning>
+**Wait for the page to finish loading before you click Export.** The file copies
+whatever the page has loaded at the moment you press the button, so a section still
+showing a grey placeholder is dropped silently and Qtap still says "Export successful".
+Exporting twenty seconds after opening Analytics produced a PDF with Staff Performance
+and Key Insights missing; waiting for the page to settle produced the same report with
+both in it. Give it half a minute and check no card is still blank.
+</Warning>
+
+## The checkboxes do not apply to every format
+
+Unticking a section reliably keeps it out of the **CSV**. The other two formats only
+read part of the list.
+
+| Section | CSV | PDF | Story PNG |
+| --- | --- | --- | --- |
+| Overview Metrics (stamp accounts) | Follows the box | Follows the box | Follows the box |
+| Stamps Over Time | Follows the box | Follows the box | Never in it |
+| Peak Hours | Follows the box | Follows the box | Never in it |
+| Points Overview (points accounts) | Follows the box | Always in it | Follows the box |
+| Points Earned Over Time | Follows the box | Always in it | Never in it |
+| Outstanding Points Liability | Follows the box | Always in it | Never in it |
+| Staff Performance | Follows the box | Follows the box | Never in it |
+| Customer Segments | Follows the box | Follows the box | Never in it |
+| Insights | Follows the box | Follows the box | First three only |
+
+<Warning>
+**A points account cannot keep its points figures out of the PDF.** The three points
+boxes are read when Qtap builds the CSV and ignored when it builds the PDF. The
+screenshot below is page two of a PDF exported with Points Overview, Points Earned
+Over Time and Outstanding Points Liability all unticked. The written summary on the
+cover quotes the same figures. If those numbers are sensitive, send the CSV with the
+boxes unticked instead.
+</Warning>
+
+<Frame caption="Page two of a PDF exported with all three points sections unticked. They are in the file anyway.">
+  <img src="/images/merchants/analytics/exporting-06-pdf-points-ignored.png" alt="A PDF page headed Points Program Overview showing Points Earned, Points Redeemed, Outstanding and Avg Value per point" />
+</Frame>
+
+## What the PDF looks like
+
+<Frame caption="The cover page of a real export. The summary paragraph and the contents list are written from your own numbers.">
+  <img src="/images/merchants/analytics/exporting-04-pdf-cover.png" alt="PDF cover page reading Analytics Report, Last 30 Days, prepared for Golden Crust Bakery, with an executive summary and a four item contents list" />
+</Frame>
+
+The contents list only names the sections that made it into the file, so it doubles as
+a check that you exported what you meant to.
+
+## What the CSV looks like
+
+The CSV is laid out as a report rather than one clean table. It opens with a banner and
+your business name, then each section gets its own divider line and its own column
+headings. You will need to split it up before a pivot table will work on it.
+
+Two things to know before you start sorting:
+
+- Dates in the daily rows read `Sep 7` and `Oct 1`, with no year. Sorting that column
+  alphabetically will not put the days in order.
+- Once a figure reaches a thousand, Qtap writes it with a comma and does not wrap it in
+  quotes, so a spreadsheet reads `1,234` as two cells and shifts the rest of that row
+  across. Staff names and insight text are quoted and come through fine.
+
+## The Story image
+
+<Frame caption="A real Story PNG. Your logo, your business name, the period, the headline numbers, and up to three insights.">
+  <img src="/images/merchants/analytics/exporting-05-story.png" alt="A maroon Instagram Story image showing Golden Crust Bakery, Last 30 Days, four metric cards and a Key Insights box" />
+</Frame>
+
+Each insight is cut to a single line, so the longer ones end mid-sentence. Read them in
+full on the Analytics page or in the PDF before you post the image.
+
+## What never gets exported
+
+The file covers the main Analytics page only. The Points Expiry Forecast, Top Points
+Earners and Reward Popularity cards at the bottom of the page are not in any export,
+and neither are Churn Risk, Best Customers or Regional Benchmarks. For a per branch or
+per staff member breakdown, use the
+[detailed reports](/merchants/analytics/reports-hub), which have their own filters.
+
+The numbers match the page exactly, comparison percentages included, so the notes in
+[the charts article](/merchants/analytics/charts) about how those are counted apply
+here too. On a stamp card account the
+[branch picker](/merchants/settings/branch-switcher) narrows most of what you export;
+on a points account it does not.
+
+## Who can export
+
+Owners and managers. Anyone who can open Analytics can export it.
+
+<Warning>
+**Export data** in the Edit Permissions checklist does not hold anyone back. Ticking
+**View analytics** on its own already lets a teammate open the page and download every
+format, because nothing in Qtap checks the export permission. Treat the two boxes as
+one decision until that is fixed.
+</Warning>
+
+<CardGroup cols={2}>
+  <Card title="Analytics overview" href="/merchants/analytics/overview">
+    What each number on the page means
+  </Card>
+  <Card title="Detailed reports" href="/merchants/analytics/reports-hub">
+    Per branch, per staff member and revenue reports
+  </Card>
+</CardGroup>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 430" font-family="system-ui, -apple-system, sans-serif" role="img" aria-label="Two separate rules decide the browse category and the category label">
+  <rect width="860" height="430" fill="#F8F5F2"/>
+
+  <text x="30" y="36" font-size="17" font-weight="600" fill="#423F4C">Two different rules, two different answers</text>
+  <text x="30" y="58" font-size="13" fill="#6B6770">Which browse category you appear under, and which label shows on your page, are decided separately.</text>
+
+  <!-- LEFT: browse chip -->
+  <rect x="30" y="80" width="380" height="316" rx="14" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
+  <rect x="30" y="80" width="380" height="42" rx="14" fill="#8E4A63"/>
+  <rect x="30" y="108" width="380" height="14" fill="#8E4A63"/>
+  <text x="50" y="107" font-size="14" font-weight="600" fill="#FFFFFF">Which browse chip lists you</text>
+  <text x="50" y="146" font-size="12" fill="#6B6770">Settings &gt; Business Details only</text>
+
+  <rect x="50" y="162" width="340" height="46" rx="9" fill="#F8F5F2" stroke="#8E4A63" stroke-width="1"/>
+  <text x="66" y="183" font-size="13" font-weight="600" fill="#423F4C">1. Industry Sub-category</text>
+  <text x="66" y="200" font-size="11.5" fill="#6B6770">Only the nine Food &amp; Beverage ones are chips</text>
+
+  <text x="220" y="224" font-size="13" fill="#8E4A63" text-anchor="middle">no match</text>
+  <path d="M220 228 L220 240" stroke="#8E4A63" stroke-width="1.5"/>
+  <path d="M220 246 l-5 -8 h10 z" fill="#8E4A63"/>
+
+  <rect x="50" y="252" width="340" height="46" rx="9" fill="#F8F5F2" stroke="#8E4A63" stroke-width="1"/>
+  <text x="66" y="273" font-size="13" font-weight="600" fill="#423F4C">2. Industry</text>
+  <text x="66" y="290" font-size="11.5" fill="#6B6770">Food &amp; Beverage is not a chip on its own</text>
+
+  <text x="220" y="314" font-size="13" fill="#8E4A63" text-anchor="middle">no match</text>
+  <path d="M220 318 L220 330" stroke="#8E4A63" stroke-width="1.5"/>
+  <path d="M220 336 l-5 -8 h10 z" fill="#8E4A63"/>
+
+  <rect x="50" y="342" width="340" height="38" rx="9" fill="#F0D793" stroke="#423F4C" stroke-width="1"/>
+  <text x="66" y="366" font-size="13" font-weight="600" fill="#423F4C">3. Other</text>
+
+  <!-- RIGHT: label -->
+  <rect x="450" y="80" width="380" height="316" rx="14" fill="#FFFFFF" stroke="#423F4C" stroke-width="1.5"/>
+  <rect x="450" y="80" width="380" height="42" rx="14" fill="#423F4C"/>
+  <rect x="450" y="108" width="380" height="14" fill="#423F4C"/>
+  <text x="470" y="107" font-size="14" font-weight="600" fill="#FFFFFF">The label on your page in the app</text>
+  <text x="470" y="146" font-size="12" fill="#6B6770">Starts somewhere else entirely</text>
+
+  <rect x="470" y="162" width="340" height="46" rx="9" fill="#F8F5F2" stroke="#423F4C" stroke-width="1"/>
+  <text x="486" y="183" font-size="13" font-weight="600" fill="#423F4C">1. Merchant Page category</text>
+  <text x="486" y="200" font-size="11.5" fill="#6B6770">Set in the Merchant Page editor, not here</text>
+
+  <text x="640" y="224" font-size="13" fill="#423F4C" text-anchor="middle">no match</text>
+  <path d="M640 228 L640 240" stroke="#423F4C" stroke-width="1.5"/>
+  <path d="M640 246 l-5 -8 h10 z" fill="#423F4C"/>
+
+  <rect x="470" y="252" width="340" height="46" rx="9" fill="#F8F5F2" stroke="#423F4C" stroke-width="1"/>
+  <text x="486" y="273" font-size="13" font-weight="600" fill="#423F4C">2. Industry Sub-category</text>
+  <text x="486" y="290" font-size="11.5" fill="#6B6770">then 3. Industry</text>
+
+  <text x="640" y="314" font-size="13" fill="#423F4C" text-anchor="middle">no match</text>
+  <path d="M640 318 L640 330" stroke="#423F4C" stroke-width="1.5"/>
+  <path d="M640 336 l-5 -8 h10 z" fill="#423F4C"/>
+
+  <rect x="470" y="342" width="340" height="38" rx="9" fill="#F0D793" stroke="#423F4C" stroke-width="1"/>
+  <text x="486" y="366" font-size="13" font-weight="600" fill="#423F4C">4. Other</text>
+
+  <text x="30" y="418" font-size="12" fill="#6B6770">A Merchant Page category on its own names your page. It never puts you in a browse chip.</text>
+</svg>

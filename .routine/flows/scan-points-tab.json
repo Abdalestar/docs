@@ -1,0 +1,25 @@
+{
+  "section": "merchants/cards",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1000 },
+  "steps": [
+    {
+      "name": "scan-06-points-adjust-tab",
+      "goto": "/points-operations",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 7000 },
+        { "click": "[role=tab]:has-text('Adjust/Deduct')" },
+        { "wait": 4000 }
+      ],
+      "waitFor": "input[placeholder='Search members...']",
+      "waitMs": 2000,
+      "clip": { "x": 280, "y": 150, "width": 640, "height": 250 },
+      "annotate": [
+        { "type": "box", "target": "[role=tab]:has-text('Adjust/Deduct')", "number": 1 },
+        { "type": "box", "target": "button:has(svg.lucide-scan-line)", "number": 2 }
+      ]
+    }
+  ]
+}

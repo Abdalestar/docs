@@ -1,0 +1,101 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/nfc-tags",
+  "account": "stamp",
+  "defaultWaitMs": 4000,
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "steps": [
+    {
+      "name": "how-tap-list",
+      "goto": "/nfc-tags",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 6000
+        }
+      ],
+      "waitFor": "text=Total Taps",
+      "waitMs": 3000,
+      "clip": {
+        "x": 255,
+        "y": 0,
+        "width": 1185,
+        "height": 650
+      },
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has-text('Total Taps')",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "th:has-text('Taps')",
+          "number": 2,
+          "color": "charcoal"
+        },
+        {
+          "type": "box",
+          "target": "th:has-text('Last Tapped')",
+          "number": 3,
+          "color": "charcoal"
+        }
+      ]
+    },
+    {
+      "name": "how-tap-detail",
+      "goto": "/nfc-tags",
+      "actions": [
+        {
+          "wait": 6000
+        },
+        {
+          "click": "tr:has-text('Test Tag 1') button"
+        },
+        {
+          "wait": 900
+        },
+        {
+          "click": "text=View Details"
+        },
+        {
+          "wait": 7000
+        }
+      ],
+      "waitFor": "text=Total Taps",
+      "waitMs": 3000,
+      "clip": {
+        "x": 255,
+        "y": 0,
+        "width": 1185,
+        "height": 500
+      },
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has-text(\"Total Taps\")",
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "rect": {
+            "x": 300,
+            "y": 390,
+            "width": 300,
+            "height": 54
+          },
+          "color": "charcoal"
+        }
+      ]
+    }
+  ]
+}

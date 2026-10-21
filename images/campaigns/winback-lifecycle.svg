@@ -27,6 +27,7 @@
   <circle cx="655" cy="140" r="10" fill="none" stroke="#8E4A63" stroke-width="3"/>
   <text x="655" y="176" text-anchor="middle" font-size="14" font-weight="600" fill="#423F4C">Can fire again</text>
   <text x="655" y="196" text-anchor="middle" font-size="12" fill="#6B6770">only if they lapsed again</text>
+  <text x="655" y="214" text-anchor="middle" font-size="12" fill="#6B6770">and the send cap allows it</text>
 
   <!-- arrowhead end -->
   <path d="M 800 134 L 812 140 L 800 146 Z" fill="#423F4C"/>

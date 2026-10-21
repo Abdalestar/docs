@@ -1,0 +1,75 @@
+{
+  "section": "members",
+  "account": "stamp",
+  "viewport": {
+    "width": 1440,
+    "height": 1200
+  },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "deleted-member-redemption",
+      "goto": "/redemptions",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 6000
+        },
+        {
+          "click": "button:has-text('Look Up Customer')"
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "fill": [
+            "input[placeholder=\"Search by name, email, phone, or Qtap ID...\"]",
+            "Q102812"
+          ]
+        },
+        {
+          "wait": 5000
+        },
+        {
+          "click": ".divide-y button"
+        },
+        {
+          "wait": 7000
+        }
+      ],
+      "clip": {
+        "x": 290,
+        "y": 548,
+        "width": 1130,
+        "height": 482
+      },
+      "annotate": [
+        {
+          "type": "box",
+          "rect": {
+            "x": 312,
+            "y": 563,
+            "width": 180,
+            "height": 20
+          },
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "rect": {
+            "x": 318,
+            "y": 912,
+            "width": 190,
+            "height": 32
+          },
+          "color": "plum"
+        }
+      ]
+    }
+  ]
+}

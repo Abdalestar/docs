@@ -1,0 +1,41 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/staff",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1100 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "roles-permissions-05-role-card",
+      "goto": "/staff",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text(\"Decline\")" },
+        { "wait": 6000 }
+      ],
+      "waitFor": "text=Role Permissions",
+      "clipTo": "div.rounded-xl:has(div:text-is(\"Role Permissions\"))",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "p:has-text(\"limited analytics\")", "color": "plum" }
+      ]
+    },
+    {
+      "name": "roles-permissions-06-staff-defaults",
+      "actions": [
+        { "click": ":nth-match(button[aria-haspopup=\"menu\"], 4)" },
+        { "wait": 1000 },
+        { "click": "[role=menuitem]:has-text(\"Edit Permissions\")" },
+        { "wait": 2500 },
+        { "hover": "button:has-text(\"Save Changes\")" },
+        { "wait": 1200 }
+      ],
+      "clipTo": "[role=dialog]",
+      "clipPadding": 8,
+      "annotate": [
+        { "type": "box", "target": "label:has-text(\"View QR codes\")", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label:has-text(\"View analytics\")", "number": 2, "color": "plum" }
+      ]
+    }
+  ]
+}
