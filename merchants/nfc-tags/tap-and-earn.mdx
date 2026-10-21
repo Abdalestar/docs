@@ -4,7 +4,7 @@ sidebarTitle: "How a tap works"
 description: "What happens when a customer taps an NFC tag: the stamp, points, or check-in it records, and how a tap differs from a QR scan."
 ---
 
-When a customer taps their phone on one of your NFC tags, Qtap reads the tag's serial number and runs the action you set for it. That tap adds a stamp, awards points, or records a check-in, then logs the visit against the customer's account.
+When a customer taps their phone on one of your NFC tags, Qtap reads the address written on the tag and runs the action you set for it. That tap adds a stamp, awards points, or records a check-in, then logs the visit against the customer's account.
 
 <Frame caption="Each tag's Action column shows what a tap does, and the Taps column counts how many times it has been tapped.">
   <img src="/images/merchants/nfc-tags/nfc-tap-list.png" alt="NFC Tags page with the Action and Taps columns called out" />
@@ -22,7 +22,7 @@ You choose one action per tag when you register it (see [NFC Tags](/merchants/nf
 
 ### Add Stamp
 
-Adds one stamp to the stamp card linked to the tag. The card's wait time between stamps and its daily cap still apply, so a customer can't tap twice in a row to collect extra. If the tag has no stamp card linked, the tap fails and tells the customer to ask staff.
+Adds one stamp to the stamp card linked to the tag. A tap adds one stamp per card per customer per day, so a customer can't tap twice in a row to collect extra. If the tag has no stamp card linked, the tap fails and tells the customer to ask staff.
 
 ### Award Points
 
@@ -52,15 +52,13 @@ The Total Taps number is the figure to watch for how often a tag gets used. It a
 
 ## How a tap differs from a QR scan
 
-A tap and a scan both add stamps or points. Two differences are worth knowing before you decide which to use:
+A tap and a scan run the same rules. Points multipliers apply to both, a completed card sends the same "you completed your card" message either way, and a birthday or milestone reward the customer is owed is handed over on a tap as readily as on a scan.
 
 <Warning>
-**Points multipliers don't apply to taps.** If you run a double-points or bonus-points campaign, that bonus lands on QR scans only. An NFC tap always awards the flat points value set on the tag.
-
-**A tap doesn't send the reward push.** When a customer finishes a stamp card, a QR scan sends them a "reward earned" notification. From a tap, the stamp and the reward still land, but that push message doesn't go out.
+**A stamp tap is capped at one per card per day.** That limit is on taps only: a QR scan or a code typed in by staff has no daily cap. The day rolls over at midnight UTC, which is 3am in Qatar.
 </Warning>
 
-If you want a points bonus or the reward message to reach customers, send them to a QR code for those visits, or have your staff mention the reward at the counter.
+The other difference is who can use them. A tap needs the Qtap app on the customer's phone, while a QR code opens for anyone with a camera. For a customer who has not installed the app yet, point them at a QR code.
 
 <Frame caption="What Qtap does the moment a customer taps a tag.">
   <img src="/images/merchants/nfc-tags/nfc-tap-flow.svg" alt="Flow from a customer tap to the stamp, points, or check-in it records" />

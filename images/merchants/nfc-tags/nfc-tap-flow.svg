@@ -12,7 +12,7 @@
 
   <!-- Step 2 -->
   <rect x="210" y="150" width="340" height="56" rx="12" fill="#FFFFFF" stroke="#E5D7DC" stroke-width="1.5"/>
-  <text x="380" y="174" text-anchor="middle" font-size="14" font-weight="600" fill="#423F4C">Qtap reads the serial number and</text>
+  <text x="380" y="174" text-anchor="middle" font-size="14" font-weight="600" fill="#423F4C">Qtap reads the address on the tag and</text>
   <text x="380" y="193" text-anchor="middle" font-size="14" font-weight="600" fill="#423F4C">identifies the member (a new one is added for you)</text>
 
   <line x1="380" y1="206" x2="380" y2="234" stroke="#6B6770" stroke-width="2"/>
@@ -38,14 +38,14 @@
   <rect x="40" y="316" width="210" height="96" rx="12" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
   <text x="145" y="343" text-anchor="middle" font-size="15" font-weight="700" fill="#8E4A63">Add Stamp</text>
   <text x="145" y="366" text-anchor="middle" font-size="12.5" fill="#423F4C">Adds 1 stamp to the</text>
-  <text x="145" y="383" text-anchor="middle" font-size="12.5" fill="#423F4C">linked card. Wait time</text>
-  <text x="145" y="400" text-anchor="middle" font-size="12.5" fill="#423F4C">and daily cap still apply.</text>
+  <text x="145" y="383" text-anchor="middle" font-size="12.5" fill="#423F4C">linked card. One stamp</text>
+  <text x="145" y="400" text-anchor="middle" font-size="12.5" fill="#423F4C">per card per day.</text>
 
   <rect x="275" y="316" width="210" height="96" rx="12" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
   <text x="380" y="343" text-anchor="middle" font-size="15" font-weight="700" fill="#8E4A63">Award Points</text>
   <text x="380" y="366" text-anchor="middle" font-size="12.5" fill="#423F4C">Adds the flat points</text>
-  <text x="380" y="383" text-anchor="middle" font-size="12.5" fill="#423F4C">value set on the tag.</text>
-  <text x="380" y="400" text-anchor="middle" font-size="12.5" fill="#6B6770">No multiplier bonus.</text>
+  <text x="380" y="383" text-anchor="middle" font-size="12.5" fill="#423F4C">value set on the tag,</text>
+  <text x="380" y="400" text-anchor="middle" font-size="12.5" fill="#6B6770">times any active multiplier.</text>
 
   <rect x="510" y="316" width="210" height="96" rx="12" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
   <text x="615" y="343" text-anchor="middle" font-size="15" font-weight="700" fill="#8E4A63">Check-In</text>
@@ -58,5 +58,5 @@
   <line x1="145" y1="312" x2="145" y2="316" stroke="#6B6770" stroke-width="2"/>
   <line x1="615" y1="312" x2="615" y2="316" stroke="#6B6770" stroke-width="2"/>
 
-  <text x="380" y="442" text-anchor="middle" font-size="12.5" fill="#6B6770">A tap does not send the "reward earned" push that a QR scan sends.</text>
+  <text x="380" y="442" text-anchor="middle" font-size="12.5" fill="#6B6770">A tap runs the same rules as a QR scan, and sends the same messages.</text>
 </svg>
