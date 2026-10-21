@@ -37,6 +37,7 @@
           "merchants/stamp-cards/card-designer",
           "merchants/stamp-cards/bonus-stamps",
           "merchants/stamp-cards/rewards",
+          "merchants/stamp-cards/repeat-cards",
           "merchants/stamp-cards/advanced-settings",
           "merchants/cards/card-terms",
           "merchants/cards/deleting",
