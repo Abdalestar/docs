@@ -1,16 +1,19 @@
 ---
 title: "The Card Designer"
 sidebarTitle: "Card designer"
-description: "Style a loyalty card with templates, colors, and icons before you build it in the create-card wizard."
+description: "Style a stamp card with templates, a color, and an icon, then carry that design into the create-card wizard."
 ---
 
-The Card Designer is a sandbox for the look of a loyalty card. You pick a starting
-template, change the colors, icon, and layout, and a phone preview updates as you go.
-It lives at the `/cards/design` URL. There is no sidebar or Cards-page link to it yet,
-so you reach it by typing the address.
+The Card Designer is where you settle the look of a stamp card before you build it.
+You pick a starting template, change the color, icon and stamp count, and a phone
+preview updates as you go. When you are happy with it, **Save & Continue** opens the
+create-card wizard with your design already filled in.
 
-<Frame caption="The Card Designer. The four panels (1) change the card; the Save & Continue button (2) takes you to the create-card wizard.">
-  <img src="/images/stamp-cards/card-designer-overview.png" alt="The Card Designer page with the panel tabs and the Save & Continue button highlighted" />
+It lives at the `/cards/design` address. Nothing in the sidebar or on the Cards page
+links to it, so you reach it by typing the address.
+
+<Frame caption="The Card Designer. The four panels (1) restyle the card, and Save & Continue (2) carries the design into the create-card wizard.">
+  <img src="/images/stamp-cards/card-designer-overview.png" alt="The Card Designer page with the panel tabs and the Save and Continue button highlighted" />
 </Frame>
 
 The page splits in two: the design panels on the left, and a live preview of the
@@ -18,61 +21,87 @@ member's card on the right. Four tabs sit above the panels.
 
 ## Templates
 
-The **Templates** tab opens with a gallery of starter designs: Coffee Shop, Pizza
-Place, Salon & Spa, Retail Store, Gaming Cafe, and Blank. Click one and its colors,
-icon, stamp count, and layout fill in at once. A template is a starting point, so you
-can keep editing after you pick one.
+The **Templates** tab opens with six starter designs: Coffee Shop, Pizza Place,
+Salon & Spa, Retail Store, Gaming Cafe, and Blank. Click one and its color, icon,
+stamp count and reward text fill in at once.
+
+<Frame caption="Six starter templates. Each one sets the color, stamp icon, stamp count and reward text together.">
+  <img src="/images/stamp-cards/card-designer-templates.png" alt="The Start from Template gallery with six template tiles" />
+</Frame>
+
+<Warning>
+  Picking a template replaces everything you have already changed, including your
+  reward text. Choose your template first, then make your edits.
+</Warning>
 
 ## Colors
 
-The **Colors** tab sets three colors: **Background**, **Text**, and **Accent** (the
-fill on a collected stamp). Each one opens a color picker with eight presets, or you
-can type a hex value into the field next to the swatch.
+The **Colors** tab sets one value: **Card Color**, the background of the card in the
+Qtap app. Click the swatch for a color picker with eight presets, or type a hex value
+into the field beside it.
 
-<Frame caption="The Colors panel: background, text, and accent color, each with a picker and a hex field.">
-  <img src="/images/stamp-cards/card-designer-colors.png" alt="The Colors panel showing background, text, and accent color pickers with hex values" />
+<Frame caption="The Colors panel sets a single card color, by picker, preset, or hex value.">
+  <img src="/images/stamp-cards/card-designer-colors.png" alt="The Colors panel showing the card color swatch, hex field, and an open color picker with eight presets" />
 </Frame>
 
 ## Icons
 
-The **Icons** tab is the stamp icon: the shape that fills in each time a member earns
-a stamp. Icons are grouped into Food & Drinks, Services, Shopping, Entertainment, and
-Symbols. The selected icon shows a maroon outline.
+The **Icons** tab sets the stamp icon, the shape that fills in each time a member
+earns a stamp. Twelve icons are on offer and the selected one gets a maroon border.
+If none of them suit you, you can upload your own picture on the wizard's Card Design
+step after you continue.
 
-## Layout
+<Frame caption="Twelve stamp icons. The selected icon is outlined in maroon.">
+  <img src="/images/stamp-cards/card-designer-icons.png" alt="The Stamp Icon panel with twelve icons in a grid" />
+</Frame>
 
-The **Layout** tab holds the card's settings:
+## Settings
 
-- **Card Type**: Stamp Card or Points Card.
-- **Stamp Layout**: Grid, Horizontal, or Vertical.
+The **Settings** tab holds two fields:
+
 - **Stamps to Collect**: 6, 8, 10, 12, 15, or 20.
-- **Font**: Inter, Poppins, Roboto, Open Sans, Montserrat, or Playfair Display.
-- **Reward Text**: the line a member reads under the stamps, such as *Get a FREE reward!*
+- **Reward Text**: the reward a member earns when the card is full, such as *Free pizza on your 8th visit!*
 
-<Frame caption="The Layout panel: card type, stamp layout, stamp count, font, and reward text.">
-  <img src="/images/stamp-cards/card-designer-layout.png" alt="The Layout and Settings panel with card type, layout, stamp count, font, and reward text fields" />
+<Frame caption="Card Settings: how many stamps fill the card (1), and the reward at the end of it (2).">
+  <img src="/images/stamp-cards/card-designer-settings.png" alt="The Card Settings panel with the Stamps to Collect dropdown and the Reward Text field" />
 </Frame>
 
 ## The live preview
 
-The right side shows a phone with your card on it, using your business name and an
-example of 7 collected stamps. Every change you make on the left updates here, so you
-can read the card the way a member will before you commit to it.
+The right side shows a phone with your card on it, using your business name and a few
+example stamps already collected. Every change on the left updates here, so you can
+read the card the way a member will before you commit to it.
 
-<Frame caption="The live preview shows the card with your business name and example stamps filled in.">
-  <img src="/images/stamp-cards/card-designer-preview.png" alt="A phone preview of the loyalty card with the business name, stamp grid, and reward text" />
+<Frame caption="The preview after picking the Pizza Place template: the card color, stamp icon, stamp count and reward text all change together.">
+  <img src="/images/stamp-cards/card-designer-preview.png" alt="A phone preview of a red loyalty card with pizza stamp icons and the reward text" />
 </Frame>
 
-## Saving your design
+## What carries into the wizard
 
-The **Save & Continue** button takes you to the create-card wizard at `/cards/new`,
-where you finish building the card and publish it.
+**Save & Continue** opens the create-card wizard at `/cards/new` with four things
+already set from your design: the stamp count, the card color, the stamp icon, and
+the reward text.
+
+<Frame caption="The wizard opens with the design applied: 8 stamps (1), and the red card and pizza icons in the preview.">
+  <img src="/images/stamp-cards/card-designer-handoff-design.png" alt="The Create Stamp Card wizard with the stamps field set to 8 and a red pizza-themed card in the preview" />
+</Frame>
+
+Your reward text arrives as a ready-made **main reward** on the wizard's Rewards step,
+set to trigger when the card is full. You can rename it, change it, or add more
+rewards beside it.
+
+<Frame caption="The reward text from the designer becomes the card's main reward, due after 8 stamps.">
+  <img src="/images/stamp-cards/card-designer-handoff-rewards.png" alt="The wizard Rewards step showing a main reward named Free pizza on your 8th visit, after 8 stamps" />
+</Frame>
+
+You still name the card, write its description, choose its branches and publish it in
+the wizard. The designer sets the look, not the whole card.
 
 <Note>
-  The design you make here does not carry into the wizard. Save & Continue opens the
-  new-card wizard, but the wizard starts fresh, so you set the card's colors, icon,
-  and stamp count again on its **Card Design** step. For now the Card Designer is a
-  place to try looks and settle on a direction before you build the real card.
+  The handoff happens once. Your design is held in the browser until the wizard reads
+  it, so if you reload the wizard or go back to the designer, set it up again. Nothing
+  is stored on your account until you publish the card, and a design is only applied
+  to a brand-new card, never to one you are editing.
 </Note>
 
 For the fields you set when you actually create a card, see [Creating a stamp
@@ -83,3 +112,6 @@ card](/merchants/stamp-cards/designing).
 
 Owners and managers can open the Card Designer. Staff have no access to the Cards area
 by default, so they do not see it unless you give them stamp card access.
+
+The designer is for stamp cards only. On a points account the page answers **Access
+Denied**, even for the owner, and the sidebar shows Points in place of Cards.

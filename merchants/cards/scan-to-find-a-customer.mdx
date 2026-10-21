@@ -1,0 +1,88 @@
+---
+title: "Scanning a customer's code at the till"
+sidebarTitle: "Scan to find a customer"
+description: "Use the camera to pull up a customer on Stamp Operations or Points Operations instead of typing their name or Qtap ID."
+---
+
+Spelling a customer's name back to them with a queue waiting is the slow way to start a transaction. Both operations pages have a **Scan** button next to the member search. Point the camera at the customer's Qtap code and their record comes up.
+
+## Where the button is
+
+On **Stamp Operations**, Scan sits beside the search box in the Select Member card.
+
+<Frame caption="Stamp Operations: the member search (1) and the Scan button (2) sit side by side.">
+  <img src="/images/merchants/cards/scan-01-where.png" alt="The Select Member card on Stamp Operations showing the Search members box and the Scan button" />
+</Frame>
+
+On **Points Operations** you get the same button on both tabs, so you can scan whether you are awarding points or correcting a balance.
+
+<Frame caption="Points Operations keeps the Scan button (2) on the Adjust/Deduct tab (1) as well as on Award Points.">
+  <img src="/images/merchants/cards/scan-06-points-adjust-tab.png" alt="The Adjust/Deduct tab on Points Operations with the Scan button beside the member search" />
+</Frame>
+
+## Scan a customer
+
+<Steps>
+  1. Ask the customer to open their Qtap code. It is on the QR screen in the app, on the card they have open, or on their Apple or Google Wallet pass. All three show the same code.
+  2. Click **Scan**. The camera opens in a window titled **Scan customer**.
+  3. Hold the customer's screen in front of the camera.
+  4. The first code the camera reads closes the window on its own. There is nothing to press to finish.
+  5. Tap the customer's row in the results to select them, then issue the stamps or points as usual.
+</Steps>
+
+<Frame caption="The scanner window while staff line up the code. It reads the rear camera and takes one code per open.">
+  <img src="/images/merchants/cards/scan-02-viewfinder.png" alt="The Scan customer window showing the camera view with a QR code being lined up" />
+</Frame>
+
+A scan does not pick the customer for you. It drops their Qtap ID into the search box (1) and their record appears below it (2), which is the same result as typing the ID by hand. Tap the row to carry on.
+
+<Frame caption="After the scan: the Qtap ID lands in the search box and the matching customer appears. Tap the row to select them.">
+  <img src="/images/merchants/cards/scan-03-found.png" alt="The member search filled with a scanned Qtap ID and one matching customer row below it" />
+</Frame>
+
+## When the code is not a customer
+
+Staff point the camera at all sorts of things during a shift, so Qtap tells you what it read instead of failing quietly.
+
+A reward voucher is the common one. Vouchers are handed over on the Redemptions page, not here.
+
+<Frame caption="A reward voucher read on an operations page. Redeem it on the Redemptions page instead.">
+  <img src="/images/merchants/cards/scan-04-reward-code.png" alt="A Reward code message saying that is a reward voucher, redeem it on the Redemptions page" />
+</Frame>
+
+Anything Qtap cannot place at all comes back in red.
+
+<Frame caption="An older-format Qtap code read on Stamp Operations. A loyalty card from another shop or a product barcode reads the same way.">
+  <img src="/images/merchants/cards/scan-05-not-recognized.png" alt="A red Not recognized message saying this QR is not a Qtap customer code" />
+</Frame>
+
+Scan a QR poster you generated in Qtap on **Stamp Operations** and you get a third message, **Earning QR**. It explains that customers scan those with their app rather than staff reading them at the counter.
+
+<Warning>
+**Points Operations does not have that third message.** Scan one of your posters on either points tab and you get the red **Not recognized** instead, which reads like a broken code. The poster is fine. It is an earning code, and earning codes are for the customer's phone, not the counter camera.
+</Warning>
+
+## If the camera will not start
+
+The window says so and points you back at the search box. On a shared till the usual cause is the browser blocking the camera, so allow camera access for `dashboard.qtap.qa` and open the scanner again. Typing the customer's name or Qtap ID always works in the meantime.
+
+## At the counter on a phone
+
+On a phone the search box and the Scan button stack, and Scan runs the full width of the card, which makes it easy to hit one-handed.
+
+<Frame caption="Stamp Operations on a phone. The Scan button (1) runs the full width under the search box.">
+  <img src="/images/merchants/cards/scan-07-mobile.png" alt="Stamp Operations on a phone screen with the Scan button spanning the width below the member search" />
+</Frame>
+
+## Who can use it
+
+Anyone who can reach the page. Stamp Operations and Points Operations are open to owners, managers and staff by default, so the whole counter team can scan. You will only see the page that matches your programme: Stamp Operations if you run stamp cards, Points Operations if you run points.
+
+<CardGroup cols={2}>
+  <Card title="Scan to redeem" href="/merchants/redemptions/scan-redemption">
+    The same camera on the Redemptions page, plus the hardware options for your counter.
+  </Card>
+  <Card title="Issuing stamps by hand" href="/merchants/stamp-cards/manual-stamps">
+    What to do once you have the customer on screen.
+  </Card>
+</CardGroup>

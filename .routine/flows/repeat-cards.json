@@ -1,0 +1,158 @@
+{
+  "section": "merchants/stamp-cards",
+  "account": "stamp",
+  "viewport": {
+    "width": 1440,
+    "height": 1400
+  },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "repeat-cards-01-rewards",
+      "goto": "/cards/b0000000-0000-0000-0000-000000000001",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 8000
+        },
+        {
+          "click": "button:has-text('Rewards')"
+        },
+        {
+          "wait": 2500
+        }
+      ],
+      "waitMs": 1500,
+      "clipTo": "div.rounded-xl:has-text('Rewards')",
+      "clipPadding": 16,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.rounded-lg.border:has-text('Free Coffee')",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.rounded-lg.border:has-text('10% Off Any Drink')",
+          "number": 2,
+          "color": "gold"
+        }
+      ]
+    },
+    {
+      "name": "repeat-cards-02-member",
+      "goto": "/stamp-operations",
+      "actions": [
+        {
+          "wait": 5000
+        },
+        {
+          "fill": [
+            "input[placeholder=\"Search members...\"]",
+            "Q173600"
+          ]
+        },
+        {
+          "wait": 3500
+        },
+        {
+          "click": ".divide-y button"
+        },
+        {
+          "wait": 3000
+        }
+      ],
+      "waitMs": 1500,
+      "clip": {
+        "x": 280,
+        "y": 222,
+        "width": 560,
+        "height": 292
+      },
+      "annotate": [
+        {
+          "type": "redact",
+          "rect": {
+            "x": 378,
+            "y": 361,
+            "width": 134,
+            "height": 27
+          },
+          "color": "charcoal"
+        },
+        {
+          "type": "box",
+          "target": "text=Total Stamps",
+          "number": 1,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "repeat-cards-03-counter",
+      "actions": [
+        {
+          "click": "[role=combobox]"
+        },
+        {
+          "wait": 1200
+        },
+        {
+          "click": "[role=option]"
+        },
+        {
+          "wait": 3000
+        },
+        {
+          "fill": [
+            "#stamps-qty",
+            "1"
+          ]
+        },
+        {
+          "wait": 2500
+        }
+      ],
+      "waitMs": 1500,
+      "clip": {
+        "x": 856,
+        "y": 222,
+        "width": 570,
+        "height": 960
+      },
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.space-y-2:has(> div.max-w-\\[366px\\]) > div.border",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.rounded-lg:has-text('10% Off Any Drink')",
+          "number": 2,
+          "color": "gold"
+        }
+      ]
+    },
+    {
+      "name": "repeat-cards-04-projection",
+      "waitMs": 1500,
+      "clipTo": "div.space-y-2:has(> div.max-w-\\[366px\\])",
+      "clipPadding": 30,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.space-y-2:has(> div.max-w-\\[366px\\]) > div.border",
+          "color": "plum"
+        }
+      ]
+    }
+  ]
+}
