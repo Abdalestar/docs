@@ -1,0 +1,107 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/billing",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": {
+    "width": 1440,
+    "height": 1400
+  },
+  "steps": [
+    {
+      "name": "payment-failed-meters",
+      "goto": "/settings/billing",
+      "waitFor": "text=Current Plan",
+      "waitMs": 9000,
+      "actions": [
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 2500
+        }
+      ],
+      "clip": {
+        "x": 560,
+        "y": 272,
+        "width": 856,
+        "height": 296
+      },
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.space-y-2:has(span:text-is('Locations'))",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.space-y-2:has(span:text-is('Staff Members'))",
+          "number": 2,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.space-y-2:has(span:text-is('Loyalty Cards'))",
+          "number": 3,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.space-y-2:has(span:text-is('Campaigns'))",
+          "color": "charcoal"
+        }
+      ]
+    },
+    {
+      "name": "payment-failed-starter-limits",
+      "actions": [
+        {
+          "click": "[role=tab]:has-text('Plans')"
+        },
+        {
+          "wait": 4000
+        }
+      ],
+      "clip": {
+        "x": 578,
+        "y": 334,
+        "width": 204,
+        "height": 430
+      },
+      "annotate": [
+        {
+          "type": "box",
+          "target": "h3:text-is('Starter')",
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "payment-failed-locations",
+      "goto": "/settings/locations",
+      "waitFor": "text=Manage your store locations",
+      "waitMs": 9000,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has-text('Al Sadd Branch')",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has-text('The Pearl Branch')",
+          "number": 2,
+          "color": "charcoal"
+        }
+      ],
+      "clip": {
+        "x": 552,
+        "y": 164,
+        "width": 872,
+        "height": 300
+      }
+    }
+  ]
+}
