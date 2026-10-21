@@ -1,0 +1,47 @@
+{
+  "section": "merchants/settings",
+  "account": "stamp",
+  "viewport": {
+    "width": 1440,
+    "height": 1400
+  },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "business-logo-06-derived-transparent",
+      "goto": "/cards/b0000000-0000-0000-0000-000000000001/pass-design",
+      "actions": [
+        {
+          "wait": 24000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 2500
+        }
+      ],
+      "waitMs": 1500,
+      "clip": {
+        "x": 248,
+        "y": 480,
+        "width": 616,
+        "height": 434
+      },
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(img[src*='logo-trimmed'])",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(img[src*='logo-watermark'])",
+          "number": 2,
+          "color": "gold"
+        }
+      ]
+    }
+  ]
+}

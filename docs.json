@@ -187,6 +187,7 @@
           "merchants/settings/notifications",
           "merchants/settings/marketing-emails",
           "merchants/settings/merchant-page",
+          "merchants/settings/business-logo",
           "merchants/merchant-page/business-overview",
           "merchants/settings/merchant-page-editor",
           "merchants/merchant-page/public-link",

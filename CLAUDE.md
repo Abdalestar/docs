@@ -20,6 +20,147 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-10 — Your business logo (gap-discovery article)
+
+**Article:** `merchants/settings/business-logo.mdx` (new) + a two-line correction to
+`merchants/settings/merchant-page.mdx`
+**Branch:** `claude/busy-clarke-xhubqi`
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 6 real annotated screenshots + 1 brand SVG,
+validate-images 7/7 OK. One task this run: no screenshot backfill exists.
+
+### ENVIRONMENT CHANGES — read these first, two long-standing notes are now wrong
+- **`main` has caught up.** `origin/main` is at the PR #213 merge, so everything through
+  #213 has landed. The "main is 20+ PRs behind" line in the entries below is stale. Open
+  now: #214-#221 (one per day), plus the older #163-#165, #186-#191, #137/#145/#148, #154,
+  #158. Still a merge backlog, but a much smaller one.
+- **The Playwright/Chromium pin moved.** The sandbox image now ships chromium **1243** and
+  1194 at `/opt/pw-browsers`. `npm install playwright` pulls **1.64**, which wants 1248 and
+  fails. Install **`playwright@1.63.0`** (revision 1243). The old advice to pin 1.62/1234 is
+  out of date; check with
+  `node -e "console.log(require('./node_modules/playwright-core/browsers.json').browsers.find(b=>b.name==='chromium').revision)"`.
+- The TLS bridge was still required and stayed up for the whole run.
+
+### Task selection — the board still has nothing writable, and the one open row says so itself
+`notion-query-data-sources` (SQL mode) returns ~70 non-Done rows. Every P1 and P2 is an
+engineering-fix tracker filed by an earlier run, a verified duplicate, or blocked on an
+Elite/Franchise account. Re-verified read-only this run: **Golden Crust and Brew & Bean are
+both `growth` / `active` / 0 AI credits / no `stripe_subscription_id`**, so Cancel
+Subscription, the AI Suite and Settings > MCP all stay blocked, and `QTAP_NAJMA_EMAIL` is
+**still** a duplicate of `QTAP_EMAIL`. Najma Coffee (elite, 77 credits) and Dana Salon
+(franchise, 84, real subscription) are still the unreachable ones. That env fix has been
+asked for in every run log since 2026-08-19.
+
+The only row that is not Done is **"Campaign Analytics: Sent, Opened, Redeemed"**, and its
+own Notes say *do not write this article fresh, it would duplicate open PR #187*. #187 is
+open and conflicted; the unblock is a human resolving it. Left alone.
+
+Backfill is still exhausted: the zero-PNG scan on `origin/main` returns the same four
+non-workable files (`customer-app/settings-profile`, `index.mdx`, `support/faq.mdx`, and
+`merchants/campaigns/analytics.mdx`, which #187 already replaces).
+
+### How the gap was found
+Route-diff is exhausted (every `app/(dashboard)` route maps to an article or a blocked row).
+What worked: extract every `<CardTitle>/<DialogTitle>/<h1-3>` string from the app and grep
+each against a **combined corpus** of all on-main `.mdx` plus every `.mdx` from all 22 open
+PR branches, materialised into one scratch dir with `git show`. 62 strings had zero hits.
+Chasing them led to `app/api/logo-variants/route.ts` and `lib/logo-pipeline/`.
+
+### The gap
+A merchant uploads one logo. `processOrgLogo` derives **three** things from it and nothing
+in the docs mentions any of them (corpus grep: "logo variant" zero hits, "watermark" only
+three, all in pass-studio/card-preview and none explaining where it comes from):
+`logo_trimmed_url`, `logo_watermark_url` and `logo_has_alpha`, both variants capped at 512px
+PNG, upserted to fixed paths with a `?v=Date.now()` cache-buster.
+
+**I did not take the pipeline's word for any of it.** I downloaded the real assets for both
+reachable orgs and re-ran the pipeline's own arithmetic over the raw RGBA:
+- **Golden Crust** (`logo_has_alpha` FALSE): 1024x1024, 3 channels. Border uniform cream
+  `rgb(244,238,216)` at 100%. Content bbox **658x658 at (183,183)**, so 36% padding. Trim box
+  740x740 -> trimmed **512x512**, and the trimmed PNG is **still fully opaque**, so the cream
+  tile travels onto every card. Watermark 512x512, **every pixel white**, 38.3% opaque: the
+  colour-distance mask path ran, the radial-ghost fallback did not.
+- **Brew & Bean** (`logo_has_alpha` TRUE): 1024x1024, 100% transparent border. Content bbox
+  585x651 at (219,186). Trim box 667x733 -> trimmed **466x512**, exactly fit-inside. So a
+  non-square logo is **not** cropped, which is what the published prose claimed.
+
+That pair is the article: the two reachable demo orgs happen to sit on opposite branches of
+the pipeline, so both outcomes are capturable side by side with no writes at all.
+
+### What the article says, all grounded
+Consumers verified by grep rather than assumed. `logo_trimmed_url`: the `/cards` and
+`/points` card previews, `member-loyalty-card-preview` at the counter, the Wallet pass,
+`/api/qr-codes/[code]/details` (the join page), and **eight** email templates via
+`ORG_LOGO_COLUMNS` + `logoUrl()` (staff-invite, weekly-insights-digest, trial
+welcome/midpoint/day12/expiring/extended, subscription-confirmation); `EmailShell` draws an
+initials disc without one. `logo_watermark_url`: `app/m/[slug]` line 159, the mobile card
+(`CardWatermark` renders a server watermark **verbatim** at `CARD_SPEC.watermark` 227px /
+6%; without one it sniffs alpha at runtime and uses 6% tinted / 9% untinted behind a radial
+fade), the pass-studio panel, and the join page.
+
+Two upload surfaces with different rules, which the article separates: Settings > Business
+Logo (`accept="image/*"`, **no size check**, saves on pick, owner-only because `/settings`
+needs `perms.settings === true` and that is false by default for manager and staff) and the
+merchant page editor's **Merchant Logo** (PNG/JPEG, 10MB, saved on **Update Merchant**,
+`/merchant-page` allows managers). The editor's **Merchant Logo (Transparent PNG)** is a
+different thing entirely: a manual stamp icon in `settings.merchant_page.transparent_logo_url`
+that the pipeline never touches.
+
+Honest caveats shipped: variant regeneration is **best-effort** and nothing retries it
+except the next upload or a backfill script; the editor's phone preview drops the watermark
+until you save (`merchant-page-editor.tsx:1248` only passes the stored watermark while the
+edited logo still equals the saved one); on the join page a branch's own **Location Logo**
+beats the business logo.
+
+### A claim I nearly shipped and killed
+The wallet-pass preview shows a faint circular emblem in the pass body and I was about to
+call it the watermark. It is **not**: `wallet-pass-preview.tsx` has no watermark at all, and
+that ghost is baked into the generated strip artwork
+(`wallet-pass-assets/strips/<type>/<id>@2x.png`). The pass-studio article's existing line
+("Watermark logo does not appear on the Wallet pass") is correct and I left it alone.
+
+### Correction to the neighbour
+`settings/merchant-page.mdx` said *"Use a square image for the best result — logos that are
+taller or wider than they are square may appear cropped in some views."* Trimming plus
+fit-inside means they are not cropped (Brew & Bean's is 466x512). Fixed, plus the same Note's
+"appears in the dashboard header and on your public merchant page", which omits the card, the
+pass, the join page and the emails. Two-line diff, **CRLF preserved** (the file is CRLF; a
+Python rewrite in text mode would have turned the diff into a whole-file replacement).
+
+### Screenshots (read-only; nothing was uploaded)
+`.routine/flows/business-logo.json` (points, 4 steps), `business-logo-counter.json` (points,
+the counter card), `business-logo-stamp.json` (stamp, the transparent-logo pair).
+**No logo was uploaded and no form was saved**, so both demo orgs' logos and variants are
+unchanged. The only clicks were the cookie Decline and a member lookup. No customer PII.
+
+### Gotchas for future runs
+- **The pass design studio is the only place both derived assets render as separate,
+  identifiable images** (54x54 each). Selectors that resolve to exactly one node:
+  `div.rounded-xl:has(img[src*='logo-trimmed'])` @ 280,498 556x180 and
+  `div.rounded-xl:has(img[src*='logo-watermark'])` @ 280,694 556x200 at 1440x1400. A clip of
+  `{x:248,y:480,width:616,height:434}` holds both with room for the badges; `x:272` cuts them.
+  The page still needs `{"wait": 24000}` as the first action.
+- **The watermark thumbnail there is drawn at `opacity-40` on a `bg-muted` panel**, so a white
+  silhouette looks like an empty tile. That is correct behaviour, not a failed capture. Caption
+  it honestly rather than re-shooting.
+- On the `/cards` and `/points` list pages the card logo renders at **9-10px** at a 1400-tall
+  viewport (28px at 1200), so those pages are useless for showing a logo. The counter preview
+  (`div.max-w-\[366px\]`, 366x168) renders it at 42px and shows the watermark ghost behind
+  the card body, which is the only in-context watermark shot available.
+- **That counter crop leaks PII at padding >= 48**: the member identity line sits at y 634 with
+  the card at 375,449 366x168, so `clipPadding` pulls in a real name. An explicit
+  `clip {x:350,y:422,width:418,height:198}` stops cleanly above it.
+- A number badge on `text=Recommended: 400x400px, PNG or JPG` covers its first letter. Plain
+  boxes plus an ordered `<Frame caption>` again (same lesson as several earlier runs).
+- No org in the project has `settings.merchant_page.featuredCardIds`, so the public `/m/<slug>`
+  page renders no loyalty card and the watermark cannot be captured there.
+
+### Gap discovery
+One row created and worked in the same run (the article above). No other rows added: the
+board is already carrying ~70 open items, most of them engineering trackers nobody has
+closed. Closing or re-labelling those would give every future run its time back.
+
+---
+
 ## 2026-10-09 — Why a customer is not getting your messages (push status)
 
 **Article:** `merchants/members/push-status.mdx` (new) + a correction to `support/faq.mdx`
