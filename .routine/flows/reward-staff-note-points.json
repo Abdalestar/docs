@@ -1,0 +1,98 @@
+{
+  "section": "merchants/points",
+  "account": "points",
+  "viewport": {
+    "width": 1440,
+    "height": 1300
+  },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "rewards-staff-note-field",
+      "goto": "/points/c0000000-0000-0000-0000-000000000001",
+      "actions": [
+        {
+          "wait": 16000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 1500
+        },
+        {
+          "click": "div.rounded-xl:has(button:text-is('Add Reward')) >> div.rounded-lg >> nth=0"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "fill": [
+            "#staffNote",
+            "One per customer. Check their ID before handing it over."
+          ]
+        },
+        {
+          "wait": 1200
+        }
+      ],
+      "annotate": [
+        {
+          "type": "box",
+          "target": "#staffNote",
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "[role=dialog] p:has-text('only visible to staff')",
+          "color": "red"
+        }
+      ],
+      "clip": {
+        "x": 452,
+        "y": 752,
+        "width": 540,
+        "height": 212
+      }
+    },
+    {
+      "name": "rewards-staff-note-list-line",
+      "goto": "/points/c0000000-0000-0000-0000-000000000001",
+      "actions": [
+        {
+          "wait": 16000
+        },
+        {
+          "click": "div.rounded-xl:has(button:text-is('Add Reward')) >> div.rounded-lg >> nth=0"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "fill": [
+            "#staffNote",
+            "One per customer. Check their ID before handing it over."
+          ]
+        },
+        {
+          "wait": 800
+        },
+        {
+          "click": "[role=dialog] button:has-text('Save reward')"
+        },
+        {
+          "wait": 2500
+        }
+      ],
+      "clipTo": "div.rounded-xl:has(button:text-is('Add Reward'))",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(button:text-is('Add Reward')) >> div.rounded-lg >> nth=0",
+          "color": "plum"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "account": "points",
+  "section": "merchants/campaigns",
+  "viewport": { "width": 1440, "height": 1000 },
+  "steps": [
+    {
+      "name": "stopping-01-list",
+      "goto": "/campaigns",
+      "actions": [
+        { "wait": 3500 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 7000 }
+      ],
+      "waitFor": "[role=tablist]",
+      "waitMs": 2000,
+      "clip": { "x": 272, "y": 150, "width": 1168, "height": 452 },
+      "annotate": [
+        { "type": "box", "target": "[role=tablist]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:text-is('Pause')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Resume')", "number": 3, "color": "plum" }
+      ]
+    },
+    {
+      "name": "stopping-02-active-card",
+      "goto": "/campaigns",
+      "actions": [ { "wait": 9000 } ],
+      "waitMs": 1500,
+      "clipTo": "div.rounded-xl:has-text('Double Points Weekend')",
+      "clipPadding": 18,
+      "annotate": [
+        { "type": "box", "target": "button:text-is('Pause')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has-text('Double Points Weekend') button[aria-haspopup='menu']", "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "stopping-03-menu",
+      "goto": "/campaigns",
+      "actions": [
+        { "wait": 9000 },
+        { "click": "div.rounded-xl:has-text('Double Points Weekend') button[aria-haspopup='menu']" },
+        { "wait": 1200 }
+      ],
+      "waitMs": 800,
+      "clip": { "x": 272, "y": 196, "width": 1168, "height": 186 },
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('Delete')", "color": "plum" }
+      ]
+    },
+    {
+      "name": "stopping-04-delete-dialog",
+      "goto": "/campaigns",
+      "actions": [
+        { "wait": 9000 },
+        { "click": "div.rounded-xl:has-text('Double Points Weekend') button[aria-haspopup='menu']" },
+        { "wait": 1200 },
+        { "click": "[role=menuitem]:has-text('Delete')" },
+        { "wait": 1600 }
+      ],
+      "waitMs": 800,
+      "clipTo": "[role=alertdialog]",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "[role=alertdialog] p", "color": "plum" }
+      ]
+    },
+    {
+      "name": "stopping-05-paused-card",
+      "goto": "/campaigns",
+      "actions": [ { "wait": 9000 } ],
+      "waitMs": 1500,
+      "clipTo": "div.rounded-xl:has-text('Birthday Bonus')",
+      "clipPadding": 18,
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has-text('Birthday Bonus') div:text-is('Paused')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Resume')", "number": 2, "color": "plum" }
+      ]
+    }
+  ]
+}
