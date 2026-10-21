@@ -85,6 +85,7 @@
           "merchants/nfc-tags/what-is-nfc",
           "merchants/nfc-tags",
           "merchants/nfc-tags/tap-and-earn",
+          "merchants/nfc-tags/how-customers-tap",
           "merchants/nfc-tags/detail"
         ]
       },
@@ -178,6 +179,7 @@
           "merchants/billing/downgrade",
           "merchants/billing/add-ons",
           "merchants/billing/invoices-payment",
+          "merchants/billing/payment-failed",
           "merchants/settings/locations",
           "merchants/settings/branch-switcher",
           "merchants/settings/notifications",
