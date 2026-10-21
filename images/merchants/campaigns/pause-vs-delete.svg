@@ -1,0 +1,51 @@
+<svg viewBox="0 0 880 452" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, -apple-system, sans-serif" role="img" aria-label="Pause keeps issued vouchers working; Delete removes them">
+  <rect width="880" height="452" fill="#F8F5F2"/>
+
+  <!-- PAUSE panel -->
+  <rect x="24" y="24" width="400" height="404" rx="16" fill="#FFFFFF" stroke="#8E4A63" stroke-width="2"/>
+  <rect x="24" y="24" width="400" height="56" rx="16" fill="#8E4A63"/>
+  <rect x="24" y="64" width="400" height="16" fill="#8E4A63"/>
+  <text x="48" y="60" font-size="21" font-weight="700" fill="#FFFFFF">Pause</text>
+  <text x="404" y="60" font-size="13" fill="#F0D793" text-anchor="end">reversible</text>
+
+  <text x="48" y="112" font-size="13" font-weight="700" fill="#6B6770" letter-spacing="0.6">STOPS</text>
+  <g font-size="14" fill="#423F4C">
+    <circle cx="54" cy="136" r="4" fill="#8E4A63"/><text x="70" y="141">New notifications going out</text>
+    <circle cx="54" cy="164" r="4" fill="#8E4A63"/><text x="70" y="169">New vouchers being issued</text>
+    <circle cx="54" cy="192" r="4" fill="#8E4A63"/><text x="70" y="197">Claiming a public offer</text>
+    <circle cx="54" cy="220" r="4" fill="#8E4A63"/><text x="70" y="225">A points multiplier</text>
+  </g>
+
+  <line x1="48" y1="248" x2="400" y2="248" stroke="#E3DDD8" stroke-width="1"/>
+
+  <text x="48" y="280" font-size="13" font-weight="700" fill="#6B6770" letter-spacing="0.6">KEEPS WORKING</text>
+  <rect x="48" y="296" width="352" height="108" rx="12" fill="#F0D793" fill-opacity="0.38" stroke="#F0D793" stroke-width="2"/>
+  <text x="68" y="326" font-size="15" font-weight="700" fill="#423F4C">Vouchers already issued</text>
+  <text x="68" y="352" font-size="13.5" fill="#423F4C">They stay on the customer&#8217;s phone and</text>
+  <text x="68" y="372" font-size="13.5" fill="#423F4C">still redeem at your counter. The counter</text>
+  <text x="68" y="392" font-size="13.5" fill="#423F4C">screen gives staff no warning.</text>
+
+  <!-- DELETE panel -->
+  <rect x="456" y="24" width="400" height="404" rx="16" fill="#FFFFFF" stroke="#423F4C" stroke-width="2"/>
+  <rect x="456" y="24" width="400" height="56" rx="16" fill="#423F4C"/>
+  <rect x="456" y="64" width="400" height="16" fill="#423F4C"/>
+  <text x="480" y="60" font-size="21" font-weight="700" fill="#FFFFFF">Delete</text>
+  <text x="836" y="60" font-size="13" fill="#F0D793" text-anchor="end">permanent</text>
+
+  <text x="480" y="112" font-size="13" font-weight="700" fill="#6B6770" letter-spacing="0.6">REMOVES</text>
+  <g font-size="14" fill="#423F4C">
+    <circle cx="486" cy="136" r="4" fill="#423F4C"/><text x="502" y="141">The campaign and its settings</text>
+    <circle cx="486" cy="164" r="4" fill="#423F4C"/><text x="502" y="169">Sent, Opened, Clicked, Redeemed</text>
+    <circle cx="486" cy="192" r="4" fill="#423F4C"/><text x="502" y="197">The record of who received it</text>
+    <circle cx="486" cy="220" r="4" fill="#423F4C"/><text x="502" y="225">No undo, no archive</text>
+  </g>
+
+  <line x1="480" y1="248" x2="832" y2="248" stroke="#E3DDD8" stroke-width="1"/>
+
+  <text x="480" y="280" font-size="13" font-weight="700" fill="#6B6770" letter-spacing="0.6">AND ALSO REMOVES</text>
+  <rect x="480" y="296" width="352" height="108" rx="12" fill="#8E4A63" fill-opacity="0.12" stroke="#8E4A63" stroke-width="2"/>
+  <text x="500" y="326" font-size="15" font-weight="700" fill="#8E4A63">Vouchers already issued</text>
+  <text x="500" y="352" font-size="13.5" fill="#423F4C">Unredeemed ones included. They vanish</text>
+  <text x="500" y="372" font-size="13.5" fill="#423F4C">from the customer&#8217;s phone and the code</text>
+  <text x="500" y="392" font-size="13.5" fill="#423F4C">stops working, with no notice to them.</text>
+</svg>

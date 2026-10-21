@@ -1,0 +1,108 @@
+---
+title: "Pausing or deleting a campaign"
+sidebarTitle: "Pausing or deleting"
+description: "What stops when you pause a campaign, and what disappears when you delete one."
+---
+
+A campaign has two stop buttons, and they are not interchangeable. **Pause** holds the
+campaign where it is and leaves everything it has handed out alone. **Delete** removes the
+campaign and takes the rewards your customers are holding with it.
+
+Both live on the **Campaigns** page. Each card shows its status, and the tabs above the
+list group your campaigns by that status.
+
+<Frame caption="The Campaigns page. The status tabs (1) group the list, an active campaign has a Pause button (2), and a paused one has Resume (3).">
+  <img src="/images/merchants/campaigns/stopping-01-list.png" alt="Campaigns page showing an Active campaign with a Pause button, a Draft campaign, and a Paused campaign with a Resume button" />
+</Frame>
+
+## Pausing
+
+Click **Pause** on the campaign card. The badge turns yellow and the campaign stops doing
+anything new:
+
+- It stops sending. Qtap checks for campaigns to run every 15 minutes and skips anything
+  that is not active, so no new notifications go out.
+- It stops handing out new rewards. Nobody new gets a voucher from it.
+- Customers stop seeing a public offer on your merchant page, and nobody can claim it.
+- A points multiplier stops multiplying. Scans go back to your normal earn rate.
+
+Pausing also frees up a campaign slot, so you can start a different campaign without
+upgrading your plan.
+
+<Frame caption="An active campaign card. Pause (1) stops the campaign; the three-dot menu (2) holds View Stats and Delete.">
+  <img src="/images/merchants/campaigns/stopping-02-active-card.png" alt="Cropped campaign card with the Pause button and the three-dot menu button outlined" />
+</Frame>
+
+<Warning>
+**Pausing does not cancel rewards you have already given out.** A voucher that is already
+in a customer's phone keeps working, and your staff can still redeem it at the counter.
+Qtap never checks whether the campaign behind a code is paused, so the counter screen will
+not warn anyone. If you need to stop honouring a reward, tell your staff; pausing the
+campaign will not do it for you.
+</Warning>
+
+## Starting it again
+
+A paused campaign keeps every setting. Click **Resume** and it goes back into the next
+15-minute run.
+
+<Frame caption="A paused campaign. The yellow Paused badge (1) and the Resume button (2) replace the Pause button.">
+  <img src="/images/merchants/campaigns/stopping-05-paused-card.png" alt="Cropped campaign card with a yellow Paused badge and a Resume button outlined" />
+</Frame>
+
+Nobody gets the message twice. Qtap remembers who it has already sent this campaign to, so
+resuming only reaches members it never got to. Two types can come back to the same person:
+a birthday campaign returns each year, and a win-back campaign can try a lapsed customer
+again up to the limit you set.
+
+## Deleting
+
+Open the three-dot menu on the card and choose **Delete**.
+
+<Frame caption="The campaign card menu. View Stats opens the numbers; Delete is outlined in red.">
+  <img src="/images/merchants/campaigns/stopping-03-menu.png" alt="Campaign card with its three-dot menu open, showing View Stats and a red Delete item" />
+</Frame>
+
+Read the confirmation before you click through it.
+
+<Frame caption="The confirmation names the campaign and says it will remove 'the campaign and all its data'. That phrase covers more than the numbers.">
+  <img src="/images/merchants/campaigns/stopping-04-delete-dialog.png" alt="Delete Campaign dialog with the warning sentence outlined" />
+</Frame>
+
+"All its data" means:
+
+| What goes | What that means for you |
+|---|---|
+| Every reward the campaign issued | Including unredeemed ones. They vanish from your customers' phones and their codes stop working at the counter. |
+| The send history | Sent, Opened, Clicked and Redeemed are gone, and so is the record of who received it. |
+| The campaign itself | There is no undo and no archive. |
+
+<Warning>
+Deleting is the only one of these actions that changes what a customer already has. If
+anyone is still holding a voucher from this campaign, you take it off their phone with no
+notice to them. Pause instead, let the outstanding vouchers get used or expire, then delete
+it later.
+</Warning>
+
+<Frame caption="Pause holds the campaign still. Delete reaches back and removes what it already gave out.">
+  <img src="/images/merchants/campaigns/pause-vs-delete.svg" alt="Diagram comparing pause and delete: pause stops new sends, new claims and the multiplier while issued vouchers keep working; delete removes the campaign, its history and every voucher it issued" />
+</Frame>
+
+## Who can do this
+
+Owners and managers. Pausing, resuming and deleting all need campaign editing rights, which
+managers have by default. The Staff role cannot open the Campaigns page unless an owner
+grants it.
+
+You can also pause, resume and delete from a campaign's own page. The confirmation there is
+a plain browser message that does not name the campaign, so the card menu is the safer place
+to delete from.
+
+<Note>
+A campaign can also end on its own. A flash sale that reaches its redemption limit switches
+itself to **Ended** and stops. There is no button that ends a campaign by hand; use Pause.
+</Note>
+
+For the numbers behind a campaign before you decide, see
+[Campaign stats](/merchants/campaigns/stats). For what each status means day to day, see
+[Campaign timing and repeat sends](/merchants/campaigns/timing).

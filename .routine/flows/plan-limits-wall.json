@@ -1,0 +1,40 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/billing",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 1000 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "limit-04-campaign-wall",
+      "goto": "/campaigns/new",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 10000 }
+      ],
+      "clip": { "x": 580, "y": 180, "width": 600, "height": 230 },
+      "annotate": [
+        { "type": "box", "target": "div.text-center button:has-text('Upgrade Plan')", "color": "plum" }
+      ]
+    },
+    {
+      "name": "limit-05-no-campaigns",
+      "goto": "/campaigns",
+      "actions": [ { "wait": 11000 } ],
+      "clip": { "x": 256, "y": 230, "width": 1184, "height": 290 },
+      "annotate": [
+        { "type": "box", "target": "text=\"No campaigns yet\"", "color": "plum" }
+      ]
+    },
+    {
+      "name": "limit-06-offers-use-the-allowance",
+      "goto": "/campaigns/offers",
+      "actions": [ { "wait": 12000 } ],
+      "clip": { "x": 256, "y": 60, "width": 1184, "height": 560 },
+      "annotate": [
+        { "type": "box", "target": ":nth-match(button:has-text('Pause'), 1)", "color": "plum" }
+      ]
+    }
+  ]
+}

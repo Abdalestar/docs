@@ -1,0 +1,95 @@
+<svg viewBox="0 0 900 520" xmlns="http://www.w3.org/2000/svg" role="img"
+     aria-label="What deleting a stamp card removes compared with what deleting a points program removes">
+  <title>What a delete takes with it</title>
+  <rect width="900" height="520" fill="#F8F5F2"/>
+
+  <text x="450" y="38" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif"
+        font-size="20" font-weight="700" fill="#423F4C">What a delete takes with it</text>
+
+  <!-- Stamp card column -->
+  <rect x="34" y="62" width="392" height="422" rx="14" fill="#FFFFFF" stroke="#E4DCDF" stroke-width="1.5"/>
+  <rect x="34" y="62" width="392" height="46" rx="14" fill="#8E4A63"/>
+  <rect x="34" y="94" width="392" height="14" fill="#8E4A63"/>
+  <text x="58" y="92" font-family="system-ui, -apple-system, sans-serif" font-size="16"
+        font-weight="700" fill="#FFFFFF">Delete a stamp card</text>
+
+  <text x="58" y="140" font-family="system-ui, -apple-system, sans-serif" font-size="13"
+        font-weight="700" fill="#8E4A63">GONE FOR GOOD</text>
+  <g font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#423F4C">
+    <text x="58" y="166">Every customer's progress on that card</text>
+    <text x="58" y="192">Rewards they earned but never collected</text>
+    <text x="58" y="218">The card's reward list and its settings</text>
+  </g>
+  <g stroke="#8E4A63" stroke-width="2" stroke-linecap="round">
+    <line x1="42" y1="158" x2="50" y2="166"/><line x1="50" y1="158" x2="42" y2="166"/>
+    <line x1="42" y1="184" x2="50" y2="192"/><line x1="50" y1="184" x2="42" y2="192"/>
+    <line x1="42" y1="210" x2="50" y2="218"/><line x1="50" y1="210" x2="42" y2="218"/>
+  </g>
+
+  <line x1="58" y1="248" x2="402" y2="248" stroke="#E4DCDF" stroke-width="1.5"/>
+
+  <text x="58" y="280" font-family="system-ui, -apple-system, sans-serif" font-size="13"
+        font-weight="700" fill="#6B6770">STILL THERE</text>
+  <g font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#423F4C">
+    <text x="58" y="306">Past stamps in your reports and activity log</text>
+    <text x="58" y="332">Your members and their lifetime totals</text>
+    <text x="58" y="358">QR codes and NFC tags, now pointing</text>
+    <text x="58" y="378">at no card</text>
+  </g>
+  <g stroke="#6B6770" stroke-width="2" stroke-linecap="round" fill="none">
+    <polyline points="42,300 46,305 52,296"/>
+    <polyline points="42,326 46,331 52,322"/>
+    <polyline points="42,352 46,357 52,348"/>
+  </g>
+
+  <rect x="58" y="398" width="344" height="62" rx="10" fill="#FDF3F6" stroke="#8E4A63" stroke-width="1.5"/>
+  <text x="74" y="422" font-family="system-ui, -apple-system, sans-serif" font-size="13"
+        font-weight="700" fill="#8E4A63">A stamp QR stops working</text>
+  <text x="74" y="444" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#423F4C">
+    It answers "not linked to a stamp card".</text>
+
+  <!-- Points program column -->
+  <rect x="474" y="62" width="392" height="422" rx="14" fill="#FFFFFF" stroke="#E4DCDF" stroke-width="1.5"/>
+  <rect x="474" y="62" width="392" height="46" rx="14" fill="#423F4C"/>
+  <rect x="474" y="94" width="392" height="14" fill="#423F4C"/>
+  <text x="498" y="92" font-family="system-ui, -apple-system, sans-serif" font-size="16"
+        font-weight="700" fill="#FFFFFF">Delete a points program</text>
+
+  <text x="498" y="140" font-family="system-ui, -apple-system, sans-serif" font-size="13"
+        font-weight="700" fill="#8E4A63">GONE FOR GOOD</text>
+  <g font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#423F4C">
+    <text x="498" y="166">Every customer's points balance</text>
+    <text x="498" y="192">Rewards they earned but never collected</text>
+    <text x="498" y="218">The reward list and its settings</text>
+    <text x="498" y="244">Every points entry ever recorded</text>
+  </g>
+  <g stroke="#8E4A63" stroke-width="2" stroke-linecap="round">
+    <line x1="482" y1="158" x2="490" y2="166"/><line x1="490" y1="158" x2="482" y2="166"/>
+    <line x1="482" y1="184" x2="490" y2="192"/><line x1="490" y1="184" x2="482" y2="192"/>
+    <line x1="482" y1="210" x2="490" y2="218"/><line x1="490" y1="210" x2="482" y2="218"/>
+    <line x1="482" y1="236" x2="490" y2="244"/><line x1="490" y1="236" x2="482" y2="244"/>
+  </g>
+
+  <line x1="498" y1="270" x2="842" y2="270" stroke="#E4DCDF" stroke-width="1.5"/>
+
+  <text x="498" y="300" font-family="system-ui, -apple-system, sans-serif" font-size="13"
+        font-weight="700" fill="#6B6770">STILL THERE</text>
+  <g font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#423F4C">
+    <text x="498" y="326">Your members and their lifetime totals</text>
+    <text x="498" y="352">QR codes and NFC tags, which move to</text>
+    <text x="498" y="372">whichever program is active next</text>
+  </g>
+  <g stroke="#6B6770" stroke-width="2" stroke-linecap="round" fill="none">
+    <polyline points="482,320 486,325 492,316"/>
+    <polyline points="482,346 486,351 492,342"/>
+  </g>
+
+  <rect x="498" y="398" width="344" height="62" rx="10" fill="#FBF6E6" stroke="#D9BE6A" stroke-width="1.5"/>
+  <text x="514" y="422" font-family="system-ui, -apple-system, sans-serif" font-size="13"
+        font-weight="700" fill="#7A5E14">Two reports go empty</text>
+  <text x="514" y="444" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#423F4C">
+    Points Activity and Revenue Impact.</text>
+
+  <text x="450" y="506" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif"
+        font-size="13" fill="#6B6770">Deactivate instead and none of this is removed.</text>
+</svg>

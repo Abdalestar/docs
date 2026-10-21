@@ -1,0 +1,137 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "analytics",
+  "account": "points",
+  "viewport": {
+    "width": 1440,
+    "height": 1600
+  },
+  "defaultWaitMs": 16000,
+  "steps": [
+    {
+      "name": "points-panels-row",
+      "goto": "/analytics",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        }
+      ],
+      "waitMs": 17000,
+      "clip": {
+        "x": 264,
+        "y": 1090,
+        "width": 1168,
+        "height": 375
+      },
+      "annotate": [
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has(> div:has-text('Top Points Earners')) p.truncate",
+          "rect": {
+            "x": 731,
+            "y": 1203,
+            "width": 203,
+            "height": 202
+          },
+          "color": "charcoal"
+        },
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(> div:has-text('Points Expiry Forecast'))",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(> div:has-text('Top Points Earners'))",
+          "number": 2,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has(> div:has-text('Reward Popularity'))",
+          "number": 3,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "points-panels-expiry",
+      "goto": "/analytics",
+      "waitMs": 17000,
+      "clipTo": "div.rounded-xl:has(> div:has-text('Points Expiry Forecast'))",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "rect": {
+            "x": 301,
+            "y": 1195,
+            "width": 320,
+            "height": 176
+          },
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "rect": {
+            "x": 301,
+            "y": 1375,
+            "width": 320,
+            "height": 45
+          },
+          "number": 2,
+          "color": "gold"
+        }
+      ]
+    },
+    {
+      "name": "points-panels-top-earners",
+      "goto": "/analytics",
+      "waitMs": 17000,
+      "clipTo": "div.rounded-xl:has(> div:has-text('Top Points Earners'))",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "redact",
+          "rect": {
+            "x": 731,
+            "y": 1203,
+            "width": 203,
+            "height": 202
+          },
+          "color": "charcoal"
+        },
+        {
+          "type": "box",
+          "rect": {
+            "x": 936,
+            "y": 1201,
+            "width": 74,
+            "height": 204
+          },
+          "number": 1,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "points-panels-reward-popularity",
+      "goto": "/analytics",
+      "waitMs": 17000,
+      "clipTo": "div.rounded-xl:has(> div:has-text('Reward Popularity'))",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "text=No redemption data yet",
+          "color": "plum"
+        }
+      ]
+    }
+  ]
+}

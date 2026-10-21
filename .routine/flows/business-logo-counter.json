@@ -1,0 +1,56 @@
+{
+  "section": "merchants/settings",
+  "account": "points",
+  "viewport": {
+    "width": 1440,
+    "height": 1200
+  },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "business-logo-05-on-card",
+      "goto": "/points-operations",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 5000
+        },
+        {
+          "fill": [
+            "input[placeholder=\"Search members...\"]",
+            "Q056329"
+          ]
+        },
+        {
+          "wait": 3500
+        },
+        {
+          "click": ".divide-y button"
+        },
+        {
+          "wait": 5000
+        }
+      ],
+      "waitMs": 2000,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.max-w-\\[366px\\] img[src*='logo-trimmed']",
+          "number": 1,
+          "color": "plum"
+        }
+      ],
+      "clip": {
+        "x": 350,
+        "y": 422,
+        "width": 418,
+        "height": 198
+      }
+    }
+  ]
+}

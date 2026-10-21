@@ -15,6 +15,9 @@
 //   "deployUrl": "https://dashboard.qtap.qa",   // optional default
 //   "section": "merchants/staff",                // images/<section>/<name>.png
 //   "account": "points",                         // alias: "points" (default) or "stamp"
+//   "anonymous": true,                           // skip login; capture as a logged-out visitor
+//                                                // (the only way to reach /login and /signup, which
+//                                                //  middleware redirects away from once signed in)
 //   "viewport": { "width": 390, "height": 844 }, // optional; default 1440x900
 //   "fakeCamera": { "qr": "Q721848", "aim": "partial" },  // counter-scanner flows only
 //   "defaultWaitMs": 2500,
@@ -192,9 +195,12 @@ if (flow.fakeCamera) {
 }
 const page = await context.newPage();
 
-// Login
-let ok = false;
-for (const a of ACCOUNTS) {
+// Login. Anonymous flows skip it: /login and /signup are in the middleware's
+// AUTH_PATHS, so a signed-in context is redirected away from both and the only
+// way to capture them is as a logged-out visitor.
+let ok = flow.anonymous === true;
+if (ok) console.log('Anonymous flow: no login');
+for (const a of ok ? [] : ACCOUNTS) {
   try {
     await page.goto(DEPLOY_URL + '/login', { waitUntil: 'networkidle', timeout: 30000 });
     await page.fill('input[type="email"]', a.email);

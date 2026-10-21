@@ -1,0 +1,39 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/cards",
+  "account": "stamp",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 1000 },
+  "steps": [
+    {
+      "name": "deleting-01-cards-menu",
+      "goto": "/cards",
+      "waitFor": "text=Stamp Cards",
+      "waitMs": 8000,
+      "actions": [
+        { "wait": 1500 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1200 },
+        { "click": "button:has(svg.lucide-ellipsis)" },
+        { "wait": 1200 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('Deactivate')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "[role=menuitem]:has-text('Delete')", "number": 2, "color": "red" },
+        { "type": "caption", "text": "The card menu on the Stamp Cards page. Deactivate (1) takes the card offline and keeps everything. Delete (2) is the only way to remove a card, and it is permanent." }
+      ]
+    },
+    {
+      "name": "deleting-02-confirm-stamp",
+      "actions": [
+        { "click": "[role=menuitem]:has-text('Delete')" },
+        { "wait": 1500 }
+      ],
+      "clipTo": "[role=alertdialog]",
+      "clipPadding": 18,
+      "annotate": [
+        { "type": "box", "target": "[role=alertdialog] button:has-text('Delete')", "color": "red" }
+      ]
+    }
+  ]
+}

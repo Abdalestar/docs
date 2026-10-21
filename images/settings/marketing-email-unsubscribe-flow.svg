@@ -1,0 +1,65 @@
+<svg viewBox="0 0 900 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The two steps of the unsubscribe link in a Qtap marketing email, and which emails stop.">
+  <rect width="900" height="430" fill="#F8F5F2"/>
+
+  <text x="32" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="17" font-weight="600" fill="#423F4C">The unsubscribe link takes two steps</text>
+
+  <!-- Step 1: the email footer -->
+  <rect x="32" y="60" width="180" height="104" rx="10" fill="#FFFFFF" stroke="#E4DFDA" stroke-width="1.5"/>
+  <text x="46" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#8E4A63">MARKETING EMAIL</text>
+  <text x="46" y="106" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6B6770">Footer of the message:</text>
+  <text x="46" y="126" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#8E4A63" text-decoration="underline">Manage email preferences</text>
+  <text x="46" y="145" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#6B6770">or <tspan fill="#8E4A63" text-decoration="underline">unsubscribe</tspan></text>
+
+  <path d="M220 112 L258 112" stroke="#423F4C" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Step 2: the confirm page -->
+  <rect x="266" y="60" width="226" height="104" rx="10" fill="#FFFFFF" stroke="#8E4A63" stroke-width="2"/>
+  <text x="280" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#8E4A63">CONFIRM PAGE</text>
+  <text x="280" y="105" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#423F4C">Unsubscribe from Qtap</text>
+  <text x="280" y="122" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#423F4C">marketing emails?</text>
+  <rect x="280" y="132" width="98" height="24" rx="12" fill="#8E4A63"/>
+  <text x="329" y="148" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="600" fill="#FFFFFF" text-anchor="middle">Unsubscribe</text>
+
+  <path d="M500 112 L538 112" stroke="#423F4C" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Step 3: done -->
+  <rect x="546" y="60" width="180" height="104" rx="10" fill="#FFFFFF" stroke="#E4DFDA" stroke-width="1.5"/>
+  <text x="560" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#8E4A63">SAVED</text>
+  <text x="560" y="108" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#423F4C">You are unsubscribed.</text>
+  <text x="560" y="130" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" fill="#6B6770">Same as turning the</text>
+  <text x="560" y="146" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" fill="#6B6770">switch off in Settings.</text>
+
+  <!-- Note -->
+  <rect x="32" y="180" width="694" height="38" rx="8" fill="#F0D793" opacity="0.45"/>
+  <text x="48" y="204" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#423F4C">Opening the link changes nothing on its own. Only the Unsubscribe button saves the change, so a mail app that previews links cannot unsubscribe you by accident.</text>
+
+  <!-- What stops -->
+  <text x="32" y="262" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#423F4C">What stops</text>
+  <rect x="32" y="274" width="330" height="122" rx="10" fill="#FFFFFF" stroke="#E4DFDA" stroke-width="1.5"/>
+  <circle cx="50" cy="300" r="3.5" fill="#8E4A63"/>
+  <text x="64" y="304" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#423F4C">Trial guidance (day 0, day 7, day 12)</text>
+  <circle cx="50" cy="328" r="3.5" fill="#8E4A63"/>
+  <text x="64" y="332" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#423F4C">Feature spotlights during a trial</text>
+  <circle cx="50" cy="356" r="3.5" fill="#8E4A63"/>
+  <text x="64" y="360" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#423F4C">The weekly digest (Elite and Franchise)</text>
+  <circle cx="50" cy="384" r="3.5" fill="#8E4A63"/>
+  <text x="64" y="388" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#423F4C">The trial extension congratulation</text>
+
+  <!-- What keeps arriving -->
+  <text x="396" y="262" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#423F4C">What keeps arriving</text>
+  <rect x="396" y="274" width="330" height="122" rx="10" fill="#FFFFFF" stroke="#E4DFDA" stroke-width="1.5"/>
+  <circle cx="414" cy="300" r="3.5" fill="#423F4C"/>
+  <text x="428" y="304" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#423F4C">Payment receipts and failed payments</text>
+  <circle cx="414" cy="328" r="3.5" fill="#423F4C"/>
+  <text x="428" y="332" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#423F4C">Plan changes and cancellations</text>
+  <circle cx="414" cy="356" r="3.5" fill="#423F4C"/>
+  <text x="428" y="360" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#423F4C">Password resets and staff invitations</text>
+  <circle cx="414" cy="384" r="3.5" fill="#423F4C"/>
+  <text x="428" y="388" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#423F4C">The countdown in your last trial days</text>
+
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#423F4C"/>
+    </marker>
+  </defs>
+</svg>
