@@ -1,0 +1,88 @@
+---
+title: "Churn risk and best customers"
+sidebarTitle: "Churn risk & best customers"
+description: "The two member lists at the bottom of Analytics: who has stopped coming in, and who keeps coming back."
+---
+
+Scroll to the bottom of the Analytics page and you get two member lists. **Churn Risk** names
+the members who have gone quiet. **Best Customers** ranks the ones who keep turning up.
+Both read your live member data, and neither needs an add-on or a higher plan.
+
+<Frame caption="Churn Risk (1) and Best Customers (2) sit side by side at the bottom of Analytics. Member names are covered here.">
+  <img src="/images/merchants/analytics/customer-lists-both.png" alt="The Churn Risk and Best Customers cards side by side at the bottom of the Analytics page" />
+</Frame>
+
+## Who is slipping away
+
+**Churn Risk** lists members at risk of leaving your program. Each row carries a name, a
+risk level, a one-line reason, and the number of days since that member last did anything
+with you.
+
+<Frame caption="A high-risk row (1) with its reason, and the days-inactive counter on the right (2).">
+  <img src="/images/merchants/analytics/customer-lists-churn.png" alt="The Churn Risk card showing one high risk row and two medium risk rows with reasons and day counts" />
+</Frame>
+
+Qtap sorts your members by how long they have been quiet, hands the 20 quietest to a model,
+and gets back a level of **high**, **medium** or **low** with a short reason for each. If
+that model is unavailable, a plain rule takes over: more than 14 days idle counts as medium,
+and more than 30 days counts as high. Either way the card holds at most 20 rows.
+
+<Note>
+The risk level is a judgment. A member idle for 10 days can come back marked medium, and a
+row marked low turns up now and then even though the list is meant for medium and high. The
+day count is the hard number in the row, so lean on that when you compare two members.
+</Note>
+
+The counter measures the time since the member last earned or redeemed anything. For someone
+who joined and never came back, it counts from the day they joined. When nobody is idle, the
+card reads "No churn risks detected".
+
+Once you have the names, do something with them. A
+[win-back campaign](/merchants/campaigns/winback) reaches everyone past an inactivity mark
+you set, and a [targeted notification](/merchants/notifications/targeted) lets you write to
+a handful of people you pick by hand.
+
+## Who your regulars are
+
+**Best Customers** ranks your top ten. The first three get a crown, a trophy and a medal;
+after that the rank is a number. Each row shows the member's stamps or points, a tier badge,
+and a score.
+
+<Frame caption="The top row (1) takes the crown and the Platinum badge. The number under each badge is that member's score.">
+  <img src="/images/merchants/analytics/customer-lists-best.png" alt="The Best Customers card ranking six members with tier badges and scores" />
+</Frame>
+
+The score blends three things: how many stamps or points the member has earned, how recently
+they came in, and how fast they earn per month since joining. Recency carries the most
+weight, so a large balance that has sat still for months ranks below a smaller, fresher one.
+On the points program below, the member holding 400 points sits in fourth place behind
+someone with 252.
+
+<Frame caption="A points program ranks on points. The 400-point member sits fourth because the balance is old.">
+  <img src="/images/merchants/analytics/customer-lists-best-points.png" alt="The Best Customers card on a points program, showing points balances and tier badges" />
+</Frame>
+
+<Warning>
+Tiers are positions in your own list, not fixed targets. Your number one is always Platinum,
+roughly the next fifth is Gold, then Silver, then Bronze at the bottom. A member can drop a
+tier because someone else got busier, without changing anything themselves. Don't promise
+members a tier as a reward.
+</Warning>
+
+Stamp programs rank on stamps and label the row "16 stamps". Points programs rank on points
+and label it "252 pts". A new business with no activity yet sees "No customer data yet".
+
+## Who can see these lists
+
+Owners and managers, the same as the rest of Analytics. Staff have no analytics access by
+default, so they never see either list. See
+[Roles and permissions](/merchants/staff/roles-permissions) to change that.
+
+<CardGroup cols={2}>
+  <Card title="Analytics Overview" href="/merchants/analytics/overview">
+    The metrics, charts and export tools above these two lists
+  </Card>
+  <Card title="Win-back campaigns" href="/merchants/campaigns/winback">
+    Reach the members the churn list just named
+  </Card>
+</CardGroup>

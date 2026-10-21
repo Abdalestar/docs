@@ -1,13 +1,13 @@
 ---
 title: "Redemptions dashboard"
 sidebarTitle: "Redemptions"
-description: "Process reward redemptions at the counter. Enter a 6-character code or look up the customer directly."
+description: "Process reward redemptions at the counter. Enter the customer's 8-digit code or look them up directly."
 ---
 
 The Redemptions page is where your staff go when a customer wants to claim a reward. Open it from the sidebar at any time. It has two tabs: **Redeem** for processing rewards right now, and **History** for reviewing what's been processed.
 
-<Frame caption="The Redemptions page opens on the Redeem tab. Enter Code and Look Up Customer are the two ways to start.">
-  <img src="/images/redemptions/redeem-overview.png" alt="The Redemptions page on the Redeem tab, showing the Enter Code and Look Up Customer buttons" />
+<Frame caption="The Redeem tab: type the customer's code (1), search for them by name (2), or scan (3).">
+  <img src="/images/redemptions/redeem-overview.png" alt="The Redemptions page on the Redeem tab, showing the Enter Code, Look Up Customer and Scan buttons" />
 </Frame>
 
 <Info>
@@ -22,10 +22,10 @@ The Members section also has a Redemptions page, but that one shows the redempti
 
 ### Enter a code
 
-When a customer earns a reward, Qtap gives them a 6-character code in the app. Entering the code takes about 10 seconds at the counter.
+When a customer claims a reward, Qtap gives them an **8-digit code** in the app. It is digits only, so staff can type it on a numeric keypad without switching keyboards. Entering the code takes about 10 seconds at the counter.
 
-<Frame caption="Enter Code: type the six-character code from the customer's phone, then click Look Up to load the reward.">
-  <img src="/images/redemptions/enter-code.png" alt="The Enter Code tab with a code typed into the field and the Look Up button beside it" />
+<Frame caption="Type the 8-digit code from the customer's phone (1), then click Look Up (2).">
+  <img src="/images/redemptions/enter-code.png" alt="The Enter Redemption Code card reading Enter the 8-digit code shown on the customer's phone, with a code typed in and the Look Up button beside it" />
 </Frame>
 
 <Steps>
@@ -36,15 +36,45 @@ When a customer earns a reward, Qtap gives them a 6-character code in the app. E
     Click the **Enter Code** button if it is not already active.
   </Step>
   <Step title="Type the code">
-    Enter the 6-character code from the customer's phone. The field auto-capitalizes, so lowercase works fine. Press Enter or click **Look Up**.
+    Enter the 8-digit code from the customer's phone. Press Enter or click **Look Up**. The button stays greyed out until you have typed at least six characters.
   </Step>
   <Step title="Review the reward card">
     The card shows the customer's name, the reward, which program it comes from, when it was earned, and the expiry date if one is set.
   </Step>
   <Step title="Click Confirm Redemption">
-    The button appears only when the reward status is available. If the reward is already used or expired, the button won't show.
+    The button appears only when the reward is still available. If it has already been used, the card says so instead.
   </Step>
 </Steps>
+
+<Frame caption="A stamp card reward loaded from its code. The badge reads Ready, so Confirm Redemption is available.">
+  <img src="/images/redemptions/code-voucher.png" alt="A reward voucher for Free Pastry on the Coffee Lovers Card, showing a Ready badge, the 8-digit code, the customer name and a Confirm Redemption button" />
+</Frame>
+
+#### One box, three kinds of code
+
+Staff do not need to know where a code came from. Qtap checks three places for it: rewards the customer earned on a card, offers they claimed from your public page, and rewards they bought with a points balance. Whichever one matches, the voucher loads the same way.
+
+<Frame caption="The same box loaded a claimed public offer. The strip above the voucher names the deal so staff know what to hand over.">
+  <img src="/images/redemptions/code-offer.png" alt="A campaign voucher for 15% Off Any Drink loaded from a code, labelled Discount and Campaign Voucher, with the customer email redacted" />
+</Frame>
+
+Before the numeric format, Qtap issued codes that mixed letters, digits and a hyphen. Those still work until they expire, and the field takes them in upper or lower case.
+
+<Note>
+A code only resolves for the business you are signed in to. If a customer hands you a code from another Qtap merchant, the lookup reports **No reward found with this code**.
+</Note>
+
+#### When a code will not go through
+
+If the code has already been used, the voucher loads with a **Redeemed** badge and the line "This reward has been redeemed" where the button would be, so staff cannot hand the same reward over twice.
+
+<Frame caption="An already-used code loads with a Redeemed badge and no Confirm button.">
+  <img src="/images/redemptions/code-redeemed.png" alt="A redeemed reward voucher showing a Redeemed badge and the message This reward has been redeemed" />
+</Frame>
+
+<Warning>
+A voucher past its expiry date still shows a **Ready** badge and an active **Confirm Redemption** button, with a red **Expired** line underneath it. Confirming it fails and marks the reward expired, so check that line before you hand anything over.
+</Warning>
 
 ### Look up the customer
 
@@ -65,12 +95,12 @@ Use this method when the customer doesn't have their code ready or you want to c
     Click their row. Their pending rewards load automatically below their profile card.
   </Step>
   <Step title="Redeem a reward">
-    Find the reward and click **Redeem**. A dialog shows the reward name and the customer's name. Click **Confirm** to process it.
+    Find the reward and click **Redeem**. A dialog titled Confirm Redemption shows the reward name and the customer's name. Click **Confirm Redemption** in the dialog to process it.
   </Step>
 </Steps>
 
 <Tip>
-Qtap ID (the short alphanumeric code on every customer profile, like Q7K4M9) is the most precise search. Ask returning customers to save it to their phone; it's on their profile card in the app.
+Qtap ID (the short code on every customer profile: the letter Q followed by six digits, like Q102812) is the most precise search. Ask returning customers to save it to their phone; it's on their profile card in the app.
 </Tip>
 
 ## Points-based programs
@@ -116,8 +146,13 @@ The **History** tab shows the last 50 redemptions across your organization. Each
 
 Use this when a customer questions whether their reward was already redeemed, or to track which staff member processed a specific transaction.
 
+<Note>
+One kind of redemption is missing from this tab. When a claimed offer pays out bonus stamps or bonus points, Qtap books it as earning rather than as a redemption, so it lands in the customer's activity instead of here. Offers that hand over a discount, a free item or a buy-one-get-one do appear.
+</Note>
+
 ## Related
 
+- [Redeeming by scanning](/merchants/redemptions/scan-redemption): use the Scan button instead of typing, with a scanner or a phone camera
 - [Member Redemptions](/merchants/members/redemptions): view a specific customer's full redemption record from their profile
 - [Stamp Card Rewards](/merchants/stamp-cards/rewards): configure what reward members get when they complete a stamp card
 - [Points Programs: Operations](/merchants/points/operations): how points are issued and how redemption thresholds work

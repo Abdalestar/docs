@@ -1,0 +1,59 @@
+{
+  "section": "merchants/qr-codes",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1100 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "qr-plan-limits-meter",
+      "goto": "/settings/billing",
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "hover": "span:has-text('QR Codes (this month)')" }
+      ],
+      "waitFor": "span:has-text('QR Codes (this month)')",
+      "waitMs": 8000,
+      "clipTo": "div.rounded-xl:has(span:has-text('QR Codes (this month)'))",
+      "clipPadding": 8,
+      "annotate": [
+        { "type": "box", "target": "span:has-text('QR Codes (this month)')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "span:has-text('of 300 used')", "number": 2, "color": "gold" }
+      ]
+    },
+    {
+      "name": "qr-plan-limits-plan-cards",
+      "goto": "/settings/billing",
+      "actions": [
+        { "click": "[role=tab]:has-text('Plans')" },
+        { "wait": 3000 },
+        { "hover": "text=300 QR codes/mo" }
+      ],
+      "waitFor": "text=300 QR codes/mo",
+      "waitMs": 3000,
+      "annotate": [
+        { "type": "box", "target": "text=50 QR codes/mo", "color": "plum" },
+        { "type": "box", "target": "text=300 QR codes/mo", "color": "plum" },
+        { "type": "box", "target": "text=1500 QR codes/mo", "color": "plum" },
+        { "type": "box", "target": "text=Unlimited QR codes/mo", "color": "plum" },
+        { "type": "caption", "text": "Each plan card lists its monthly QR code allowance." }
+      ]
+    },
+    {
+      "name": "qr-plan-limits-batch",
+      "goto": "/qr-codes/generate",
+      "actions": [
+        { "click": "text=Batch Generate" },
+        { "wait": 1200 },
+        { "fill": ["#quantity", "40"] },
+        { "hover": "#quantity" }
+      ],
+      "waitFor": "#quantity",
+      "waitMs": 3000,
+      "clipTo": "div.rounded-xl:has(#quantity)",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "#quantity", "number": 1, "color": "plum" }
+      ]
+    }
+  ]
+}

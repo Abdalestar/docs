@@ -1,0 +1,86 @@
+---
+title: "Campaign messages and personalization"
+sidebarTitle: "Messages and variables"
+description: "Write the push a campaign sends, and drop in each member's name, stamps, or reward so it reads like you wrote it for them."
+---
+
+Every campaign that pushes a notification carries one title and one message. You write both on the **Message** step of the campaign wizard, and you can drop small tags into them that Qtap swaps for each member's own details as the push goes out. One message, written once, arrives as "Hi Noor" for Noor and "Hi Hassan" for Hassan.
+
+Owners and managers can create and edit campaigns. Staff accounts have no campaign access by default, so a staff member who opens the wizard sees an access notice instead.
+
+## The two fields
+
+<Frame caption="The Message step: title (1), message (2), and the personalization chips (3).">
+  <img src="/images/merchants/campaigns/messages-01-step.png" alt="The Message step of the campaign wizard with the title field, message field, and personalization variables" />
+</Frame>
+
+The title takes up to 100 characters and the message up to 500. A counter under each field tracks what you have used. **Next** stays off until both fields have something in them, so a campaign that pushes cannot go out with an empty message.
+
+The exception is a campaign members claim themselves. If you set the audience to Members only or Everyone, the campaign lives on your page in the app instead of arriving as a push, and the wizard lets you move past this step with both fields blank.
+
+## Start from a template
+
+<Frame caption="Use Template fills a starting title and message for your campaign type. The preview underneath already shows a name in place.">
+  <img src="/images/merchants/campaigns/messages-02-template.png" alt="The Message step after clicking Use Template, showing a filled win-back title and message with a live preview" />
+</Frame>
+
+**Use Template** fills both fields with wording written for the campaign type you picked, tags included. Edit it afterwards. Clicking the button again overwrites whatever is in the two fields, so copy your own version somewhere first if you want it back.
+
+## The tags you can use
+
+<Frame caption="Clicking a chip adds its tag to the end of the message. Move it where you want it from there.">
+  <img src="/images/merchants/campaigns/messages-03-variables.png" alt="The message field containing two personalization tags after clicking the Stamps Count chip" />
+</Frame>
+
+Four chips sit under the message box: Customer Name, First Name, Stamps Count, and Reward Name. Clicking one adds its tag to the **end** of the message rather than at your cursor, so click the chip and then move the tag into the sentence where it belongs. Typing a tag by hand works just as well.
+
+Qtap fills six tags:
+
+| Tag | What each member sees |
+| --- | --- |
+| `{{customer_name}}` | Their full name, or "Customer" when you have no name on file |
+| `{{first_name}}` | Their first name only, same fallback |
+| `{{stamps_count}}` | How many stamps they have earned with you in total |
+| `{{points_count}}` | How many points they have earned with you in total |
+| `{{reward_name}}` | The reward attached to this campaign |
+| `{{merchant_name}}` | Your business name |
+
+`{{points_count}}` and `{{merchant_name}}` have no chip, so type those two yourself. Capitals do not matter, and the double braces do.
+
+Both counting tags run on lifetime totals, not on where the member sits on their current card. A member on their second card who has collected sixteen stamps with you reads sixteen, not six.
+
+<Warning>
+A tag Qtap does not recognize goes out exactly as you typed it. `{{firstname}}` with no underscore reaches the member as `{{firstname}}`, so check any tag you type by hand against the table above.
+</Warning>
+
+## What the preview shows
+
+<Frame caption="The preview fills the name tags only. The other tags stay as written until the push is sent.">
+  <img src="/images/merchants/campaigns/messages-04-preview.png" alt="The message preview showing a filled first name and an unfilled stamps count tag" />
+</Frame>
+
+The preview under the fields puts a sample name into `{{customer_name}}` and `{{first_name}}` so you can read the sentence back. It leaves the other four tags alone. Seeing `{{stamps_count}}` sitting there in the preview is the normal state, not a sign that the tag is broken.
+
+## What reaches the member
+
+<Frame caption="One message, filled per member at the moment the campaign sends.">
+  <img src="/images/merchants/campaigns/message-personalization.svg" alt="Diagram showing one campaign message template filling with two different members' names and stamp counts" />
+</Frame>
+
+Qtap fills every tag when the campaign engine picks the message up, using each member's own record at that moment. A member with no first name saved still gets a readable sentence, because the name tags fall back to "Customer".
+
+`{{reward_name}}` reads the reward you attached on the Reward step. Leave the reward off and it fills with the word "reward", which reads oddly in most sentences, so keep that tag for campaigns that carry one. The same tag in a one-off push from the Notifications page has no campaign behind it and fills the same way.
+
+<Note>
+Campaigns written before Qtap moved to double braces still work. Qtap fills a single-brace tag like `{customer_name}` on an older campaign the same way, so a campaign you set up long ago and left running is not sending raw text to anyone.
+</Note>
+
+## Checking it on the Review step
+
+<Frame caption="Review shows the message as you wrote it, tags and all.">
+  <img src="/images/merchants/campaigns/messages-05-review.png" alt="The Review step showing the campaign notification with its personalization tags unfilled" />
+</Frame>
+
+The Notification card on the Review step repeats your title and message as written, with the tags still visible. Read it for spelling and for the shape of the sentence. What each member receives is the filled version.
+
+For the rest of the wizard, see [Creating a campaign](/merchants/campaigns/wizard). For who receives a campaign and when, see [Campaign timing](/merchants/campaigns/timing).

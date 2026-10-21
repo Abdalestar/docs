@@ -1,0 +1,67 @@
+{
+  "section": "merchants/qr-codes",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 900 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "show-on-screen-gallery",
+      "goto": "/qr-codes",
+      "actions": [
+        { "wait": 2000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 5000 },
+        { "click": "button:has(svg.lucide-layout-grid)" }
+      ],
+      "waitFor": "div.rounded-xl:has(canvas)",
+      "waitMs": 3500,
+      "annotate": [
+        { "type": "box", "target": "button:has(svg.lucide-layout-grid)", "number": 1, "color": "plum" },
+        { "type": "box", "target": ":nth-match(div.rounded-xl:has(canvas), 1)", "number": 2, "color": "plum" },
+        { "type": "redact", "rect": { "x": 1248, "y": 8, "width": 184, "height": 48 } },
+        { "type": "caption", "text": "Gallery view draws every code as a picture, with its name, status, and scan count underneath." }
+      ]
+    },
+    {
+      "name": "show-on-screen-menu",
+      "actions": [
+        { "hover": ":nth-match(div.rounded-xl:has(canvas), 1)" },
+        { "wait": 600 },
+        { "click": "button[class*='group-hover:opacity-100']" }
+      ],
+      "waitFor": "[role=menuitem]:has-text('Show to customer')",
+      "waitMs": 1500,
+      "clipTo": "[role=menu]",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('Show to customer')", "number": 1, "color": "plum" }
+      ]
+    },
+    {
+      "name": "show-on-screen-presenter",
+      "actions": [
+        { "click": "[role=menuitem]:has-text('Show to customer')" },
+        { "wait": 2500 }
+      ],
+      "waitFor": "[aria-label='QR code presentation']",
+      "waitMs": 2000,
+      "clip": { "x": 0, "y": 48, "width": 1440, "height": 852 },
+      "annotate": [
+        { "type": "box", "target": "button[aria-label='Close presentation']", "number": 1, "color": "plum" },
+        { "type": "box", "target": "p.font-mono", "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "show-on-screen-detail-button",
+      "goto": "/qr-codes/8e70760b-ffc8-4234-89c5-b5aff0b7628d",
+      "waitFor": "button:has-text('Show to customer')",
+      "waitMs": 5000,
+      "actions": [{ "wait": 4000 }, { "hover": "button:has-text('Show to customer')" }],
+      "clipTo": "div.rounded-xl:has(button:has-text('Show to customer'))",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Show to customer')", "number": 1, "color": "plum" }
+      ]
+    }
+  ]
+}

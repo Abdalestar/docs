@@ -1,0 +1,92 @@
+---
+title: "What Each Staff Permission Unlocks"
+sidebarTitle: "Permission reference"
+description: "A checkbox-by-checkbox map of the Edit Permissions list: which pages and actions each of the 18 permissions opens."
+---
+
+The Edit Permissions dialog holds 18 checkboxes in six groups. This page maps every one of them to the pages and buttons it opens, so you can tick the right boxes the first time.
+
+To reach the list, open **Staff**, click the menu icon on a teammate's row, choose **Edit Permissions**, then turn on **Use Custom Permissions**. [Roles and permissions](/merchants/staff/roles-permissions) covers that walkthrough in full.
+
+<Frame caption="With Use Custom Permissions off (1), the checklist is greyed out and shows the role defaults. This teammate has the Staff role, so View members (2) is ticked and the three edit boxes below it are not.">
+  <img src="/images/merchants/staff/permission-reference-01-defaults.png" alt="Edit Permissions dialog with the Use Custom Permissions switch off and the Members checklist greyed out" />
+</Frame>
+
+## Members
+
+| Permission | What it opens |
+| --- | --- |
+| View members | The Members page and each member's profile |
+| Add members | Full member access: view, add, edit, and delete members |
+| Edit members | Full member access: view, add, edit, and delete members |
+| Delete members | Full member access: view, add, edit, and delete members |
+
+Those last three boxes all resolve to the same level of access. Tick any one of them and the teammate can add, edit, and delete members, plus use the bulk actions on the Members list.
+
+## Loyalty
+
+| Permission | What it opens |
+| --- | --- |
+| Issue stamps | The Stamp Ops page and the manual stamp it writes |
+| Award points | The Points Ops page |
+| Adjust points | The Adjust and Deduct tab, where a balance gets corrected |
+| Redeem rewards | The Redemptions page |
+
+Adjust points sits on its own box, so you can let someone add points at the till without letting them correct a balance later.
+
+<Frame caption="Custom permissions turned on. Delete members (1) grants the same access as Add and Edit; Redeem rewards (2) is what opens the Redemptions page.">
+  <img src="/images/merchants/staff/permission-reference-02-members-loyalty.png" alt="Members and Loyalty permission groups with the Delete members and Redeem rewards rows highlighted" />
+</Frame>
+
+## Cards and programs, QR, analytics, notifications
+
+| Permission | What it opens |
+| --- | --- |
+| View cards | Your Cards or Points section, read only |
+| Edit cards | Editing an existing card or program |
+| Create cards | Creating new cards and programs |
+| View QR codes | The QR Codes section |
+| Generate QR codes | The QR Codes section |
+| Manage NFC tags | The QR Codes section |
+| View analytics | The Analytics section |
+| Export data | Analytics plus its export tools |
+| View notifications | Notifications and Campaigns, read only |
+| Send notifications | Sending notifications and running campaigns |
+
+<Frame caption="The lower half of the list. Create cards (1) covers both program types, any QR box (2) opens the whole QR section, Export data (3) grants full analytics, and Send notifications (4) also opens Campaigns.">
+  <img src="/images/merchants/staff/permission-reference-03-cards-qr-analytics.png" alt="Cards and Programs, QR and NFC, Analytics, and Notifications permission groups with four rows highlighted" />
+</Frame>
+
+## Groups that reach wider than they look
+
+Four of these boxes grant more than their label suggests:
+
+- **The cards boxes cover both program types.** There is one Cards and Programs group, and it controls stamp cards and points programs together. You cannot give someone your points programs while keeping them out of your stamp cards.
+- **Any single QR box opens the whole QR section.** View, Generate, and Manage all grant the same access. NFC Tags carries an extra rule: a teammate on the Staff role never sees it, whatever you tick.
+- **Send notifications also opens Campaigns.** The Notifications group governs both, so a teammate who can send a push can also build and run campaigns.
+- **Export data grants full analytics.** Tick it and the teammate gets every report, not only the export buttons.
+
+## What the checklist cannot grant
+
+Staff management, Billing, and Settings are not on the list. Custom permissions start from nothing and add only what you tick, so those three stay closed for everyone except you.
+
+<Warning>
+Turning on **Use Custom Permissions** for a manager takes away their view of the Staff page, because no checkbox can give it back. Leave the switch off if you want a manager to keep their role defaults.
+</Warning>
+
+If you clear every box, the teammate can still sign in and reach the dashboard home, and nothing else. The sidebar hides whatever they cannot open, so a restricted teammate sees a shorter menu rather than a list of dead ends.
+
+<Note>
+Your loyalty type still decides what appears. A points account never shows Cards or Stamp Ops even with the cards boxes ticked, and a stamp account never shows Points or Points Ops.
+</Note>
+
+Only owners can edit roles and permissions. Managers cannot change permissions for anyone, including themselves.
+
+<CardGroup cols={2}>
+  <Card title="Roles and permissions" href="/merchants/staff/roles-permissions">
+    The three roles and how to open the permissions dialog
+  </Card>
+  <Card title="Staff setup recipes" href="/merchants/staff/setup-recipes">
+    Ready-made setups for a cashier and a shift manager
+  </Card>
+</CardGroup>

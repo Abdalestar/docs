@@ -1,0 +1,18 @@
+{
+  "section": "merchants/staff",
+  "anonymous": true,
+  "viewport": { "width": 900, "height": 620 },
+  "defaultWaitMs": 2000,
+  "steps": [
+    {
+      "name": "invite-04-confirm-page",
+      "goto": "/api/auth/confirm?token_hash=DOCSCAPTURE&type=invite",
+      "waitMs": 2500,
+      "clipTo": "div[style*=\"max-width:480px\"]",
+      "clipPadding": 26,
+      "annotate": [
+        { "type": "box", "target": "button[type=submit]", "color": "plum" }
+      ]
+    }
+  ]
+}

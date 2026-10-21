@@ -1,0 +1,56 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "getting-started",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1500 },
+  "defaultWaitMs": 4000,
+  "steps": [
+    {
+      "name": "recent-activity-context",
+      "goto": "/",
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 600 }
+      ],
+      "waitFor": "[data-tour=\"activity-feed\"]",
+      "waitMs": 12000,
+      "clip": { "x": 0, "y": 0, "width": 1440, "height": 1400 },
+      "annotate": [
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=1", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=2", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=3", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=4", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=5", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=6", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=7", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=8", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=9", "color": "charcoal" },
+        { "type": "box", "target": "[data-tour=\"activity-feed\"]", "number": 1, "color": "plum" }
+      ]
+    },
+    {
+      "name": "recent-activity-card",
+      "goto": "/",
+      "waitFor": "[data-tour=\"activity-feed\"] span.data-mono",
+      "waitMs": 12000,
+      "clipTo": "[data-tour=\"activity-feed\"]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=1", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=2", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=3", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=4", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=5", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=6", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=7", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=8", "color": "charcoal" },
+        { "type": "redact", "target": "[data-tour=\"activity-feed\"] span.font-medium.truncate >> nth=9", "color": "charcoal" },
+        { "type": "box", "target": "[data-tour=\"activity-feed\"] span.uppercase", "number": 1, "color": "plum" },
+        { "type": "box", "target": "[data-tour=\"activity-feed\"] p.text-xs.text-muted-foreground", "number": 2, "color": "plum" },
+        { "type": "box", "target": "[data-tour=\"activity-feed\"] span.data-mono", "number": 3, "color": "plum" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "section": "merchants/analytics",
+  "account": "points",
+  "viewport": {
+    "width": 1440,
+    "height": 2600
+  },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "customer-lists-best-points",
+      "goto": "/analytics",
+      "actions": [
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 13000
+        },
+        {
+          "hover": "div.rounded-xl:has-text('Best Customers')"
+        }
+      ],
+      "waitFor": "div.rounded-xl:has-text('Best Customers')",
+      "waitMs": 2500,
+      "clipTo": "div.rounded-xl:has-text('Best Customers')",
+      "clipPadding": 10,
+      "annotate": [
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=0"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=1"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=2"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=3"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=0"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=1"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=2"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=3"
+        }
+      ]
+    }
+  ]
+}

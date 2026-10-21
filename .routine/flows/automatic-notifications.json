@@ -1,0 +1,105 @@
+{
+  "section": "merchants/notifications",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 900 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "automatic-01-list",
+      "goto": "/notifications",
+      "waitFor": "[role=tablist]",
+      "waitMs": 9000,
+      "actions": [
+        { "wait": 6000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1200 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl.bg-card:has-text('Not pushed')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl.bg-card:has-text('Reward redeemed!')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "Your notification history lists the messages Qtap sent for you alongside the ones you wrote." }
+      ]
+    },
+    {
+      "name": "automatic-02-row-menu",
+      "goto": "/notifications",
+      "waitFor": "[role=tablist]",
+      "waitMs": 9000,
+      "actions": [
+        { "wait": 6000 },
+        { "click": "div.rounded-xl.bg-card:has-text('Reward redeemed!') button[aria-haspopup='menu']" },
+        { "wait": 1500 }
+      ],
+      "clipTo": "div.rounded-xl.bg-card:has-text('Reward redeemed!')",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "[role=menuitem]:has-text('Delete')", "color": "plum" }
+      ]
+    },
+    {
+      "name": "automatic-03-points-receipt",
+      "goto": "/notifications",
+      "waitFor": "[role=tablist]",
+      "waitMs": 9000,
+      "actions": [
+        { "wait": 6000 },
+        { "hover": "div.rounded-xl.bg-card:has-text('Balance: 85')" },
+        { "wait": 900 }
+      ],
+      "clipTo": "div.rounded-xl.bg-card:has-text('Balance: 85')",
+      "clipPadding": 12
+    },
+    {
+      "name": "automatic-04-reward-redeemed",
+      "goto": "/notifications",
+      "waitFor": "[role=tablist]",
+      "waitMs": 9000,
+      "actions": [
+        { "wait": 6000 },
+        { "hover": "div.rounded-xl.bg-card:has-text('Reward redeemed!')" },
+        { "wait": 900 }
+      ],
+      "clipTo": "div.rounded-xl.bg-card:has-text('Reward redeemed!')",
+      "clipPadding": 12
+    },
+    {
+      "name": "automatic-05-not-pushed",
+      "goto": "/notifications",
+      "waitFor": "[role=tablist]",
+      "waitMs": 9000,
+      "actions": [
+        { "wait": 6000 },
+        { "hover": "div.rounded-xl.bg-card:has-text('Not pushed')" },
+        { "wait": 900 }
+      ],
+      "clipTo": "div.rounded-xl.bg-card:has-text('Not pushed')",
+      "clipPadding": 12
+    },
+    {
+      "name": "automatic-06-welcome",
+      "goto": "/notifications",
+      "waitFor": "[role=tablist]",
+      "waitMs": 9000,
+      "actions": [
+        { "wait": 6000 },
+        { "hover": "div.rounded-xl.bg-card:has-text('Your loyalty card is ready')" },
+        { "wait": 900 }
+      ],
+      "clipTo": "div.rounded-xl.bg-card:has-text('Your loyalty card is ready')",
+      "clipPadding": 12
+    },
+    {
+      "name": "automatic-07-offer-claimed",
+      "goto": "/notifications",
+      "waitFor": "[role=tablist]",
+      "waitMs": 9000,
+      "actions": [
+        { "wait": 6000 },
+        { "hover": "div.rounded-xl.bg-card:has-text('offer is ready to use')" },
+        { "wait": 900 }
+      ],
+      "clipTo": "div.rounded-xl.bg-card:has-text('offer is ready to use')",
+      "clipPadding": 12
+    }
+  ]
+}

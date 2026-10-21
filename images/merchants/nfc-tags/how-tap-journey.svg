@@ -1,0 +1,94 @@
+<svg viewBox="0 0 980 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The four steps a customer goes through when tapping a Qtap NFC tag">
+  <style>
+    .t { font-family: system-ui, -apple-system, sans-serif; }
+    .step-n { font-size: 13px; font-weight: 700; fill: #FFFFFF; }
+    .step-h { font-size: 15px; font-weight: 600; fill: #423F4C; }
+    .body { font-size: 12.5px; fill: #6B6770; }
+    .screen { font-size: 11.5px; fill: #423F4C; }
+    .screen-b { font-size: 12px; font-weight: 600; fill: #423F4C; }
+    .btn-t { font-size: 11px; font-weight: 600; fill: #FFFFFF; }
+    .note { font-size: 12.5px; fill: #423F4C; }
+    .note-b { font-size: 12.5px; font-weight: 600; fill: #8E4A63; }
+  </style>
+
+  <rect x="0" y="0" width="980" height="460" fill="#F8F5F2"/>
+
+  <!-- Step 1 -->
+  <g>
+    <circle cx="40" cy="42" r="14" fill="#8E4A63"/>
+    <text x="40" y="47" class="t step-n" text-anchor="middle">1</text>
+    <text x="64" y="40" class="t step-h">Hold the phone to the tag</text>
+    <text x="64" y="60" class="t body">Screen on, unlocked. No app open.</text>
+
+    <!-- phone -->
+    <rect x="26" y="84" width="112" height="200" rx="16" fill="#FFFFFF" stroke="#423F4C" stroke-width="2"/>
+    <rect x="34" y="96" width="96" height="176" rx="9" fill="#F8F5F2"/>
+    <text x="82" y="180" class="t screen" text-anchor="middle">Home screen</text>
+    <!-- tag -->
+    <rect x="150" y="150" width="56" height="56" rx="10" fill="#F0D793" stroke="#423F4C" stroke-width="2"/>
+    <text x="178" y="183" class="t screen-b" text-anchor="middle">TAG</text>
+    <!-- waves -->
+    <path d="M144 170 q-12 14 0 28" fill="none" stroke="#8E4A63" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M134 162 q-18 22 0 44" fill="none" stroke="#8E4A63" stroke-width="2.5" stroke-linecap="round" opacity="0.55"/>
+  </g>
+
+  <path d="M222 184 l30 0 m-8 -7 l8 7 l-8 7" fill="none" stroke="#6B6770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Step 2 -->
+  <g>
+    <circle cx="288" cy="42" r="14" fill="#8E4A63"/>
+    <text x="288" y="47" class="t step-n" text-anchor="middle">2</text>
+    <text x="312" y="40" class="t step-h">The phone offers the link</text>
+    <text x="312" y="60" class="t body">A banner appears. The customer taps it.</text>
+
+    <rect x="274" y="84" width="112" height="200" rx="16" fill="#FFFFFF" stroke="#423F4C" stroke-width="2"/>
+    <rect x="282" y="96" width="96" height="176" rx="9" fill="#F8F5F2"/>
+    <rect x="288" y="104" width="84" height="40" rx="8" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.6"/>
+    <text x="330" y="120" class="t screen-b" text-anchor="middle">Qtap</text>
+    <text x="330" y="135" class="t screen" text-anchor="middle">c.qtap.qa</text>
+    <text x="330" y="200" class="t screen" text-anchor="middle">Tap to open</text>
+  </g>
+
+  <path d="M402 184 l30 0 m-8 -7 l8 7 l-8 7" fill="none" stroke="#6B6770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Step 3 -->
+  <g>
+    <circle cx="468" cy="42" r="14" fill="#8E4A63"/>
+    <text x="468" y="47" class="t step-n" text-anchor="middle">3</text>
+    <text x="492" y="40" class="t step-h">Qtap shows what the tap will do</text>
+    <text x="492" y="60" class="t body">Nothing is recorded on this screen.</text>
+
+    <rect x="454" y="84" width="112" height="200" rx="16" fill="#FFFFFF" stroke="#423F4C" stroke-width="2"/>
+    <rect x="462" y="96" width="96" height="176" rx="9" fill="#F8F5F2"/>
+    <circle cx="510" cy="130" r="18" fill="#F0D793"/>
+    <text x="510" y="166" class="t screen-b" text-anchor="middle">Brew &amp; Bean</text>
+    <text x="510" y="184" class="t screen" text-anchor="middle">Collect a stamp</text>
+    <rect x="474" y="200" width="72" height="24" rx="12" fill="#8E4A63"/>
+    <text x="510" y="216" class="t btn-t" text-anchor="middle">Confirm</text>
+    <text x="510" y="243" class="t screen" text-anchor="middle">Not now</text>
+  </g>
+
+  <path d="M582 184 l30 0 m-8 -7 l8 7 l-8 7" fill="none" stroke="#6B6770" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Step 4 -->
+  <g>
+    <circle cx="648" cy="42" r="14" fill="#8E4A63"/>
+    <text x="648" y="47" class="t step-n" text-anchor="middle">4</text>
+    <text x="672" y="40" class="t step-h">The stamp or points land</text>
+    <text x="672" y="60" class="t body">Your Taps count goes up by one.</text>
+
+    <rect x="634" y="84" width="112" height="200" rx="16" fill="#FFFFFF" stroke="#423F4C" stroke-width="2"/>
+    <rect x="642" y="96" width="96" height="176" rx="9" fill="#F8F5F2"/>
+    <circle cx="690" cy="150" r="24" fill="#8E4A63"/>
+    <path d="M679 150 l8 8 l14 -16" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="690" y="196" class="t screen-b" text-anchor="middle">Stamp earned</text>
+    <text x="690" y="214" class="t screen" text-anchor="middle">3 of 5</text>
+  </g>
+
+  <!-- Note strip -->
+  <rect x="26" y="316" width="928" height="110" rx="12" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.6"/>
+  <text x="50" y="348" class="t note-b">There is no button to press inside the app.</text>
+  <text x="50" y="372" class="t note">The Qtap app has a <tspan font-weight="600">Scan NFC</tspan> button, and in version 1.0 it answers "Coming soon". The phone's own</text>
+  <text x="50" y="392" class="t note">tag reading is what opens Qtap, so the customer should hold the phone to the tag from the home screen</text>
+  <text x="50" y="412" class="t note">or lock screen rather than opening Qtap first.</text>
+</svg>

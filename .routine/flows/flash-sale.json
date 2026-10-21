@@ -1,0 +1,152 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/campaigns",
+  "account": "points",
+  "defaultWaitMs": 3000,
+  "viewport": { "width": 1440, "height": 1050 },
+  "steps": [
+    {
+      "name": "flash-sale-01-type",
+      "goto": "/campaigns/new",
+      "waitFor": "text=Choose Campaign Type",
+      "waitMs": 5000,
+      "actions": [
+        { "wait": 2500 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 600 },
+        { "click": "label[for='flash_sale']" },
+        { "wait": 400 },
+        { "fill": ["#name", "Thursday Flash Sale"] },
+        { "wait": 400 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "label[for='flash_sale']", "number": 1, "color": "plum" },
+        { "type": "box", "target": "label[for='time_based']", "number": 2, "color": "gold" },
+        { "type": "box", "target": "#name", "number": 3, "color": "charcoal" },
+        { "type": "caption", "text": "Flash Sale (1) and Time-Based Promotion (2) sit in the same type list. The name you type (3) becomes the headline on the voucher." }
+      ]
+    },
+    {
+      "name": "flash-sale-02-trigger",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 },
+        { "click": "[role=combobox]:has-text('Bonus Points')" },
+        { "wait": 500 },
+        { "click": "[role=option]:has-text('Discount')" },
+        { "wait": 500 },
+        { "fill": ["input[type='number'][min='1']", "20"] },
+        { "wait": 300 },
+        { "fill": ["input[type='datetime-local']", "2026-09-11T18:00"] },
+        { "wait": 300 },
+        { "click": "[role=combobox]:has-text('4 hours')" },
+        { "wait": 500 },
+        { "click": "[role=option]:has-text('2 hours')" },
+        { "wait": 500 },
+        { "fill": ["input[placeholder='Unlimited']", "50"] },
+        { "wait": 500 }
+      ],
+      "waitFor": "text=Configure Trigger",
+      "waitMs": 2000,
+      "annotate": [
+        { "type": "box", "target": "[role=combobox]:has-text('Discount')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "input[type='number'][min='1']", "number": 2, "color": "plum" },
+        { "type": "box", "target": "input[type='datetime-local']", "number": 3, "color": "plum" },
+        { "type": "box", "target": "[role=combobox]:has-text('2 hours')", "number": 4, "color": "plum" },
+        { "type": "box", "target": "input[placeholder='Unlimited']", "number": 5, "color": "charcoal" },
+        { "type": "caption", "text": "The Flash Sale trigger: Sale Type (1), Value (2), Start Time (3), Duration (4), and an optional cap on redemptions (5)." }
+      ]
+    },
+    {
+      "name": "flash-sale-03-review",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 800 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 800 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 800 },
+        { "click": "button:has-text('Use Template')" },
+        { "wait": 800 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 800 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 800 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "button:has-text('Activate Campaign')",
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "box", "target": "text=\"Custom trigger\"", "number": 1, "color": "plum" },
+        { "type": "label", "target": "text=\"Custom trigger\"", "text": "Review has no summary for a flash sale", "color": "plum" },
+        { "type": "caption", "text": "Review does not repeat the sale you set up. Every flash sale reads Custom trigger here, whatever you entered." }
+      ]
+    },
+    {
+      "name": "time-based-01-trigger",
+      "goto": "/campaigns/new",
+      "waitFor": "text=Choose Campaign Type",
+      "waitMs": 5000,
+      "actions": [
+        { "click": "label[for='time_based']" },
+        { "wait": 400 },
+        { "fill": ["#name", "Weekend Happy Hour"] },
+        { "wait": 400 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 },
+        { "click": "#day-1" },
+        { "wait": 200 },
+        { "click": "#day-2" },
+        { "wait": 200 },
+        { "click": "#day-3" },
+        { "wait": 200 },
+        { "click": "#day-6" },
+        { "wait": 300 },
+        { "fill": [":nth-match(input[type='time'], 1)", "15:00"] },
+        { "wait": 300 },
+        { "fill": [":nth-match(input[type='time'], 2)", "18:00"] },
+        { "wait": 300 },
+        { "click": "[role=combobox]:has-text('1 hour')" },
+        { "wait": 500 },
+        { "click": "[role=option]:has-text('30 min')" },
+        { "wait": 600 }
+      ],
+      "waitFor": "text=Configure Trigger",
+      "waitMs": 2000,
+      "annotate": [
+        { "type": "box", "target": "#day-6", "number": 1, "color": "plum" },
+        { "type": "box", "target": ":nth-match(input[type='time'], 1)", "number": 2, "color": "plum" },
+        { "type": "box", "target": ":nth-match(input[type='time'], 2)", "number": 3, "color": "plum" },
+        { "type": "box", "target": "[role=combobox]:has-text('30 min')", "number": 4, "color": "charcoal" },
+        { "type": "caption", "text": "A Thursday to Saturday happy hour: tick the days (1), set the start time (2) and end time (3). The reminder setting (4) is not used when the campaign runs." }
+      ]
+    },
+    {
+      "name": "time-based-02-review",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 800 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 800 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 800 },
+        { "click": "button:has-text('Use Template')" },
+        { "wait": 800 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 800 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 800 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "button:has-text('Activate Campaign')",
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "box", "target": "text=\"15:00 - 18:00\"", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Activate Campaign')", "number": 2, "color": "charcoal" },
+        { "type": "caption", "text": "Review shows the window back to you (1). Check it matches what you set before you activate (2)." }
+      ]
+    }
+  ]
+}

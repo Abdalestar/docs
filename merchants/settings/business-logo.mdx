@@ -1,0 +1,124 @@
+---
+title: "Your business logo"
+sidebarTitle: "Business logo"
+description: "Where to upload your logo, what Qtap builds from it, and which file gives you the best result on a customer's phone."
+---
+
+You upload your logo once. Qtap then uses it on the loyalty card in your customer's app, on the
+Wallet pass, on your public merchant page, on the join page a camera scan opens, and at the top of
+the emails Qtap sends on your behalf.
+
+Because those places are small, Qtap does not use your file as-is. It builds a few things from it
+the moment you upload.
+
+## Where to upload it
+
+Go to **Settings** in the sidebar. The **Business Logo** card sits at the top of the page. Click
+**Upload Logo**, pick a file, and it saves straight away. There is no separate save button for this
+card.
+
+<Frame caption="Settings opens on the Business Logo card. Upload Logo replaces the current file immediately, and the line under it is the size Qtap suggests.">
+  <img src="/images/merchants/settings/business-logo-01-upload.png" alt="The Business Logo card in Settings, with the current logo, the Upload Logo button outlined, and the recommended size hint outlined below it" />
+</Frame>
+
+Settings is open to the owner only. If you are a manager, you can change the same logo from the
+**Merchant Logo** field in the merchant page editor instead, where the limit is 10 MB and the file
+must be a PNG or a JPG.
+
+## What Qtap builds from your file
+
+<Frame caption="One file in, and Qtap keeps a trimmed copy, a watermark, and a note about transparency.">
+  <img src="/images/merchants/settings/business-logo-pipeline.svg" alt="Diagram: one uploaded image becomes a trimmed copy, a watermark and a transparency note, which feed the loyalty card, the Wallet pass, Qtap emails, the join page and the merchant page" />
+</Frame>
+
+**A trimmed copy.** Qtap finds the edge of your artwork and cuts the empty space around it, then
+sizes the result down to 512 pixels. Padding in your file costs you nothing. The bakery logo in the
+screenshots below arrived as a 1024 pixel square whose artwork only fills the middle 658 pixels, so
+more than a third of it was blank, and the version customers see has none of that blank space left.
+
+A tall or wide logo is kept whole rather than cropped square. The coffee shop logo further down
+comes out 466 by 512, with nothing cut off.
+
+**A watermark.** A faint, oversized shape of your logo that sits behind the artwork on a loyalty
+card. It is drawn at about six percent opacity, so you should have to look for it.
+
+**A note about transparency**, which tells the app how to treat the watermark without having to
+work it out on a customer's phone.
+
+You can see the first two in the pass design studio, which keeps each one on its own panel.
+
+<Frame caption="The pass design studio on a points programme. The trimmed logo (1) and the watermark Qtap built from it (2). The watermark panel looks almost empty because a pale shape on a pale panel is hard to make out.">
+  <img src="/images/merchants/settings/business-logo-02-derived.png" alt="The Logo and Watermark logo panels in the pass design studio, each showing a small preview of the asset Qtap derived" />
+</Frame>
+
+## Upload a PNG with a see-through background
+
+This is the one choice that changes how your logo looks everywhere else.
+
+A PNG with a see-through background sits directly on the card, and its watermark comes out as a
+clean shape. A JPG, or a PNG that has a white or coloured square baked into it, keeps that square.
+Qtap trims the square down to the artwork, but it cannot remove what is painted into the file, so
+the block of colour travels with your logo onto every card and pass.
+
+The two accounts in these screenshots show both outcomes. The bakery uploaded a file with a cream
+background, and the cream tile follows its logo around:
+
+<Frame caption="The coffee shop uploaded a PNG with a see-through background, so the cup sits straight on the panel with no tile behind it. Compare the cream tile in the screenshot above.">
+  <img src="/images/merchants/settings/business-logo-06-derived-transparent.png" alt="The same Logo and Watermark logo panels on a stamp card account, where the logo has no background tile behind it" />
+</Frame>
+
+Square is a good habit because most of the places your logo appears are round or square, but it is
+not a rule.
+
+## Where it turns up
+
+<Frame caption="The customer's card as staff see it at the counter. The logo sits in the panel on the right, and the watermark is the faint ring behind the card name.">
+  <img src="/images/merchants/settings/business-logo-05-on-card.png" alt="A member's points card preview showing the merchant logo in the side panel and a faint watermark behind the card artwork" />
+</Frame>
+
+<Frame caption="The same logo at the top of the Wallet pass, in both the plain and the branded preview.">
+  <img src="/images/merchants/settings/business-logo-03-wallet-pass.png" alt="Two Wallet pass previews side by side, each with the merchant logo outlined in the pass header" />
+</Frame>
+
+It also appears on the join page a customer reaches by scanning your QR code with a plain camera,
+and in eight of the emails Qtap sends for you: the staff invitation, the weekly insights digest,
+and six about your trial and billing. With no logo saved, those emails fall back to a circle with
+your initials in it.
+
+<Note>
+On the join page, a branch that has its own **Location Logo** uses that instead of your business
+logo. Check Settings and then Locations if a scan shows a logo you did not expect.
+</Note>
+
+## The second logo field is a different thing
+
+The merchant page editor has two logo slots, and they do different jobs. **Merchant Logo** is the
+one described above. **Merchant Logo (Transparent PNG)** is a separate file you upload by hand, and
+it is used as the stamp icon on mobile loyalty cards. Qtap does not build anything from it.
+
+<Frame caption="Merchant Logo (1) is your business logo. Merchant Logo (Transparent PNG) (2) is the stamp icon, and it stays empty until you set one.">
+  <img src="/images/merchants/settings/business-logo-04-two-slots.png" alt="The Merchant Logo and Merchant Logo Transparent PNG fields in the merchant page editor, each outlined" />
+</Frame>
+
+<Warning>
+The trimmed copy and the watermark are rebuilt in the background right after an upload, and nothing
+retries if that fails. If your new logo shows on the Settings page but an old one is still on the
+card previews, upload the file again.
+</Warning>
+
+<Tip>
+In the merchant page editor the phone preview drops the watermark as soon as you pick a new logo,
+and shows it again once you press **Update Merchant**. A blank watermark mid-edit is normal.
+</Tip>
+
+If you want a different watermark from the one Qtap built, the pass design studio lets you upload
+your own and put the original back with a revert button.
+
+<CardGroup cols={2}>
+  <Card title="Business settings" href="/merchants/settings/merchant-page">
+    Your name, contact details, hours and social links.
+  </Card>
+  <Card title="Designing your Wallet pass" href="/merchants/passes/pass-design-studio">
+    Colours, logo and watermark on the pass customers add to their phone.
+  </Card>
+</CardGroup>

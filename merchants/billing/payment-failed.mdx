@@ -1,0 +1,84 @@
+---
+title: "If your payment fails"
+sidebarTitle: "Failed payment"
+description: "What Qtap switches off when a charge is declined, how long you have to fix the card, and what your customers keep either way."
+---
+
+A card expires, a bank blocks a charge, and the monthly payment does not go through. Qtap gives you two weeks to sort it out before anything on your account is switched off. Your customers keep their stamps, points and history the whole time.
+
+<Frame caption="A declined payment starts two different clocks. Fixing the card at any point stops the rest.">
+  <img src="/images/merchants/billing/payment-failed-timeline.svg" alt="Timeline showing day zero when the plan shows Past Due, days one to thirteen when nothing is removed, and day fourteen when the oldest branches, staff and loyalty cards are switched off" />
+</Frame>
+
+## The day the charge fails
+
+Your plan shows a red **Past Due** badge, and a red banner appears at the top of the Billing page: "Your payment is past due. Please update your payment method to avoid service interruption." Only the account owner sees the **Update Payment** button next to it, which opens the Stripe billing portal.
+
+Qtap also emails the owner. The subject is **Your card was declined**, and it carries a link straight to the portal along with the amount that failed.
+
+<Warning>
+Your plan features drop to Starter the moment the charge fails, before the two weeks start. Qtap grants features on your current billing status, so anything above Starter stops working right away. You cannot add a branch or invite another staff member until the card is fixed. Nothing you already built is removed at this point.
+</Warning>
+
+## The two weeks
+
+Stripe retries the card on its own, and the declined-payment email tells you when. Through this window your branches, staff accounts and loyalty cards all stay active and untouched. Update the card and your plan returns to normal with nothing lost.
+
+The clock runs on the day your status changed, so editing your business details or adding members does not reset it or extend it.
+
+## What gets switched off on day fourteen
+
+If the card is still failing after fourteen days, Qtap moves your account to Starter properly and switches off whatever sits above Starter's limits. Three of the meters on your Billing page are the ones that matter.
+
+<Frame caption="Locations, Staff Members and Loyalty Cards are measured against Starter's limits. Campaigns, boxed in grey, are left alone.">
+  <img src="/images/merchants/billing/payment-failed-meters.png" alt="Billing usage meters showing Locations at 2 of 2, Staff Members at 3 of 5, Loyalty Cards at 1 of 3 and Campaigns at 5 of 3" />
+</Frame>
+
+Starter allows one branch, two staff accounts and one loyalty card, so anything past those numbers is deactivated.
+
+<Frame caption="The Starter plan card lists the limits everything is cut back to.">
+  <img src="/images/merchants/billing/payment-failed-starter-limits.png" alt="Starter plan card showing 1 location, 2 staff, 1 loyalty card, 50 QR codes per month, 1 campaign and 1 push per month" />
+</Frame>
+
+<Warning>
+Qtap switches off your **oldest** branches, staff accounts and loyalty cards first and keeps the newest ones. On an account with two branches, the one you opened first is the one that goes quiet, which is usually the busiest. Check your branch list before the fourteen days run out and deactivate the one you can spare yourself.
+</Warning>
+
+<Frame caption="Two active branches on a Growth account. Al Sadd (1) was added first, so it is the one Qtap would switch off; The Pearl (2) would survive.">
+  <img src="/images/merchants/billing/payment-failed-locations.png" alt="Locations settings page showing The Pearl Branch and Al Sadd Branch, both marked Active, under a Location Limit of 2" />
+</Frame>
+
+Your campaigns are the exception. Qtap counts them on the Billing page but never deactivates them, so a campaign over the Starter limit keeps running.
+
+## What your customers never lose
+
+Members, their stamps, their points and every transaction stay exactly where they are through all of this. A branch that gets switched off stops appearing in the dashboard, and the loyalty history recorded against it stays in your reports.
+
+## Turning things back on
+
+<Note>
+Paying restores your plan and its limits, but it does not switch your branches, staff and cards back on. Reactivate each one yourself from its own page once your billing is healthy again.
+</Note>
+
+## If a trial payment fails
+
+When the card fails on the day your trial converts, Qtap moves you to the free Starter plan and keeps the account open so you can try again. Nothing is deactivated at that moment. Your members and their stamps are untouched, and subscribing switches your extra branches, staff seats and campaigns back on.
+
+## Who can fix it
+
+Only the account owner can open the billing portal and update the card. Managers with billing access can see the Past Due banner but cannot act on it, so pass it to the owner.
+
+<CardGroup cols={2}>
+  <Card title="Invoices and payment method" href="/merchants/billing/invoices-payment">
+    Update the card you pay with and download past receipts
+  </Card>
+  <Card title="Understanding your usage meters" href="/merchants/billing/usage-meters">
+    Read the meters that decide what gets switched off
+  </Card>
+  <Card title="Your free trial" href="/merchants/billing/trial">
+    How the 14-day trial ends and what happens after
+  </Card>
+  <Card title="Downgrading your plan" href="/merchants/billing/downgrade">
+    Move down a plan on purpose, with a check first
+  </Card>
+</CardGroup>
