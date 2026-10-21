@@ -1,0 +1,93 @@
+---
+title: "Why a customer is not getting your messages"
+sidebarTitle: "Push status"
+description: "Read the push status on a member's profile, and the four things that have to line up before a message reaches a phone."
+---
+
+A customer swears they never saw your offer. Qtap tells you part of the answer in two places: the **Push** column on the Members list, and a status banner on that customer's profile.
+
+## The Push column
+
+Open **Members**. The **Push** column sits between Last Active and the row menu.
+
+<Frame caption="Three states in the Push column: a green bell (push on), a grey crossed bell (push off), and a dash on a customer who deleted their Qtap account. Names and contact details are covered here.">
+  <img src="/images/merchants/members/push-status-01-list.png" alt="The Members table with the Push column outlined, showing a green bell on one row, a crossed bell on another, and a dash on a deleted member" />
+</Frame>
+
+Hover a bell and Qtap names the state: *Push notifications enabled* or *Push notifications not enabled*. On a phone the column folds into the stacked line under the customer's name, where it reads **Push: Enabled** or **Push: Not enabled**.
+
+## The banner on a profile
+
+Open a customer from the row menu's **View Profile**. Under their details sits a banner in one of two states.
+
+<Frame caption="Push is on. The bell badge on the avatar (1) and the green banner (2) both say so.">
+  <img src="/images/merchants/members/push-status-03-enabled.png" alt="A member profile showing a green bell badge on the avatar and a green Push Notifications Enabled banner" />
+</Frame>
+
+<Frame caption="Push is off. There is no badge on the avatar, and the banner asks you to talk to the customer.">
+  <img src="/images/merchants/members/push-status-04-disabled.png" alt="A member profile showing an amber Push Notifications Disabled banner that reads Ask this customer to enable notifications in the Qtap mobile app" />
+</Frame>
+
+If the customer has muted your business, the green banner gains an amber **Muted your notifications** chip and the bell badge on the avatar turns amber. A mute is set by the customer inside the Qtap app, one business at a time. You cannot set one or clear one.
+
+## When you cannot send at all
+
+With push off, **Send Notification** on the profile is greyed out.
+
+<Frame caption="The button is disabled, and hovering it explains why.">
+  <img src="/images/merchants/members/push-status-05-send-blocked.png" alt="A greyed out Send Notification button with a tooltip reading This member does not have push notifications enabled" />
+</Frame>
+
+The row menu on the Members list does the same thing: **Send Notification** is replaced by a disabled **Push not enabled** item.
+
+<Frame caption="The row menu on a customer with push off.">
+  <img src="/images/merchants/members/push-status-02-row-menu.png" alt="A member row menu showing View Profile, a disabled Push not enabled item, Add Tag, and Delete Member" />
+</Frame>
+
+## What the green banner does not tell you
+
+<Warning>
+The banner reads one switch. It says *This customer will receive notifications from your campaigns*, but a campaign has three more checks to clear after that one, and the dashboard shows you none of them.
+</Warning>
+
+Four things have to line up before a campaign or a one-off push reaches a phone:
+
+1. **A registered phone.** The customer installed the Qtap app and signed in on a device. Someone who joined by scanning a QR code at your counter has a Qtap account with no app behind it.
+2. **Push switched on.** This is the one the banner and the Push column read.
+3. **Suggestions & offers switched on.** A separate switch in the customer's own app settings, described there as *Nudges and merchant campaigns*. It starts off, so a customer has to go and turn it on before any campaign can reach them.
+4. **Your business not muted.**
+
+<Frame caption="A campaign clears all four checks. A receipt for something the customer just did clears the first two.">
+  <img src="/images/merchants/members/push-delivery-gates.svg" alt="Diagram of the four checks a push clears, with a campaign lane needing all four and a receipt lane needing only the first two" />
+</Frame>
+
+Because the third switch starts off, most of your customers will not get a campaign on their phone until they turn it on. That is the usual reason a send shows a healthy member count and a low delivered figure.
+
+## Receipts always get through
+
+The message Qtap sends when a customer earns a stamp, earns points, finishes a card, redeems a reward or has their balance corrected is a receipt for something they just did. Preferences and mutes do not silence it. A receipt needs only the first two checks.
+
+## A quiet phone is not a lost message
+
+Whatever the outcome, Qtap writes the message into the customer's in-app inbox. Someone whose phone stayed silent still sees it the next time they open the app. That is also why your send can report a recipient it never rang.
+
+## What you can do about it
+
+Nothing in the dashboard turns push on for someone else, clears a mute, or flips their offers switch. Those are the customer's to set, in **Account → Settings** in the Qtap app. Ask at the counter when it matters.
+
+There is no way to stop messaging one customer either. Campaigns go to a whole audience, so the way to leave someone out is to pick an audience they are not in.
+
+<CardGroup cols={2}>
+  <Card title="Member profiles" href="/merchants/members/profiles">
+    The rest of what a customer's profile shows.
+  </Card>
+  <Card title="Reading your notification stats" href="/merchants/notifications/stats">
+    Why Sent and Delivered rarely match.
+  </Card>
+  <Card title="Messages Qtap sends for you" href="/merchants/notifications/automatic">
+    The receipts that go out on their own.
+  </Card>
+  <Card title="Audience segments" href="/merchants/notifications/segments">
+    Who a campaign reaches before any of this applies.
+  </Card>
+</CardGroup>
