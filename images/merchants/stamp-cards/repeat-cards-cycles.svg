@@ -1,0 +1,64 @@
+<svg viewBox="0 0 860 420" xmlns="http://www.w3.org/2000/svg" role="img"
+     aria-label="Three cycles of a five-stamp card. The milestone reward at stamp three is issued on the first card only. The main reward at stamp five is issued every time.">
+  <style>
+    .t { font-family: system-ui, -apple-system, sans-serif; fill: #423F4C; }
+    .h { font-size: 19px; font-weight: 600; }
+    .lbl { font-size: 15px; font-weight: 600; }
+    .sm { font-size: 13px; fill: #6B6770; }
+    .ok { font-size: 13px; font-weight: 600; fill: #8E4A63; }
+    .no { font-size: 13px; font-weight: 600; fill: #6B6770; }
+  </style>
+  <rect width="860" height="420" fill="#F8F5F2"/>
+  <text class="t h" x="32" y="42">The same customer, three cards in a row</text>
+  <text class="t sm" x="32" y="66">A 5-stamp card with a milestone reward at stamp 3 and a main reward at stamp 5.</text>
+
+  <!-- column headers -->
+  <text class="t sm" x="330" y="108">Milestone at stamp 3</text>
+  <text class="t sm" x="595" y="108">Main reward at stamp 5</text>
+  <line x1="32" y1="120" x2="828" y2="120" stroke="#E4DCD6" stroke-width="1"/>
+
+  <!-- row 1 -->
+  <text class="t lbl" x="32" y="160">Their first card</text>
+  <g>
+    <circle cx="150" cy="154" r="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+    <circle cx="176" cy="154" r="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+    <circle cx="202" cy="154" r="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+    <circle cx="228" cy="154" r="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+    <circle cx="254" cy="154" r="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+  </g>
+  <rect x="320" y="138" width="200" height="32" rx="8" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
+  <text class="t ok" x="334" y="159">Issued</text>
+  <rect x="585" y="138" width="210" height="32" rx="8" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
+  <text class="t ok" x="599" y="159">Issued</text>
+
+  <!-- row 2 -->
+  <text class="t lbl" x="32" y="248">Their second card</text>
+  <g>
+    <circle cx="150" cy="242" r="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+    <circle cx="176" cy="242" r="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+    <circle cx="202" cy="242" r="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+    <circle cx="228" cy="242" r="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+    <circle cx="254" cy="242" r="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+  </g>
+  <rect x="320" y="226" width="200" height="32" rx="8" fill="#EFECEA" stroke="#C9C2BD" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text class="t no" x="334" y="247">Nothing issued</text>
+  <rect x="585" y="226" width="210" height="32" rx="8" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
+  <text class="t ok" x="599" y="247">Issued again</text>
+
+  <!-- row 3 -->
+  <text class="t lbl" x="32" y="336">Their third card</text>
+  <g>
+    <circle cx="150" cy="330" r="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+    <circle cx="176" cy="330" r="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+    <circle cx="202" cy="330" r="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+    <circle cx="228" cy="330" r="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+    <circle cx="254" cy="330" r="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.5"/>
+  </g>
+  <rect x="320" y="314" width="200" height="32" rx="8" fill="#EFECEA" stroke="#C9C2BD" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text class="t no" x="334" y="335">Nothing issued</text>
+  <rect x="585" y="314" width="210" height="32" rx="8" fill="#FFFFFF" stroke="#8E4A63" stroke-width="1.5"/>
+  <text class="t ok" x="599" y="335">Issued again</text>
+
+  <line x1="32" y1="368" x2="828" y2="368" stroke="#E4DCD6" stroke-width="1"/>
+  <text class="t sm" x="32" y="395">A milestone reward is issued once per customer per card. The main reward is issued on every completion.</text>
+</svg>

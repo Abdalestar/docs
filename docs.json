@@ -16,11 +16,13 @@
         "pages": [
           "merchants/what-is-qtap",
           "merchants/welcome",
+          "merchants/getting-started/creating-your-account",
           "merchants/onboarding-wizard",
           "merchants/dashboard-overview",
           "merchants/getting-started/recent-activity",
           "merchants/getting-started/demo-mode",
           "merchants/getting-started/top-bar",
+          "merchants/getting-started/on-a-phone",
           "merchants/getting-started/checklist",
           "merchants/first-loyalty-program"
         ]
@@ -35,9 +37,13 @@
           "merchants/stamp-cards/card-designer",
           "merchants/stamp-cards/bonus-stamps",
           "merchants/stamp-cards/rewards",
+          "merchants/stamp-cards/repeat-cards",
           "merchants/stamp-cards/advanced-settings",
           "merchants/cards/card-terms",
-          "merchants/stamp-cards/manual-stamps"
+          "merchants/cards/deleting",
+          "merchants/stamp-cards/manual-stamps",
+          "merchants/cards/scan-to-find-a-customer",
+          "merchants/stamp-cards/fixing-a-mistake"
         ]
       },
       {
@@ -52,7 +58,15 @@
           "merchants/points/expiry",
           "merchants/points/awarding",
           "merchants/points/adjusting",
-          "merchants/redemptions/points-rewards"
+          "merchants/cards/scan-to-find-a-customer",
+          "merchants/redemptions/points-rewards",
+          "merchants/cards/deleting"
+        ]
+      },
+      {
+        "group": "Wallet Passes",
+        "pages": [
+          "merchants/passes/pass-design-studio"
         ]
       },
       {
@@ -71,9 +85,11 @@
           "merchants/qr-codes/printing",
           "merchants/qr-codes/troubleshooting",
           "merchants/qr-codes/qr-code-detail",
+          "merchants/qr-codes/scan-analytics",
           "merchants/nfc-tags/what-is-nfc",
           "merchants/nfc-tags",
           "merchants/nfc-tags/tap-and-earn",
+          "merchants/nfc-tags/how-customers-tap",
           "merchants/nfc-tags/detail"
         ]
       },
@@ -85,14 +101,18 @@
           "merchants/campaigns/audience",
           "merchants/campaigns/messages",
           "merchants/campaigns/timing",
+          "merchants/campaigns/stopping-a-campaign",
           "merchants/campaigns/stats",
           "merchants/campaigns/birthday",
           "merchants/campaigns/winback",
           "merchants/campaigns/welcome",
           "merchants/campaigns/milestone",
+          "merchants/campaigns/flash-sale",
+          "merchants/campaigns/points-multiplier",
           "merchants/campaigns/rewards",
           "merchants/campaigns/analytics",
           "merchants/campaigns/push-notifications",
+          "merchants/notifications/image-and-link",
           "merchants/notifications/stats",
           "merchants/notifications/segments",
           "merchants/campaigns/notification-templates",
@@ -111,7 +131,11 @@
         "group": "Analytics",
         "pages": [
           "merchants/analytics/overview",
+          "merchants/analytics/insights",
+          "merchants/analytics/points-panels",
+          "merchants/analytics/charts",
           "merchants/analytics/customer-lists",
+          "merchants/analytics/exporting",
           "merchants/analytics/reports-hub",
           "merchants/analytics/location-comparison",
           "merchants/analytics/points-activity",
@@ -128,11 +152,14 @@
           "merchants/members/joined-without-the-app",
           "merchants/members/joining-without-the-app",
           "merchants/members/profiles",
+          "merchants/members/push-status",
           "merchants/members/complete-profile",
           "merchants/members/export-delete",
           "merchants/members/redemptions",
           "merchants/redemptions",
-          "merchants/redemptions/scan-redemption"
+          "merchants/redemptions/scan-redemption",
+          "merchants/redemptions/card-preview",
+          "merchants/redemptions/reward-types"
         ]
       },
       {
@@ -153,17 +180,24 @@
           "merchants/billing/plans",
           "merchants/settings/billing",
           "merchants/billing/usage-meters",
+          "merchants/billing/limit-reached",
           "merchants/billing/upgrade",
           "merchants/billing/trial",
           "merchants/billing/downgrade",
           "merchants/billing/add-ons",
           "merchants/billing/invoices-payment",
+          "merchants/billing/payment-failed",
           "merchants/settings/locations",
           "merchants/settings/branch-switcher",
           "merchants/settings/notifications",
+          "merchants/settings/marketing-emails",
           "merchants/settings/merchant-page",
+          "merchants/settings/business-details",
+          "merchants/settings/business-logo",
           "merchants/merchant-page/business-overview",
           "merchants/settings/merchant-page-editor",
+          "merchants/merchant-page/public-link",
+          "merchants/merchant-page/rating-and-hours",
           "merchants/merchant-page/public-view",
           "merchants/settings/security",
           "merchants/settings/password-reset"
