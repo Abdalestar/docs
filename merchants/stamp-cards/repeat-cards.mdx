@@ -1,0 +1,67 @@
+---
+title: "When a customer finishes a card and starts another"
+sidebarTitle: "Finishing a card twice"
+description: "What a returning customer earns on their second and third card, and which reward stops arriving."
+---
+
+A customer who fills your stamp card keeps going. Qtap hands over the main reward, wipes the card back to zero, and they start collecting on a fresh one. What they earn on that second card is different from the first, and one of your rewards stops arriving altogether.
+
+<Frame caption="The same customer across three cards. The milestone reward arrives once. The main reward arrives every time.">
+  <img src="/images/merchants/stamp-cards/repeat-cards-cycles.svg" alt="Three rows showing a five-stamp card completed three times. The milestone reward at stamp three is issued on the first card only, while the main reward at stamp five is issued on all three." />
+</Frame>
+
+## What happens when the last stamp lands
+
+Qtap issues the main reward as a voucher, resets the stamp count to zero, and adds one to the number of cards that customer has completed. Their phone gets a message saying they finished the card. The same card keeps running for them, with nothing for you to switch back on and no new card to create.
+
+## The main reward repeats. A milestone reward does not.
+
+Rewards you add with the **Interim** type are milestone rewards: they fire at a stamp number partway along the card. The **Main** reward fires when the card fills.
+
+<Frame caption="The Coffee Lovers Card has one Main reward at 5 stamps (1) and three milestone rewards, including 10% Off Any Drink at 4 stamps (2).">
+  <img src="/images/merchants/stamp-cards/repeat-cards-01-rewards.png" alt="Loyalty rewards list showing Free Coffee as the Main reward after 5 stamps and three Interim rewards after 1, 3 and 4 stamps" />
+</Frame>
+
+A milestone reward is issued **once per customer per card, ever**. Once a customer has been given a particular milestone reward on a particular card, passing that stamp number again gives them nothing, no matter how many cards they go on to fill. Redeeming the first one does not reset it.
+
+The main reward has no such limit. It is issued again each time the card fills.
+
+<Warning>
+  This lands hardest on your best customers. A regular on their fourth card collects no milestone rewards at all, so the rewards you added to pull people through the middle of the card stop working for exactly the people who come back most.
+</Warning>
+
+## The counter screen still promises the milestone
+
+Before you issue a stamp, the Stamp Operations screen previews what that stamp will unlock. That preview is worked out from the stamp count alone. It does not check what the customer has already been given.
+
+<Frame caption="The preview promises 10% Off Any Drink (1), but this customer was issued that same reward on an earlier card and is still holding it (2). Issuing the stamp will not produce a second one.">
+  <img src="/images/merchants/stamp-cards/repeat-cards-03-counter.png" alt="Stamp Card panel reading Now: 3 of 5 stamps, unlocks 10% Off Any Drink, above a Pending Rewards list that already contains 10% Off Any Drink" />
+</Frame>
+
+Read the **Pending Rewards** list underneath before you say anything out loud to the customer. If the reward named in the preview is already sitting in that list, they are not getting another one.
+
+<Note>
+  Stamps a customer earns by scanning in the Qtap app run through a separate rulebook from stamps you issue at the counter, and the two do not treat milestone rewards the same way. Plan your card around the counter rule above, which is the stricter of the two.
+</Note>
+
+## A voucher they already hold is not issued twice
+
+The same thing applies to the main reward, for a different reason. A customer can only hold one unredeemed voucher for a given reward at a time. If they fill a second card before redeeming the first **Free Coffee**, no second voucher is created. The counter screen and their phone can both still name the reward, so check the Pending Rewards list rather than trusting the confirmation.
+
+This is only a problem for customers who bank their rewards. Once they redeem one, the next completion issues a fresh voucher as normal.
+
+## Telling whether someone has finished a card before
+
+Qtap counts completed cards internally but does not show the number anywhere in the dashboard. The closest signal is **Total Stamps** on the Select Member panel, which is a lifetime count rather than the current card. A figure well above your stamp goal means they have filled the card at least once.
+
+<Frame caption="Total Stamps (1) is this customer's lifetime count, not their progress on the current card.">
+  <img src="/images/merchants/stamp-cards/repeat-cards-02-member.png" alt="Select Member panel showing a customer with 16 total stamps and 0 under Rewards Earned" />
+</Frame>
+
+The **Rewards Earned** figure beside it counts rewards the customer has redeemed, not rewards they have been given, so a customer holding four unredeemed vouchers still reads zero.
+
+## Setting up a card for returning customers
+
+Put anything you want a regular to receive repeatedly on the **Main** reward, since that is the one that comes back. Treat milestone rewards as a first-card nudge for new customers. If you want to give your regulars something extra later, a [campaign](/merchants/campaigns/overview) can reach them on its own schedule.
+
+See [Stamp card rewards](/merchants/stamp-cards/rewards) for how to add each type, and [Issuing stamps manually](/merchants/stamp-cards/manual-stamps) for the counter flow.

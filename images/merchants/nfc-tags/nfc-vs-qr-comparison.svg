@@ -25,14 +25,14 @@
 
   <!-- row 3 -->
   <text x="24" y="238" font-size="14" font-weight="600" fill="#423F4C">Anonymous use</text>
-  <text x="250" y="238" font-size="13" fill="#6B6770">Not possible</text>
-  <text x="500" y="238" font-size="13" fill="#6B6770">Logs the scan, credits no member</text>
+  <text x="250" y="238" font-size="13" fill="#6B6770">Earns nothing, app page only</text>
+  <text x="500" y="238" font-size="13" fill="#6B6770">Joins them, credits that scan</text>
   <line x1="24" y1="258" x2="736" y2="258" stroke="#E5DCD6" stroke-width="1"/>
 
   <!-- row 4 -->
-  <text x="24" y="298" font-size="14" font-weight="600" fill="#423F4C">Points multiplier</text>
-  <text x="250" y="298" font-size="13" fill="#6B6770">Awards the flat value</text>
-  <text x="500" y="298" font-size="13" fill="#6B6770">Multiplier campaigns apply</text>
+  <text x="24" y="298" font-size="14" font-weight="600" fill="#423F4C">Daily stamp cap</text>
+  <text x="250" y="298" font-size="13" fill="#8E4A63" font-weight="600">One stamp per card per day</text>
+  <text x="500" y="298" font-size="13" fill="#6B6770">No daily cap</text>
   <line x1="24" y1="318" x2="736" y2="318" stroke="#E5DCD6" stroke-width="1"/>
 
   <!-- row 5 -->
