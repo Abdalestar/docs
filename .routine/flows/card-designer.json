@@ -1,51 +1,92 @@
 {
   "section": "stamp-cards",
   "account": "stamp",
-  "defaultWaitMs": 2500,
-  "viewport": { "width": 1440, "height": 900 },
+  "defaultWaitMs": 2000,
+  "viewport": { "width": 1440, "height": 1000 },
   "steps": [
     {
       "name": "card-designer-overview",
       "goto": "/cards/design",
+      "actions": [
+        { "wait": 9000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1500 }
+      ],
       "waitFor": "text=Card Designer",
-      "waitMs": 4500,
+      "waitMs": 1500,
       "annotate": [
         { "type": "box", "target": "[role=tablist]", "number": 1, "color": "plum" },
         { "type": "box", "target": "button:has-text('Save & Continue')", "number": 2, "color": "plum" },
-        { "type": "caption", "text": "The Card Designer: pick a starting template, restyle it, and watch the live preview on the right." }
+        { "type": "caption", "text": "The Card Designer: four panels (1) restyle the card, and Save & Continue (2) carries the design into the create-card wizard." }
       ]
+    },
+    {
+      "name": "card-designer-templates",
+      "goto": "/cards/design",
+      "waitFor": "text=Start from Template",
+      "waitMs": 9000,
+      "clipTo": "div.rounded-xl:has(div:text-is('Start from Template'))",
+      "clipPadding": 24
     },
     {
       "name": "card-designer-colors",
       "goto": "/cards/design",
       "waitFor": "text=Card Designer",
       "actions": [
-        { "click": "[role=tab]:has-text('Colors')" },
-        { "wait": 1200 }
+        { "wait": 9000 },
+        { "click": "[role=tab]:text-is('Colors')" },
+        { "wait": 1200 },
+        { "click": "div.rounded-xl:has(input.font-mono) button.w-10" },
+        { "wait": 1500 }
       ],
-      "waitMs": 1200,
-      "clipTo": "div.bg-card:has-text('Background Color')",
-      "clipPadding": 16
+      "waitMs": 800,
+      "clip": { "x": 264, "y": 150, "width": 612, "height": 500 },
+      "annotate": [
+        { "type": "box", "target": "input.font-mono", "color": "plum" }
+      ]
     },
     {
-      "name": "card-designer-layout",
+      "name": "card-designer-icons",
       "goto": "/cards/design",
       "waitFor": "text=Card Designer",
       "actions": [
-        { "click": "[role=tab]:has-text('Layout')" },
-        { "wait": 1200 }
+        { "wait": 9000 },
+        { "click": "[role=tab]:text-is('Icons')" },
+        { "wait": 1500 }
       ],
-      "waitMs": 1200,
-      "clipTo": "div.bg-card:has-text('Stamps to Collect')",
-      "clipPadding": 16
+      "waitMs": 800,
+      "clipTo": "div.rounded-xl:has(div.grid.grid-cols-6)",
+      "clipPadding": 24
+    },
+    {
+      "name": "card-designer-settings",
+      "goto": "/cards/design",
+      "waitFor": "text=Card Designer",
+      "actions": [
+        { "wait": 9000 },
+        { "click": "[role=tab]:text-is('Settings')" },
+        { "wait": 1500 }
+      ],
+      "waitMs": 800,
+      "clipTo": "div.rounded-xl:has(input[placeholder='Get a FREE reward!'])",
+      "clipPadding": 30,
+      "annotate": [
+        { "type": "box", "target": "[role=combobox]", "number": 1, "color": "plum" },
+        { "type": "box", "target": "input[placeholder='Get a FREE reward!']", "number": 2, "color": "plum" }
+      ]
     },
     {
       "name": "card-designer-preview",
       "goto": "/cards/design",
-      "waitFor": "text=Card Designer",
-      "waitMs": 4500,
-      "clipTo": "div.bg-card:has-text('This is how your card')",
-      "clipPadding": 16
+      "waitFor": "text=Start from Template",
+      "actions": [
+        { "wait": 9000 },
+        { "click": "button:has(span:text-is('Pizza Place'))" },
+        { "wait": 1800 }
+      ],
+      "waitMs": 800,
+      "clipTo": "div.rounded-xl:has(div:text-is('Preview'))",
+      "clipPadding": 24
     }
   ]
 }
