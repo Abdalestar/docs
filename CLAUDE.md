@@ -20,6 +20,124 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-14 — A stamp issued by mistake (there is no undo for a stamp)
+
+**Article:** `merchants/stamp-cards/fixing-a-mistake.mdx` (new) + a one-sentence correction to
+`merchants/stamp-cards/manual-stamps.mdx`
+**Branch:** `claude/busy-clarke-ls3onk`
+**PR:** https://github.com/Abdalestar/docs/pull/226
+**Status:** Done. SMOKE_OK **first try with no TLS bridge**; 3 real annotated screenshots + 1 brand
+SVG, validate-images 4/4 OK (and 6/6 on the corrected article). One task this run: no screenshot
+backfill exists.
+
+### TWO ENVIRONMENT CHANGES — read these before you fight the pipeline
+1. **The Playwright version mismatch is gone.** `/opt/pw-browsers` now ships chromium **1248**, and
+   a plain `npm install playwright` pulls **1.64.0**, which wants exactly 1248. Do NOT pin 1.62 the
+   way the 2026-09-06/07 logs say; that advice is stale and would now break the launch. Just
+   `npm init -y && npm install sharp playwright` and run.
+2. **The TLS bridge was NOT needed.** `node .routine/smoke-test.mjs` printed SMOKE_OK on the first
+   attempt with no `PLAYWRIGHT_PROXY` at all. Try the bare smoke test before building a cert and a
+   bridge; §6a is a fallback, not a ritual.
+
+### Main caught up — the "26 open PRs" picture has changed shape
+`origin/main` is now at the **PR #213** merge, so everything up to the marketing-emails article has
+landed. Still open and unmerged: **#214-#225** (one per day since 09-18) plus the older #137, #145,
+#148, #154, #158, #163-#165, #186-#191. That is still 26 PRs, so the "already covered" universe is
+main **plus every open branch**. I materialised all of it into one scratch dir (173 files) and
+grepped against that; do the same before claiming any gap.
+
+### Task selection — the board is still ~90% engineering trackers
+`notion-query-data-sources` (SQL mode) returns ~75 non-Done rows. The P1 block is entirely
+duplicates, non-features, and "NEEDS AN ENGINEERING FIX" trackers filed by earlier runs. Backfill is
+still exhausted: the zero-PNG scan on `origin/main` returns the same four non-workable files
+(`customer-app/settings-profile`, `index.mdx`, `support/faq.mdx`, and the `campaigns/analytics.mdx`
+stub, which open PR #187 replaces but is conflicted). So §14 gap discovery again.
+
+**The qtap dashboard repo has not moved since 2026-09-16** (`4d622e4`), a month. `Qtap_app` is at
+2026-10-07 (OTP resend cooldown, v1.0.1, Android store profile). So there is no new dashboard
+feature to document and route-diff stays exhausted.
+
+### How the gap was found (reusable)
+Extracted every `<CardTitle|DialogTitle|AlertDialogTitle|SheetTitle|h1|h2|h3>` string from
+`components/` + `app/` (209 of them) and grepped each against the 173-file corpus. 57 came back with
+zero hits. Most were blocked or known, but the cluster around stamp operations pointed at the real
+hole: **points can be corrected by hand and stamps cannot, and no article anywhere said so.**
+
+### The finding
+`merchants/points/adjusting.mdx` covers Add/Deduct properly. Stamps have no equivalent. Verified by
+tracing every writer of `member_stamps.current_stamps`:
+- `lib/stamps/issue-stamp.ts:293` (increment) and `:456` (reset to 0 on completion),
+- `app/api/campaigns/rewards/[code]/redeem/route.ts:144` (bonus_stamps, increment only),
+- the other four hits (`members/[id]/page.tsx:130`, `stamp-operations/page.tsx:303`,
+  `redemptions/page.tsx:693`, `api/members/[id]/stamps/route.ts`) are **SELECTs**.
+
+**No code path anywhere decrements a stamp balance.** And `pending_rewards` has no delete and no
+cancel: its only transitions are `expired` (hourly `/api/offers/expire`, and only where `expires_at`
+is set) and `pending_redemption`/`redeemed`. So an unearned voucher cannot be withdrawn either. The
+article's two honest options are to redeem it yourself to burn the code (which does increment
+`total_redemptions`, and the article says so) or wait for an expiry the reward may not have — all
+four Brew & Bean rewards have `expiry_days = null`.
+
+### The guardrails, both screenshotted
+- **Number of Stamps clamps in `onChange`** to `stamps_required - current_stamps`, so you cannot
+  overshoot past the goal. For a member at 3 of 5 the hint reads `max 2`.
+- **The Confirm Stamp Issue dialog** prints `Current: 3/5`, `+2`, and **"This will complete the
+  card!"**. That dialog is the last check before the write.
+- Honest caveat shipped as a Warning: the card's **daily stamp cap and stamping delay do not apply
+  here**, because the manual path calls `issueStamp` with `skip_rules: true`.
+
+### DRIFT CORRECTED — published prose named a label that does not exist
+`manual-stamps.mdx` told merchants a **"Card Complete!"** indicator appears before they confirm.
+Grep the app: no such string. The pre-confirm line is **"This will complete the card!"**;
+**"Card Completed!"** is the heading on the post-issue success screen
+(`stamp-operations/page.tsx:930`). One sentence corrected plus a cross-link. No open PR touches that
+file, so there is no conflict.
+
+### Screenshots (read-only, nothing issued)
+`.routine/flows/stamp-mistake.json`, stamp demo (Brew & Bean), member **`Q173600` "App Reviewer" at
+3 of 5** on the 5-stamp Coffee Lovers Card — that member has **no email**, so the dialog needed no
+redaction. **Confirm was never clicked**, and Supabase confirms afterwards: still 3 of 5, 3 cards
+completed, 4 vouchers, **zero stamp transactions in the capture window**. Member names redacted on
+the ledger shot.
+
+### Gotchas for future runs
+- **The Issue button label is dynamic**: `Issue {n > 1 ? `${n} Stamps` : 'Stamp'}`. So
+  `button:has-text('Issue Stamp')` times out the moment the quantity is 2. Use
+  `button.w-full:has-text('Issue 2 Stamps')`, and note `manual-stamps.mdx` still says "Click
+  **Issue Stamp**".
+- **flow-capture falls back to the points account when the stamp login fails**, and says so only in
+  the single `Logged in as` line. It happened once this run and the identical command worked on an
+  immediate retry. Always grep the output for `Logged in as` before trusting a capture.
+- Member search needs the **full** `qtap_id`; a bare `Q` prefix returns nothing (confirms the
+  2026-08-30 note).
+- Number badges covered the text on both tight crops (`Issue multiple stamps...` lost its "I", and
+  the dialog lines lost their first letter). Plain boxes plus an ordered `<Frame caption>` is the
+  readable version. That is now the fourth run to record this; just start with plain boxes.
+- Stable selectors on `/stamp-operations`: member search `input[placeholder='Search members...']`,
+  result row `.divide-y button`, quantity `#stamps-qty`, tabs `[role=tab]:has-text('Recent
+  Activity')`, right-hand card `div.rounded-xl:has(#stamps-qty)`, ledger `div.rounded-xl:has(table)`.
+- The page needs ~7-9s to settle, and the cookie **Decline** click still has to be the first action
+  of the first step only.
+
+### Gap discovery (2 rows added, both verified in code)
+- **P2, a genuine writable docs gap:** a **milestone (interim) reward fires once per member per card,
+  ever** — the dedupe at `issue-stamp.ts:388` matches on member + reward + card with no status, date
+  or cycle filter — while the **main reward has no dedupe at all** and fires on every completion
+  (`:436`). So a regular on their fourth card gets no milestone rewards. Nothing on main or in any
+  open PR says whether a milestone repeats. Conflicts with open PR #223, which edits `rewards.mdx`.
+- **P2, engineering:** campaign **bonus_stamps bypass `issueStamp`** entirely (raw
+  `current_stamps + amount` at `campaigns/rewards/[code]/redeem/route.ts:144`), so they check no
+  reward threshold, never complete a card, write no `transactions` or `analytics_events` row, and do
+  not raise `total_stamps_earned`. A member can sit at 7 of 5 with no reward and no trace in any
+  report.
+
+### Environment ask, unchanged and now ~8 weeks old
+`QTAP_NAJMA_EMAIL` is **still** a duplicate of `QTAP_EMAIL` (`owner@goldencrust.qa`). Re-verified
+live: both reachable orgs are **growth / active / 0 AI credits / no `stripe_subscription_id`**, so
+Cancel Subscription, The AI Suite and Settings > MCP stay uncapturable. Najma Coffee (elite, 77
+credits) and Dana Salon (franchise, 84, real subscription) are still unreachable. Pointing that third
+slot at either one is still the single highest-value environment fix on this routine.
+
 ## 2026-10-13 — Business Details: the two fields that decide where customers find you
 
 **Articles:** `merchants/settings/business-details.mdx` (new) + a five-claim correction to
