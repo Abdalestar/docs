@@ -1,0 +1,20 @@
+{
+  "section": "campaigns",
+  "account": "points",
+  "defaultWaitMs": 4000,
+  "viewport": { "width": 1440, "height": 1200 },
+  "steps": [
+    {
+      "name": "campaign-stats-cards",
+      "goto": "/campaigns/6ced08c4-cd45-4a07-a2c2-d625739cbcb7",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text(\"Decline\")" },
+        { "wait": 1000 }
+      ],
+      "waitFor": "text=Est. Revenue",
+      "waitMs": 9000,
+      "clip": { "x": 268, "y": 146, "width": 1160, "height": 196 }
+    }
+  ]
+}

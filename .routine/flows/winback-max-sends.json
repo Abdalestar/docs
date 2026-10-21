@@ -1,0 +1,83 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "campaigns",
+  "account": "points",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "winback-03-trigger",
+      "goto": "/campaigns/new",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 2500
+        },
+        {
+          "click": "label:has-text('Win-Back Campaign')"
+        },
+        {
+          "fill": [
+            "#name",
+            "We Miss You"
+          ]
+        },
+        {
+          "wait": 800
+        },
+        {
+          "click": "button:has-text('Next')"
+        },
+        {
+          "wait": 2500
+        }
+      ],
+      "waitFor": "text=Maximum sends per customer",
+      "waitMs": 1500,
+      "annotate": [
+        {
+          "type": "box",
+          "target": ":nth-match(button[role=combobox], 1)",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": ":nth-match(button[role=combobox], 2)",
+          "number": 2,
+          "color": "plum"
+        },
+        {
+          "type": "caption",
+          "text": "Step 2 Trigger: the inactivity window (1) decides who qualifies, and Maximum sends per customer (2) caps how many win-back messages one person can ever get from this campaign."
+        }
+      ]
+    },
+    {
+      "name": "winback-07-max-sends",
+      "actions": [
+        {
+          "click": ":nth-match(button[role=combobox], 2)"
+        },
+        {
+          "wait": 1500
+        }
+      ],
+      "waitMs": 1200,
+      "clip": {
+        "x": 282,
+        "y": 296,
+        "width": 600,
+        "height": 330
+      }
+    }
+  ]
+}

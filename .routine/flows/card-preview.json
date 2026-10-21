@@ -1,0 +1,120 @@
+{
+  "section": "merchants/redemptions",
+  "account": "stamp",
+  "viewport": {
+    "width": 1440,
+    "height": 1400
+  },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "card-preview-01-context",
+      "goto": "/stamp-operations",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 4000
+        },
+        {
+          "fill": [
+            "input[placeholder=\"Search members...\"]",
+            "QTAP-TT024"
+          ]
+        },
+        {
+          "wait": 3500
+        },
+        {
+          "click": ".divide-y button"
+        },
+        {
+          "wait": 3000
+        },
+        {
+          "click": "[role=combobox]"
+        },
+        {
+          "wait": 1200
+        },
+        {
+          "click": "[role=option]"
+        },
+        {
+          "wait": 3000
+        },
+        {
+          "fill": [
+            "#stamps-qty",
+            "3"
+          ]
+        },
+        {
+          "wait": 2000
+        }
+      ],
+      "waitMs": 2500,
+      "clip": {
+        "x": 0,
+        "y": 120,
+        "width": 1440,
+        "height": 1060
+      },
+      "annotate": [
+        {
+          "type": "redact",
+          "rect": {
+            "x": 316,
+            "y": 322,
+            "width": 252,
+            "height": 92
+          },
+          "color": "charcoal"
+        },
+        {
+          "type": "box",
+          "target": "div.space-y-2:has(> div.max-w-\\[366px\\])",
+          "number": 1,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "card-preview-02-strip",
+      "waitMs": 1500,
+      "clipTo": "div.space-y-2:has(> div.max-w-\\[366px\\])",
+      "clipPadding": 30,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "span:has-text('AFTER THIS ISSUE')",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "p:has-text('Now:')",
+          "number": 2,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "card-preview-03-pending",
+      "waitMs": 1500,
+      "clipTo": "div.space-y-2:has(> div.text-sm:has-text('Pending Rewards'))",
+      "clipPadding": 14,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.text-sm:has-text('Pending Rewards')",
+          "color": "plum"
+        }
+      ]
+    }
+  ]
+}

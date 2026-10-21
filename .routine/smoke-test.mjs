@@ -19,7 +19,7 @@
 import { chromium } from 'playwright';
 
 const DEPLOY_URL   = process.env.DEPLOY_URL   || 'https://dashboard.qtap.qa';
-const SUPABASE_URL = process.env.SUPABASE_URL || 'https://qeriqybbomqqkdqaylhl.supabase.co';
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://amaucrgpsulnykvyrlzq.supabase.co';
 
 // Credentials come from the environment ONLY. This repo is public — never hardcode
 // or commit account emails/passwords. Set QTAP_EMAIL / QTAP_PASSWORD in the

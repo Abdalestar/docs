@@ -1,0 +1,30 @@
+{
+  "section": "merchants/redemptions",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 1200 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "card-preview-06-redemptions",
+      "goto": "/redemptions",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 4000 },
+        { "click": "button:has-text('Look Up Customer')" },
+        { "wait": 2000 },
+        { "fill": ["input[placeholder*=\"Search by name\"]", "QTAP-TT024"] },
+        { "wait": 4000 },
+        { "click": ".divide-y button" },
+        { "wait": 5000 }
+      ],
+      "waitMs": 2500,
+      "clipTo": "div.space-y-2:has(> div.max-w-\\[366px\\])",
+      "clipPadding": 30,
+      "annotate": [
+        { "type": "redact", "target": "div.space-y-2:has(> div.max-w-\\[366px\\]) span[class*=\"truncate\"]", "color": "charcoal" },
+        { "type": "box", "target": "div.space-y-2:has(> div.max-w-\\[366px\\]) p[class*=\"leading-4\"]", "color": "plum" }
+      ]
+    }
+  ]
+}
