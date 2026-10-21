@@ -1,0 +1,92 @@
+---
+title: "When Qtap says you have reached a limit"
+sidebarTitle: "Hitting a plan limit"
+description: "The four places your plan can stop you adding something, what each one counts, and how to free up room without upgrading."
+---
+
+Your plan caps four things: branches, staff seats, loyalty cards, and campaigns. The [usage meters](/merchants/billing/usage-meters) on Settings > Billing tell you where you stand. What follows is the moment you are actually stopped, which looks different in each part of the dashboard and counts slightly different things.
+
+## The four places you get stopped
+
+**Loyalty cards.** Create Stamp Card and Create Points Program both swap the whole form for a block headed **Loyalty Card Limit Reached**, with an Upgrade Plan button. It counts your active stamp cards and active points programs added together, so a salon running one of each uses two.
+
+**Campaigns.** New Campaign swaps the wizard for the same kind of block.
+
+<Frame caption="The New Campaign page on a Growth account that already has three active campaigns. Upgrade Plan takes you straight to Settings > Billing.">
+  <img src="/images/merchants/billing/limit-04-campaign-wall.png" alt="A block headed Campaign Limit Reached reading you have reached the 3 campaign limit on your Growth plan, with an Upgrade Plan button" />
+</Frame>
+
+**Branches.** On Settings > Locations the Add Location button goes grey and its label changes to the limit you are on.
+
+<Frame caption="Golden Crust is on Growth with both of its branches active, so the button reads Location Limit (2) and will not open.">
+  <img src="/images/merchants/billing/limit-03-location-limit.png" alt="The Locations page with a greyed out button labelled Location Limit (2) where Add Location normally sits" />
+</Frame>
+
+**Staff seats.** On the Staff page the Invite Staff button goes the same way and reads **Staff Limit** with your number in brackets.
+
+## What each wall counts
+
+| You are adding | It counts |
+| --- | --- |
+| A stamp card or points program | Your active cards and programs together. A deactivated one does not count. |
+| A campaign | Your active campaigns, including active public offers. Drafts, paused and ended ones do not count. |
+| A branch | Your active branches. |
+| A staff seat | Every staff account on the team, including an invitation nobody has accepted yet. |
+
+Growth allows 2 branches, 5 staff, 3 loyalty cards and 3 campaigns. [Plans compared](/merchants/billing/plans) has the numbers for every tier.
+
+## A full Campaigns meter does not always stop you
+
+The Campaigns meter on Settings > Billing counts every campaign you have ever saved, including drafts, paused ones and public offers. The wall on New Campaign counts only the active ones. So the meter can sit in red while the wizard still opens.
+
+<Frame caption="Golden Crust has five campaigns saved, so the Campaigns meter reads 5 of 3 used in red.">
+  <img src="/images/merchants/billing/limit-01-billing-meters.png" alt="The Billing usage meters with the Campaigns meter reading 5 of 3 used in red" />
+</Frame>
+
+<Frame caption="Three of those five are a draft, a paused campaign and a paused offer, so only two are active and New Campaign opens normally.">
+  <img src="/images/merchants/billing/limit-02-wizard-still-opens.png" alt="The New Campaign wizard open on the Choose Campaign Type step despite the red Campaigns meter" />
+</Frame>
+
+If New Campaign opens, you can create a campaign, whatever the meter says.
+
+<Warning>
+Public offers use your campaign allowance, but they are listed on **Public offers**, not on Campaigns. A café with four published offers and no push campaigns at all sees an empty Campaigns page and still cannot create one. If you are blocked and the Campaigns page looks empty, open Public offers.
+</Warning>
+
+<Frame caption="Brew and Bean's Campaigns page is empty.">
+  <img src="/images/merchants/billing/limit-05-no-campaigns.png" alt="The Campaigns page showing the empty state No campaigns yet" />
+</Frame>
+
+<Frame caption="The same account's Public offers page: four active offers, which is what fills the three-campaign allowance. Pause one to free a slot.">
+  <img src="/images/merchants/billing/limit-06-offers-use-the-allowance.png" alt="The Public offers page showing Active (4) and three offer rows, each with a Pause button" />
+</Frame>
+
+## Freeing up room without paying more
+
+Pausing is almost always better than deleting, because a paused thing keeps its history and you can turn it back on.
+
+- **A campaign or offer you are not running:** press **Pause** on its row. Paused campaigns do not count toward the wall.
+- **A loyalty card you have retired:** deactivate it from its row menu rather than deleting it. Deleting [destroys the balances and history attached to it](/merchants/cards/deleting).
+- **A branch you have closed:** deactivate it on Settings > Locations.
+- **A staff seat:** there is no way to park a teammate. Removing someone deletes their access for good, so free a seat by cancelling an invitation that was never accepted before you remove a real person.
+
+The [Add-ons tab](/merchants/billing/add-ons) sells an extra branch and an extra loyalty card if you only need one more of either. There is no add-on for campaigns or staff seats, so those two come down to pausing something or moving up a plan.
+
+## The two meters that never stop you
+
+**QR Codes (this month)** is enforced when you generate, not with a greyed button, so you get an error at that point instead. [Monthly QR quotas](/merchants/qr-codes/plan-limits) covers it.
+
+**Push Notifications (this month)** stays on zero on every account, because nothing adds to it when you send. It is on the Billing page but it will not block a send today.
+
+<Note>
+The walls themselves show for anyone who can open those pages, so a manager can run into one. Raising a limit happens on Settings > Billing, which only the account owner can reach, and a non-owner sees Contact Owner in place of the plan buttons.
+</Note>
+
+<CardGroup cols={2}>
+  <Card title="Usage meters" href="/merchants/billing/usage-meters">
+    Read where you stand before you hit a wall.
+  </Card>
+  <Card title="Upgrading your plan" href="/merchants/billing/upgrade">
+    Raise every limit at once, and what you are charged.
+  </Card>
+</CardGroup>
