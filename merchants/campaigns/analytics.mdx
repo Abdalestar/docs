@@ -1,6 +1,57 @@
 ---
-title: "Campaign Analytics"
-description: "Tracking the performance of your automated campaigns"
+title: "What the campaign numbers mean"
+sidebarTitle: "Reading campaign numbers"
+description: "The five figures on a campaign's page, where each one comes from, and the two that are easy to misread."
 ---
 
-Coming soon
+Open any campaign and five figures sit across the top of the page. Each one counts a different event, and two of them can read zero on a campaign that is doing real work. This page explains what each number counts. For how to open a campaign and what its settings panels show, see [Campaign stats](/merchants/campaigns/stats).
+
+## The five figures
+
+<Frame caption="The five figures on a campaign's page: Total Sent (1), Opened (2), Clicked (3), Redeemed (4), and Est. Revenue (5).">
+  <img src="/images/merchants/campaigns/campaign-numbers-tiles.png" alt="Five metric cards reading Total Sent 0, Opened 3, Clicked 0, Redeemed 1, and Est. Revenue $20" />
+</Frame>
+
+- **Total Sent** counts the push notifications Qtap handed to the notification service for this campaign. The campaign engine checks for work every 15 minutes and adds to this number each time it sends. Qtap skips a member who has not installed the app or who has turned push off, so nobody in that group reaches this count.
+- **Opened** counts members who opened the notification, plus anyone who opened the campaign inside the app.
+- **Clicked** counts taps on the notification itself. It moves only when the notification service reports a tap, so it can lag behind opens.
+- **Redeemed** goes up by one each time your staff redeems a reward code from this campaign at the counter.
+- **Est. Revenue** multiplies your redemptions by an assumed ticket size, so treat it as a rough guide.
+
+## Every percentage is a share of sends
+
+Under Opened, Clicked, and Redeemed sits a small line reading **% of sends**. All three divide by Total Sent, and none of them divides by opens. When Total Sent is zero, all three percentages read 0% whatever the counts above them say.
+
+<Frame caption="Total Sent is zero (gold), so Opened reads 3 with 0% of sends beneath it, and a real redemption reads 0% too.">
+  <img src="/images/merchants/campaigns/campaign-numbers-zero-rates.png" alt="Metric cards showing Total Sent 0 next to Opened 3 and Redeemed 1, each with 0% of sends underneath" />
+</Frame>
+
+<Warning>
+A claimable campaign, one set to Members only or Everyone, never sends a push. Customers find it on your page in the app and claim it themselves. So Total Sent stays at zero for the life of the campaign, and every percentage on the page stays at 0% even after real people have opened and redeemed it. Read the raw counts on those campaigns and ignore the percentages.
+</Warning>
+
+This page does not carry a claim count. To see how many people claimed a claimable campaign, open the [Public offers](/merchants/offers/overview) page and read the campaign's own row.
+
+## Estimated revenue uses a fixed figure
+
+<Frame caption="Est. Revenue is one redemption multiplied by the assumed ticket size, and the card names the figure it used.">
+  <img src="/images/merchants/campaigns/campaign-numbers-revenue.png" alt="The Est. Revenue card reading $20 with the line Based on $20 avg ticket size" />
+</Frame>
+
+Qtap does not see what a customer spent at the till when they redeemed, so it multiplies your redemptions by a flat assumed ticket size and names that figure on the card. Qtap applies the same figure to every business on the platform, and quotes it in US dollars whatever currency you take at the till.
+
+Rank your campaigns against each other with it, and keep it out of your accounts.
+
+## The same figures on the Campaigns list
+
+Each card on the Campaigns page carries a short version of the same numbers, so you can compare campaigns without opening them.
+
+<Frame caption="A campaign card carries Sent as a count, then Opened, Clicked, and Redeemed as percentages of sends.">
+  <img src="/images/merchants/campaigns/campaign-numbers-list-cards.png" alt="A campaign card for Double Points Weekend showing Sent 0, Opened 0%, Clicked 0%, Redeemed 0% with Clicked outlined" />
+</Frame>
+
+Sent is a count here. The other three are percentages, and they follow the same share-of-sends rule, so a claimable campaign shows 0% across the row. Cards for claimable campaigns swap the row for a claimed count and a redeemed count instead.
+
+## Who can see this
+
+Campaign pages are open to owners and managers. Staff have no campaign access by default, so they do not see the Campaigns section unless you grant it. See [What each staff permission unlocks](/merchants/staff/permission-reference).
