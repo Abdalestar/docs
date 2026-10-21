@@ -1,0 +1,97 @@
+---
+title: "Your Google rating and opening hours"
+sidebarTitle: "Rating and hours"
+description: "Link your Google Maps listing so your real rating shows on your merchant page, and set the hours behind the live Open or Closed badge."
+---
+
+Under your business name, your merchant page carries a white strip with four cells: your category, your Google rating, a link to directions, and whether you are open right now. Three of them come from the Merchant Page editor. Customers see the same strip in the Qtap app.
+
+<Frame caption="The strip on a live merchant page. The rating cell and the Open cell both open a sheet when tapped.">
+  <img src="/images/merchants/merchant-page/strip-live.png" alt="A merchant page on a phone with the details strip outlined below the business description" />
+</Frame>
+
+## Link your Google Maps listing
+
+Open the editor from **Merchants → Edit Merchant**, or go to `dashboard.qtap.qa/merchant-page` directly. The **Google Maps listing** field sits in the Merchant Profile card.
+
+<Frame caption="The Google Maps listing search (1) and the fallback rating slider (2) that covers for it.">
+  <img src="/images/merchants/merchant-page/strip-google-field.png" alt="The Google Maps listing search box and the fallback rating slider in the Merchant Profile card" />
+</Frame>
+
+<Steps>
+
+### Search for your business
+
+Type your business name, or paste the link to your listing from Google Maps. A pasted link fills the search box with the business name so you can confirm which listing you meant.
+
+### Pick your listing from the suggestions
+
+Read the address on each suggestion before you choose. Businesses share names, and picking the wrong one puts a stranger's rating on your page.
+
+<Frame caption="Suggestions from Google Maps. The address under each name is how you tell your shop from someone else's.">
+  <img src="/images/merchants/merchant-page/strip-google-search.png" alt="The Google Maps listing search box with five suggestions, each showing a street and city" />
+</Frame>
+
+### Check the card, then save
+
+The linked listing shows the name Google holds, the rating, and the review count. **Unlink** clears it if you picked the wrong shop. Click **Update Merchant** at the bottom of the page to save.
+
+<Frame caption="A linked listing. The rating and review count come straight from Google.">
+  <img src="/images/merchants/merchant-page/strip-google-linked.png" alt="The linked Google listing card showing a business name, a 4.4 rating, 50 reviews, and an Unlink button" />
+</Frame>
+
+</Steps>
+
+<Note>
+The **Fallback rating** slider only appears while no listing is linked. Your page uses that number whenever Qtap has no Google rating stored for you. The cell is labelled "Google rating" either way, so keep the number you set honest.
+</Note>
+
+<Warning>
+A listing you pin counts only while you run a single branch. With two or more active branches, Qtap looks each branch up on its own, using the branch name and its map pin, and ignores the listing you pinned. Two shops of the same business rarely share a rating, which is why they are matched separately.
+</Warning>
+
+Qtap asks Google for your rating at most once a day and reuses the stored answer in between. Changing the linked listing clears that stored answer, so a correction takes effect straight away.
+
+Customers tap the rating cell to read the reviews Google holds. Qtap collects no reviews of its own.
+
+<Frame caption="The rating cell opens Ratings and reviews. With no listing linked, it shows the fallback number and no reviews.">
+  <img src="/images/merchants/merchant-page/strip-reviews-sheet.png" alt="The Ratings and reviews sheet showing a 4.8 rating and a note that ratings come from Google" />
+</Frame>
+
+## Pick a category
+
+Your category fills the first cell of the strip, with the icon that goes with it. There are eighteen to choose from, matching the list the Qtap app uses. A category saved before this list existed, such as "Beauty & Spa", does not match any of them and shows as **Other**, so open the dropdown once and pick the closest fit.
+
+<Frame caption="The category list. Your choice sets both the label and the icon customers see.">
+  <img src="/images/merchants/merchant-page/strip-category.png" alt="The category dropdown open, listing eighteen categories with icons and Bakery ticked" />
+</Frame>
+
+## Set the hours behind Open and Closed
+
+**Working Hours** gives you a row per day with an opening time, a closing time, and a **Closed** toggle. For a late night, set a closing time earlier than the opening time: 6:00 PM to 2:00 AM reads as open at one in the morning.
+
+<Frame caption="Working Hours in the editor. Toggle Closed for any day you do not open.">
+  <img src="/images/merchants/merchant-page/strip-hours.png" alt="The Working Hours table with an open time, close time, and Closed toggle for each day of the week" />
+</Frame>
+
+Customers see **Open** or **Closed** with a line such as "opens 9 AM" under it, and tapping the cell opens the whole week with today picked out.
+
+<Frame caption="The Opening hours sheet: the live status on top, then every day of the week.">
+  <img src="/images/merchants/merchant-page/strip-hours-sheet.png" alt="The Opening hours sheet on a phone showing Closed, opens 9:00 AM, and the seven day schedule" />
+</Frame>
+
+<Warning>
+Qtap saves hours against a branch. This editor loads the first of your active branches in alphabetical order, and your page reads the hours of one active branch. On a multi-branch account those can be two different branches, so set hours on every branch in [Locations](/merchants/settings/locations) and check your page afterwards. If the branch your page picks has no hours saved, the Open cell does not appear at all.
+</Warning>
+
+<CardGroup cols={3}>
+  <Card title="Merchant page designer" href="/merchants/settings/merchant-page-editor">
+    The rest of the editor: covers, logos, and the cards you feature
+  </Card>
+  <Card title="Locations" href="/merchants/settings/locations">
+    Set hours, address, and map pin for each branch
+  </Card>
+  <Card title="Your public page" href="/merchants/merchant-page/public-view">
+    Everything else customers see when they open your page
+  </Card>
+</CardGroup>

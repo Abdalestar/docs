@@ -1,0 +1,51 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "settings",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1500 },
+  "defaultWaitMs": 9000,
+  "steps": [
+    {
+      "name": "marketing-emails-page",
+      "goto": "/settings/notifications",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 800 }
+      ],
+      "waitFor": "div.rounded-xl:has-text('Marketing emails')",
+      "waitMs": 9000,
+      "clip": { "x": 260, "y": 60, "width": 1180, "height": 800 },
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has-text('Marketing emails')", "number": 1, "color": "plum" }
+      ]
+    },
+    {
+      "name": "marketing-emails-switch",
+      "goto": "/settings/notifications",
+      "waitFor": "div.rounded-xl:has-text('Marketing emails')",
+      "waitMs": 9000,
+      "clipTo": "div.rounded-xl:has-text('Marketing emails')",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": ":nth-match(button[role='switch'], 4)", "color": "plum" }
+      ]
+    },
+    {
+      "name": "marketing-emails-off",
+      "goto": "/settings/notifications",
+      "waitFor": "div.rounded-xl:has-text('Marketing emails')",
+      "actions": [
+        { "wait": 9000 },
+        { "click": ":nth-match(button[role='switch'], 4)" },
+        { "wait": 1200 }
+      ],
+      "waitMs": 1500,
+      "clip": { "x": 260, "y": 140, "width": 1180, "height": 620 },
+      "annotate": [
+        { "type": "box", "target": ":nth-match(button[role='switch'], 4)", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Save Preferences')", "number": 2, "color": "gold" }
+      ]
+    }
+  ]
+}

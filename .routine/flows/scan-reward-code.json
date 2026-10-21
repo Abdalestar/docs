@@ -1,0 +1,49 @@
+{
+  "section": "merchants/cards",
+  "account": "stamp",
+  "viewport": {
+    "width": 1440,
+    "height": 720
+  },
+  "fakeCamera": {
+    "qr": "24083777",
+    "aim": "locked",
+    "qrPx": 340
+  },
+  "steps": [
+    {
+      "name": "scan-04-reward-code",
+      "goto": "/stamp-operations",
+      "actions": [
+        {
+          "wait": 3000
+        },
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 6500
+        },
+        {
+          "click": "button:has(svg.lucide-scan-line)"
+        },
+        {
+          "wait": 2500
+        }
+      ],
+      "waitMs": 700,
+      "clip": {
+        "x": 280,
+        "y": 150,
+        "width": 1160,
+        "height": 570
+      },
+      "annotate": [
+        {
+          "type": "box",
+          "target": "li[data-state=open]"
+        }
+      ]
+    }
+  ]
+}

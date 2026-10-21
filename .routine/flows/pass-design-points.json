@@ -1,0 +1,22 @@
+{
+  "section": "merchants/passes",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "viewport": { "width": 1440, "height": 1000 },
+  "steps": [
+    {
+      "name": "pass-design-points",
+      "goto": "/points/c0000000-0000-0000-0000-000000000001/pass-design",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 19000 },
+        { "fill": ["input.font-mono", "#1F4A3D"] },
+        { "wait": 1500 }
+      ],
+      "waitMs": 2000,
+      "clipTo": "div.grid.grid-cols-2.gap-3",
+      "clipPadding": 16
+    }
+  ]
+}

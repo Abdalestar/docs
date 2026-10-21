@@ -23,20 +23,46 @@ Stamp card rewards are issued automatically by Qtap based on conditions you set.
 
 ## Adding a Reward
 
-Click **Add Reward** on the Rewards step to open the reward editor. Fill in:
+Click **Add reward** on the Rewards step to open the reward editor. Fill in:
 
 - **Reward Type** — Main, Sign Up, or Interim
 - **Reward Name** — the name of the reward the member sees (e.g., "Free Coffee")
 - **Trigger Value** — for Interim rewards, the stamp number that triggers it; for Main rewards, auto-set to the stamp goal
 - **Expiry** — toggle on and enter a number of days to set an expiry period after the reward is issued
 - **Reward Image** — optional PNG or JPEG up to 2MB, shown with the reward in the app
-- **Staff Note** — optional internal note shown to staff at the point of redemption
+- **Staff note (internal)**: the reward's description, which customers read in the app
 
-Click **Save Reward** to add it to the card.
+Click **Save reward** to add it to the card.
 
 <Frame caption="The reward editor. Choose a type, name the reward, and set an optional image, staff note, and expiry.">
   <img src="/images/merchants/stamp-cards/rewards-add-dialog.png" alt="Add a reward dialog with the Main type selected and a reward named Free coffee" />
 </Frame>
+
+## What the staff note really is
+
+The box labelled **Staff note (internal)** is the reward's description, and your customers read it. Qtap saves whatever you type there as the reward's description, and the Qtap app prints it under the reward name on the customer's card.
+
+<Frame caption="Open a reward from the list to see its note. This one carries a line written for the customer, which is the right way to use the field.">
+  <img src="/images/merchants/stamp-cards/rewards-staff-note-dialog.png" alt="The Edit reward dialog with the Staff note field holding the words A pastry on us to get you started, above a line claiming the note is only visible to staff" />
+</Frame>
+
+<Warning>
+The helper text under the box says the note is only visible to staff. That is wrong. Write the box as a public line: say what the customer gets, and keep anything private (a cost, or a rule about who qualifies) somewhere else.
+</Warning>
+
+Your team will not read it either. The note never appears on the Redemptions screen or on Stamp Operations, and the reward list on the card does not print it, so a note written for the counter reaches nobody.
+
+<Frame caption="The reward list shows each reward's name and when it triggers. The note is not here.">
+  <img src="/images/merchants/stamp-cards/rewards-staff-note-list.png" alt="The Loyalty rewards list showing four rewards with their type badges and stamp triggers, and no note text on any of them" />
+</Frame>
+
+<Frame caption="One text box, two audiences.">
+  <img src="/images/merchants/stamp-cards/reward-staff-note-path.svg" alt="Diagram showing the staff note saved as the reward description and shown to customers in the Qtap app, while the counter screens never display it" />
+</Frame>
+
+### What to write instead
+
+Write the line you would be happy to see on your own card, like "A pastry on us to get you started." If your team needs an instruction, put it in the reward **name**, which staff do see on the voucher when they redeem it, or in your card's [terms and conditions](/merchants/cards/card-terms). Qtap has no field for a private per-reward note today.
 
 ## Reward Expiry
 

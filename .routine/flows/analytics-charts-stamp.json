@@ -1,0 +1,35 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "analytics",
+  "account": "stamp",
+  "viewport": {
+    "width": 1440,
+    "height": 1500
+  },
+  "defaultWaitMs": 4000,
+  "steps": [
+    {
+      "name": "analytics-peak-hours",
+      "goto": "/analytics",
+      "actions": [
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 800
+        }
+      ],
+      "waitFor": "div.font-semibold:has-text('Peak Hours')",
+      "waitMs": 20000,
+      "clipTo": "div.rounded-xl:has(> div > div.font-semibold:has-text('Peak Hours'))",
+      "clipPadding": 10,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div[title='Sun 12:00 - 2 activities']",
+          "color": "plum"
+        }
+      ]
+    }
+  ]
+}
