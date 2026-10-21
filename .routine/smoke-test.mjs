@@ -19,7 +19,13 @@
 import { chromium } from 'playwright';
 
 const DEPLOY_URL   = process.env.DEPLOY_URL   || 'https://dashboard.qtap.qa';
-const SUPABASE_URL = process.env.SUPABASE_URL || 'https://qeriqybbomqqkdqaylhl.supabase.co';
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://amaucrgpsulnykvyrlzq.supabase.co';
+// amaucrgpsulnykvyrlzq is the production project dashboard.qtap.qa has called since the
+// 2026-10-18 cutover. It must be the host probed here: the retired test project
+// (qeriqybbomqqkdqaylhl) still answers 401, so probing it reported "Supabase reachable"
+// while the dashboard's real backend was blocked, and step [4/5] then failed as
+// login_failed, which reads like dead credentials. Keep this in sync with
+// NEXT_PUBLIC_SUPABASE_URL in the live login page HTML.
 
 // Credentials come from the environment ONLY. This repo is public — never hardcode
 // or commit account emails/passwords. Set QTAP_EMAIL / QTAP_PASSWORD in the
