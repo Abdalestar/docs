@@ -20,6 +20,154 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-08 — Exporting your analytics (the three formats and what they really contain)
+
+**Article:** `merchants/analytics/exporting.mdx` (new) + a label correction to `analytics/overview.mdx`
+**Branch:** `claude/busy-clarke-4p404i`
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 6 real images, validate-images 6/6 OK. One task
+this run: **no screenshot backfill exists** (the on-main zero-PNG scan returns the same four
+non-workable files) and no board row is writable.
+
+### MAIN HAS CAUGHT UP — stop assuming it is 27 PRs behind
+Every run log below this one says `origin/main` is stuck at the PR #185 merge. **That is no
+longer true.** Main is at **b7768ff, the PR #213 merge**, and carries 127 MDX files; #186
+through #213 all landed. Still open: **#214-#219** (payment-failed, the email-table
+correction, email confirm pages, NFC how-customers-tap, billing/limit-reached, and the
+2026-10-07 run log), plus the long-stale #163-#165, #186-#191, #137/#145/#148/#154/#158.
+Diff those before claiming a topic; do not re-derive the whole #186+ list as unmerged.
+
+### PLAYWRIGHT VERSION TRAP MOVED AGAIN
+`/opt/pw-browsers` now ships chromium **1194 and 1243** (1234 is gone). `npm install
+playwright` pulls **1.64**, which wants **1248**, so the smoke test dies at launch.
+`npm install playwright@1.63.0` maps to 1243 and works. Running map: 1.56→1194, 1.59→1217,
+1.60→1223, 1.61→1228, 1.62→1234, **1.63→1243**, 1.64→1248. Check with
+`node -e "console.log(require('./node_modules/playwright-core/browsers.json').browsers.find(b=>b.name==='chromium').revision)"`.
+The TLS bridge was needed again and stayed up for the whole run. The **first** smoke test
+failed `login_failed` on a `waitForURL` timeout and the identical command passed on an
+immediate retry, as in the 2026-09-14 run. Retry once before believing dead credentials.
+
+### GOOGLE WALLET SHIPPED IN THE MOBILE APP AND IS SWITCHED OFF — do not document it
+`Qtap_app` has moved since the last run (it was frozen at 2026-09-16). Commits `e19c9ea` /
+`e6d326d` (2026-10-05) add an **Add to Google Wallet** button on Android, a
+`google-wallet-pass` edge function, and a Google LoyaltyObject patch on balance change.
+I nearly wrote it up. **`app_config.google_wallet_enabled` is `false` in production**
+(read-only check, one active row, untouched since 2026-07-21), migration `045` defaults it
+false, and `useWalletAvailabilityStore` fails closed, so no customer can see the button
+today. `pass-design-studio.mdx` saying "Apple Wallet" is still correct. Filed as a row; a
+future run should re-check the flag before writing. Other new mobile work: an OTP resend
+cooldown (2026-10-07), the full country picker, and v1.0.1 — all customer-app surfaces that
+are not Playwright-capturable.
+
+### Task selection — the board is still all trackers, duplicates and blockers
+`notion-query-data-sources` (SQL) returns ~66 non-Done rows and not one is writable: the
+P1s are the same four duplicates plus the blocked/non-existent features, and the bulk are
+**engineering-fix trackers filed by earlier runs** whose article already ships the honest
+Warning. `QTAP_NAJMA_EMAIL` is **still** a duplicate of `QTAP_EMAIL` (both
+`owner@goldencrust.qa`), so the only reachable orgs are Golden Crust (growth/points/0
+credits) and Brew & Bean (growth/stamps/0 credits), and Cancel Subscription, the AI Suite
+and Settings > MCP stay uncapturable. **Pointing that third slot at Najma Coffee (elite,
+77 credits) or Dana Salon (franchise, 84, real subscription) remains the single
+highest-value environment fix**; it has been asked for in every log since 2026-08-19.
+
+So this was §14 gap discovery by **component-title diff**: extract every `CardTitle` /
+`DialogTitle` / `AlertDialogTitle` from `components` + `app`, then `grep -rqiF` each against
+a corpus of all on-main MDX **plus** every MDX from all 20 open PR branches. 128 titles in,
+34 with no hit anywhere. `Export Analytics Report` was one of them.
+
+### The gap
+`components/dashboard/analytics/export-dialog.tsx` + `lib/utils/analytics-export.ts` (1,368
+lines) are a real surface with nine lines of coverage: `analytics/overview.mdx` lists three
+formats under the wrong names and says "check or uncheck the sections you want". The Notion
+row (P3) was flagged DUPLICATE on that basis. It is not, once you look at what the three
+formats actually do with the checkboxes.
+
+### Everything was verified by downloading the real files, not by reading code alone
+`acceptDownloads: true` + `page.waitForEvent('download')` → `download.saveAs()`. Clicking
+**Export** is safe to capture: jsPDF, a Blob and `canvas.toDataURL` all run client-side, so
+nothing is written to the account and nothing leaves the browser. Read the PDF back with
+`pdfjs-dist/legacy/build/pdf.mjs` in plain node for text, and render a page to PNG by
+injecting `pdf.min.mjs` into a blank chromium page (the 2026-08-19 QR-printing recipe).
+
+- Live labels are **PDF Report / CSV Data / Story PNG**, default PDF, all six boxes ticked,
+  **Export** disabled at zero boxes. The published article's "CSV / PDF / Instagram Story"
+  was wrong on all three; corrected.
+- Points sections: Points Overview, Points Earned Over Time, Outstanding Points Liability,
+  Staff Performance, Customer Segments, Insights. Stamps swap the first three for Overview
+  Metrics, Stamps Over Time, Peak Hours. Both captured.
+
+### THE FINDING — the PDF ignores the three points checkboxes (proved, not inferred)
+Exported a PDF with all three points boxes **unticked**: page 2 is still
+**Points Program Overview** with all four metric cards, the points trend and the liability
+chart, the cover's executive summary still quotes the figures, and the contents list still
+numbers it 01. The CSV from the same dialog state correctly omits all three. Cause:
+`analytics-export.ts` lines 678 / 692 / 724 gate on `data.pointsOverview` alone, never on
+`sections`, while the CSV at 103 / 116 / 128 checks both. Shipped as a Warning with the
+PDF page as the evidence shot. Filed as a P2 engineering row.
+
+### A near-miss worth recording — the missing sections were a RACE, not a bug
+My first export (≈20 s after load) produced a 3-page PDF with **Staff Performance and Key
+Insights absent** although both were ticked and both were in the CSV taken 2.5 s later. I
+was one step from writing "the PDF drops staff and insights". Re-exported after a 30 s
+settle: 4 pages, both present, both in the TOC. The export copies whatever the page's hooks
+have resolved at click time and the toast still says "Export successful". That is now the
+article's first Warning, and it is a better fact than the bug I thought I had. **Re-run
+before you write a drop as deterministic.**
+
+### Other verified facts the article carries
+- The Story PNG only ever reads `overview`, `points_overview` and `insights`; the other
+  checkboxes cannot change it. Insights are capped at **3** and each is truncated to one
+  line by `truncateText`, visible mid-sentence in the shipped image. Metric cards cap at 6.
+- The CSV is a report, not a table: `═══` banner, per-section `───` dividers and headers.
+  Dates render `Sep 7` with no year. **Numbers are written with `toLocaleString()` and are
+  not quoted**, so a figure of 1,000+ splits into two spreadsheet cells; staff names and
+  insight text *are* quoted. Neither reachable org has a figure that large (Golden Crust
+  tops out at 797), so this is stated from code, not demonstrated.
+- Nothing from the bottom of `/analytics` exports: `handleExport` builds `exportData` from
+  nine hooks and never includes `expiryForecast`, `topEarners`, `rewardPop`, churn,
+  best-customers or benchmarks.
+- `page.tsx` passes `locationId` to the stamp hooks and not to the points hooks, so the
+  branch picker narrows a stamp export and not a points one.
+
+### SECOND FINDING — "Export data" in Edit Permissions gates nothing
+`permissionIdsToEffectivePermissions` maps `analytics.export` to `analytics: 'full'`, but
+`analytics === 'full'` is read **only inside `staff-permissions-dialog.tsx` itself** (to
+re-tick its own boxes). `canAccessRoute('/analytics')` checks `!== 'none'` and the
+`<ExportDialog>` has no gate at all, so ticking **View analytics** alone already lets a
+teammate download every format. Shipped as a Warning; filed as a P2 row. Same family as the
+View QR codes / View analytics mismatches from PRs #207 and #211.
+
+### Screenshots (nothing was written to either account)
+`.routine/flows/analytics-exporting.json` (points) + `analytics-exporting-stamp.json`
+(stamp). Six images: the Export button in context, both dialogs cropped, the real PDF cover
+rendered from the downloaded file, the real Story PNG, and the PDF proof shot. All three
+exports are pure client-side downloads. No customer PII; the staff name on the PDF cover is
+the merchant's own team, same treatment as the published staff articles.
+
+### Gotchas for future runs
+- **Badge 2 on `button#points_overview` covers the first checkbox** at this crop size. Box
+  the two groups instead: `[role=dialog] div.flex.gap-4` (formats) and
+  `[role=dialog] div.space-y-2:has(button#points_overview)` (sections). Same lesson as the
+  notification-stats and dashboard-home runs; it keeps recurring because the dialogs are
+  narrow.
+- The section checkboxes are addressable by id: `#points_overview`, `#points_over_time`,
+  `#points_balance`, `#overview`, `#stamps_over_time`, `#peak_hours`, `#staff_performance`,
+  `#customer_segments`, `#insights`. Format radios are `#pdf` / `#csv` / `#png`, and the
+  labels are `label:has-text("PDF Report")` etc.
+- Use `button:text-is('Export')` scoped to `[role=dialog]` for the submit: a bare
+  `has-text('Export')` first-matches the page's own Export button behind the scrim.
+- **`isExporting` is unreachable.** The dialog's own handler calls `onExport(...)` then
+  `setOpen(false)` without awaiting, so the "Exporting..." label never renders. Do not
+  document that button state.
+- `/analytics` needs ~20 s to settle before the export is complete, which is longer than the
+  ~16 s earlier runs used for the cards themselves.
+- `merchants/analytics/overview.mdx` is **CRLF**. Convert back before writing or the diff
+  comes back as a whole-file replacement; mine stayed at a real 5/5.
+- The campaign-analytics stub stays blocked and the diagnosis filed on 2026-10-07 holds:
+  `app/api/analytics/campaigns/[id]/performance/route.ts:71` selects `type` and the column
+  is `campaign_type` (confirmed in `information_schema`). The topic is also claimed by open
+  PR #187.
+
+
 ## 2026-10-07 — No article: everything is claimed, and the campaign-analytics 404 is finally root-caused
 
 **Article:** none. **Branch:** `claude/busy-clarke-vev6oc`
