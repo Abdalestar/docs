@@ -1,0 +1,68 @@
+---
+title: "How a customer taps one of your tags"
+sidebarTitle: "What a customer does"
+description: "What a customer does to earn from one of your NFC tags, and why telling them to open the app first no longer works."
+---
+
+Your tags sit on the counter and customers bring a phone to them. What changed recently is how the phone reads the tag. The Qtap app used to carry its own tag reader, and the app in the stores today does not, so the phone's own tag reading is what opens Qtap now. The steps your staff describe at the counter need to change with it.
+
+<Warning>
+**Do not tell customers to open the app first.** The Qtap app still shows a **Scan NFC** button, and pressing it answers "Coming soon. Tap-to-earn with Qtap NFC stickers is on the way." Someone who opens Qtap and then holds their phone to the tag gets nothing. Ask them to tap with the app closed.
+</Warning>
+
+## What a tap looks like on the customer's phone
+
+<Frame caption="The four steps, from holding the phone against the tag to the stamp landing.">
+  <img src="/images/merchants/nfc-tags/how-tap-journey.svg" alt="Four steps: hold the phone to the tag, the phone offers the Qtap link, Qtap shows what the tap will do with a Confirm button, the stamp lands" />
+</Frame>
+
+The customer holds an unlocked phone with the screen on against the tag, from the home screen or the lock screen. The phone reads the address on the tag and offers to open it. Tapping that offer opens Qtap on a small screen that names your business and says what the tap will do: **Collect a stamp**, **Earn 10 points**, or **Check in**, depending on how you set the tag up. Pressing **Confirm** is what records it. **Not now** backs out and leaves everything untouched.
+
+That confirm step is deliberate. A phone resting on a counter can brush a tag by accident, so Qtap shows the customer what is about to happen before it writes anything. Nothing reaches your Taps count until they press Confirm.
+
+## What the customer needs
+
+- The Qtap app installed and signed in. Without it, tapping opens a web page instead and nothing is earned.
+- A phone that reads NFC tags. Most iPhones from the XS onward and most modern Android phones do.
+- The screen on and the phone unlocked. A locked, dark phone will not pick up the tag.
+
+## Checking that a tap landed
+
+Open **NFC Tags**. The **Taps** column counts every confirmed tap, and **Last Tapped** shows the date of the most recent one, so a tag that is getting used climbs while a tag nobody notices stays still.
+
+<Frame caption="Total Taps across all your tags, then the per-tag Taps count and the date each tag was last used.">
+  <img src="/images/merchants/nfc-tags/how-tap-list.png" alt="NFC Tags page with the Total Taps card, the Taps column, and the Last Tapped column outlined" />
+</Frame>
+
+A single tag's page carries the same two figures with a timestamp, which is the quickest way to confirm your own test tap went through.
+
+<Frame caption="A tag's own page: its total taps, and the exact time it was last tapped.">
+  <img src="/images/merchants/nfc-tags/how-tap-detail.png" alt="NFC tag detail page with Total Taps and the Last Tapped date and time outlined" />
+</Frame>
+
+## Test one tag before you print anything
+
+Tap a tag with your own phone, press Confirm, then reload the NFC Tags page and check that the count moved. That test costs a minute and tells you whether the tags are worth putting on every table. Counter signage that says "tap here to collect a stamp" is worth holding back until you have seen a tap go through.
+
+<Note>
+The wording on the tag's web page is out of date. A phone without Qtap installed lands on a page reading "Open the Qtap app and tap the tag again", which points at the button that answers "Coming soon". Expect a customer or two to come back to the counter confused, and have staff point them at a QR code for that visit.
+</Note>
+
+<Frame caption="What a phone without the Qtap app shows after a tap. The instruction on it is stale.">
+  <img src="/images/merchants/nfc-tags/how-tap-web-fallback.png" alt="The Qtap tag page on a phone, with the open-the-app instruction and the Get the Qtap app button outlined" />
+</Frame>
+
+<CardGroup cols={2}>
+  <Card title="How a tap works" href="/merchants/nfc-tags/tap-and-earn">
+    The stamp, points, or check-in a tap records, and the daily cap on stamps.
+  </Card>
+  <Card title="NFC tags vs QR codes" href="/merchants/nfc-tags/what-is-nfc">
+    Which one to reach for, and what each costs you.
+  </Card>
+  <Card title="NFC Tags" href="/merchants/nfc-tags">
+    Buy, register, and manage the tags in your locations.
+  </Card>
+  <Card title="Showing a QR code to a customer" href="/merchants/qr-codes/customer-scan-flow">
+    The fallback to hand anyone who does not have the app yet.
+  </Card>
+</CardGroup>
