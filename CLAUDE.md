@@ -20,6 +20,127 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-09-18 — If your payment fails (the 14-day dunning window)
+
+**Article:** `merchants/billing/payment-failed.mdx` (new) + a one-paragraph correction to
+`merchants/billing/invoices-payment.mdx`
+**Branch:** `claude/busy-clarke-mtqe01`
+**PR:** https://github.com/Abdalestar/docs/pull/214
+**Status:** Done. SMOKE_OK (TLS bridge, §6a); 3 real annotated screenshots + 1 brand SVG,
+validate-images 4/4 and 3/3 OK. One task this run: no screenshot backfill exists.
+
+### THE ENVIRONMENT CHANGED — read this before assuming anything is stale
+Two things are different from every entry below this one:
+- **`origin/main` has caught up.** It is at the PR #213 merge and carries **127 articles**.
+  PRs #192-#213 were all merged. Only **14 PRs are open**: #186-#191 (NFC x2, deleted
+  members, campaign analytics, winback, the "without the app" merge), #163/#164/#165
+  (pass design, voucher design, offer editing), #158 (human-authored Marketing), #154,
+  and the three triplicate "Editing a Stamp Card" PRs #137/#145/#148. Diff those 14
+  before claiming a gap; the long "main is 20+ PRs behind" note is finally out of date.
+- **`Abdalestar/qtap` moved for the first time since 2026-08-10.** A large email redesign
+  landed 2026-09-16 (commits `1203a9b` → `4d622e4`): a shared `EmailShell`, theme tokens,
+  a wordmark, and **19 templates** under `lib/email/templates/`. The 2026-09-17 run covered
+  only the marketing opt-out switch (`b585299`); the rest of that series is still unmined.
+
+### Playwright now MATCHES the image again
+`/opt/pw-browsers` ships chromium **1243**, and plain `npm install playwright` pulls 1.63,
+which wants 1243. **Do not pin `playwright@1.62.0`** as the 2026-09-06/07 entries say, and
+do not run `npx playwright install`. Just `npm install sharp playwright`. Check with
+`node -e "console.log(require('./node_modules/playwright-core/browsers.json').browsers.find(b=>b.name==='chromium').revision)"`.
+
+The bare smoke test still failed `login_failed - all credentials rejected` with
+`ERR_TOO_MANY_RETRIES`, which is the TLS-bridge symptom in disguise (2026-09-17 logged the
+same). Scratch cert + `.routine/tls-bridge.mjs` in Bash background mode, then
+`PLAYWRIGHT_PROXY=http://127.0.0.1:38443`, and it passed first try and stayed up all run.
+
+### Task selection — the board is still 100% non-writing work
+`notion-query-data-sources` (SQL mode) returns 52 non-Done rows and **not one is a writing
+task**: verified duplicates, capture blockers, and the now-dominant bucket of
+engineering-fix trackers filed by earlier runs. So §14 gap discovery again.
+
+Re-verified read-only: both reachable orgs are **still growth/active with no
+`stripe_subscription_id`** (Golden Crust `QTAP_EMAIL`, Brew & Bean `QTAP_STAMP_EMAIL`), and
+**`QTAP_NAJMA_EMAIL` is STILL a duplicate of `QTAP_EMAIL`**. That third credential slot has
+been wasted for a month and is still the single cheapest unblock on the board (cancel
+subscription, AI Suite, MCP/AI, and now the Past Due banner all need it). Najma (elite, 78
+credits) and Dana (franchise, 84, real subscription) remain unreachable.
+
+### How the gap was found
+Route-diff is exhausted and component-name diffing mostly returns false positives now. What
+worked: extract every `<CardTitle|DialogTitle|h1|h2|h3>` string from the app and grep each
+against a **combined corpus** (all 127 on-main `.mdx` plus every `.mdx` from all 14 open PR
+branches, materialised with `git show` into one scratch dir). 209 titles, 68 with zero hits.
+That did not directly surface this article, but reading `vercel.json` crons next to the
+corpus did: **`grep -ri "grace period"` over the whole corpus returns ZERO hits** while three
+crons (`dunning-expiry`, `grace-expiry`, `enforce-trials`) drive the lifecycle.
+
+### The gap, and the correction it forced
+Published `billing/invoices-payment.mdx` covered a failed payment in three sentences and was
+wrong on the central point: it told merchants to fix the card *"before your access is
+affected"*. `lib/billing/entitlement.ts` `entitledPlan()` returns `starter` for `past_due`
+**immediately**, and `lib/billing/enforce-limits.ts` `checkResourceLimit` calls it, so a
+merchant cannot add a branch or invite staff the moment the charge fails. Corrected that
+paragraph and pointed it at the new article.
+
+### Facts (all grounded, read-only)
+- `app/api/webhooks/stripe/route.ts` `handlePaymentFailed` — two paths. A **trial-conversion**
+  failure drops the plan column to `starter`, sets `past_due` and clears `trial_ends_at`, with
+  an explicit comment "Do NOT hide the org". A **normal** failure only sets `past_due`.
+- `app/api/billing/dunning-expiry/route.ts` — `DUNNING_GRACE_DAYS = 14`, daily `0 4 * * *`,
+  keyed on **`subscription_status_changed_at`** (a DB trigger, default `now()`), and the
+  code says why: so unrelated org writes cannot reset the clock.
+- At day 14: hard downgrade to `starter`/`expired` **plus** `softLockExcessResources(org,'starter')`.
+- Starter limits that everything is cut to: 1 location, 2 staff, 1 loyalty card.
+- Email subject **"Your card was declined"**; banner "Your payment is past due. Please update
+  your payment method to avoid service interruption." with **Update Payment** gated on `isOwner`.
+
+### THE FINDING — the soft-lock keeps the NEWEST and kills the OLDEST (filed as P2)
+`lib/billing/downgrade-check.ts` orders active rows `created_at` **ascending** then does
+`slice(0, allResources.length - limit)`, i.e. takes the excess from the FRONT. So a merchant's
+**first** branch, **first** staff seats and **original** loyalty card are switched off and the
+newest survive. Its own comment says "keeping most recent", so it looks deliberate, but it is
+backwards from what a merchant expects. Shipped as a Warning telling them to deactivate the
+branch they can spare before day 14.
+
+Two related facts, both documented honestly:
+- **Campaigns are never soft-locked.** `resourceChecks` gives campaigns `activeColumn: null`,
+  so the loop `continue`s. The Billing meter counts them (Golden Crust reads a red 5 of 3) and
+  nothing ever deactivates them.
+- **Paying does not switch anything back on.** Grepped `is_active` across the whole billing /
+  stripe / webhook surface: every hit is a read filter or the unrelated plan-config fallback at
+  `plan-config-service.ts:125`. Soft-locked rows stay off until reactivated by hand. This also
+  quietly contradicts Qtap's own payment-failed email copy ("Subscribe and the extra locations,
+  staff seats and campaigns switch back on"), which is true for the immediate trial-failure case
+  and not for the day-14 cut. Filed as a second P2.
+
+### Screenshots (nothing purchased, cancelled, downgraded or deactivated)
+`.routine/flows/payment-failed.json`, points demo. The three usage meters the soft-lock
+measures (Campaigns boxed separately as the exception), the Starter plan card, and both active
+branches. Only the cookie **Decline** and the Plans tab were clicked. No customer PII (billing
+meters and the merchant's own branches).
+
+**The Past Due banner and badge are NOT screenshotted, deliberately.** No reachable org has a
+Stripe subscription, and putting one into `past_due` means writing to production. Their exact
+strings are quoted from source instead, and the day-0 / day-14 timeline is the §9 SVG case.
+
+### Gotchas for future runs
+- **Check `created_at` before you number a "first vs newest" annotation.** My first pass
+  numbered The Pearl Branch 1 and Al Sadd 2 by their on-screen order, which is the reverse of
+  the real age (Al Sadd 2026-07-18, The Pearl 2026-07-26). The badges would have taught the
+  wrong rule. One Supabase query caught it.
+- **Do not screenshot the Billing status badge on these demo orgs.** `StatusBadge` short-circuits
+  to a grey **"Free Plan"** whenever `stripe_subscription_id` is null, regardless of the real
+  plan, so the shot would read as a Starter account on a Growth org. Crop it out.
+- Reliable geometry on `/settings/billing` at 1440x1400 after the cookie Decline: the six meters
+  are `div.space-y-2:has(span:text-is('<Label>'))` at x585 w806 h36, y = 293 Locations / 345
+  Staff Members / 397 Loyalty Cards / 449 QR Codes / 501 Campaigns / 553 Push. A clip of
+  `{x:560,y:272,w:856,h:296}` frames the first five.
+- The Plans tab grid is `x585 y341 w806`, four columns with `gap-4`, so the Starter card is
+  ~189 wide at x585. An explicit clip `{x:578,y:334,w:204,h:430}` crops it with no whitespace.
+- `/settings/locations` cards sit at y240 and y354, each 856x98, with the "Location Limit (N)"
+  header at y174. Clip `{x:552,y:164,w:872,h:300}` gets the header and both branches.
+- **`python3 json.dump` drops the trailing newline on `docs.json`**, which adds a spurious
+  "\ No newline at end of file" to the diff. `printf '\n' >>` it back before committing.
 ## 2026-09-17 — Turning off Qtap's marketing emails (the new opt-out switch)
 
 **Article:** `merchants/settings/marketing-emails.mdx` (new)
