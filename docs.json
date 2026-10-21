@@ -177,6 +177,7 @@
           "merchants/billing/downgrade",
           "merchants/billing/add-ons",
           "merchants/billing/invoices-payment",
+          "merchants/billing/payment-failed",
           "merchants/settings/locations",
           "merchants/settings/branch-switcher",
           "merchants/settings/notifications",
