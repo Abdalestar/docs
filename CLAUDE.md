@@ -20,6 +20,142 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-13 — Business Details: the two fields that decide where customers find you
+
+**Articles:** `merchants/settings/business-details.mdx` (new) + a five-claim correction to
+`merchants/settings/merchant-page.mdx`
+**Branch:** `claude/busy-clarke-twr943`
+**Status:** Done. SMOKE_OK **with no TLS bridge** (first run in months that needed none);
+4 real annotated screenshots + 1 brand SVG, validate-images 5/5 and 4/4 OK. One task this
+run: no screenshot backfill exists.
+
+### THE BACKLOG MERGED — main is at PR #213 and carries 127 articles
+Every run log entry below this one says "N PRs are open and unmerged, main lacks all of
+it". **That is over.** `origin/main` has absorbed #192 through #213, so the articles those
+runs wrote are live. 25 PRs are still open (#214-#224 from the last eleven runs, plus the
+older #186-#191, #163-#165, #158, #154, #148, #145, #137), so still diff every open branch
+before claiming a topic, but stop treating the board as a merge problem.
+
+### Environment: two things changed, one did not
+- **No TLS bridge needed.** `node .routine/smoke-test.mjs` printed SMOKE_OK on the first
+  try, direct. Try it bare before building a scratch cert; §6a may be unnecessary now.
+- **No Playwright version trap.** The sandbox ships chromium **1248** and the global
+  playwright **1.64.0** wants 1248. `npm install sharp playwright@1.64.0` in the repo root
+  and the scripts run. (Global playwright resolves from `/opt/node22`, but `sharp` must be
+  installed locally or flow-capture dies.)
+- **`QTAP_NAJMA_EMAIL` is STILL a duplicate of `QTAP_EMAIL`** (`owner@goldencrust.qa`).
+  Both reachable orgs are **growth / active / no stripe_subscription_id / 0 AI credits**,
+  re-verified in Supabase this run. So Cancel Subscription, the AI Suite and Settings >
+  MCP all stay blocked, 8 weeks after the first ask. The MCP page's gate is
+  `plan === 'elite' || 'franchise'` AND `isOwner` (`settings/mcp/page.tsx`), so a growth
+  owner sees only the "Ask Claude how your business is doing" upsell.
+  **Ignore the 2026-09-12 note claiming the demo org is on Franchise.** The dashboard does
+  render the word "Franchise" on `/settings`, which is what that run saw, but
+  `organizations.subscription_plan` is `growth`. Read Supabase, not the card.
+
+### Task selection — the board is still all trackers, and backfill is still empty
+73 non-Done rows, none workable: engineering-fix trackers filed by earlier runs, verified
+duplicates, and capture blockers. The on-main zero-PNG scan returns the same four
+non-workable files, and the only one of them that is a real stub
+(`merchants/campaigns/analytics.mdx`) is claimed by open PR #187. So §14 gap discovery.
+
+### How the gap was found (the technique that still works)
+Component-string diff against a **combined corpus** (all 127 on-main `.mdx` plus every
+`.mdx` from all 25 open PR branches, materialised into one scratch dir with `git show`):
+
+```
+grep -rhoE '<(h1|h2|h3|Label|Button[^>]*|TabsTrigger[^>]*|CardDescription)[^>]*>[^<{]{8,55}</' components app
+```
+
+then `grep -rqiF` each string against the corpus. Widening past `CardTitle` to `Label` is
+what surfaced this: **"VAT / Tax Percentage", "Industry Sub-category" and "Time Zone" all
+returned zero hits**, and they sit on the first settings page every merchant opens.
+
+### The gap, and it is not a dead-field story
+`components/dashboard/settings/business-details-form.tsx` has seven fields that all write
+into `organizations.settings`. Four of them are genuinely unread (below). **Two of them
+decide whether customers can find the merchant at all**, and the docs never said so:
+
+- `Qtap_app/app/(tabs)/explore.tsx` and `src/components/ui/FilterModal.tsx` render browse
+  chips from `useDiscoveryCategories()`, which reads the **`discovery_categories`** table
+  (19 rows, all `is_active`, verified live and identical to the bundled fallback).
+- `matchOrg()` in `Qtap_app/src/constants/categories.ts` decides whether an org sits under
+  a chip, and it reads **only** `settings.industry_subcategory` and `settings.industry`.
+- **Food & Beverage has no industry chip.** It is represented by its nine sub-chips
+  (cafe, restaurant, bakery, fast_food, juice_bar, food_truck, ice_cream, tea_house, bar),
+  all `matchType: 'sub'`. Pick Food & Beverage and leave the sub-category blank and
+  `matchOrg` falls through to the `other` catch-all. Every other industry matches on the
+  Industry field alone, so the sub-category only matters for F&B.
+
+### THREE FINDINGS, all filed as rows
+1. **Onboarding never sets the discovery category.** `app/api/onboarding/route.ts` writes
+   `settings.business_type` and nothing else; nothing in discovery reads `business_type`
+   (its only other appearance is a passthrough column in `016_nearby_merchants.sql`). So a
+   merchant who answered "Cafe / Coffee Shop" in the wizard still has `settings.industry`
+   NULL and sits in **Other** until someone opens Business Details.
+2. **The page label and the browse chip come from different fields.**
+   `getOrgCategory()` (used on `MerchantDetailsScreen`) prefers
+   `settings.merchant_page.category`, then sub, then industry. `matchOrg()` never reads
+   `merchant_page.category`. Live, across the **7 published orgs** (the only ones Explore
+   fetches, `.eq('visibility','published')`): Brew & Bean, Golden Crust and **Najma** all
+   land in Other while their cards read Cafe / Bakery / Restaurant, and **Tea Time**'s card
+   reads Restaurant while its chip is Cafe. Four of seven disagree with themselves.
+3. **The `pills` chip can never match anyone.** It is `sort_order 1`, the first chip a
+   customer sees, `matchType: 'industry'`, `matchValue: 'pills'` — and `pills` appears
+   **nowhere** in the dashboard (`INDUSTRIES` has ten values and that is not one of them).
+
+### The four store-only fields (verified by exhaustive grep over BOTH repos)
+`settings.country`, `settings.currency`, `settings.vat_percentage` and `settings.timezone`
+have **zero readers** anywhere. Nothing computes tax. Nothing formats a timestamp from the
+chosen zone. The currency a customer sees on a card is `points_programs.currency` (the
+points program form has its own Currency field; stamp cards hardcode `'QAR'` in
+`app/m/[slug]/page.tsx`). And `settings.google_rating` written here is **a different key**
+from the `merchant_page.googleRating` (camelCase) the public page reads via
+`effectiveSettings`, so the Google Rating box on this card reaches no customer.
+
+### FIVE WRONG CLAIMS CORRECTED in published prose
+`merchants/settings/merchant-page.mdx` (live on main) said all of these, and all five are
+false against current code and the live UI:
+| Published | Reality |
+|---|---|
+| VAT "used in any tax-inclusive calculations" | zero readers |
+| Timezone "controls how timestamps are displayed in the dashboard" | zero readers |
+| Currency "used on your merchant page" | the card reads `points_programs.currency` |
+| Google rating "displayed on your public page" | the page reads `merchant_page.googleRating` |
+| Button "**Save extended settings**" (x3) | live labels are **Save Details**, **Save Hours**, **Save Social Links** |
+
+**Conflict check:** open PR #222 also edits `merchant-page.mdx` but only its **Logo**
+section. My hunks are Business Details / Hours / Social Links. Both can merge.
+
+### Screenshots (nothing was saved)
+`.routine/flows/business-details.json`, points demo (Golden Crust), **1440x1400** so the
+whole card sits in the viewport and page coords equal viewport coords. The card, the
+10-industry dropdown, the 10 F&B sub-categories, and the four store-only fields filled
+(VAT 5, rating 4.6) and boxed. **Save Details was never clicked**, so `settings` is
+unchanged on the demo org. No customer PII (merchant's own business settings). Plus one
+brand SVG comparing the two resolution orders, which cannot be screenshotted because the
+browse chips live in the mobile app.
+
+### Gotchas for future runs
+- **`/settings` needs ~12s.** At 3s a probe sees "Something went wrong" and two stray
+  `div.font-semibold` reading "Franchise", which looks like a crashed page and is not.
+  Give it 11-12s after the cookie **Decline**.
+- Selectors, all resolving to exactly one node at 1440 wide: card
+  `div.rounded-xl:has(#vat)` (560,748 856x488), `#vat`, `input[placeholder='e.g. 4.5']`
+  (Google Rating), `button[role=combobox]:has-text('Select industry')`, and the
+  sub-category trigger which reads **`Select industry first`** while disabled and
+  **`Select sub-category`** once an industry is chosen. Save is `button:has-text('Save Details')`.
+- **Both Radix listboxes open UPWARD** from a trigger at y≈1039, landing at y≈705 h330. A
+  `clipTo` on the trigger misses the list entirely; use an explicit clip
+  `{x:560,y:688,w:450,h:404}` for Industry and `{x:966,y:688,w:455,h:404}` for the
+  sub-category.
+- Three save buttons on one page means a `button:has-text('Save')` match is ambiguous.
+  Scope to the exact label.
+- `merchants/settings/merchant-page.mdx` is **CRLF**. Convert back before writing or the
+  diff comes back as a whole-file replacement (same trap as the 2026-09-15 run). The real
+  diff here is 5 insertions / 10 deletions.
+- `notion-create-pages` rejects a Section outside the select list; this row used **Settings**.
+
 ## 2026-10-12 — The Card Designer carries your design into the wizard now (correction)
 
 **Article:** `merchants/stamp-cards/card-designer.mdx` (correction + full recapture)
