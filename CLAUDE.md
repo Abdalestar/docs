@@ -20,6 +20,128 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-07 — No article: everything is claimed, and the campaign-analytics 404 is finally root-caused
+
+**Article:** none. **Branch:** `claude/busy-clarke-vev6oc`
+**Status:** SMOKE_OK (TLS bridge, §6a). **Zero tasks written, deliberately.** Every
+candidate is either claimed by an open PR, a verified duplicate, or blocked. The run's
+output is a root cause that three earlier runs got wrong, plus three Notion rows.
+
+### READ THIS FIRST — two things changed that invalidate the entries below
+1. **`main` has caught up.** PRs #186 through #213 are all merged. `origin/main` carries
+   **127 articles**. Every entry below this one says "main is N PRs behind"; that is over.
+   Coverage derived from `main` is trustworthy again for the first time since August.
+2. **Six PRs are open and unmerged: #187, #214, #215, #216, #217, #218.** Diff all six
+   before claiming any topic. #187 is **CONFLICTED** (`mergeable_state: dirty`) and has
+   been open since 2026-08-22.
+
+Claimed MDX paths in those six: `billing/payment-failed` (new), `billing/invoices-payment`,
+`settings/notifications`, `getting-started/creating-your-account`, `settings/password-reset`,
+`staff/inviting`, `nfc-tags/how-customers-tap` (new), `nfc-tags/tap-and-earn`,
+`nfc-tags/what-is-nfc`, `billing/limit-reached` (new), `billing/usage-meters`, and
+`campaigns/analytics` + `campaigns/stats` (both in #187).
+
+### THE FINDING: campaigns.type does not exist, and that is the whole 404
+`merchants/campaigns/analytics.mdx` is **still a live six-line "Coming soon" stub on main**,
+sitting in the Campaigns nav at `docs.json` line 107. It was never written because the
+Performance card on `/campaigns/[id]` never renders, and three runs each blamed something
+different. All three were wrong.
+
+`app/api/analytics/campaigns/[id]/performance/route.ts` line 71 selects
+`'id, name, type, status, organization_id, total_sent, ...'`. **There is no `type` column on
+`campaigns`.** It is `campaign_type`. PostgREST rejects the unknown column with 42703,
+`campaignError` goes truthy, and lines 74-79 answer `404 {"error":"Campaign not found"}` for
+every campaign on every account. That route is the only place in the app that selects
+`campaigns.type`; `useCampaign` selects `*`, which is exactly why the campaign page renders
+its own name while the card below it never appears. **The fix is one word.**
+
+How the earlier diagnoses were ruled out, live, in one session as `owner@goldencrust.qa`:
+- *2026-06: "RLS blocks the user-scoped campaign fetch."* No: the campaign is fetched with
+  `createAdminClient()`, which bypasses RLS.
+- *2026-08-19: "the admin client, or the campaigns RLS policy."* No: `/api/offers/stats` uses
+  `createAdminClient()` on the same org in the same session and returns 200.
+- *PR #187's own body: "the 404 comes from the staff lookup one line below."* No:
+  `/api/offers/stats` line 32 does the **identical** user-scoped `supabase.from('staff')`
+  read and returns 200. The staff row is also correct in the DB (`is_active` true,
+  `user_id` set). **#187's body carries the wrong root cause; do not repeat it.**
+
+Filed as a P1 row. Fixing it unblocks the per-branch breakdown, the sent-vs-redeemed time
+series, `click_rate` and `redemption_per_open_rate`, none of which any merchant has seen.
+
+### Do NOT write campaigns/analytics.mdx — #187 already did
+I had the article fully researched before finding #187. It covers the same five tiles, the
+same campaign, and the same 0%-of-sends finding. Its Notion row claims "DONE 2026-08-22 via
+PR #187", which is false: there is no #187 merge commit and the file on main is untouched
+since `2cdcfe6`. I corrected that row to In progress rather than write a duplicate. **The
+unblock is a human resolving #187's conflict**, not another run writing it again.
+
+Facts I verified independently, useful if #187 ever needs rebuilding:
+- The page ships **five** tiles (Total Sent, Opened, Clicked, Redeemed, Est. Revenue).
+  Published `campaigns/stats.mdx` still says "The four headline numbers" and omits
+  **Clicked** entirely. #187 fixes that too.
+- `safePercent` in `lib/campaigns/analytics-math.ts` returns 0 when the denominator is 0, and
+  all three rates divide by `total_sent`. Live on Golden Crust's `6ced08c4` ("25% off after
+  6pm", a public offer): **Total Sent 0, Opened 3, Clicked 0, Redeemed 1**, so every
+  percentage sub-line reads "0% of sends" beside non-zero counts.
+- `withStats()` in `hooks/use-campaigns.ts` **overrides** the stored `estimated_revenue`
+  column (never written by anything, always 0) with `total_redeemed × 20`
+  (`ASSUMED_AVG_TICKET_VALUE_USD`). So `stats.mdx`'s claim that Qtap multiplies redemptions
+  by an assumed ticket size is **correct**. I nearly shipped a "correction" to a right
+  sentence; check the hook, not just the column.
+- `isPullOffer` (`lib/campaigns/announce-gate.ts`) is why Total Sent is 0 on an offer: a pull
+  offer never runs `processCampaign`. Only a one-time announce push, latched by
+  `announced_at`, increments `total_sent`, and `announce_push` is false on both demo offers.
+
+### Task selection: the board has nothing writable, and this is the proof
+`notion-query-data-sources` (SQL) returns 62 non-Done rows. Not one is a writing task. They
+are engineering-fix trackers filed by earlier runs, verified duplicates of on-main articles,
+or blocked. Re-verified blockers this run:
+- **`QTAP_NAJMA_EMAIL` is STILL a duplicate of `QTAP_EMAIL`** (`owner@goldencrust.qa`). The
+  third credential slot has been wasted since 2026-08-19, seven weeks. Only Golden Crust and
+  Brew & Bean are reachable, both **growth / active / 0 AI credits / no Stripe subscription**.
+  Najma Coffee (elite, 77 credits) and Dana Salon (franchise, 84, real subscription) exist and
+  stay unreachable. Cancel Subscription, the AI Suite and Settings > MCP remain uncapturable.
+  **This one env change is still the highest-value unblock on the board.**
+- Backfill is exhausted. The zero-PNG scan on `main` returns the same four non-workable files:
+  `support/faq.mdx`, `customer-app/settings-profile.mdx`, `index.mdx`, and the
+  `campaigns/analytics.mdx` stub (claimed by #187).
+- Route-diff is exhausted. Every `app/(dashboard)` route maps to an article except
+  `/settings/mcp` (Elite-gated) and `/settings/system` (platform-only).
+- **The app is frozen.** `Abdalestar/qtap` HEAD is `4d622e4`, 2026-09-16. The one new surface
+  since, a 19-template email redesign, is already claimed by #215 (the subject-line table,
+  including the two MCP emails) and #216 (the confirm pages on email links). `DRIP_SCHEDULE`
+  is unchanged at day 0/7/12, so `billing/trial.mdx` and `settings/marketing-emails.mdx` are
+  still accurate and need no correction.
+
+### Gotchas worth keeping
+- **Chromium 1243 is preinstalled now** and matches `playwright@1.63`. The version-pinning
+  dance in the 2026-09-02..08 entries is no longer needed; plain `npm install playwright` works.
+- The smoke test failed `login_failed` with a `waitForURL` timeout on the first attempt and
+  **passed on an immediate retry with the identical command**. Third run to log this. Always
+  retry once before believing `login_failed - all credentials rejected`.
+- **A probe that scrapes the first `*.supabase.co` URL out of the page HTML lies.**
+  `app/layout.tsx` line 46 preconnects to `eqjqbxdgpwvhpyyjnbqo.supabase.co`, a project the
+  app never calls; production is `qeriqybbomqqkdqaylhl`. I briefly believed the dashboard was
+  pointed at a different project. It is not. Filed as a P3 cleanup.
+- Auth lives in **cookies**, not `localStorage` (`@supabase/ssr`), so a probe reading
+  `localStorage` for an access token finds nothing. PostgREST is cross-origin from the
+  dashboard, so test RLS through an app API route instead of hitting PostgREST directly.
+- `mcp__Supabase__execute_sql` returns **only the last statement's result** when you send
+  several separated by semicolons. Two of my column checks silently vanished that way.
+- A `CardTitle` scan misses surfaces whose title is a substring of covered text. "Performance"
+  on the campaign page reads as covered because "Staff Performance" exists in the docs.
+- `merchants/members/joined-without-the-app.mdx` and `joining-without-the-app.mdx` are both
+  live and are genuinely different articles (the "No app yet" flag vs the web-enrollment join
+  flow), but their sidebar titles are "Joined without the app" and "Joining without the app".
+  Not a duplicate; still a confusing pair for a reader.
+
+### Board note
+The docs backlog is a **merge** problem, not a writing problem. Six PRs are open, #187 has
+been conflicted for six weeks, and the only uncovered campaign surface is blocked behind a
+one-word app bug. An hour of a human's time on that queue is worth more than another run.
+
+---
+
 ## 2026-10-06 — The four plan-limit walls (and the Campaigns meter that disagrees with one)
 
 **Article:** `merchants/billing/limit-reached.mdx` (new) + a five-claim correction to
