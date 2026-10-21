@@ -1,0 +1,20 @@
+{
+  "section": "merchants/offers",
+  "account": "points",
+  "defaultWaitMs": 2500,
+  "viewport": { "width": 1440, "height": 1000 },
+  "steps": [
+    {
+      "name": "editing-11-paused",
+      "goto": "/campaigns/offers",
+      "actions": [{ "click": "button:has-text('Decline')" }],
+      "waitFor": "[role=tablist]",
+      "waitMs": 7500,
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(h3:has-text('Gratis fika med kanelbulle')) .bg-yellow-100", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl:has(h3:has-text('Gratis fika med kanelbulle')) button:has-text('Resume')", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "A paused offer stays in your list and comes off your public page until you resume it." }
+      ]
+    }
+  ]
+}

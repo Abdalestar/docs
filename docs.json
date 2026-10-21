@@ -126,7 +126,8 @@
         "group": "Public Offers",
         "pages": [
           "merchants/offers/overview",
-          "merchants/offers/voucher-design"
+          "merchants/offers/voucher-design",
+          "merchants/offers/editing"
         ]
       },
       {
