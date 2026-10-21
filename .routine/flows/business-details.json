@@ -1,0 +1,65 @@
+{
+  "section": "settings",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1400 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "business-details-card",
+      "goto": "/settings",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 11000 }
+      ],
+      "clipTo": "div.rounded-xl:has(#vat)",
+      "clipPadding": 24,
+      "annotate": [
+        { "type": "box", "target": "button[role=combobox]:has-text('Select industry')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button[role=combobox]:has-text('Select industry first')", "number": 2, "color": "plum" }
+      ]
+    },
+    {
+      "name": "business-details-industry",
+      "goto": "/settings",
+      "actions": [
+        { "wait": 12000 },
+        { "click": "button[role=combobox]:has-text('Select industry')" },
+        { "wait": 1500 }
+      ],
+      "clip": { "x": 560, "y": 688, "width": 450, "height": 404 }
+    },
+    {
+      "name": "business-details-subcategory",
+      "goto": "/settings",
+      "actions": [
+        { "wait": 12000 },
+        { "click": "button[role=combobox]:has-text('Select industry')" },
+        { "wait": 1200 },
+        { "click": "[role=option]:has-text('Food & Beverage')" },
+        { "wait": 1500 },
+        { "click": "button[role=combobox]:has-text('Select sub-category')" },
+        { "wait": 1500 }
+      ],
+      "clip": { "x": 966, "y": 688, "width": 455, "height": 404 }
+    },
+    {
+      "name": "business-details-store-only",
+      "goto": "/settings",
+      "actions": [
+        { "wait": 12000 },
+        { "fill": ["#vat", "5"] },
+        { "fill": ["input[placeholder='e.g. 4.5']", "4.6"] },
+        { "wait": 800 }
+      ],
+      "clipTo": "div.rounded-xl:has(#vat)",
+      "clipPadding": 24,
+      "annotate": [
+        { "type": "box", "target": "#vat", "number": 1, "color": "plum" },
+        { "type": "box", "target": "input[placeholder='e.g. 4.5']", "number": 2, "color": "plum" },
+        { "type": "box", "target": "button[role=combobox]:has-text('Qatari Riyal')", "number": 3, "color": "plum" },
+        { "type": "box", "target": "button[role=combobox]:has-text('Qatar')>>nth=1", "number": 4, "color": "plum" }
+      ]
+    }
+  ]
+}

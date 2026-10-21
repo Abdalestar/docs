@@ -1,0 +1,43 @@
+{
+  "section": "stamp-cards",
+  "account": "stamp",
+  "defaultWaitMs": 2000,
+  "viewport": { "width": 1440, "height": 1100 },
+  "steps": [
+    {
+      "name": "card-designer-handoff-design",
+      "goto": "/cards/design",
+      "actions": [
+        { "wait": 9000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1200 },
+        { "click": "button:has(span:text-is('Pizza Place'))" },
+        { "wait": 1500 },
+        { "click": "button:has-text('Save & Continue')" },
+        { "wait": 15000 }
+      ],
+      "waitFor": "text=Create Stamp Card",
+      "waitMs": 2000,
+      "annotate": [
+        { "type": "box", "target": "#stamps", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "The wizard opens with the design already applied: 8 stamps (1) and the pizza stamp icon from the template." }
+      ]
+    },
+    {
+      "name": "card-designer-handoff-rewards",
+      "goto": "/cards/design",
+      "actions": [
+        { "wait": 9000 },
+        { "click": "button:has(span:text-is('Pizza Place'))" },
+        { "wait": 1500 },
+        { "click": "button:has-text('Save & Continue')" },
+        { "wait": 15000 },
+        { "click": "button:has-text('Rewards')" },
+        { "wait": 4000 }
+      ],
+      "waitMs": 1500,
+      "clipTo": "div.rounded-xl:has-text('Loyalty rewards')",
+      "clipPadding": 24
+    }
+  ]
+}
