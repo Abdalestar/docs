@@ -1,0 +1,40 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/billing",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1100 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "limit-01-billing-meters",
+      "goto": "/settings/billing",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 11000 }
+      ],
+      "clip": { "x": 556, "y": 206, "width": 864, "height": 447 },
+      "annotate": [
+        { "type": "box", "target": "div.flex.justify-between.text-sm:has-text('Campaigns')", "color": "plum" }
+      ]
+    },
+    {
+      "name": "limit-02-wizard-still-opens",
+      "goto": "/campaigns/new",
+      "actions": [ { "wait": 11000 } ],
+      "clip": { "x": 256, "y": 60, "width": 1184, "height": 520 },
+      "annotate": [
+        { "type": "box", "target": "text=\"Choose Campaign Type\"", "color": "plum" }
+      ]
+    },
+    {
+      "name": "limit-03-location-limit",
+      "goto": "/settings/locations",
+      "actions": [ { "wait": 11000 } ],
+      "clip": { "x": 556, "y": 166, "width": 864, "height": 312 },
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Location Limit')", "color": "plum" }
+      ]
+    }
+  ]
+}
