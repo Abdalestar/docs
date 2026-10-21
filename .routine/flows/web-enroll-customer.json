@@ -1,0 +1,144 @@
+{
+  "section": "merchants/members",
+  "account": "stamp",
+  "viewport": {
+    "width": 430,
+    "height": 1000
+  },
+  "defaultWaitMs": 6000,
+  "steps": [
+    {
+      "name": "enroll-01-join-page",
+      "goto": "/scan/CLAUDE-JOIN-COUNTER",
+      "waitFor": "text=Get my card",
+      "waitMs": 5000,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "h1:has-text('Welcome to')",
+          "number": 1,
+          "color": "plum"
+        }
+      ],
+      "actions": [
+        {
+          "select": [
+            "select[aria-label='Country calling code']",
+            "QA"
+          ]
+        },
+        {
+          "wait": 500
+        }
+      ]
+    },
+    {
+      "name": "enroll-02-form",
+      "goto": "/scan/CLAUDE-JOIN-COUNTER",
+      "waitFor": "text=Get my card",
+      "actions": [
+        {
+          "select": [
+            "select[aria-label='Country calling code']",
+            "QA"
+          ]
+        },
+        {
+          "fill": [
+            "#full-name",
+            "Layla Al Thani"
+          ]
+        },
+        {
+          "fill": [
+            "#phone",
+            "33001122"
+          ]
+        },
+        {
+          "click": "#terms"
+        },
+        {
+          "hover": "button:has-text('Get my card')"
+        },
+        {
+          "wait": 700
+        }
+      ],
+      "waitMs": 2500,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "#phone",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "#terms",
+          "number": 2,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "button:has-text('Get my card')",
+          "number": 3,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "enroll-03-confirm-number",
+      "goto": "/scan/CLAUDE-JOIN-COUNTER",
+      "waitFor": "text=Get my card",
+      "actions": [
+        {
+          "select": [
+            "select[aria-label='Country calling code']",
+            "QA"
+          ]
+        },
+        {
+          "fill": [
+            "#full-name",
+            "Layla Al Thani"
+          ]
+        },
+        {
+          "fill": [
+            "#phone",
+            "33001122"
+          ]
+        },
+        {
+          "click": "#terms"
+        },
+        {
+          "click": "button:has-text('Get my card')"
+        },
+        {
+          "wait": 1500
+        }
+      ],
+      "waitMs": 2000,
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "button:has-text('Edit number')",
+          "number": 1,
+          "color": "plum"
+        }
+      ]
+    },
+    {
+      "name": "enroll-04-code-expired",
+      "goto": "/scan/CEO-EXPIRED-001",
+      "waitFor": "text=This QR code has expired",
+      "waitMs": 3000,
+      "clipTo": "h1:has-text('This QR code has expired')",
+      "clipPadding": 90
+    }
+  ]
+}

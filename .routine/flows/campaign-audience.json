@@ -1,0 +1,115 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/campaigns",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 1000 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "audience-01-step",
+      "goto": "/campaigns/new",
+      "waitFor": "text=Choose Campaign Type",
+      "waitMs": 6000,
+      "actions": [
+        { "click": "button:has-text('Decline')" },
+        { "wait": 600 },
+        { "fill": ["#name", "Weekend Treat"] },
+        { "wait": 500 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1200 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1600 }
+      ],
+      "annotate": [
+        { "type": "box", "target": "label[for='audience-private']", "number": 1, "color": "charcoal" },
+        { "type": "box", "target": "label[for='audience-members']", "number": 2, "color": "plum" },
+        { "type": "box", "target": "label[for='audience-public']", "number": 3, "color": "plum" },
+        { "type": "caption", "text": "Step 4 of the wizard. Notification only (1) is the default; Members only (2) and Everyone (3) put the campaign on your page in the app." }
+      ]
+    },
+    {
+      "name": "audience-02-claim-limits",
+      "actions": [
+        { "click": "label[for='audience-members']" },
+        { "wait": 1400 },
+        { "hover": "#claim-window" },
+        { "wait": 600 }
+      ],
+      "clipTo": "div.rounded-lg.border:has(#claim-limit-per-member)",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "#claim-limit-per-member", "number": 1, "color": "plum" },
+        { "type": "box", "target": "#claim-limit-total", "number": 2, "color": "plum" },
+        { "type": "box", "target": "#claim-window", "number": 3, "color": "plum" }
+      ]
+    },
+    {
+      "name": "audience-03-claim-window",
+      "actions": [
+        { "click": "#claim-window" },
+        { "wait": 1000 }
+      ],
+      "clipTo": "[role=listbox]",
+      "clipPadding": 8
+    },
+    {
+      "name": "audience-04-review",
+      "actions": [
+        { "press": "Escape" },
+        { "wait": 700 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1300 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1300 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1300 },
+        { "click": "button:has-text('Next')" },
+        { "wait": 1800 },
+        { "hover": "div.rounded-xl:has(div:text-is('Audience'))" },
+        { "wait": 800 }
+      ],
+      "clipTo": "div.rounded-xl:has(div:text-is('Audience'))",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(div:text-is('Audience'))", "color": "plum" }
+      ]
+    },
+    {
+      "name": "audience-05-badge",
+      "goto": "/campaigns",
+      "waitFor": "text=Double Points Weekend",
+      "waitMs": 7000,
+      "clipTo": "div.rounded-xl:has(h3:has-text('Double Points Weekend'))",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(h3:has-text('Double Points Weekend')) [title='Sent as a notification only']", "color": "plum" }
+      ]
+    },
+    {
+      "name": "audience-06-detail-control",
+      "goto": "/campaigns/11111111-0000-0000-0000-000000000001",
+      "waitFor": "text=Who can see this",
+      "waitMs": 6000,
+      "actions": [
+        { "hover": "div.rounded-xl:has(div:text-is('Who can see this')) button[role=combobox]" },
+        { "wait": 600 }
+      ],
+      "clipTo": "div.rounded-xl:has(div:text-is('Who can see this'))",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(div:text-is('Who can see this')) button[role=combobox]", "color": "plum" }
+      ]
+    },
+    {
+      "name": "audience-07-detail-options",
+      "actions": [
+        { "click": "div.rounded-xl:has(div:text-is('Who can see this')) button[role=combobox]" },
+        { "wait": 1000 }
+      ],
+      "clipTo": "[role=listbox]",
+      "clipPadding": 8
+    }
+  ]
+}

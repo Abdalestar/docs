@@ -1,0 +1,36 @@
+{
+  "section": "merchants/cards",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 1000 },
+  "fakeCamera": { "qr": "Q173600", "aim": "partial", "qrPx": 340 },
+  "steps": [
+    {
+      "name": "scan-01-where",
+      "goto": "/stamp-operations",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 6500 }
+      ],
+      "waitFor": "input[placeholder='Search members...']",
+      "waitMs": 2500,
+      "clip": { "x": 280, "y": 150, "width": 580, "height": 250 },
+      "annotate": [
+        { "type": "box", "target": "input[placeholder='Search members...']", "number": 1 },
+        { "type": "box", "target": "button:has(svg.lucide-scan-line)", "number": 2 }
+      ]
+    },
+    {
+      "name": "scan-02-viewfinder",
+      "goto": "/stamp-operations",
+      "actions": [
+        { "wait": 8000 },
+        { "click": "button:has(svg.lucide-scan-line)" },
+        { "wait": 3000 }
+      ],
+      "waitMs": 1500,
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10
+    }
+  ]
+}

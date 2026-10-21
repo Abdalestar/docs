@@ -1,0 +1,218 @@
+{
+  "section": "merchants/analytics",
+  "account": "stamp",
+  "viewport": {
+    "width": 1440,
+    "height": 2300
+  },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "customer-lists-both",
+      "goto": "/analytics",
+      "actions": [
+        {
+          "click": "button:has-text('Decline')"
+        },
+        {
+          "wait": 13000
+        },
+        {
+          "hover": "div.rounded-xl:has-text('Best Customers')"
+        }
+      ],
+      "waitFor": "div.rounded-xl:has-text('Best Customers')",
+      "waitMs": 3000,
+      "clipTo": "div.grid:has(div.rounded-xl:has-text('Churn Risk'))",
+      "clipPadding": 12,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has-text('Churn Risk')",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has-text('Best Customers')",
+          "number": 2,
+          "color": "charcoal"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Churn Risk') p.truncate >> nth=0"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Churn Risk') p.truncate >> nth=1"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Churn Risk') p.truncate >> nth=2"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=0"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=1"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=2"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=3"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=4"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=5"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=0"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=1"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=2"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=3"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=4"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=5"
+        }
+      ]
+    },
+    {
+      "name": "customer-lists-churn",
+      "goto": "/analytics",
+      "actions": [
+        {
+          "wait": 13000
+        },
+        {
+          "hover": "div.rounded-xl:has-text('Churn Risk')"
+        }
+      ],
+      "waitFor": "div.rounded-xl:has-text('Churn Risk')",
+      "waitMs": 2500,
+      "clipTo": "div.rounded-xl:has-text('Churn Risk')",
+      "clipPadding": 10,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has-text('Churn Risk') div[class*=\"text-red-700\"]",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has-text('Churn Risk') div[class*=\"ml-3\"] >> nth=0",
+          "number": 2,
+          "color": "charcoal"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Churn Risk') p.truncate >> nth=0"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Churn Risk') p.truncate >> nth=1"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Churn Risk') p.truncate >> nth=2"
+        }
+      ]
+    },
+    {
+      "name": "customer-lists-best",
+      "goto": "/analytics",
+      "actions": [
+        {
+          "wait": 13000
+        },
+        {
+          "hover": "div.rounded-xl:has-text('Best Customers')"
+        }
+      ],
+      "waitFor": "div.rounded-xl:has-text('Best Customers')",
+      "waitMs": 2500,
+      "clipTo": "div.rounded-xl:has-text('Best Customers')",
+      "clipPadding": 10,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "div.rounded-xl:has-text('Best Customers') li >> nth=0",
+          "number": 1,
+          "color": "plum"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=0"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=1"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=2"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=3"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=4"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') p.truncate >> nth=5"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=0"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=1"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=2"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=3"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=4"
+        },
+        {
+          "type": "redact",
+          "target": "div.rounded-xl:has-text('Best Customers') li span[class*=\"h-9\"] >> nth=5"
+        }
+      ]
+    }
+  ]
+}

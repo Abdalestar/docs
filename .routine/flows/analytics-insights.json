@@ -1,0 +1,39 @@
+{
+  "section": "merchants/analytics",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 900 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "insights-context",
+      "goto": "/analytics",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 14000 },
+        { "hover": "div.rounded-xl:has(svg.lucide-lightbulb)" },
+        { "wait": 1500 }
+      ],
+      "waitMs": 2500,
+      "clip": { "x": 0, "y": 296, "width": 1440, "height": 300 },
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(svg.lucide-lightbulb)", "color": "plum" }
+      ]
+    },
+    {
+      "name": "insights-card",
+      "actions": [
+        { "hover": "div.rounded-xl:has(svg.lucide-lightbulb)" },
+        { "wait": 1500 }
+      ],
+      "waitMs": 1500,
+      "clipTo": "div.rounded-xl:has(svg.lucide-lightbulb)",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "div.rounded-lg:has-text(\"30+ days\")", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-lg:has-text(\"are regulars with\")", "number": 2, "color": "plum" },
+        { "type": "box", "target": "div.rounded-lg:has-text(\"total member\")", "number": 3, "color": "plum" }
+      ]
+    }
+  ]
+}

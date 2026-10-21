@@ -1,0 +1,93 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/nfc-tags",
+  "account": "stamp",
+  "defaultWaitMs": 3500,
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    {
+      "name": "placement-inventory",
+      "goto": "/nfc-tags",
+      "actions": [
+        { "wait": 3000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 5000 }
+      ],
+      "waitFor": "text=Total Tags",
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "box", "rect": { "x": 1144, "y": 168, "width": 272, "height": 110 }, "number": 1, "color": "plum" },
+        { "type": "box", "rect": { "x": 818, "y": 413, "width": 208, "height": 199 }, "number": 2, "color": "charcoal" },
+        { "type": "box", "rect": { "x": 1027, "y": 413, "width": 74, "height": 199 }, "number": 3, "color": "charcoal" },
+        { "type": "caption", "text": "Every tag carries its own branch and its own tap count. The Unassigned card counts tags that belong to no branch." }
+      ]
+    },
+    {
+      "name": "placement-assign-location",
+      "goto": "/nfc-tags",
+      "actions": [
+        { "wait": 6000 },
+        { "click": "tr:has-text('TEST_SERIAL_123') button" },
+        { "wait": 1200 },
+        { "click": "[role=menuitem]:has-text('Assign Location')" },
+        { "wait": 1500 }
+      ],
+      "clipTo": "[role=dialog]",
+      "clipPadding": 18,
+      "waitMs": 600,
+      "annotate": [
+        { "type": "box", "target": "[role=dialog] button[role=combobox]", "color": "plum" }
+      ]
+    },
+    {
+      "name": "placement-branch-tag",
+      "goto": "/nfc-tags",
+      "actions": [
+        { "wait": 6000 },
+        { "click": "tr:has-text('Test Tag 2') button" },
+        { "wait": 1200 },
+        { "click": "[role=menuitem]:has-text('View Details')" },
+        { "wait": 6000 }
+      ],
+      "waitFor": "text=Total Taps",
+      "waitMs": 2500,
+      "clip": { "x": 280, "y": 76, "width": 1136, "height": 300 },
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(p:text-is('Location'))", "color": "plum" }
+      ]
+    },
+    {
+      "name": "placement-unassigned-tag",
+      "goto": "/nfc-tags",
+      "actions": [
+        { "wait": 6000 },
+        { "click": "tr:has-text('TEST_SERIAL_123') button" },
+        { "wait": 1200 },
+        { "click": "[role=menuitem]:has-text('View Details')" },
+        { "wait": 6000 }
+      ],
+      "waitFor": "text=Total Taps",
+      "waitMs": 2500,
+      "clip": { "x": 280, "y": 76, "width": 1136, "height": 300 },
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl:has(p:text-is('Location'))", "color": "plum" }
+      ]
+    },
+    {
+      "name": "placement-tap-history",
+      "goto": "/nfc-tags",
+      "actions": [
+        { "wait": 6000 },
+        { "click": "tr:has-text('TEST_SERIAL_123') button" },
+        { "wait": 1200 },
+        { "click": "[role=menuitem]:has-text('View Details')" },
+        { "wait": 6000 },
+        { "hover": "text=Recent Taps" },
+        { "wait": 1200 }
+      ],
+      "clipTo": "div.rounded-xl:has(div:text-is('Recent Taps'))",
+      "clipPadding": 16,
+      "waitMs": 600
+    }
+  ]
+}

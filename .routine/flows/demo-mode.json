@@ -1,0 +1,80 @@
+{
+  "section": "merchants/getting-started",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 900 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "demo-01-toggle",
+      "goto": "/",
+      "actions": [
+        { "wait": 7000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1500 },
+        { "hover": "button:has(svg.lucide-eye)" }
+      ],
+      "waitMs": 2000,
+      "clipTo": "header",
+      "clipPadding": 8,
+      "annotate": [
+        { "type": "box", "target": "button:has(svg.lucide-eye)", "number": 1, "color": "plum" }
+      ]
+    },
+    {
+      "name": "demo-02-banner-tour",
+      "actions": [
+        { "click": "button:has(svg.lucide-eye)" },
+        { "wait": 3500 }
+      ],
+      "waitMs": 2500,
+      "annotate": [
+        { "type": "box", "target": "div.w-\\[300px\\]", "number": 1, "color": "plum" },
+        { "type": "redact", "rect": { "x": 880, "y": 728, "width": 540, "height": 172 }, "color": "charcoal" },
+        { "type": "caption", "text": "Demo mode on: the purple banner across the top, and the guided tour starting on the sidebar." }
+      ]
+    },
+    {
+      "name": "demo-03-tour-metrics",
+      "actions": [
+        { "click": "button:has-text('Next')" },
+        { "wait": 2000 }
+      ],
+      "waitMs": 1500,
+      "clip": { "x": 270, "y": 150, "width": 1170, "height": 370 }
+    },
+    {
+      "name": "demo-04-members",
+      "goto": "/members",
+      "actions": [
+        { "wait": 2500 },
+        { "click": "button.h-6.w-6:has(svg.lucide-x)" },
+        { "wait": 1000 }
+      ],
+      "waitFor": "text=total members",
+      "waitMs": 8000,
+      "annotate": [
+        { "type": "box", "target": "text=20 total members", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "Members in demo mode: twenty sample customers from Brew House Qatar, not your own list." }
+      ]
+    },
+    {
+      "name": "demo-05-qr-codes",
+      "goto": "/qr-codes",
+      "waitFor": "text=Pearl Branch Stamp QR",
+      "waitMs": 8000,
+      "annotate": [
+        { "type": "box", "target": "table", "number": 1, "color": "plum" },
+        { "type": "caption", "text": "The QR Codes page in demo mode lists Brew House Qatar's sample codes and their scan counts." }
+      ]
+    },
+    {
+      "name": "demo-06-exit",
+      "goto": "/",
+      "waitMs": 6000,
+      "clip": { "x": 0, "y": 0, "width": 1440, "height": 44 },
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Exit')", "color": "plum" }
+      ]
+    }
+  ]
+}

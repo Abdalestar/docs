@@ -1,0 +1,80 @@
+---
+title: "The Insights panel on your analytics page"
+sidebarTitle: "Insights panel"
+description: "Three plain-language observations Qtap works out from your member list, and what each one is counting."
+---
+
+Partway down **Analytics**, under the charts and above Churn Risk, is a card called
+**Insights**. Qtap reads your member list and puts up to three short observations
+there, each with a suggestion attached.
+
+<Frame caption="Insights sits between the charts and the Churn Risk list.">
+  <img src="/images/merchants/analytics/insights-context.png" alt="The Analytics page with the Insights card outlined" />
+</Frame>
+
+Every plan gets this card, and there is nothing to switch on.
+
+## What each line is counting
+
+<Frame caption="The three observations, on a bakery running a points program.">
+  <img src="/images/merchants/analytics/insights-card.png" alt="The Insights card showing an at-risk warning, a regulars observation and a member count" />
+</Frame>
+
+1. **Customers who have gone quiet.** The orange triangle counts members whose last
+   recorded visit was more than 30 days ago. It appears only when at least one
+   member is that quiet, and it points you at a
+   [win-back campaign](/merchants/campaigns/winback).
+2. **How many of your customers are regulars.** The purple line is the share of your
+   members who have earned 5 or more stamps, or 100 or more points, over their whole
+   history with you. It appears only when that share is above 10%.
+3. **How many members you have.** The yellow line is your total member count, with a
+   nudge to keep promoting the program. It appears as soon as you have one member.
+
+The 5 stamps and 100 points figures are the same line Qtap uses to fill the
+**Regulars** slice of the Customer Segments chart higher up the page, so the two
+never disagree.
+
+On a stamp card program the wording changes to match.
+
+<Frame caption="The same card on a cafe running stamp cards, counting stamps instead of points.">
+  <img src="/images/merchants/analytics/insights-stamps.png" alt="The Insights card on a stamp card account showing the 5+ stamps threshold" />
+</Frame>
+
+## What the card ignores
+
+<Warning>
+The time period picker at the top of the page does not reach this card. Switching to
+Today or Last 7 days leaves all three lines where they were: the quiet-customer
+window is always 30 days, and the other two count your members from the day you
+opened. The branch picker in the top bar does not reach it either, so on a
+multi-branch account these numbers are always the whole business.
+</Warning>
+
+The first line also counts only members who have a visit on record. Someone who
+joined and never came back at all has no last visit, so they sit outside that count.
+The [Churn Risk list](/merchants/analytics/customer-lists) further down picks those
+members up, because it falls back to the day they joined.
+
+## When the card is empty
+
+With no members yet, the card reads "Start collecting data to see personalized
+insights about your loyalty program." Give a QR code to a few customers and the
+member count line appears on your next visit to the page.
+
+## Insights and AI Insights are two different cards
+
+<Note>
+This card is arithmetic. It runs the same three checks in the same order every time,
+and the numbers move only when your member list does. **AI Insights** is a separate
+card that writes a fresh read of your data on each run. It belongs to the Elite and
+Franchise plans and spends an insight credit every time it runs. On the other plans
+it does not appear at all, which is why most accounts see this card and then go
+straight to Churn Risk.
+</Note>
+
+## Who can see it
+
+Anyone who can open Analytics. Owners and managers can by default; a teammate on the
+Staff role cannot, and gets an access-denied screen instead. To let one in, turn on
+custom permissions for them and tick **View analytics**. See
+[Staff roles and permissions](/merchants/staff/roles-permissions).

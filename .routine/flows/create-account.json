@@ -1,0 +1,119 @@
+{
+  "section": "merchants/getting-started",
+  "anonymous": true,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "create-account-signup",
+      "goto": "/signup",
+      "waitFor": "#businessName",
+      "waitMs": 4000,
+      "clipTo": ".shadow-lg",
+      "clipPadding": 12,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "#businessName",
+          "number": 1
+        },
+        {
+          "type": "box",
+          "target": "#email",
+          "number": 2
+        },
+        {
+          "type": "box",
+          "target": "#password",
+          "number": 3
+        },
+        {
+          "type": "box",
+          "target": "input[type=checkbox]",
+          "number": 4
+        }
+      ]
+    },
+    {
+      "name": "create-account-filled",
+      "goto": "/signup",
+      "waitFor": "#businessName",
+      "waitMs": 4000,
+      "actions": [
+        {
+          "fill": [
+            "#businessName",
+            "Al Bahr Coffee House"
+          ]
+        },
+        {
+          "fill": [
+            "#email",
+            "owner@albahr.example"
+          ]
+        },
+        {
+          "fill": [
+            "#password",
+            "Karak2026"
+          ]
+        },
+        {
+          "click": "button[aria-label='Show password']"
+        }
+      ],
+      "clipTo": ".shadow-lg",
+      "clipPadding": 12,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "button[aria-label='Hide password']"
+        },
+        {
+          "type": "box",
+          "target": "button[type=submit]"
+        }
+      ]
+    },
+    {
+      "name": "create-account-errors",
+      "goto": "/signup",
+      "waitFor": "#businessName",
+      "waitMs": 4000,
+      "actions": [
+        {
+          "click": "button[type=submit]"
+        },
+        {
+          "wait": 1500
+        }
+      ],
+      "clipTo": ".shadow-lg",
+      "clipPadding": 12
+    },
+    {
+      "name": "create-account-verify",
+      "goto": "/verify-email",
+      "waitMs": 4000,
+      "clipTo": ".shadow-lg",
+      "clipPadding": 12
+    },
+    {
+      "name": "create-account-google",
+      "goto": "/login",
+      "waitFor": "#email",
+      "waitMs": 4000,
+      "clipTo": ".shadow-lg",
+      "clipPadding": 12,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "button:has-text('Continue with Google')"
+        }
+      ]
+    }
+  ]
+}

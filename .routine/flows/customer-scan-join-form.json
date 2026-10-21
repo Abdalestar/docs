@@ -1,0 +1,94 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/qr-codes",
+  "account": "stamp",
+  "defaultWaitMs": 9000,
+  "viewport": {
+    "width": 390,
+    "height": 1500
+  },
+  "steps": [
+    {
+      "name": "customer-scan-join-form",
+      "goto": "/scan/CLAUDE-JOIN-COUNTER",
+      "waitFor": "h1:has-text('Welcome to')",
+      "waitMs": 9000,
+      "clipTo": "form",
+      "clipPadding": 10,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "#phone",
+          "number": 1
+        },
+        {
+          "type": "box",
+          "target": "#birthday",
+          "number": 2
+        },
+        {
+          "type": "box",
+          "target": "button:has-text('Get my card')",
+          "number": 3
+        }
+      ],
+      "actions": [
+        {
+          "select": [
+            "select[aria-label='Country calling code']",
+            "QA"
+          ]
+        },
+        {
+          "wait": 500
+        }
+      ]
+    },
+    {
+      "name": "customer-scan-confirm",
+      "goto": "/scan/CLAUDE-JOIN-COUNTER",
+      "waitFor": "h1:has-text('Welcome to')",
+      "waitMs": 9000,
+      "actions": [
+        {
+          "select": [
+            "select[aria-label='Country calling code']",
+            "QA"
+          ]
+        },
+        {
+          "fill": [
+            "#phone",
+            "55550000"
+          ]
+        },
+        {
+          "click": "#terms"
+        },
+        {
+          "wait": 600
+        },
+        {
+          "click": "button:has-text('Get my card')"
+        },
+        {
+          "wait": 2000
+        }
+      ],
+      "clipTo": "[role=dialog]",
+      "clipPadding": 10,
+      "annotate": [
+        {
+          "type": "box",
+          "target": "button:has-text('Edit number')",
+          "number": 1
+        },
+        {
+          "type": "box",
+          "target": "button:has-text('Confirm and join')",
+          "number": 2
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+---
+title: "A stamp issued by mistake"
+sidebarTitle: "Fixing a stamp mistake"
+description: "There is no undo for a stamp. What a wrong one costs you, and what you can still do about it."
+---
+
+A member is at 3 of 5 and someone at the counter types 2 instead of 1. That card is finished, and the customer now owns a free coffee.
+
+Nothing in the dashboard takes a stamp back. There is no deduct button on Stamp Operations and no edit on the member's profile. Points work the other way round, which is what catches people out: you can correct a points balance by hand, and you cannot correct a stamp balance. So the whole check happens before you confirm.
+
+## Read the dialog before you confirm
+
+Clicking the button at the bottom of the card does not write anything yet. It opens a confirmation first, and that screen carries everything you need to catch the mistake. The button counts with you, so it reads **Issue Stamp** for one and **Issue 2 Stamps** for two.
+
+<Frame caption="The confirmation step. Current: 3/5 is where the member stands now, +2 is what you are about to add, and the green line warns you that the card will finish.">
+  <img src="/images/stamp-cards/stamp-mistake-confirm.png" alt="Confirm Stamp Issue dialog showing Current: 3/5, a +2 stamp count, and the line This will complete the card!" />
+</Frame>
+
+**Current: 3/5** is the member's real balance. **+2** is what you typed. When the two add up to a finished card, Qtap prints **This will complete the card!** in the green panel. Read that line as a question. **Cancel** costs you nothing.
+
+## The quantity box will not let you overshoot
+
+The **Number of Stamps** field caps itself at whatever the member still needs. A member sitting at 3 of 5 can be given 1 or 2, and the hint under the field says so.
+
+<Frame caption="The quantity field and its hint. The cap is the number of stamps left on the card, so the box reads max 2 for a member at 3 of 5.">
+  <img src="/images/stamp-cards/stamp-mistake-quantity.png" alt="Number of Stamps set to 2 with the hint Issue multiple stamps at once, max 2" />
+</Frame>
+
+That cap stops you from pushing someone far past the goal. It does not stop you landing exactly on it, which is the expensive version of this mistake.
+
+## What one confirmed stamp sets off
+
+<Frame caption="A confirmed stamp that finishes a card changes four things at once, and the dashboard can reverse none of them.">
+  <img src="/images/stamp-cards/stamp-mistake-chain.svg" alt="Diagram showing a confirmed stamp leading to the balance, card completion, reward issue and lifetime record, none reversible" />
+</Frame>
+
+When the stamps you add reach the card's goal, Qtap finishes the card in the same breath: it issues the card's main reward with a live redemption code, sets the member back to zero stamps, and adds one to their completed-card count. If those stamps also carry the member past a milestone reward they have never earned on that card, Qtap issues that one too.
+
+## After you have confirmed
+
+The balance stays as it is. The member keeps the stamps, and you cannot lower them.
+
+The voucher is the part worth your attention, because an unearned reward sits in the member's wallet with a working code. You cannot cancel or delete it. Two things are open to you:
+
+- **Redeem it yourself.** Open **Redemptions**, look the customer up, and confirm the reward without handing anything over. That burns the code so nobody can present it later. It also counts as a redemption in your reports.
+- **Wait for it to expire**, if that reward has an expiry window. Many rewards are set up without one, and those vouchers stay valid until somebody redeems them. Check the reward on your card before you count on this.
+
+If neither fits, email support@qtap.qa with the member and the date.
+
+## The record keeps it
+
+<Frame caption="Recent Activity on Stamp Operations. Every row adds stamps; there is no row type that takes them away. We have covered the customer names here.">
+  <img src="/images/stamp-cards/stamp-mistake-history.png" alt="Recent Stamp Transactions table where every row shows a plus one stamp action" />
+</Frame>
+
+Lifetime stamp totals only ever rise, so the member's totals and your analytics include the mistake. Stamps that arrived by QR scan or NFC tap show no staff name against them. One issued at the counter carries the account that issued it, which is how you find out who to have a word with.
+
+<Warning>
+The daily stamp cap and the stamping delay you set on a card do not apply here. Both rules exist to stop a customer scanning the same code five times in a row, and Qtap skips them for stamps issued by staff. Counter mistakes are not covered by either setting.
+</Warning>
+
+<Note>
+On a points program the answer is different. The **Adjust/Deduct** tab on Points Operations lets an owner or manager take points off a balance with a written reason. See [Adjusting and deducting points](/merchants/points/adjusting).
+</Note>
+
+<CardGroup cols={2}>
+  <Card title="Issuing stamps manually" icon="stamp" href="/merchants/stamp-cards/manual-stamps">
+    The everyday counter flow, step by step.
+  </Card>
+  <Card title="Stamp card advanced settings" icon="sliders" href="/merchants/stamp-cards/advanced-settings">
+    Daily caps, stamping delays, and what they do cover.
+  </Card>
+</CardGroup>

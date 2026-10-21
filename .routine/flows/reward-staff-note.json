@@ -1,0 +1,41 @@
+{
+  "section": "merchants/stamp-cards",
+  "account": "stamp",
+  "viewport": { "width": 1440, "height": 1200 },
+  "defaultWaitMs": 2500,
+  "steps": [
+    {
+      "name": "rewards-staff-note-list",
+      "goto": "/cards/b0000000-0000-0000-0000-000000000001",
+      "actions": [
+        { "wait": 14000 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1500 },
+        { "click": "button:has-text('Rewards')" },
+        { "wait": 3000 }
+      ],
+      "clipTo": "div.rounded-xl:has(button:has-text('Add reward'))",
+      "clipPadding": 14,
+      "annotate": [
+        { "type": "box", "target": "div.p-3.border.rounded-lg >> nth=2", "color": "plum" }
+      ]
+    },
+    {
+      "name": "rewards-staff-note-dialog",
+      "goto": "/cards/b0000000-0000-0000-0000-000000000001",
+      "actions": [
+        { "wait": 14000 },
+        { "click": "button:has-text('Rewards')" },
+        { "wait": 2500 },
+        { "click": "div.p-3.border.rounded-lg >> nth=2" },
+        { "wait": 2500 }
+      ],
+      "clipTo": "[role=dialog]",
+      "clipPadding": 12,
+      "annotate": [
+        { "type": "box", "target": "[role=dialog] textarea", "color": "plum" },
+        { "type": "box", "target": "[role=dialog] p:has-text('only visible to staff')", "color": "red" }
+      ]
+    }
+  ]
+}

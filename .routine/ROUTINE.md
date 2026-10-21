@@ -34,7 +34,7 @@ gyms). Stamps + points dual loyalty, NFC tap, QR scan, campaigns, analytics, sta
 roles, multi-location, billing tiers.
 
 - Merchant dashboard: https://dashboard.qtap.qa  (Next.js on Vercel, Supabase auth)
-- Backend: Supabase (project `qeriqybbomqqkdqaylhl`)
+- Backend: Supabase (project `amaucrgpsulnykvyrlzq`, the only project on the account)
 - Live docs: https://qtap.mintlify.app
 - Repos: PRIMARY (you commit here) `Abdalestar/docs`; app reference `Abdalestar/qtap`
   (may be private/inaccessible — do not block on it).

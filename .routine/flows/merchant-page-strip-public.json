@@ -1,0 +1,41 @@
+{
+  "section": "merchants/merchant-page",
+  "account": "points",
+  "viewport": { "width": 430, "height": 1000 },
+  "defaultWaitMs": 3000,
+  "steps": [
+    {
+      "name": "strip-live",
+      "goto": "/m/najma-coffee",
+      "actions": [
+        { "wait": 3500 },
+        { "click": "button:has-text('Decline')" },
+        { "wait": 1000 }
+      ],
+      "waitMs": 8000,
+      "annotate": [
+        { "type": "box", "target": "div[class*='shadow-[0_4px_12px']", "color": "plum" }
+      ]
+    },
+    {
+      "name": "strip-hours-sheet",
+      "goto": "/m/najma-coffee",
+      "actions": [
+        { "wait": 9000 },
+        { "click": "div[class*='shadow-[0_4px_12px'] button >> nth=1" },
+        { "wait": 2500 }
+      ],
+      "waitMs": 1500
+    },
+    {
+      "name": "strip-reviews-sheet",
+      "goto": "/m/najma-coffee",
+      "actions": [
+        { "wait": 9000 },
+        { "click": "div[class*='shadow-[0_4px_12px'] button >> nth=0" },
+        { "wait": 2500 }
+      ],
+      "waitMs": 1500
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 470" font-family="system-ui, -apple-system, sans-serif" role="img" aria-label="One logo upload becomes three stored results, which feed the loyalty card, the Wallet pass, the merchant page, Qtap emails and the join page">
+  <rect width="880" height="470" fill="#F8F5F2"/>
+
+  <text x="24" y="34" font-size="15" font-weight="600" fill="#423F4C">What Qtap makes from the logo you upload</text>
+
+  <!-- Column headings -->
+  <text x="24" y="70" font-size="11" font-weight="600" fill="#6B6770" letter-spacing="0.6">YOU UPLOAD</text>
+  <text x="258" y="70" font-size="11" font-weight="600" fill="#6B6770" letter-spacing="0.6">QTAP STORES</text>
+  <text x="560" y="70" font-size="11" font-weight="600" fill="#6B6770" letter-spacing="0.6">WHERE IT SHOWS UP</text>
+
+  <!-- Upload -->
+  <rect x="24" y="186" width="190" height="96" rx="12" fill="#ffffff" stroke="#8E4A63" stroke-width="2"/>
+  <text x="119" y="222" font-size="14" font-weight="600" fill="#423F4C" text-anchor="middle">One image file</text>
+  <text x="119" y="244" font-size="12" fill="#6B6770" text-anchor="middle">PNG or JPG</text>
+  <text x="119" y="263" font-size="12" fill="#6B6770" text-anchor="middle">Padding and all</text>
+
+  <!-- Connector from upload to the three results -->
+  <path d="M214 234 H240 V118 H256" fill="none" stroke="#8E4A63" stroke-width="2"/>
+  <path d="M214 234 H240 V234 H256" fill="none" stroke="#8E4A63" stroke-width="2"/>
+  <path d="M214 234 H240 V350 H256" fill="none" stroke="#8E4A63" stroke-width="2"/>
+  <circle cx="258" cy="118" r="3.5" fill="#8E4A63"/>
+  <circle cx="258" cy="234" r="3.5" fill="#8E4A63"/>
+  <circle cx="258" cy="350" r="3.5" fill="#8E4A63"/>
+
+  <!-- Result 1: trimmed -->
+  <rect x="268" y="82" width="232" height="72" rx="12" fill="#ffffff" stroke="#423F4C" stroke-width="1.5"/>
+  <text x="286" y="108" font-size="13" font-weight="600" fill="#423F4C">A trimmed copy</text>
+  <text x="286" y="128" font-size="11.5" fill="#6B6770">Padding cut away, up to 512px</text>
+  <text x="286" y="145" font-size="11.5" fill="#6B6770">This is the logo customers see</text>
+
+  <!-- Result 2: watermark -->
+  <rect x="268" y="198" width="232" height="72" rx="12" fill="#ffffff" stroke="#423F4C" stroke-width="1.5"/>
+  <text x="286" y="224" font-size="13" font-weight="600" fill="#423F4C">A watermark</text>
+  <text x="286" y="244" font-size="11.5" fill="#6B6770">A faint shape of your logo that</text>
+  <text x="286" y="261" font-size="11.5" fill="#6B6770">sits behind card artwork</text>
+
+  <!-- Result 3: transparency -->
+  <rect x="268" y="314" width="232" height="72" rx="12" fill="#ffffff" stroke="#423F4C" stroke-width="1.5"/>
+  <text x="286" y="340" font-size="13" font-weight="600" fill="#423F4C">A transparency note</text>
+  <text x="286" y="360" font-size="11.5" fill="#6B6770">Whether your file has a see</text>
+  <text x="286" y="377" font-size="11.5" fill="#6B6770">through background or not</text>
+
+  <!-- Connectors to destinations -->
+  <path d="M500 118 H528 V116 H552" fill="none" stroke="#423F4C" stroke-width="1.5"/>
+  <path d="M500 118 H528 V170 H552" fill="none" stroke="#423F4C" stroke-width="1.5"/>
+  <path d="M500 118 H528 V224 H552" fill="none" stroke="#423F4C" stroke-width="1.5"/>
+  <path d="M500 118 H528 V278 H552" fill="none" stroke="#423F4C" stroke-width="1.5"/>
+
+  <path d="M500 234 H516 V332 H552" fill="none" stroke="#8E4A63" stroke-width="1.5"/>
+  <path d="M500 234 H516 V386 H552" fill="none" stroke="#8E4A63" stroke-width="1.5"/>
+
+  <!-- Destinations fed by the trimmed copy -->
+  <rect x="552" y="98" width="304" height="36" rx="9" fill="#ffffff" stroke="#423F4C" stroke-width="1.2"/>
+  <text x="570" y="121" font-size="12.5" fill="#423F4C">The loyalty card in your customer's app</text>
+
+  <rect x="552" y="152" width="304" height="36" rx="9" fill="#ffffff" stroke="#423F4C" stroke-width="1.2"/>
+  <text x="570" y="175" font-size="12.5" fill="#423F4C">The Wallet pass header</text>
+
+  <rect x="552" y="206" width="304" height="36" rx="9" fill="#ffffff" stroke="#423F4C" stroke-width="1.2"/>
+  <text x="570" y="229" font-size="12.5" fill="#423F4C">Eight of the emails Qtap sends for you</text>
+
+  <rect x="552" y="260" width="304" height="36" rx="9" fill="#ffffff" stroke="#423F4C" stroke-width="1.2"/>
+  <text x="570" y="283" font-size="12.5" fill="#423F4C">The join page a camera scan opens</text>
+
+  <!-- Destinations fed by the watermark -->
+  <rect x="552" y="314" width="304" height="36" rx="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.2"/>
+  <text x="570" y="337" font-size="12.5" fill="#423F4C">Behind the card art, in the app</text>
+
+  <rect x="552" y="368" width="304" height="36" rx="9" fill="#F0D793" stroke="#8E4A63" stroke-width="1.2"/>
+  <text x="570" y="391" font-size="12.5" fill="#423F4C">Behind your public merchant page</text>
+
+  <!-- Footnote -->
+  <text x="24" y="440" font-size="11.5" fill="#6B6770">The transparency note tells the app how to tint the watermark, so it never has to work it out on a customer's phone.</text>
+</svg>

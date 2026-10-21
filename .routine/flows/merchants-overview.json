@@ -1,0 +1,70 @@
+{
+  "deployUrl": "https://dashboard.qtap.qa",
+  "section": "merchants/merchant-page",
+  "account": "points",
+  "viewport": { "width": 1440, "height": 900 },
+  "defaultWaitMs": 2000,
+  "steps": [
+    {
+      "name": "merchants-01-page",
+      "goto": "/merchants",
+      "actions": [
+        { "wait": 4000 },
+        { "click": "button:has-text('Decline')" }
+      ],
+      "waitFor": "div.rounded-xl",
+      "waitMs": 6000,
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Edit Merchant')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl", "number": 2, "color": "plum" },
+        { "type": "caption", "text": "The Merchants page: one card for your business profile, and the button that opens the editor." }
+      ]
+    },
+    {
+      "name": "merchants-02-card",
+      "waitMs": 1500,
+      "clipTo": "div.rounded-xl",
+      "clipPadding": 16,
+      "annotate": [
+        { "type": "box", "target": "div.rounded-xl img", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.rounded-xl div.flex.items-center.gap-3", "number": 2, "color": "plum" },
+        { "type": "box", "target": "p.line-clamp-2", "number": 3, "color": "plum" },
+        { "type": "box", "target": "span:has-text('Bakery')", "number": 4, "color": "plum" }
+      ]
+    },
+    {
+      "name": "merchants-03-counters",
+      "waitMs": 1200,
+      "clip": { "x": 290, "y": 246, "width": 540, "height": 94 },
+      "annotate": [
+        { "type": "box", "target": "div.flex.items-center.gap-4.pt-1 > div:nth-child(1)", "number": 1, "color": "plum" },
+        { "type": "box", "target": "div.flex.items-center.gap-4.pt-1 > div:nth-child(2)", "number": 2, "color": "plum" },
+        { "type": "box", "target": "div.flex.items-center.gap-4.pt-1 > div:nth-child(3)", "number": 3, "color": "plum" }
+      ]
+    },
+    {
+      "name": "merchants-04-actions",
+      "waitMs": 1200,
+      "clip": { "x": 1060, "y": 160, "width": 370, "height": 110 },
+      "annotate": [
+        { "type": "box", "target": "button:has-text('Preview')", "number": 1, "color": "plum" },
+        { "type": "box", "target": "button:text-is('Edit')", "number": 2, "color": "plum" },
+        { "type": "box", "target": "button:has-text('Delete')", "number": 3, "color": "red" }
+      ]
+    },
+    {
+      "name": "merchants-05-delete-dialog",
+      "actions": [
+        { "click": "button:has-text('Delete')" },
+        { "wait": 1200 }
+      ],
+      "waitFor": "[role=alertdialog]",
+      "waitMs": 1200,
+      "clipTo": "[role=alertdialog]",
+      "clipPadding": 10,
+      "annotate": [
+        { "type": "box", "target": "[role=alertdialog] button:has-text('Cancel')", "number": 1, "color": "plum" }
+      ]
+    }
+  ]
+}
