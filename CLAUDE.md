@@ -20,6 +20,86 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-22 — RUN STOPPED (5th in a row): the network policy allowlists the WRONG Supabase project
+
+**Articles:** none. **Branch:** `claude/busy-clarke-2duipf`
+**Status:** Stopped at ROUTINE §6 before touching any task row. Nothing shipped but this
+log entry and a dated note on the Notion parent page.
+
+### Read this before you re-diagnose anything
+`CLAUDE.md` on `main` previously ended at the 2026-10-20 entry, which makes it look like
+one run was lost. **Five consecutive runs have now stopped on the same blocker: 10-18,
+10-19, 10-20, 10-21, 10-22.** The 10-18/10-19/10-21 notes live only on the Notion parent
+page (`3411ae8f-748c-81f2-ba75-ed6e96c36275`), which is why this file understated it.
+**The last article shipped 2026-10-17.**
+
+### THE ROOT CAUSE, pinned (sharper than "Supabase is blocked")
+The environment's network allowlist names a **retired** Supabase project and not the live
+one. The 401-vs-403 pair is the whole story:
+
+| Host | Result 2026-10-22 |
+|---|---|
+| `amaucrgpsulnykvyrlzq.supabase.co` — the **live** project the dashboard calls | **000**, `gateway answered 403 to CONNECT (policy denial)` |
+| `qeriqybbomqqkdqaylhl.supabase.co` — **retired**, not on the Qtap account at all | **401**, reachable. So this is the host the policy actually permits. |
+
+Corroborated: `dashboard.qtap.qa/login` serves 200 and its own HTML references
+`amaucrgpsulnykvyrlzq.supabase.co` **twice and no other Supabase host**, so there is no
+ambiguity about which project the app calls. (The 2026-10-07 warning about scraping the
+first `*.supabase.co` out of the HTML does not apply here: there is exactly one.)
+
+### THE ONE FIX, and it is an environment change
+Replace `qeriqybbomqqkdqaylhl.supabase.co` with **`amaucrgpsulnykvyrlzq.supabase.co`** in
+the network policy of the Claude Code on the web environment this routine runs in, or
+better allow **`*.supabase.co`** so the next project migration does not cost another five
+days. Nothing in this repo can work around a gateway policy denial.
+
+### What it is NOT (all ruled out this run — do not re-derive)
+- **Not dead credentials.** Read-only `auth.users`: both demo owners confirmed, unbanned,
+  `last_sign_in_at = 2026-10-17`. They worked on the last green run and are untouched.
+- **Not a Supabase outage.** `list_projects` returns one project, `amaucrgpsulnykvyrlzq`,
+  status **ACTIVE_HEALTHY**.
+- **Not the dashboard.** `dashboard.qtap.qa/login` serves 200 and hydrates.
+- **Not the TLS bridge (§6a).** The bridge came up on 38443 and *was* used (the smoke-test
+  error changed from `ERR_TUNNEL_CONNECTION_FAILED` to `ERR_CONNECTION_CLOSED`), but its
+  own upstream CONNECT is refused identically. A bridge fixes handshake resets on hosts the
+  policy already allows; it cannot defeat a policy denial. Stop reaching for it on a 403.
+- **Not Playwright.** The sandbox ships chromium 1194 + 1248; a plain
+  `npm install sharp playwright` pulls 1.64.1, which wants 1248 and launches clean. **Do
+  not pin a version.**
+- **Not just Supabase, either.** `qtap.mintlify.app`, `supabase.co`, `test.supabase.co` and
+  `api.supabase.com` are all 000. The allowlist is a short literal list. Expect
+  `search_qtap_help_center` / live-docs cross-referencing (ROUTINE §7.4) to be unavailable
+  too until this is widened.
+
+### The tooling debt the earlier notes flagged is CLOSED — no code change is warranted
+`smoke-test.mjs` on `main` now defaults `SUPABASE_URL` to the live project and fails
+honestly and early:
+
+```
+SMOKE_FAIL: supabase_unreachable - net::ERR_TUNNEL_CONNECTION_FAILED
+  at https://amaucrgpsulnykvyrlzq.supabase.co/auth/v1/health
+```
+
+Re-verified today, bare and through the bridge. It no longer sails past step 2 to report a
+misleading `login_failed` at step [4/5], which is what sent three earlier runs chasing
+phantom credentials. **If a future run ever sees `login_failed` again, credentials are the
+LAST thing to suspect:** probe with `page.on('requestfailed')` and read
+`$HTTPS_PROXY/__agentproxy/status` first.
+
+### Board untouched, deliberately
+No task row was locked, edited or closed (§6). Gap discovery (§14) was skipped too: the
+board already carries ~80 open rows, mostly engineering-fix trackers nobody has closed, so
+more rows are noise, not help. Nothing about the backlog has changed since 2026-09-17 — the
+same verified duplicates, the same capture-blocked rows, and screenshot backfill is still
+exhausted.
+
+### One useful note for whoever unblocks this
+When the policy is fixed, the first run should expect the demo data to have moved on since
+2026-10-17. Re-check Golden Crust's and Brew & Bean's campaign/member counts before reusing
+any geometry or selector from the 10-16/10-17 entries.
+
+---
+
 ## 2026-10-20 — RUN STOPPED: SMOKE_FAIL, the sandbox can no longer reach Qtap's Supabase
 
 **Articles:** none. **Branch:** `claude/busy-clarke-l1uza5`
