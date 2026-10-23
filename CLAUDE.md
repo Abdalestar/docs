@@ -20,6 +20,81 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-23 — RUN STOPPED (6th in a row): the allowlist still names the retired Supabase project
+
+**Articles:** none. **Branch:** `claude/busy-clarke-p0t2dw`
+**Status:** Stopped at ROUTINE §6 before touching any task row. Nothing shipped but this
+log entry and a dated note on the Notion parent page. **No code change was warranted.**
+
+### Do not re-diagnose. The cause is pinned; read the 10-22 entry, not this one
+**The full root-cause write-up lives on `origin/claude/busy-clarke-2duipf`**
+(`git show origin/claude/busy-clarke-2duipf:CLAUDE.md`), which is **unmerged**, so this
+file on `main` understates the outage. **Six consecutive runs have now stopped on the same
+blocker: 10-18, 10-19, 10-20, 10-21, 10-22, 10-23.** The 10-18/10-19/10-21 notes exist only
+on the Notion parent page (`3411ae8f-748c-81f2-ba75-ed6e96c36275`). **The last article
+shipped 2026-10-17** — six days of output lost to one unapplied environment setting.
+
+### The root cause in one line
+The environment's network allowlist permits a **retired** Supabase project and denies the
+**live** one. The 401-vs-403 pair is the whole story, re-verified read-only this run:
+
+| Host | Result 2026-10-23 |
+|---|---|
+| `amaucrgpsulnykvyrlzq.supabase.co` — the **live** project the dashboard calls | **000**, `gateway answered 403 to CONNECT (policy denial)` |
+| `qeriqybbomqqkdqaylhl.supabase.co` — **retired**, not on the Qtap account at all | **401**, reachable. The host the policy actually permits. |
+
+`dashboard.qtap.qa/login` serves 200 and its HTML names `amaucrgpsulnykvyrlzq.supabase.co`
+twice and no other Supabase host, so there is no ambiguity about which project the app calls.
+`supabase.co`, `api.supabase.com` and `c.qtap.qa` are all 000 — the allowlist is a short
+literal list, so expect live-docs cross-referencing (§7.4) to stay unavailable too.
+
+### THE ONE FIX, and it is an environment change
+Replace `qeriqybbomqqkdqaylhl.supabase.co` with **`amaucrgpsulnykvyrlzq.supabase.co`** in the
+network policy of the Claude Code on the web environment this routine runs in, or better
+allow **`*.supabase.co`** so the next project migration does not cost another six days.
+Nothing in this repo can work around a gateway CONNECT denial.
+
+### Ruled out again, independently of the earlier notes (do not re-derive)
+- **Not dead credentials.** Read-only `auth.users`: `owner@goldencrust.qa` and
+  `owner@brewbean.qa` are both confirmed, unbanned, and both still read
+  `last_sign_in_at = 2026-10-17`, the last green run. Intact; they just cannot sign in.
+- **Not a Supabase outage.** `list_projects` returns exactly one project,
+  `amaucrgpsulnykvyrlzq` ("qtap", ap-northeast-2), **ACTIVE_HEALTHY**. The retired ref in the
+  allowlist is not on the account at all.
+- **Not the dashboard.** 200, hydrates, names only the live project.
+- **Not the TLS bridge (§6a).** The bridge came up on 38443 and *was* used (the smoke-test
+  error changed from `ERR_TUNNEL_CONNECTION_FAILED` to `ERR_CONNECTION_CLOSED`), but its own
+  upstream CONNECT is refused identically: `[bridge] upstream failed
+  amaucrgpsulnykvyrlzq.supabase.co proxy CONNECT 403`. A bridge fixes handshake resets on
+  hosts the policy already allows; it cannot defeat a policy denial. **Stop reaching for it
+  on a 403.**
+- **Not Playwright.** The sandbox ships chromium 1194 + 1248 and a plain
+  `npm install sharp playwright` pulls 1.64.x, which wants 1248 and launches clean. **Do not
+  pin a version.**
+
+### The tooling debt is CLOSED — no code change this run
+`smoke-test.mjs` on `main` already defaults `SUPABASE_URL` to the live project and fails
+honestly at step [2/5] rather than sailing on to a misleading `login_failed` at [4/5], which
+is what sent three earlier runs chasing phantom credentials. **If a future run ever sees
+`login_failed` again, credentials are the LAST thing to suspect:** probe with
+`page.on('requestfailed')` and read `$HTTPS_PROXY/__agentproxy/status` first.
+
+### Board untouched, deliberately
+No task row was locked, edited or closed (§6). Gap discovery (§14) skipped: the board already
+carries ~80 open rows, mostly engineering-fix trackers nobody has closed, so more rows are
+noise rather than help. Nothing about the backlog has changed since 2026-09-17.
+
+### What DID change since 10-22, for whoever unblocks this
+**`main` has moved for the first time in weeks.** The long-stale PRs **#163, #164 and #165**
+(wallet pass design studio, voucher design, editing a live offer) were merged 2026-10-21, so
+`main` now carries those three articles and `origin/main` is at `387914b`. Several run logs
+below still describe #163-#165 as open and unmerged; that is now out of date. Also, per the
+10-22 note: the first green run should expect the demo data to have moved on since
+2026-10-17, so **re-check Golden Crust's and Brew & Bean's member and campaign counts before
+reusing any geometry or selector from the 10-16/10-17 entries.**
+
+---
+
 ## 2026-10-20 — RUN STOPPED: SMOKE_FAIL, the sandbox can no longer reach Qtap's Supabase
 
 **Articles:** none. **Branch:** `claude/busy-clarke-l1uza5`
