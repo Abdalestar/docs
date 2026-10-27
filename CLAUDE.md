@@ -20,6 +20,78 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-27 — RUN STOPPED (10th in a row): the allowlist still names the retired Supabase project
+
+**Articles:** none. **Branch:** `claude/busy-clarke-n0w09e`
+**Status:** Stopped at ROUTINE §6 before touching any task row. Nothing shipped but this log
+entry and a dated note on the Notion parent page. **No code change was warranted** — the repo
+side was already fixed on 2026-10-20 and needs nothing.
+
+### Do not re-diagnose. The canonical record is the Notion parent page, not this file
+`3411ae8f-748c-81f2-ba75-ed6e96c36275` carries a dated note for every stopped run. **Ten
+consecutive runs have now stopped on the same blocker: 10-18 through 10-27** (there is no
+10-25 note; that run did not write). Most of those notes exist *only* there, because these
+branches go unmerged — so `CLAUDE.md` on `main` badly understates the outage. **The last
+article shipped 2026-10-17.** Ten days of output lost to one unapplied environment setting.
+
+### The root cause in one line
+The environment's network allowlist permits a **retired** Supabase project and denies the
+**live** one. Re-verified read-only this run, and the 403-vs-200 CONNECT pair is the whole story:
+
+| Host | Result 2026-10-27 |
+|---|---|
+| `amaucrgpsulnykvyrlzq.supabase.co` — the **live** project the dashboard calls | **000**, `gateway answered 403 to CONNECT (policy denial)` |
+| `qeriqybbomqqkdqaylhl.supabase.co` — **retired**, not on the Qtap account at all | **CONNECT 200**, real `CN=supabase.co` cert. The host the policy actually permits. |
+
+`dashboard.qtap.qa/login` serves 200 and its HTML names `amaucrgpsulnykvyrlzq.supabase.co`
+twice and no other Supabase host. The 2026-10-17/18 production cutover repointed the dashboard
+at that project and the allowlist was never updated.
+
+### THE ONE FIX, and it is an environment change
+Add **`amaucrgpsulnykvyrlzq.supabase.co`** (better: **`*.supabase.co`**) to the network policy
+of the Claude Code on the web environment this routine runs in. Nothing in this repo can work
+around a gateway CONNECT denial, and both ROUTINE §6a fallbacks were tried and failed: pointing
+Chromium at `$HTTPS_PROXY` gives the same `ERR_TUNNEL_CONNECTION_FAILED`, and `tls-bridge.mjs`
+came up on 38443 but logged `upstream failed … proxy CONNECT 403`. **A bridge cannot fix a
+policy denial;** it only fixes handshake resets on hosts the policy already allows.
+
+### NEW this run — that one entry is SUFFICIENT, not partial
+No earlier note checked this, and it matters, because a partial fix costs another day. I
+enumerated every external origin the live login page references and probed the app's secondary
+hosts:
+
+- The login page needs exactly two: `dashboard.qtap.qa` (**allowed**) and
+  `amaucrgpsulnykvyrlzq.supabase.co` (**denied**). Supabase Storage, which serves merchant
+  logos and cover images, sits on that same denied host, so one entry covers it.
+- Already allowed, needing nothing: `maps.googleapis.com` (302), `fonts.googleapis.com` (404,
+  i.e. reachable).
+- Still denied but **not** blockers: `c.qtap.qa` and `qtap.qa`. Worth adding `c.qtap.qa` while
+  you are in there, but the 2026-09-04 and 2026-09-21 runs established that
+  `dashboard.qtap.qa/t/<token>` and `/scan/<code>` serve the same pages, so the customer-side
+  captures already have a working substitute.
+
+**So the single Supabase entry returns this routine to full output.** Also: the schedule itself
+is alive (this run fired at 06:07:48 UTC against its 06:05 slot), so the missing 10-25 note was
+a one-off miss, not the dead trigger the 10-26 note worried about.
+
+### Ruled out across ten runs — do not spend a run re-deriving any of it
+Dead credentials (`auth.users` read-only: both demo owners confirmed, both still
+`last_sign_in_at = 2026-10-17`), a Supabase outage (`list_projects` returns one project,
+`amaucrgpsulnykvyrlzq`, **ACTIVE_HEALTHY**), the dashboard being down (200), CORS, the TLS
+bridge, and a Playwright/Chromium mismatch (plain install wants chromium 1248, the image ships
+1248, launches clean — **do not pin**).
+
+### For the first green run
+- The board has not changed since 2026-09-17: mostly engineering-fix trackers filed by earlier
+  runs, the same four P1 duplicates, the same capture-blocked rows. Backfill is exhausted.
+- `origin/main` is at the **PR #165** merge, well behind the articles written since. Separate
+  merge-queue problem for a human.
+- **Expect the demo data to have moved on.** Re-check Golden Crust's and Brew & Bean's member,
+  campaign and voucher counts before reusing any geometry or selector from the 10-16/10-17
+  entries.
+
+---
+
 ## 2026-10-20 — RUN STOPPED: SMOKE_FAIL, the sandbox can no longer reach Qtap's Supabase
 
 **Articles:** none. **Branch:** `claude/busy-clarke-l1uza5`
