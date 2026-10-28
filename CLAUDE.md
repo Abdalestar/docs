@@ -20,6 +20,68 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-10-28 — RUN STOPPED: SMOKE_FAIL again. The allowlist names the WRONG Supabase project
+
+**Articles:** none. **Branch:** `claude/busy-clarke-nkeve5`
+**Status:** Stopped at ROUTINE §6 before touching any task row. No article, no backfill,
+no repo change beyond this entry. Eighth consecutive day blocked.
+
+### The 2026-10-20 ask was right but imprecise. Here is the exact fix.
+That entry asked for `amaucrgpsulnykvyrlzq.supabase.co` (better `*.supabase.co`) to be
+**added** to the environment's network policy. Probing the gateway host by host this run
+shows the allowlist is **not missing a Supabase entry — it already has exactly one, and it
+is the phantom ref**:
+
+| Host | CONNECT through `$HTTPS_PROXY` |
+|---|---|
+| `qeriqybbomqqkdqaylhl.supabase.co` (stale, not on the Qtap account) | **200 Connection Established** |
+| `amaucrgpsulnykvyrlzq.supabase.co` (the real, only Qtap project) | **403 Forbidden** |
+| `eqjqbxdgpwvhpyyjnbqo.supabase.co` | 403 Forbidden |
+| `abcdefghijklmnopqrst.supabase.co` (control) | 403 Forbidden |
+| `supabase.co`, `api.supabase.com`, `qtap.qa`, `c.qtap.qa` | 403 Forbidden |
+| `dashboard.qtap.qa` | **200** |
+
+So the policy is **per-host, not wildcard**, and its one Supabase entry is the dead ref that
+`ROUTINE.md` §1 printed until 2026-10-20 and that `qtap`'s `.env.example` still names.
+Whoever wrote the network policy copied it out of the docs before that correction landed.
+That also explains the shape of the whole outage: the allowlist has never pointed at the
+real project, and the only reason runs worked before 2026-10-17 is unrelated to it.
+
+**THE FIX, and it is one string in the environment, not in any repo:** in the Claude Code on
+the web environment's network policy, replace `qeriqybbomqqkdqaylhl.supabase.co` with
+`amaucrgpsulnykvyrlzq.supabase.co`, or simply allow `*.supabase.co`.
+
+### Ruled out independently this run (do not re-derive)
+- **Not the TLS bridge (§6a).** The bridge terminates the browser's TLS on loopback and
+  re-opens the **same** upstream CONNECT through `HTTPS_PROXY` — which is the hop returning
+  403. A bridge fixes handshake resets on hosts the policy already allows. It cannot fix a
+  policy denial. Verified by `curl` reproducing the 403 directly.
+- **Not the dashboard.** `dashboard.qtap.qa` serves 200.
+- **Not Playwright.** `/opt/pw-browsers` ships chromium **1248** and **1243**; a plain
+  `npm install sharp playwright` pulls the release wanting 1248. No pinning, no
+  `npx playwright install`. The 1.62/1234 advice in older entries stays obsolete.
+- **Not credentials.** All three account env vars are set. They were never reached: the run
+  dies at step [2/5], before login.
+
+### The 2026-10-20 tooling fix is working
+`smoke-test.mjs` now fails honestly and early:
+
+```
+SMOKE_FAIL: supabase_unreachable - net::ERR_TUNNEL_CONNECTION_FAILED
+  at https://amaucrgpsulnykvyrlzq.supabase.co/auth/v1/health
+```
+
+instead of the misleading `login_failed - all credentials rejected` that sent three earlier
+runs chasing dead credentials. Leave that constant alone.
+
+### Board untouched, deliberately
+No Notion row was locked, edited or closed (§6). A dated note went on the parent page
+instead. Nothing about the backlog has changed since 2026-10-17: still mostly
+engineering-fix trackers, the same four P1 duplicates, the same capture-blocked rows, and
+backfill still exhausted.
+
+---
+
 ## 2026-10-20 — RUN STOPPED: SMOKE_FAIL, the sandbox can no longer reach Qtap's Supabase
 
 **Articles:** none. **Branch:** `claude/busy-clarke-l1uza5`
