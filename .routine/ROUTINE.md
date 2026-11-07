@@ -144,8 +144,23 @@ npm install -g playwright 2>&1 | tail -3
 npx playwright install chromium 2>&1 | tail -5
 npm init -y >/dev/null 2>&1
 npm install sharp playwright 2>&1 | tail -3
+
+# Check the browser build Playwright wants against the builds this image ships.
+node -e "console.log(require('./node_modules/playwright-core/browsers.json').browsers.find(b=>b.name==='chromium').revision)"
+ls /opt/pw-browsers/
+
 node .routine/smoke-test.mjs
 ```
+
+**Pin Playwright to the chromium build this image already has.** Those two commands
+must agree. When they do not, pin the matching release and re-run, for example
+`npm install playwright@1.64.1` for revision 1248. Do not pin a version copied from
+a run log: the image and the npm `latest` tag both move, so check, then pin.
+Skipping this costs a run twice over, because the mismatch fails at `[1/5]` with
+`playwright_launch - Executable doesn't exist` and that **masks whatever the real
+blocker is** (observed 2026-11-07: npm `latest` wanted 1254, the image shipped
+1243 and 1248). Known map: 1.56→1194, 1.59→1217, 1.60→1223, 1.61→1228, 1.62→1234,
+1.63→1243, 1.64→1248.
 
 - `=== SMOKE_OK ===` → screenshots work; proceed.
 - `SMOKE_FAIL: …` → **stop the run.** Screenshots are mandatory (founder decision,
