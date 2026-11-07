@@ -20,6 +20,76 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-11-07 — RUN STOPPED: SMOKE_FAIL (day 18). Only new fact: the Playwright pin drifted
+
+**Articles:** none. **Branch:** `claude/busy-clarke-d56n14`
+**Status:** Stopped at ROUTINE §6 before touching any task row. No article, no backfill.
+Shipped one surgical tooling fix (below). The last article shipped **2026-10-17**.
+
+### Do not re-derive the blocker. It is unchanged since 2026-10-20.
+`amaucrgpsulnykvyrlzq.supabase.co` is denied by the environment's network policy:
+`$HTTPS_PROXY/__agentproxy/status` lists it under `recentRelayFailures` as
+`connect_rejected - gateway answered 403 to CONNECT`. The whole 2026-10-20 entry below
+still holds, and the Notion parent page carries dated notes for 10-20, 10-28, 10-29,
+11-05 and this run. The fix is an environment change: add **`*.supabase.co`** to the
+network policy. Nothing in either repo can touch it.
+
+The corrected smoke test is doing its job. It now fails honestly and early:
+
+```
+SMOKE_FAIL: supabase_unreachable - net::ERR_TUNNEL_CONNECTION_FAILED
+  at https://amaucrgpsulnykvyrlzq.supabase.co/auth/v1/health
+```
+
+### THE ONE NEW FINDING — pin Playwright before you trust a SMOKE_FAIL
+The 2026-11-05 note ruled out Playwright drift. **That is now out of date.** A bare
+`npm install sharp playwright` pulls a build wanting chromium **1254**; this image ships
+**1243 and 1248** only. Left alone the run dies at `[1/5]` with
+`playwright_launch - Executable doesn't exist`, which **masks the real blocker** and
+reads like a broken image rather than a network policy. `npm install playwright@1.64.1`
+(revision 1248) fixes it. I pinned it *before* running the smoke test so the failure
+above is the genuine one.
+
+Shipped as the run's one fix: ROUTINE §6 now prints the wanted revision next to
+`ls /opt/pw-browsers/` and says to check-then-pin rather than copy a version out of a
+log. Same class of bug as the stale project ref the 2026-10-20 run fixed: a tooling
+mismatch that disguises the real failure.
+
+### How the host was confirmed, in case a future run doubts it
+Not from the preconnect tag (the 2026-10-07 entry warns that lies, and the 2026-10-17
+entry guessed `eqjqbxdgpwvhpyyjnbqo` from `.env.example` and was wrong). I pulled all 23
+JS chunks off `dashboard.qtap.qa/login` and grepped them. Exactly one carries a Supabase
+URL, chunk `344cbc957c6643b0.js`, and it reads
+`createClient("https://amaucrgpsulnykvyrlzq.supabase.co", "<anon key, ref:amauc…>")`.
+So the blocked host is the one the login form posts to. ROUTINE §1 and
+`smoke-test.mjs` both already name it correctly.
+
+A `requestfailed` probe narrows it to a single request: `/login` serves 200, the form
+renders (1 email + 1 password input), credentials submit, the page stays on `/login`,
+and the only meaningful failure is
+`net::ERR_CONNECTION_CLOSED https://amaucrgpsulnykvyrlzq.supabase.co/auth/v1/token?grant_type=password`.
+The other two `requestfailed` entries are noise: a CSP block on the OneSignal SDK and an
+aborted `/signup?_rsc=` prefetch. **So credentials are still the last thing to suspect.**
+
+### §6a re-checked, still cannot help
+Built the scratch cert and ran `tls-bridge.mjs` on 38443. With `PLAYWRIGHT_PROXY` the
+error changes from `ERR_TUNNEL_CONNECTION_FAILED` to `ERR_CONNECTION_CLOSED`, which
+proves the bridge is alive and being used (its own liveness check via
+`curl -x http://127.0.0.1:38443` prints nothing, as the 2026-09-10 entry noted, so do
+not gate a retry on it). It still fails, because it re-opens upstream through the same
+proxy that denies CONNECT. A bridge fixes handshake resets on allowed hosts, never a
+policy denial.
+
+### Board untouched, deliberately
+No Notion row was locked, edited or closed (§6: exit without touching any task row). A
+dated note went on the parent page instead. Nothing about the backlog has changed since
+2026-10-17: still mostly engineering-fix trackers filed by earlier runs, the same four
+P1 duplicates, the same capture-blocked rows, and backfill exhausted. Worth pairing the
+network fix with a human pass over the board, or the first unblocked run will have
+little to pick up.
+
+---
+
 ## 2026-10-20 — RUN STOPPED: SMOKE_FAIL, the sandbox can no longer reach Qtap's Supabase
 
 **Articles:** none. **Branch:** `claude/busy-clarke-l1uza5`
