@@ -17,6 +17,9 @@
 // Env overrides: DEPLOY_URL, SUPABASE_URL, QTAP_EMAIL, QTAP_PASSWORD
 
 import { chromium } from 'playwright';
+import { existsSync, readdirSync, readFileSync } from 'fs';
+import { createRequire } from 'module';
+import { dirname, join } from 'path';
 
 const DEPLOY_URL   = process.env.DEPLOY_URL   || 'https://dashboard.qtap.qa';
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://amaucrgpsulnykvyrlzq.supabase.co';
@@ -36,6 +39,43 @@ const OUT = new URL('./smoke-test.png', import.meta.url).pathname;
 
 console.log('=== SMOKE TEST START ===');
 
+// [0/5] Browser-build guard. This sandbox ships a FIXED set of chromium builds in
+// /opt/pw-browsers and cannot download new ones, while a bare `npm install
+// playwright` tracks whatever the newest release wants. When those disagree the
+// launch dies with Playwright's own "run npx playwright install" message, which is
+// the WRONG remedy here: the fix is to pin playwright to the version whose
+// chromium revision is already on disk. Six separate run logs have burned a cycle
+// rediscovering that, so say it out loud before launching.
+const PW_BROWSERS_DIR = process.env.PLAYWRIGHT_BROWSERS_PATH || '/opt/pw-browsers';
+try {
+  // playwright-core does not list browsers.json in its package `exports`, so a
+  // bare import of it throws. Resolve the package and read the file off disk.
+  const req = createRequire(import.meta.url);
+  const manifestPath = join(dirname(req.resolve('playwright-core')), 'browsers.json');
+  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+  const wanted = manifest.browsers.find((b) => b.name === 'chromium')?.revision;
+  if (wanted && existsSync(PW_BROWSERS_DIR)) {
+    const onDisk = readdirSync(PW_BROWSERS_DIR);
+    const have = onDisk.some((d) => d.endsWith('-' + wanted));
+    if (!have) {
+      const revs = [...new Set(
+        onDisk.map((d) => (d.match(/^chromium(?:_headless_shell)?-(\d+)$/) || [])[1]).filter(Boolean),
+      )].sort();
+      console.log('SMOKE_FAIL: playwright_browser_mismatch - this playwright wants chromium ' + wanted +
+                  ', but ' + PW_BROWSERS_DIR + ' only has ' + (revs.join(', ') || '(none)') + '.');
+      console.log('   FIX: pin playwright to the release matching a build already on disk, e.g.');
+      console.log('        npm install playwright@1.64.1 playwright-core@1.64.1   # chromium 1248');
+      console.log('   Do NOT run `npx playwright install` here; the image ships fixed builds.');
+      console.log('   Check what a pin resolves to with:');
+      console.log("        node -e \"console.log(require('./node_modules/playwright-core/browsers.json').browsers.find(b=>b.name==='chromium').revision)\"");
+      process.exit(1);
+    }
+  }
+} catch {
+  // Guard is advisory only. If the manifest cannot be read, fall through and let
+  // the real launch below report whatever actually goes wrong.
+}
+
 let browser;
 try {
   // PLAYWRIGHT_PROXY points the browser at an explicit proxy when the sandbox
@@ -54,18 +94,35 @@ const context = await browser.newContext({
 });
 const page = await context.newPage();
 
+// A blocked Supabase host is the one failure this routine cannot fix from inside
+// the repo, and it is indistinguishable from dead credentials once the login form
+// submits, so name the remedy at the point of failure (first hit 2026-10-20).
+function explainSupabaseBlock() {
+  console.log('   The merchant dashboard authenticates from the BROWSER straight against');
+  console.log('   ' + SUPABASE_URL + ', so a blocked host means no login and no screenshot.');
+  console.log('   FIX (environment, not this repo): add *.supabase.co to the network policy');
+  console.log('   of the Claude Code on the web environment this routine runs in.');
+  console.log('   Confirm the cause before suspecting the accounts:');
+  console.log('        curl -sS "$HTTPS_PROXY/__agentproxy/status"   # look at recentRelayFailures');
+  console.log('   A `connect_rejected ... 403 to CONNECT` entry there is a policy denial, and');
+  console.log('   .routine/tls-bridge.mjs CANNOT help with one (it only fixes handshake resets');
+  console.log('   on hosts the policy already allows).');
+}
+
 // [2/5] Supabase auth reachable. A response at all (even 401) means the host is
 // up. Only DNS/TLS/network-policy failures throw here.
 try {
   const resp = await page.goto(SUPABASE_URL + '/auth/v1/health', { waitUntil: 'load', timeout: 15000 });
   if (!resp) {
     console.log('SMOKE_FAIL: supabase_unreachable - no response');
+    explainSupabaseBlock();
     await browser.close();
     process.exit(1);
   }
   console.log('[2/5] Supabase reachable (status', resp.status() + ')');
 } catch (e) {
   console.log('SMOKE_FAIL: supabase_unreachable -', e.message);
+  explainSupabaseBlock();
   await browser.close();
   process.exit(1);
 }

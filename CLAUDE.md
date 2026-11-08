@@ -20,6 +20,110 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-11-08 — RUN STOPPED: SMOKE_FAIL (day 19). The allowlist holds the retired project ref
+
+**Articles:** none. **Branch:** `claude/busy-clarke-trpkwh`
+**Status:** Stopped at ROUTINE §6 before touching any task row. No article, no backfill.
+Shipped one surgical tooling fix (below). The last article shipped **2026-10-17**.
+
+### Read the Notion parent page, not this file, for the live diagnosis
+`origin/main`'s CLAUDE.md jumps from 2026-10-20 straight to here, which makes it look
+like one stopped run. It is not: the **parent board page carries dated notes for
+10-18 through 10-29, 11-05 and 11-07**, and the 2026-10-29 and 2026-11-07 notes are the
+two worth reading. Everything below either confirms them or corrects this file.
+
+### The failure, reproduced
+```
+[1/5] Playwright launched
+SMOKE_FAIL: supabase_unreachable - net::ERR_TUNNEL_CONNECTION_FAILED
+  at https://amaucrgpsulnykvyrlzq.supabase.co/auth/v1/health
+```
+`$HTTPS_PROXY/__agentproxy/status` lists it under `recentRelayFailures` as
+`connect_rejected - gateway answered 403 to CONNECT (policy denial or upstream failure)`.
+
+### THE ALLOWLIST IS PER-HOST AND NAMES THE WRONG HOST, so the 10-29 note was right
+I nearly recorded "the whole vendor domain is blocked" today, because `supabase.co` and
+`supabase.com` both answer `000`. **That framing is wrong and would have sent the fix in
+the wrong direction.** Probing per host is what settles it:
+
+| Host | Today |
+|---|---|
+| `qeriqybbomqqkdqaylhl.supabase.co` (retired ref, not on the Qtap account) | **401** (allowed) |
+| `amaucrgpsulnykvyrlzq.supabase.co` (the live project login posts to) | **000**, 403 to CONNECT |
+| `eqjqbxdgpwvhpyyjnbqo.supabase.co` (the ref `.env.example` names) | 000 |
+| `dashboard.qtap.qa/login` | 200, renders normally |
+| `api.github.com/repos/Abdalestar/docs` | 200 |
+
+So the policy is not a domain-wide block. It is a **per-host allowlist holding exactly one
+Supabase entry, and that entry is the retired test project.** A reachable retired ref
+beside a blocked live one is the whole bug, and it is why this reads as a Qtap outage and
+is not one. This reproduces the 2026-10-29 note byte for byte, 10 days later.
+
+### THE FIX, as the exact edit (unchanged for 19 days)
+In the network policy of the Claude Code on the web environment this routine runs in,
+**replace** `qeriqybbomqqkdqaylhl.supabase.co` with `amaucrgpsulnykvyrlzq.supabase.co`,
+or simply allow **`*.supabase.co`**. Nothing in either repo can change this. The dashboard
+authenticates from the **browser** against that host, and screenshots are mandatory
+(founder decision, 2026-08-08), so every run stops here until the swap lands.
+
+### Confirmed from the other side of the network
+The **Supabase MCP still works**, because it routes through the MCP proxy rather than the
+sandbox's outbound path. Worth knowing: a blocked run can still do read-only DB
+verification with no browser. Used it to re-kill two doubts for free:
+
+- **Not an outage.** `list_projects` returns one project, `amaucrgpsulnykvyrlzq` ("qtap",
+  ap-northeast-2), **ACTIVE_HEALTHY**.
+- **Not the credentials, and here is the measurement that matters.** Read-only
+  `auth.users`: `owner@goldencrust.qa` and `owner@brewbean.qa` are both confirmed and both
+  still carry **`last_sign_in_at = 2026-10-17`**, identical to the 2026-10-20 reading.
+  **Nothing has signed in for 22 days.**
+
+### Not re-derived, deliberately
+Eleven-plus runs have ruled out dead credentials, an outage, the dashboard, CORS, and the
+TLS bridge. I skipped the bridge: a 403 on CONNECT is a policy denial, and `tls-bridge.mjs`
+only fixes handshake resets on hosts the policy already allows. The 2026-11-07 note records
+that running it again merely changes the error to `ERR_CONNECTION_CLOSED`, because it
+re-opens upstream through the same proxy that denies CONNECT.
+
+### The Playwright pin: yesterday's finding, now an executable guard
+Credit where it is due: the **2026-11-07 note found this**, and **open PR #233** adds the
+check to ROUTINE §6 as prose. I hit it independently today (a bare
+`npm install sharp playwright` wants chromium **1254**; `/opt/pw-browsers` ships **1243**
+and **1248**; `npm install playwright@1.64.1 playwright-core@1.64.1` fixes it) and the
+masking problem is real: left alone it dies at `[1/5]` with
+`playwright_launch - Executable doesn't exist`, which reads like a broken image and hides
+the actual blocker.
+
+A doc note only helps a run that remembers to read it, so this run made it a **guard in
+`.routine/smoke-test.mjs`** instead. It complements PR #233 rather than duplicating it
+(different files, no conflict):
+
+1. A pre-launch check compares the revision `playwright-core/browsers.json` wants against
+   what is really in `PLAYWRIGHT_BROWSERS_PATH` (default `/opt/pw-browsers`). On a mismatch
+   it exits with its own `SMOKE_FAIL: playwright_browser_mismatch`, prints the revisions it
+   *does* have, and names the pin. It is wrapped in a catch and advisory only, so if the
+   manifest ever moves, the real launch still reports whatever genuinely breaks.
+   **Gotcha:** `playwright-core` does not list `browsers.json` in its package `exports`, so
+   a bare `import 'playwright-core/browsers.json'` throws `ERR_PACKAGE_PATH_NOT_EXPORTED`.
+   Resolve the package and read the file off disk. The `require()` one-liner in the logs
+   works only because it is a *relative path*, which bypasses `exports`.
+2. `supabase_unreachable` now prints the remedy at the point of failure: the allowlist edit,
+   the `__agentproxy/status` command that separates a policy denial from a handshake reset,
+   and the fact that the TLS bridge cannot help with the former.
+
+Both paths were tested before committing: the guard exits 1 against a scratch browsers dir
+holding only 1243, and does **not** trip against the real `/opt/pw-browsers`.
+
+### Board untouched, deliberately
+No Notion row was locked, edited or closed (§6). A dated note went on the parent page.
+Board state is unchanged since 2026-10-17: mostly engineering-fix trackers filed by earlier
+runs, the same four P1 duplicates, the same capture-blocked rows, and screenshot backfill
+exhausted. **Pair the network fix with a human pass over the board**, or the first
+unblocked run will have little to pick up. Open PRs #231, #232 and #233 are all blocked-run
+logs and tooling notes awaiting a merge.
+
+---
+
 ## 2026-10-20 — RUN STOPPED: SMOKE_FAIL, the sandbox can no longer reach Qtap's Supabase
 
 **Articles:** none. **Branch:** `claude/busy-clarke-l1uza5`
