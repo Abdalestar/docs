@@ -54,20 +54,46 @@ const context = await browser.newContext({
 });
 const page = await context.newPage();
 
+// A sandbox network-policy denial otherwise reads as a generic tunnel error. The
+// agent proxy records the real reason: a 403 to CONNECT means the host is not on
+// this environment's allowlist, so no retry and no TLS bridge can help.
+async function proxyDenialFor(host) {
+  const proxy = process.env.HTTPS_PROXY || process.env.https_proxy;
+  if (!proxy) return null;
+  try {
+    const r = await fetch(new URL('/__agentproxy/status', proxy));
+    const s = await r.json();
+    const hit = (s.recentRelayFailures || []).find(
+      (f) => String(f.host || '').startsWith(host) && f.kind === 'connect_rejected',
+    );
+    return hit ? hit.detail || 'connect_rejected' : null;
+  } catch {
+    return null;
+  }
+}
+
+async function failSupabase(reason) {
+  const host = new URL(SUPABASE_URL).host;
+  const denial = await proxyDenialFor(host);
+  if (denial) {
+    console.log(`SMOKE_FAIL: supabase_blocked_by_network_policy - ${host}: ${denial}`);
+    console.log(`  FIX (environment, not this repo): add ${host} to the network`);
+    console.log('  allowlist of the Claude Code on the web environment this routine runs in.');
+  } else {
+    console.log('SMOKE_FAIL: supabase_unreachable -', reason);
+  }
+  await browser.close();
+  process.exit(1);
+}
+
 // [2/5] Supabase auth reachable. A response at all (even 401) means the host is
 // up. Only DNS/TLS/network-policy failures throw here.
 try {
   const resp = await page.goto(SUPABASE_URL + '/auth/v1/health', { waitUntil: 'load', timeout: 15000 });
-  if (!resp) {
-    console.log('SMOKE_FAIL: supabase_unreachable - no response');
-    await browser.close();
-    process.exit(1);
-  }
+  if (!resp) await failSupabase('no response');
   console.log('[2/5] Supabase reachable (status', resp.status() + ')');
 } catch (e) {
-  console.log('SMOKE_FAIL: supabase_unreachable -', e.message);
-  await browser.close();
-  process.exit(1);
+  await failSupabase(e.message);
 }
 
 // [3/5] Dashboard host reachable.

@@ -20,6 +20,107 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-11-14 — RUN STOPPED: SMOKE_FAIL again, and the allowlist holds the WRONG Supabase ref
+
+**Articles:** none. **Branch:** `claude/busy-clarke-psyaby`
+**Status:** Stopped at ROUTINE §6 before touching any task row. No article, no backfill.
+Shipped two tooling fixes (below) so the next run gets the answer in one line instead
+of re-deriving it.
+
+### THE ROOT CAUSE, one level deeper than the 2026-10-20 entry
+That run concluded "the environment's network allowlist no longer covers the Supabase
+host". True, but the useful half was missing: **the allowlist covers a stale project ref
+instead.** Proved by probing hosts through the agent proxy:
+
+| host | result |
+|---|---|
+| `dashboard.qtap.qa` | 200, app and login form render |
+| `amaucrgpsulnykvyrlzq.supabase.co` (the real project) | **403 to CONNECT**, policy denial |
+| `qeriqybbomqqkdqaylhl.supabase.co` (stale ref) | **CONNECT tunnel established**, real Supabase cert (CN=supabase.co, Google Trust Services), `/auth/v1/health` answers 401 "No API key found in request" |
+| `foo123zzz.supabase.co`, `nonexistent-ref-test.supabase.co`, `api.supabase.co`, bare `supabase.co`, `supabase.com`, `qtap.qa` | all 403 |
+
+Every other `*.supabase.co` is denied, so **the entry is host-specific, not a wildcard**,
+and the one host it names is `qeriqybbomqqkdqaylhl.supabase.co`: the ref ROUTINE.md §1
+printed until the 2026-10-20 run corrected it, and which still appears once in the qtap
+repo. Somebody configured the allowlist from the stale documentation. The real project
+appears nowhere in it.
+
+**The live dashboard settles which host is needed:** `curl dashboard.qtap.qa/login` and
+grep for supabase hosts returns exactly one, `https://amaucrgpsulnykvyrlzq.supabase.co`.
+That is the host the browser must reach to log in, and it is the host being denied.
+
+### THE ONE FIX, and it is an environment change
+In the network policy of the Claude Code on the web environment this routine runs in,
+**add `amaucrgpsulnykvyrlzq.supabase.co`** (or `*.supabase.co`). The stale
+`qeriqybbomqqkdqaylhl.supabase.co` entry can go. Nothing in this repo can fix it, and
+until it changes **every run stops here**, because screenshots are mandatory (founder
+decision, 2026-08-08) and no screenshot can be captured without a login.
+
+### What it is NOT (ruled out again this run, do not re-derive)
+- **Not dead credentials.** Read-only `auth.users`: `owner@goldencrust.qa` and
+  `owner@brewbean.qa` are both confirmed, not banned, and both still carry
+  `last_sign_in_at = 2026-10-17`, the date of the last run that got in. They are intact
+  and simply unused since the block began.
+- **Not a Supabase outage.** `list_projects` returns exactly one project,
+  `amaucrgpsulnykvyrlzq` ("qtap", ap-northeast-2), status **ACTIVE_HEALTHY**.
+- **Not the dashboard.** `dashboard.qtap.qa/login` serves 200 and the form renders.
+- **Not the TLS bridge (§6a).** The bridge came up on 38443 and was used (the error moves
+  from `ERR_TUNNEL_CONNECTION_FAILED` to `ERR_CONNECTION_CLOSED`), but its own upstream
+  CONNECT hits the same 403. A bridge cannot defeat a policy denial; it only fixes
+  handshake resets on hosts the policy already allows.
+- **Not Playwright.** See below: the launch problem is real but separate, and solved.
+
+### Two tooling fixes shipped
+1. **`smoke-test.mjs` now names the policy denial.** On Supabase unreachability it reads
+   `$HTTPS_PROXY/__agentproxy/status`, matches the host in `recentRelayFailures`, and
+   prints the diagnosis plus the fix rather than a generic tunnel error:
+   ```
+   SMOKE_FAIL: supabase_blocked_by_network_policy - amaucrgpsulnykvyrlzq.supabase.co:
+     gateway answered 403 to CONNECT (policy denial or other refusal)
+     FIX (environment, not this repo): add amaucrgpsulnykvyrlzq.supabase.co to the
+     network allowlist of the Claude Code on the web environment this routine runs in.
+   ```
+   The helper is wrapped so it can never itself break the smoke test, and the
+   unblocked path is untouched.
+2. **ROUTINE §6 install block corrected.** A plain `npm install sharp playwright` now
+   pulls a version wanting chromium **1255**, and the image preinstalls only **1243** and
+   **1254**, so the first failure a run sees is
+   `playwright_launch - Executable doesn't exist at .../chromium_headless_shell-1255`.
+   **I first wrote that `npx playwright install` is unavailable here. That is wrong and I
+   tested it:** it works, and fetched 1255 (~126 MB) in under a minute. So §6 now runs it,
+   with pinning as the no-download alternative. Build map, extended:
+   1.62->1234, 1.63->1243, 1.64->1248, **1.65->1254, 1.66+->1255**.
+   With the browser present Playwright launches cleanly and the policy denial is the only
+   thing left standing.
+
+### Board untouched, deliberately
+No Notion row was locked, edited or closed (§6: exit without touching any task row). A
+dated note went on the parent page instead. Nothing about the backlog has changed since
+2026-09-17: still mostly engineering-fix trackers, the same four P1 duplicates, the same
+capture-blocked rows, and backfill still exhausted.
+
+### THE MERGE BACKLOG WAS CLEARED ON 2026-10-21 (read this before triaging)
+Every entry below this one complains about 20-plus open PRs and tells you to diff every
+open branch before claiming a topic. **A human went through that queue on 2026-10-21.**
+`origin/main` now carries **141 MDX files** and 169 merged PRs, including #164, #165,
+#186, **#187**, #190, #213, #214, #220 and #227 through #230. Note the tip commit's
+subject reads "Merge pull request #165", an August PR merged late, so do not read the
+tip as main being stuck in August: check `git log origin/main` for the real picture.
+
+Still unmerged: **#137, #145, #148** (the triplicate "Editing a Stamp Card" PRs that
+should just be closed), **#154, #158** (human-authored Marketing) and **#163**
+(pass-design-studio, whose article a later run rewrote anyway).
+
+Two consequences for the next run:
+- **`merchants/campaigns/analytics.mdx` is no longer a stub.** #187 finally merged, so
+  the real 57-line article is live. The Notion row that ten runs kept re-triaging as
+  "blocked, claimed by #187" can be closed as Done.
+- **Backfill is down to three non-workable files**, not four: `customer-app/settings-profile`
+  (mobile, not Playwright-capturable), `index.mdx` (landing page) and `support/faq.mdx`
+  (not a how-to). Every other on-main article now carries real images.
+
+---
+
 ## 2026-10-20 — RUN STOPPED: SMOKE_FAIL, the sandbox can no longer reach Qtap's Supabase
 
 **Articles:** none. **Branch:** `claude/busy-clarke-l1uza5`

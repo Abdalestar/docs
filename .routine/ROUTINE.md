@@ -140,10 +140,16 @@ The screenshot tooling lives in `.routine/` in this repo. Use it; do not reinven
 
 ```bash
 cd /tmp/qtap-docs
-npm install -g playwright 2>&1 | tail -3
-npx playwright install chromium 2>&1 | tail -5
 npm init -y >/dev/null 2>&1
 npm install sharp playwright 2>&1 | tail -3
+# The image preinstalls only some chromium builds, so a fresh `npm install
+# playwright` can pull a version whose build is missing and the launch dies with
+# "Executable doesn't exist at /opt/pw-browsers/chromium_headless_shell-NNNN".
+# Verified 2026-11-14: `npx playwright install chromium` WORKS here and fetches
+# the missing build (~126 MB, under a minute), so prefer it. Pinning a version
+# that matches `ls /opt/pw-browsers/` also works and skips the download.
+npx playwright install chromium 2>&1 | tail -2
+# Build map: 1.62->1234, 1.63->1243, 1.64->1248, 1.65->1254, 1.66+->1255.
 node .routine/smoke-test.mjs
 ```
 
