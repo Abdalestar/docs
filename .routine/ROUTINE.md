@@ -147,6 +147,17 @@ npm install sharp playwright 2>&1 | tail -3
 node .routine/smoke-test.mjs
 ```
 
+**Never pin a Playwright version from a run log.** The sandbox image rotates its
+bundled Chromium builds, so a version that matched last month fails at `[1/5]` with
+`Executable doesn't exist` and masks whatever the real blocker is. A bare
+`npm install sharp playwright` has resolved to a matching pair every time it was
+checked. Verify, do not trust a number written in a log:
+
+```bash
+node -e "console.log(require('./node_modules/playwright-core/browsers.json').browsers.find(b=>b.name==='chromium').revision)"
+ls /opt/pw-browsers/        # the revision above must appear here
+```
+
 - `=== SMOKE_OK ===` → screenshots work; proceed.
 - `SMOKE_FAIL: …` → **stop the run.** Screenshots are mandatory (founder decision,
   2026-08-08): a how-to without real captures is exactly the stale-docs problem

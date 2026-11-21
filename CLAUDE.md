@@ -20,6 +20,57 @@ Automated runs by the Qtap Documentation Writer agent are logged here.
 
 ---
 
+## 2026-11-21 — RUN STOPPED: SMOKE_FAIL, day 32 of the Supabase network block
+
+**Articles:** none. **Branch:** `claude/busy-clarke-twalwp`
+**Status:** Stopped at ROUTINE §6 before touching any task row. No article, no backfill,
+no PR. Shipped one durable guard in `.routine/ROUTINE.md` §6 (below).
+
+### Nothing is new. The 2026-10-20 diagnosis still holds, in full
+`SMOKE_FAIL: supabase_unreachable - net::ERR_TUNNEL_CONNECTION_FAILED at
+https://amaucrgpsulnykvyrlzq.supabase.co/auth/v1/health`, in about five seconds.
+The environment's network policy answers **403 to CONNECT** for the only Supabase host
+the dashboard uses. **The fix is one line in the Claude Code on the web environment's
+network policy: add `*.supabase.co`.** Nothing in this repo can fix it.
+
+Re-verified read-only this run, so nobody re-derives it:
+- **Not an outage.** `list_projects` returns one project, `amaucrgpsulnykvyrlzq`, **ACTIVE_HEALTHY**.
+- **Not dead credentials.** `owner@goldencrust.qa` and `owner@brewbean.qa` both exist and are
+  confirmed, and both still read `last_sign_in_at = 2026-10-17` — which is itself the proof:
+  nothing has been able to sign in since the block started.
+- **Not the dashboard.** `dashboard.qtap.qa/login` serves 200 and renders.
+- **Not a moved project ref.** The live login HTML now references **exactly one** Supabase host,
+  `amaucrgpsulnykvyrlzq.supabase.co`. (The stale `eqjqbxdgpwvhpyyjnbqo` preconnect that misled
+  the 2026-10-07 run is **gone from the page** — there is no second host to allowlist.)
+- **Not the TLS bridge (§6a).** The denial is at CONNECT, and the bridge re-opens upstream through
+  the same proxy. It only fixes handshake resets on hosts the policy already allows.
+- **Not the proxy.** `api.github.com` returns 200 through it. `supabase.co` and `supabase.com`
+  both fail CONNECT, so the whole domain is denied.
+
+### Cost so far
+**35 days since the last shipped article (2026-10-17); 32 days since the blocker was first
+recorded.** Roughly a dozen scheduled runs have now stopped at this same gate. The Supabase MCP
+keeps working because it travels a different network path, which is why research is still possible
+and screenshots are not — and screenshots are mandatory (founder decision, 2026-08-08).
+
+### THE ONE THING SHIPPED — a durable Playwright guard in ROUTINE §6
+Three separate run logs have now lost time to a *log* telling the next run to pin a Playwright
+version. Today `/opt/pw-browsers` ships chromium **1243 and 1255**; a bare `npm install sharp
+playwright` resolved playwright-core **1.65.1**, which wants **1255**, so it launched cleanly and
+reached the genuine blocker. The 2026-11-14 note's advice to pin `1.64.1` (chromium 1248) would
+now fail at `[1/5]` with `Executable doesn't exist` and **mask the network blocker** — the exact
+failure that note existed to prevent. That warning lived only in a Notion note, so §6 now carries
+the rule itself: never pin from a log, verify the revision against `/opt/pw-browsers`.
+
+### Board untouched, deliberately
+No Notion row was locked, edited or closed (§6). A short dated note went on the parent page
+instead. Nothing about the backlog has changed since 2026-10-17: still mostly engineering-fix
+trackers filed by earlier runs, the same four P1 duplicates, the same capture-blocked rows, and
+screenshot backfill exhausted. **Worth pairing the network fix with a human pass over the board
+and the open-PR queue**, or the first unblocked run will have little to pick up.
+
+---
+
 ## 2026-10-20 — RUN STOPPED: SMOKE_FAIL, the sandbox can no longer reach Qtap's Supabase
 
 **Articles:** none. **Branch:** `claude/busy-clarke-l1uza5`
